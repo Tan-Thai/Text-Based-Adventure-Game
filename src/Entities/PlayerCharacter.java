@@ -16,6 +16,6 @@ public class PlayerCharacter extends Entity {
 
     public void levelUp(){
         this.level++;
-        System.out.println(this.getName() + " has leveled to " + this.level + "!");
+        System.out.println(this.getName() + " just reached level: " + this.level);
     }
 }
