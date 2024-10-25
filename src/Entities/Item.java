@@ -1,4 +1,4 @@
-package Entites;
+package Entities;
 
 public class Item {
     private String name;

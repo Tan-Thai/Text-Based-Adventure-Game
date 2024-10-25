@@ -1,4 +1,4 @@
-import Entites.*;
+import Entities.*;
 import Resources.GlobalMethodLibrary;
 
 import java.util.Scanner;

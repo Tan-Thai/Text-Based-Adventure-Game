@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class GlobalMethodLibrary {
     public static String checkIfValidString (Scanner sc) {
-        String userInput = "";
+        String userInput;
         do {
             userInput = sc.nextLine();
             if (!userInput.isEmpty()) {
@@ -15,7 +15,7 @@ public class GlobalMethodLibrary {
     }
 
     public static int checkIfNumber(Scanner sc) {
-        int userInput = -1; //-1 to always give error when there's no input
+        int userInput;
 
         while (true) { //forced loop in while
             if (sc.hasNextInt()) {

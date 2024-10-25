@@ -1,4 +1,4 @@
-package Entites;
+package Entities;
 
 public class Enemies extends Entity {
 
