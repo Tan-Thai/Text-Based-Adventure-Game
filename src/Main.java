@@ -25,7 +25,7 @@ public class Main {
 
         pc.setHealth(pc.getHealth() - 10);
         pc.displayHealth();
-
+        pc.displayStats();
         pc.levelUp();
     }
 
@@ -35,6 +35,7 @@ public class Main {
         System.out.print("What is your health?: ");
         int healthInput = GlobalMethodLibrary.checkIfNumber(sc);
 
-        return new PlayerCharacter(nameInput, healthInput);
+        // temp input of stats since i got no idea what we are basing it on.
+        return new PlayerCharacter(nameInput, healthInput, 9, 12, 15);
     }
 }
