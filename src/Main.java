@@ -1,3 +1,4 @@
+import GameObjects.Entites.HostileCharacter;
 import GameObjects.Entites.PlayerCharacter;
 import GameObjects.Items.Item;
 import Global.*;
@@ -17,6 +18,8 @@ public class Main {
         Item sword = new Item("A Simple Sword", "Your standard blade as a new adventurer.");
         Item potion = new Item("Health Potion", "Chug when ouch");
 
+        HostileCharacter goblin = new HostileCharacter("Goblin", 6);
+
         pc.getInventory().addItem(sword);
         pc.getInventory().addItem(potion);
 
@@ -28,6 +31,10 @@ public class Main {
         pc.displayHealth();
         pc.displayStats();
         pc.levelUp();
+
+        goblin.displayStats();
+        goblin.displayHealth();
+
     }
 
     private static PlayerCharacter setupUser(Scanner sc) {
