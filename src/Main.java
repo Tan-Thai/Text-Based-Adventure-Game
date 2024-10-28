@@ -1,11 +1,13 @@
-import Entities.*;
-import Resources.GlobalMethodLibrary;
+import GameObjects.*;
+import Global.*;
 
 import java.util.Scanner;
 import java.text.MessageFormat;
 
 public class Main {
     public static void main(String[] args) {
+
+        // currently just slapping everything into main - will create a "game" package later to put all game logic into.
         Scanner sc = new Scanner(System.in);
         PlayerCharacter pc = setupUser(sc);
         System.out.println(MessageFormat.format("Your name is {0} and your current health is {1}",
@@ -17,7 +19,12 @@ public class Main {
         pc.getInventory().addItem(sword);
         pc.getInventory().addItem(potion);
 
-        pc.getInventory().displayInventory();
+        pc.getInventory().inspectInventory(sc);
+
+        pc.getInventory().removeItem(sword);
+
+        pc.setHealth(pc.getHealth() - 10);
+        pc.displayHealth();
 
         pc.levelUp();
     }

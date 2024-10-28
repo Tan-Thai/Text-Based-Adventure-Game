@@ -1,12 +1,13 @@
-package Entities;
+package GameObjects;
 
 public class PlayerCharacter extends Entity {
-    private int level = 0;
     private int experience;
-    private Inventory inventory;
+    private final Inventory inventory;
+    // private Room location = blabla
+    // wondering if the player or even entity needs a room to "spawn" in let alone know where it's at in the world map.
 
     public PlayerCharacter(String name, int health) {
-        super(name, health);
+        super(name, health, 1);
         this.inventory = new Inventory();
     }
 
@@ -14,8 +15,4 @@ public class PlayerCharacter extends Entity {
         return inventory;
     }
 
-    public void levelUp(){
-        this.level++;
-        System.out.println(this.getName() + " just reached level: " + this.level);
-    }
 }

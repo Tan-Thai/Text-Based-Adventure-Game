@@ -1,8 +1,8 @@
-package Entities;
+package GameObjects;
 
 public class Item {
-    private String name;
-    private String description;
+    private final String name;
+    private final String description;
 
     public Item(String name, String desc) {
         this.name = name;

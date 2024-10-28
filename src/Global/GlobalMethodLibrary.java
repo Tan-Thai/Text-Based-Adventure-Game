@@ -1,5 +1,4 @@
-package Resources;
-
+package Global;
 import java.util.Scanner;
 
 public class GlobalMethodLibrary {
@@ -20,14 +19,14 @@ public class GlobalMethodLibrary {
         while (true) { //forced loop in while
             if (sc.hasNextInt()) {
                 userInput = sc.nextInt();
-                if (userInput > 0) {
+                if (userInput >= 0) {
                     clearScanner(sc);
                     return userInput;
                 }
             } else {
                 sc.next();
             }
-            System.err.print("Invalid input, please enter a number above 0: ");
+            System.err.print("Invalid input, please enter a number: ");
         }
     }
 
