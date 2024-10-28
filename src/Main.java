@@ -1,4 +1,5 @@
-import GameObjects.*;
+import GameObjects.Entites.PlayerCharacter;
+import GameObjects.Items.Item;
 import Global.*;
 
 import java.util.Scanner;

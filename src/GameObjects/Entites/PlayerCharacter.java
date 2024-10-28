@@ -1,4 +1,6 @@
-package GameObjects;
+package GameObjects.Entites;
+
+import GameObjects.Items.Inventory;
 
 public class PlayerCharacter extends Entity {
     private int experience;

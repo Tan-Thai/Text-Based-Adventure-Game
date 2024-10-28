@@ -1,4 +1,4 @@
-package GameObjects;
+package GameObjects.Items;
 
 public class Item {
     private final String name;

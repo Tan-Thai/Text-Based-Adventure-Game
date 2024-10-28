@@ -1,4 +1,4 @@
-package GameObjects;
+package GameObjects.Items;
 
 import Global.GlobalMethodLibrary;
 
