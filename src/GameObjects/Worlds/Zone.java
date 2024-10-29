@@ -48,18 +48,18 @@ public class Zone extends World {
 
     public void displayCurrentZone(PlayerCharacter pc, Area zone) {
         Utility.clearConsole();
-        Slowprint.sp("You are in " + pc.getCurrentZone() + ". " + zone.getDescription() + " Zone cleared: " + zone.getZoneCleared());
+        Slowprint.sp("You are in " + pc.getCurrentZone().getName() + ". " + zone.getDescription() + " Zone cleared: " + zone.getZoneCleared());
         Utility.promptEnterKey(sc);
-        sc.close();
+        
 
     }
     
     public void travelInsideZone(PlayerCharacter pc, Area zone) { // ONLY FOR FOREST, SWAMP, CAVE
             Utility.clearConsole();
             Slowprint.sp("You wander around the " + pc.getCurrentZone().getName());
-            Slowprint.sp("A monster appears!\nHuzzah! You killed it, and on it you find a map to the Swamp!"); // sample text
+            Slowprint.sp("A monster appears!\nHuzzah! You killed it, and on it you find a map leading to the next area!"); // sample text
             Utility.promptEnterKey(sc);
-            sc.close();
+            
             // fight?
             // EVENTS??
             zone.setZoneCleared(true);
@@ -99,6 +99,6 @@ public class Zone extends World {
             Slowprint.sp("You have not cleared this zone yet.");
         }
         Utility.promptEnterKey(sc);
-        sc.close();
+        
     }
 }

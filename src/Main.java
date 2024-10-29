@@ -42,6 +42,14 @@ public class Main {
 
         room.displayCurrentZone(pc, pc.getCurrentZone());
 
+        room.travelInsideZone(pc, pc.getCurrentZone());
+
+        room.zoneTravel(pc, pc.getCurrentZone());
+
+        room.displayCurrentZone(pc, pc.getCurrentZone());
+
+        room.travelInsideZone(pc, pc.getCurrentZone());
+
    //     room.zoneTravel(pc, pc.getCurrentZone());
    //     room.travelInsideZone(pc, pc.getCurrentZone());
    //     room.zoneTravel(pc, pc.getCurrentZone());
@@ -72,6 +80,7 @@ public class Main {
         goblin.displayStats();
         goblin.displayHealth();
 */
+        sc.close();
     }
 
     private static PlayerCharacter setupUser(Scanner sc) {
