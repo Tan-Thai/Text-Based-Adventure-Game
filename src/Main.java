@@ -1,6 +1,7 @@
 import GameObjects.Entites.HostileCharacter;
 import GameObjects.Entites.PlayerCharacter;
 import GameObjects.Items.Item;
+import GameObjects.Items.Potion;
 import Global.*;
 
 import java.util.Scanner;
@@ -16,14 +17,17 @@ public class Main {
                 pc.getName(), pc.getHealth()));
 
         Item sword = new Item("A Simple Sword", "Your standard blade as a new adventurer.");
-        Item potion = new Item("Health Potion", "Chug when ouch");
+        Potion potion = new Potion("Health Potion", "Chug when ouch", 5, true);
+        Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", 7, false);
+
 
         HostileCharacter goblin = new HostileCharacter("Goblin", 6);
 
         pc.getInventory().addItem(sword);
         pc.getInventory().addItem(potion);
+        pc.getInventory().addItem(poison);
 
-        pc.getInventory().inspectInventory(sc);
+        pc.getInventory().inspectInventory(sc, pc);
 
         pc.getInventory().removeItem(sword);
 

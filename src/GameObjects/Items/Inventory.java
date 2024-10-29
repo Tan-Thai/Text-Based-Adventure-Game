@@ -1,6 +1,7 @@
 package GameObjects.Items;
 
-import Global.GlobalMethodLibrary;
+import GameObjects.Entites.PlayerCharacter;
+import Global.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -10,6 +11,10 @@ public class Inventory {
 
     public Inventory() {
         this.items = new ArrayList<>();
+    }
+
+    public ArrayList<Item> getItems() {
+        return items;
     }
 
     public void addItem(Item item) {
@@ -36,24 +41,28 @@ public class Inventory {
 
     }
 
-    public void inspectInventory(Scanner sc) {
+    public void inspectInventory(Scanner sc, PlayerCharacter player) {
         if (checkIfEmpty()) return;
 
-        printInventory();
         while (true) {
+            Utility.clearConsole();
+            printInventory();
             System.out.print("\nPress 0 to exit.\nEnter the number of the item to inspect: ");
             int input = GlobalMethodLibrary.checkIfNumber(sc);
 
             if (input == 0) {
-                System.out.println("exiting inventory view"); //temp since i dunno how to phrase this.
+                System.out.println("exiting inventory view");//temp since i dunno how to phrase this.
+                GlobalMethodLibrary.promtEnterKey(sc);
                 return;
             }
 
             if (input > 0 && input <= items.size()) {
                 Item selectedItem = items.get(input - 1);
                 selectedItem.displayItem();
+                selectedItem.promptUse(sc, player, selectedItem);
             } else {
                 System.out.println("Invalid choice. Please try again.");
+                GlobalMethodLibrary.promtEnterKey(sc);
             }
         }
 
