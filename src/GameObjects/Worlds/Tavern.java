@@ -15,7 +15,7 @@ public class Tavern extends Zone {
         Slowprint.sp("You take a rest and regain some health.");
         pc.setHealth(pc.getMaxHealth());
         Utility.promptEnterKey(sc);
-        sc.close();
+        
         
     }
 
@@ -24,7 +24,7 @@ public class Tavern extends Zone {
         Slowprint.sp("You open the shop and see a variety of items for sale.");
         // call a method to open shop from items class?
         Utility.promptEnterKey(sc);
-        sc.close();
+        
     }
 
     public void setOut(PlayerCharacter pc, Area zone) {
@@ -32,7 +32,7 @@ public class Tavern extends Zone {
         Slowprint.sp("You leave the tavern and head out in the looming dark forest.");
         pc.setCurrentZone(zone.FOREST);
         Utility.promptEnterKey(sc);
-        sc.close();
+        
     }
 
    // @Override //testar Override

@@ -32,11 +32,11 @@ public class Main {
         tavern.openShop(pc);
         tavern.setOut(pc, Area.FOREST);
 
-        room.displayCurrentZone(pc, pc.getCurrentZone());
+        room.displayCurrentZone(pc, pc.getCurrentZone()); //TESTING IF TRAVEL WORKS
         
         room.travelInsideZone(pc, pc.getCurrentZone());
 
-        room.displayCurrentZone(pc, pc.getCurrentZone());
+        room.displayCurrentZone(pc, pc.getCurrentZone()); //TESTING IF TRAVEL WORKS
         
         room.zoneTravel(pc, pc.getCurrentZone());
 
