@@ -3,6 +3,7 @@ package GameObjects.Entites;
 public class Entity {
     private final String name;
     private int health;
+    private int maxHealth;
     private int level;
     private int strength;
     private int dexterity;
@@ -12,6 +13,7 @@ public class Entity {
     public Entity(String name, int health, int level, int str, int dex, int intelligence) {
         this.name = name;
         this.health = health;
+        this.maxHealth = health;
         this.level = level;
         this.strength = str;
         this.dexterity = dex;
@@ -22,6 +24,7 @@ public class Entity {
     public Entity(String name, int health, int level) {
         this.name = name;
         this.health = health;
+        this.maxHealth = health;
         this.level = level;
         this.strength = 10;
         this.dexterity = 10;
@@ -30,7 +33,9 @@ public class Entity {
 
     public String getName() {return name;}
     public int getHealth() {return health;}
-
+    public int getMaxHealth() {
+        return maxHealth;
+    }
     public int getLevel() {
         return level;
     }
@@ -39,12 +44,12 @@ public class Entity {
         this.health = health;
     }
 
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
     public boolean isAlive() {
         return this.health > 0;
+    }
+
+    public boolean isFullHP() {
+        return health >= maxHealth;
     }
 
     public void displayHealth() {
@@ -61,5 +66,9 @@ public class Entity {
     public void levelUp() {
         this.level++;
         System.out.println(this.getName() + " just reached level: " + this.level);
+    }
+
+    public void changeHealth(int incomingValue) {
+        health += incomingValue;
     }
 }

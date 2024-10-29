@@ -1,8 +1,9 @@
 package Global;
+
 import java.util.Scanner;
 
-public class GlobalMethodLibrary {
-    public static String checkIfValidString (Scanner sc) {
+public class Utility {
+    public static String checkIfValidString(Scanner sc) {
         String userInput;
         do {
             userInput = sc.nextLine();
@@ -49,8 +50,32 @@ public class GlobalMethodLibrary {
     }
 
     public static void clearScanner(Scanner sc) {
-        if(sc.hasNextLine()){
+        if (sc.hasNextLine()) {
             sc.nextLine();
+        }
+    }
+
+    public static void promptEnterKey(Scanner sc) {
+        System.out.println("\nPress \"ENTER\" to continue.");
+        sc.nextLine();
+    }
+
+    public static void clearConsole() {
+        // ANSI escape code to clear the console // TOTALLY YOINKED THIS
+
+        try {
+            final String os = System.getProperty("os.name");
+            if (os.contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
+            }
+        } catch (Exception e) {
+            System.out.println("Could not clear console: " + e.getMessage());
+            //fallback: print 10 new lines
+            for (int i = 0; i < 10; i++) {
+                System.out.println();
+            }
         }
     }
 }

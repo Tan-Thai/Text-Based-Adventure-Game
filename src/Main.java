@@ -1,6 +1,7 @@
 import GameObjects.Entites.HostileCharacter;
 import GameObjects.Entites.PlayerCharacter;
 import GameObjects.Items.Item;
+import GameObjects.Items.Potion;
 import Global.*;
 
 import java.util.Scanner;
@@ -16,21 +17,26 @@ public class Main {
                 pc.getName(), pc.getHealth()));
 
         Item sword = new Item("A Simple Sword", "Your standard blade as a new adventurer.");
-        Item potion = new Item("Health Potion", "Chug when ouch");
+        Potion potion = new Potion("Health Potion", "Chug when ouch", 5, true);
+        Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", 7, false);
+
 
         HostileCharacter goblin = new HostileCharacter("Goblin", 6);
 
         pc.getInventory().addItem(sword);
         pc.getInventory().addItem(potion);
+        pc.getInventory().addItem(poison);
 
-        pc.getInventory().inspectInventory(sc);
+        pc.getInventory().inspectInventory(sc, pc);
 
         pc.getInventory().removeItem(sword);
 
         pc.setHealth(pc.getHealth() - 10);
+        Utility.clearConsole();
         pc.displayHealth();
         pc.displayStats();
         pc.levelUp();
+        Utility.promptEnterKey(sc);
 
         goblin.displayStats();
         goblin.displayHealth();
@@ -39,9 +45,9 @@ public class Main {
 
     private static PlayerCharacter setupUser(Scanner sc) {
         System.out.print("What is your name?: ");
-        String nameInput = GlobalMethodLibrary.checkIfValidString(sc);
+        String nameInput = Utility.checkIfValidString(sc);
         System.out.print("What is your health?: ");
-        int healthInput = GlobalMethodLibrary.checkIfNumber(sc);
+        int healthInput = Utility.checkIfNumber(sc);
 
         // temp input of stats since i got no idea what we are basing it on.
         return new PlayerCharacter(nameInput, healthInput, 9, 12, 15);
