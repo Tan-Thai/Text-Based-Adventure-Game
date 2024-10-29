@@ -50,6 +50,8 @@ public class Main {
 
         room.travelInsideZone(pc, pc.getCurrentZone());
 
+        room.zoneTravel(pc, pc.getCurrentZone());
+
    //     room.zoneTravel(pc, pc.getCurrentZone());
    //     room.travelInsideZone(pc, pc.getCurrentZone());
    //     room.zoneTravel(pc, pc.getCurrentZone());

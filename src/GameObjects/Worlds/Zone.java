@@ -89,7 +89,10 @@ public class Zone extends World {
                 case Zones.Area.CAVE:
             //        displayCurrentZone(pc, Area.CAVE);
                     Slowprint.sp("You travel to the " + "Basement");
+                    Utility.promptEnterKey(sc);
                     // call on Basement class to display specific events ??
+                    Basement basement = new Basement();
+                    basement.bossfight();
                     break;
                 default:
                     System.out.println("Unavailable to travel");
