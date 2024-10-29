@@ -22,6 +22,7 @@ public class Potion extends Item implements Consumable {
             if (player.getHealth() < player.getMaxHealth()) {
                 player.setHealth(player.getHealth() + potionEffect);
                 System.out.println("You consumed the potion");
+                player.getInventory().removeItem(this);
             } else {
                 System.out.println("You don't need to consume a potion right now");
             }
@@ -29,14 +30,13 @@ public class Potion extends Item implements Consumable {
         } else {
             int damage = -potionEffect;
             player.setHealth(player.getHealth() - damage);
+            player.getInventory().removeItem(this);
             System.out.println("You consumed an ooga booga potion and took " + damage + " damage.");
         }
 
         if (player.getHealth() > player.getMaxHealth()) {
             player.setHealth(player.getMaxHealth());
         }
-
-        player.getInventory().removeItem(this);
     }
 
 }
