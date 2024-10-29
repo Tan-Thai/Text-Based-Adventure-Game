@@ -47,13 +47,16 @@ public class Zone extends World {
     }
 
     public void displayCurrentZone(PlayerCharacter pc, Area zone) {
+        Utility.clearConsole();
         Slowprint.sp("You are in " + pc.getCurrentZone() + ". " + zone.getDescription() + " Zone cleared: " + zone.getZoneCleared());
+        Utility.promptEnterKey(sc);
 
     }
     
     public void travelInsideZone(PlayerCharacter pc, Area zone) { // ONLY FOR FOREST, SWAMP, CAVE
+            Utility.clearConsole();
             Slowprint.sp("You wander around the " + pc.getCurrentZone().getName());
-            Slowprint.sp("A monster appears!"); // sample text
+            Slowprint.sp("A monster appears!\nHuzzah! You killed it, and on it you find a map to the Swamp!"); // sample text
             Utility.promptEnterKey(sc);
             // fight?
             // EVENTS??
@@ -61,7 +64,9 @@ public class Zone extends World {
     }
 
     public void zoneTravel(PlayerCharacter pc, Area room) { // pc, next zone
- 
+
+        Utility.clearConsole();
+        
         if (room.getZoneCleared() == true) {
             switch (pc.getCurrentZone()) {
                 case null: // THIS WILL BE REMOVED, RIGHT?!? RIGHT?!?!?!?... Yes, I think so.. Use other means to set pc currentzone Forest at start after Tavern.
@@ -91,6 +96,6 @@ public class Zone extends World {
         } else {
             Slowprint.sp("You have not cleared this zone yet.");
         }
-           
+        Utility.promptEnterKey(sc);  
     }
 }

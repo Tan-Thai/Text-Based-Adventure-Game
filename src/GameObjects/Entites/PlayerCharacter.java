@@ -13,6 +13,7 @@ public class PlayerCharacter extends Entity {
     public PlayerCharacter(String name, int health, int str, int dex, int intel) {
         super(name, health, 1, str, dex, intel);
         this.inventory = new Inventory();
+        Area currentZone;
         }
 
         public Inventory getInventory() {
