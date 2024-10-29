@@ -15,7 +15,6 @@ public class Potion extends Item implements Consumable {
         this.healingPotion = healingPotion;
     }
 
-    // temp potion thing, need to change entity to have max health + current health.
     @Override
     public void consume(PlayerCharacter player) {
         System.out.println();
