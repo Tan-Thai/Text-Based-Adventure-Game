@@ -1,6 +1,5 @@
 package GameObjects.Items;
 
-import java.util.Optional;
 
 import GameObjects.Entites.PlayerCharacter;
 
@@ -19,22 +18,24 @@ public class Potion extends Item implements Consumable {
     public void consume(PlayerCharacter player) {
         System.out.println();
         if (healingPotion) {
-            if (player.getHealth() < player.getMaxHealth()) {
-                player.setHealth(player.getHealth() + potionEffect);
-                System.out.println("You consumed the potion");
+            if (!player.isFullHP()) {
+                player.changeHealth(potionEffect);
+                System.out.println("You consumed " + getName());
+                System.out.println("Your health is now " + player.getHealth());
                 player.getInventory().removeItem(this);
             } else {
-                System.out.println("You don't need to consume a potion right now");
+                System.out.println("You don't need to consume " + getName() + " right now");
             }
 
         } else {
             int damage = -potionEffect;
-            player.setHealth(player.getHealth() - damage);
-            player.getInventory().removeItem(this);
+            player.changeHealth(damage);
             System.out.println("You consumed an ooga booga potion and took " + damage + " damage.");
+            System.out.println("Your health is now " + player.getHealth());
+            player.getInventory().removeItem(this);
         }
 
-        if (player.getHealth() > player.getMaxHealth()) {
+        if (player.isFullHP()) {
             player.setHealth(player.getMaxHealth());
         }
     }

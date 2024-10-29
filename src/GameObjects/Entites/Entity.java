@@ -33,11 +33,9 @@ public class Entity {
 
     public String getName() {return name;}
     public int getHealth() {return health;}
-
     public int getMaxHealth() {
         return maxHealth;
     }
-
     public int getLevel() {
         return level;
     }
@@ -46,16 +44,12 @@ public class Entity {
         this.health = health;
     }
 
-    public void setMaxHealth(int maxHealth) {
-        this.maxHealth = maxHealth;
-    } // very much not needed atm.
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
     public boolean isAlive() {
         return this.health > 0;
+    }
+
+    public boolean isFullHP() {
+        return health >= maxHealth;
     }
 
     public void displayHealth() {
@@ -72,5 +66,9 @@ public class Entity {
     public void levelUp() {
         this.level++;
         System.out.println(this.getName() + " just reached level: " + this.level);
+    }
+
+    public void changeHealth(int incomingValue) {
+        health += incomingValue;
     }
 }

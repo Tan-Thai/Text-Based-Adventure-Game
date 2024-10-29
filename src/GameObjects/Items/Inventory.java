@@ -25,7 +25,7 @@ public class Inventory {
     public void removeItem(Item item) {
         if (items.contains(item)) {
             items.remove(item);
-            System.out.println(item.getName() + " was removed from your inventory");
+            System.out.println("\n" + item.getName() + " was removed from your inventory");
         } else {
             System.out.println("You do not posses a " + item.getName());
         }

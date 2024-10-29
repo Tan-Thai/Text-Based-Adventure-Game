@@ -55,7 +55,7 @@ public class GlobalMethodLibrary {
     }
 
     public static void promtEnterKey(Scanner sc) {
-        System.out.println("Press \"ENTER\" to continue.");
+        System.out.println("\nPress \"ENTER\" to continue.");
         sc.nextLine();
     }
 }

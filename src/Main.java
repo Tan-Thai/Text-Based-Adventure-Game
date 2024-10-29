@@ -32,9 +32,12 @@ public class Main {
         pc.getInventory().removeItem(sword);
 
         pc.setHealth(pc.getHealth() - 10);
+        Utility.clearConsole();
         pc.displayHealth();
         pc.displayStats();
         pc.levelUp();
+        GlobalMethodLibrary.promtEnterKey(sc);
+
 
         goblin.displayStats();
         goblin.displayHealth();
