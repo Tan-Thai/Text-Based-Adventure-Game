@@ -48,11 +48,11 @@ public class Inventory {
             Utility.clearConsole();
             printInventory();
             System.out.print("\nPress 0 to exit.\nEnter the number of the item to inspect: ");
-            int input = GlobalMethodLibrary.checkIfNumber(sc);
+            int input = Utility.checkIfNumber(sc);
 
             if (input == 0) {
                 System.out.println("exiting inventory view");//temp since i dunno how to phrase this.
-                GlobalMethodLibrary.promtEnterKey(sc);
+                Utility.promptEnterKey(sc);
                 return;
             }
 
@@ -62,7 +62,7 @@ public class Inventory {
                 selectedItem.promptUse(sc, player, selectedItem);
             } else {
                 System.out.println("Invalid choice. Please try again.");
-                GlobalMethodLibrary.promtEnterKey(sc);
+                Utility.promptEnterKey(sc);
             }
         }
 

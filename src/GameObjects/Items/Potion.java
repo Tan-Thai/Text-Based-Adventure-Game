@@ -1,6 +1,5 @@
 package GameObjects.Items;
 
-
 import GameObjects.Entites.PlayerCharacter;
 
 public class Potion extends Item implements Consumable {

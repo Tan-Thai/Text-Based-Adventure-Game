@@ -1,7 +1,7 @@
 package GameObjects.Items;
 
 import GameObjects.Entites.PlayerCharacter;
-import Global.GlobalMethodLibrary;
+import Global.Utility;
 
 import java.util.Scanner;
 
@@ -32,7 +32,7 @@ public class Item {
         // will most likely make a switch case for this in case of other items like weapons.
         if (selectedItem instanceof Consumable) {
             System.out.print("Do you want to use this item? (Y/N): ");
-            boolean response = GlobalMethodLibrary.checkYesOrNo(sc);
+            boolean response = Utility.checkYesOrNo(sc);
 
             if (response) {
                 ((Consumable) selectedItem).consume(player);
@@ -44,6 +44,6 @@ public class Item {
             System.out.println("This item cannot be used.");
         }
 
-        GlobalMethodLibrary.promtEnterKey(sc);
+        Utility.promptEnterKey(sc);
     }
 }

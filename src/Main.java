@@ -36,8 +36,7 @@ public class Main {
         pc.displayHealth();
         pc.displayStats();
         pc.levelUp();
-        GlobalMethodLibrary.promtEnterKey(sc);
-
+        Utility.promptEnterKey(sc);
 
         goblin.displayStats();
         goblin.displayHealth();
@@ -46,9 +45,9 @@ public class Main {
 
     private static PlayerCharacter setupUser(Scanner sc) {
         System.out.print("What is your name?: ");
-        String nameInput = GlobalMethodLibrary.checkIfValidString(sc);
+        String nameInput = Utility.checkIfValidString(sc);
         System.out.print("What is your health?: ");
-        int healthInput = GlobalMethodLibrary.checkIfNumber(sc);
+        int healthInput = Utility.checkIfNumber(sc);
 
         // temp input of stats since i got no idea what we are basing it on.
         return new PlayerCharacter(nameInput, healthInput, 9, 12, 15);
