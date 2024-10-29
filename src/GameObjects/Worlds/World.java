@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import GameObjects.Entites.PlayerCharacter;
 import Global.*;
 
-public class NyWorld {
+public class World {
     private ArrayList<Zone> zones;
 
-    public NyWorld() {
+    public World() {
         this.zones = new ArrayList<Zone>();
     }
 

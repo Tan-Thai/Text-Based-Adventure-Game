@@ -1,4 +1,5 @@
 package GameObjects.Worlds;
+import GameObjects.Entites.PlayerCharacter;
 import Global.Slowprint;
 
 public class Tavern extends Zone {
@@ -7,12 +8,13 @@ public class Tavern extends Zone {
 
     }
     
-    public void takeRest() {
+    public void takeRest(PlayerCharacter pc) {
         Slowprint.sp("You take a rest and regain some health.");
-        // call a method to regain health from player class or interactions class
+        pc.setHealth(pc.getMaxHealth());
+        
     }
 
-    public void openShop() {
+    public void openShop(PlayerCharacter pc) {
         Slowprint.sp("You open the shop and see a variety of items for sale.");
         // call a method to open shop from items class?
     }

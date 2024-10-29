@@ -2,8 +2,10 @@ package GameObjects.Worlds;
 
 import GameObjects.Entites.PlayerCharacter;
 import Global.*;
+import GameObjects.Worlds.Zones;
+import GameObjects.Worlds.Zones.Area;
 
-public abstract class Zone {
+public class Zone extends World {
     private String name;
     private String description;
     private boolean zoneCleared;
@@ -12,6 +14,12 @@ public abstract class Zone {
         this.name = name;
         this.description = desc;
         this.zoneCleared = false; 
+    }
+
+    public Zone() {
+        this.name = "DEFAULT";
+        this.description = "DEFAULT DESCRIPTION";
+        this.zoneCleared = true;
     }
 
     public Zone (String name, String desc, boolean zoneCleared) { // for Tavern and Basement
@@ -36,46 +44,41 @@ public abstract class Zone {
         return zoneCleared;
     }
 
-    public void displayCurrentZone() {
-        System.out.println("You are in " + name + ". " + description);
+    public void displayCurrentZone(PlayerCharacter pc, Zones.Area zone) {
+        System.out.println("You are in " + pc.getCurrentZone() + ". " + zone.getDescription());
     }
     
-    public void travelInsideZone(PlayerCharacter pc) {
-        if (pc.getCurrentZone() == "Tavern" || pc.getCurrentZone() == "Basement") {
-            Slowprint.sp("You look around the " + pc.getCurrentZone());
-            // call on either Tavern or Basement class to display specific events
-
-        } else {
-            Slowprint.sp("You wander around the " + pc.getCurrentZone());
+    public void travelInsideZone(PlayerCharacter pc, Area zone) { // ONLY FOR FOREST, SWAMP, CAVE
+            Slowprint.sp("You wander around the " + pc.getCurrentZone().getName());
             Slowprint.sp("A monster appears!"); // sample text
-            zoneCleared = true;
+            // fight?
+            zone.setZoneCleared(true);
             // EVENTS??
-        }
     }
 
-    public void zoneTravel(PlayerCharacter pc, String zone) { // Travel should be modular!
+    public void zoneTravel(PlayerCharacter pc, String zone, Area room) { // pc, next zone
  
-        if (zoneCleared == true) {
+        if (room.getZoneCleared() == true) {
             switch (pc.getCurrentZone()) {
-                case "Tavern":
-                    displayCurrentZone();
+                case null:
+                    System.out.println("You are in the Tavern");
                     System.out.println("You travel to the " + "Forest");
-                    pc.setCurrentZone("Forest");
+                    pc.setCurrentZone(Zones.Area.FOREST);
                     break;
-                case "Forest":
-                    displayCurrentZone();
+                case Zones.Area.FOREST:
+                    displayCurrentZone(pc, Zones.Area.FOREST);
                     System.out.println("You travel to the " + "Swamp");
-                    pc.setCurrentZone("Swamp");
+                    pc.setCurrentZone(Zones.Area.SWAMP);
                     break;
-                case "Swamp":
-                    displayCurrentZone();
+                case Zones.Area.SWAMP:
+                    displayCurrentZone(pc, Zones.Area.SWAMP);
                     System.out.println("You travel to the " + "Cave");
-                    pc.setCurrentZone("Cave");
+                    pc.setCurrentZone(Zones.Area.CAVE);
                     break;
-                case "Cave":
-                    displayCurrentZone();
+                case Zones.Area.CAVE:
+                    displayCurrentZone(pc, Zones.Area.CAVE);
                     System.out.println("You travel to the " + "Basement");
-                    pc.setCurrentZone("Basement");
+                    // call on Basement class to display specific events ??
                     break;
                 default:
                     System.out.println("Unavailable to travel");
