@@ -6,27 +6,33 @@ import Global.Utility;
 
 public class Tavern extends Zone {
     public Tavern() {
-        super( "Tavern", "A lively tavern filled with patrons and the smell of ale", true);
+        super( "Tavern", "A lively tavern filled with patrons and the smell of ale", true); //????????????
 
     }
     
     public void takeRest(PlayerCharacter pc) {
+        Utility.clearConsole();
         Slowprint.sp("You take a rest and regain some health.");
         pc.setHealth(pc.getMaxHealth());
         Utility.promptEnterKey(sc);
+        sc.close();
         
     }
 
     public void openShop(PlayerCharacter pc) {
+        Utility.clearConsole();
         Slowprint.sp("You open the shop and see a variety of items for sale.");
         // call a method to open shop from items class?
         Utility.promptEnterKey(sc);
+        sc.close();
     }
 
     public void setOut(PlayerCharacter pc, Area zone) {
+        Utility.clearConsole();
         Slowprint.sp("You leave the tavern and head out in the looming dark forest.");
         pc.setCurrentZone(zone.FOREST);
         Utility.promptEnterKey(sc);
+        sc.close();
     }
 
    // @Override //testar Override
