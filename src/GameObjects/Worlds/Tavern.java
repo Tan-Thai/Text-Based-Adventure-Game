@@ -1,5 +1,6 @@
 package GameObjects.Worlds;
 import GameObjects.Entites.PlayerCharacter;
+import GameObjects.Worlds.Zones.Area;
 import Global.Slowprint;
 
 public class Tavern extends Zone {
@@ -17,6 +18,11 @@ public class Tavern extends Zone {
     public void openShop(PlayerCharacter pc) {
         Slowprint.sp("You open the shop and see a variety of items for sale.");
         // call a method to open shop from items class?
+    }
+
+    public void setOut(PlayerCharacter pc, Area zone) {
+        Slowprint.sp("You leave the tavern and head out in the looming dark forest.");
+        pc.setCurrentZone(zone.FOREST);
     }
 
    // @Override //testar Override

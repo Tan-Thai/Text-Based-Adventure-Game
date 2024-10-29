@@ -3,6 +3,7 @@ import GameObjects.Entites.PlayerCharacter;
 import GameObjects.Items.Item;
 import GameObjects.Items.Potion;
 import GameObjects.Worlds.*;
+import GameObjects.Worlds.Zones.Area;
 import Global.*;
 
 import java.util.Scanner;
@@ -21,25 +22,38 @@ public class Main {
         Potion potion = new Potion("Health Potion", "Chug when ouch", 5, true);
         Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", 7, false);
 
-        /*  MESSING AROUND WITH ZONES AND TRAVEL
+    //      MESSING AROUND WITH ZONES AND TRAVEL
+        Tavern tavern = new Tavern();
+        Basement basement = new Basement();
         Zone room = new Zone();
-        System.out.println(pc.getCurrentZone());
-      for (Zones.Area zone : Zones.Area.values()) {
-            System.out.println("Zone: " + zone.getName());
-            System.out.println("Description: " + zone.getDescription());
-            System.out.println("Cleared: " + zone.getZoneCleared());
-      } 
-        room.zoneTravel(pc, "Forest", pc.getCurrentZone());
-        room.travelInsideZone(pc, pc.getCurrentZone());
-        room.zoneTravel(pc, "Forest", pc.getCurrentZone());
-        System.out.println(pc.getCurrentZone());
-        room.zoneTravel(pc, "Swamp", pc.getCurrentZone());
+        System.out.println("Current Zone: " + pc.getCurrentZone());
         
-         END OF ZONE TESTING */
+        tavern.takeRest(pc);
+        tavern.openShop(pc);
+        tavern.setOut(pc, Area.FOREST);
+
+        room.displayCurrentZone(pc, pc.getCurrentZone());
+        
+        room.travelInsideZone(pc, pc.getCurrentZone());
+
+        room.displayCurrentZone(pc, pc.getCurrentZone());
+        
+        room.zoneTravel(pc, pc.getCurrentZone());
+
+        room.displayCurrentZone(pc, pc.getCurrentZone());
+
+   //     room.zoneTravel(pc, pc.getCurrentZone());
+   //     room.travelInsideZone(pc, pc.getCurrentZone());
+   //     room.zoneTravel(pc, pc.getCurrentZone());
+
+   //     System.out.println("Current Zone: " + pc.getCurrentZone());
+
+   //     room.zoneTravel(pc, pc.getCurrentZone());
+        
         
 
         HostileCharacter goblin = new HostileCharacter("Goblin", 6);
- 
+ /* 
         pc.getInventory().addItem(sword);
         pc.getInventory().addItem(potion);
         pc.getInventory().addItem(poison);
@@ -57,7 +71,7 @@ public class Main {
 
         goblin.displayStats();
         goblin.displayHealth();
-
+*/
     }
 
     private static PlayerCharacter setupUser(Scanner sc) {
