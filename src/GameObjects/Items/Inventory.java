@@ -1,29 +1,33 @@
 package GameObjects.Items;
 
-import GameObjects.Entites.PlayerCharacter;
+import GameObjects.Entities.PlayerCharacter;
 import Global.*;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Inventory {
-    private ArrayList<Item> items;
+    private final List<Item> items;
 
     public Inventory() {
         this.items = new ArrayList<>();
     }
 
-    public ArrayList<Item> getItems() {
-        return items;
+    public List<Item> getItems() {
+        return Collections.unmodifiableList(items);
     }
 
     public void addItem(Item item) {
-        items.add(item);
-        System.out.println(item.getName() + " was put into your inventory");
+        if (item != null) {
+            items.add(item);
+            System.out.println(item.getName() + " was put into your inventory");
+        }
     }
 
     public void removeItem(Item item) {
-        if (items.contains(item)) {
+        if (item != null && items.contains(item)) {
             items.remove(item);
             System.out.println("\n" + item.getName() + " was removed from your inventory");
         } else {
@@ -43,7 +47,7 @@ public class Inventory {
 
     public void inspectInventory(Scanner sc, PlayerCharacter player) {
         if (checkIfEmpty()) return;
-
+        // Forced loop until user have exited their inventory or chosen to display a specific item.
         while (true) {
             Utility.clearConsole();
             printInventory();

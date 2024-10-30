@@ -1,4 +1,4 @@
-package GameObjects.Entites;
+package GameObjects.Entities;
 
 import GameObjects.Items.Inventory;
 
@@ -17,9 +17,13 @@ public class PlayerCharacter extends Entity {
         return inventory;
     }
 
+    public int getExperience() {
+        return experience;
+    }
+
     public void gainExperience(int exp) {
         experience += exp;
-        System.out.println(experience);
+        System.out.println("You gained " + exp + " EXP!");
         if (experience > 100) {
             experience -= 100;
             levelUp();
