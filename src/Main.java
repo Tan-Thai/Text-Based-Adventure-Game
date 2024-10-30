@@ -35,7 +35,7 @@ public class Main {
         Utility.clearConsole();
         pc.displayHealth();
         pc.displayStats();
-        pc.levelUp();
+        pc.gainExperience(110);
         Utility.promptEnterKey(sc);
 
         goblin.displayStats();

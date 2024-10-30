@@ -47,7 +47,6 @@ public class Entity {
     public boolean isAlive() {
         return this.health > 0;
     }
-
     public boolean isFullHP() {
         return health >= maxHealth;
     }
@@ -55,7 +54,6 @@ public class Entity {
     public void displayHealth() {
         System.out.println("Current hp is: " + this.health);
     }
-
     public void displayStats() {
         System.out.println(name + "'s stats: ");
         System.out.println("Strength: " + strength);
@@ -63,12 +61,15 @@ public class Entity {
         System.out.println("Intelligence: " + intelligence);
     }
 
-    public void levelUp() {
-        this.level++;
-        System.out.println(this.getName() + " just reached level: " + this.level);
-    }
-
     public void changeHealth(int incomingValue) {
         health += incomingValue;
+    }
+
+    public void levelUp() {
+        level++;
+        maxHealth += strength/2;
+        health += strength/2;
+        System.out.println(this.getName() + " just reached level: " + this.level);
+        System.out.println(getName() + "'s max hp is now: " + maxHealth);
     }
 }

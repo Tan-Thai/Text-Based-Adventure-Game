@@ -17,4 +17,14 @@ public class PlayerCharacter extends Entity {
         return inventory;
     }
 
+    public void gainExperience(int exp) {
+        experience += exp;
+        System.out.println(experience);
+        if (experience > 100) {
+            experience -= 100;
+            levelUp();
+            System.out.println("EXP after level up" + experience);
+        }
+    }
+
 }
