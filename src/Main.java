@@ -35,8 +35,6 @@ public class Main {
         room.displayCurrentZone(pc, pc.getCurrentZone()); //TESTING IF TRAVEL WORKS
         
         room.travelInsideZone(pc, pc.getCurrentZone());
-
-        room.displayCurrentZone(pc, pc.getCurrentZone()); //TESTING IF TRAVEL WORKS
         
         room.zoneTravel(pc, pc.getCurrentZone());
 
@@ -51,14 +49,6 @@ public class Main {
         room.travelInsideZone(pc, pc.getCurrentZone());
 
         room.zoneTravel(pc, pc.getCurrentZone());
-
-   //     room.zoneTravel(pc, pc.getCurrentZone());
-   //     room.travelInsideZone(pc, pc.getCurrentZone());
-   //     room.zoneTravel(pc, pc.getCurrentZone());
-
-   //     System.out.println("Current Zone: " + pc.getCurrentZone());
-
-   //     room.zoneTravel(pc, pc.getCurrentZone());
         
         
 

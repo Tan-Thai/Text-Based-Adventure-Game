@@ -1,6 +1,7 @@
 package GameObjects.Worlds;
 
 import Global.*;
+import Global.Utility.Slowprint;
 
 public class Basement extends Zone {
     public Basement() {

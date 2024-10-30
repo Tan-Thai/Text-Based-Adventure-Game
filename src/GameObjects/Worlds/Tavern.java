@@ -1,8 +1,8 @@
 package GameObjects.Worlds;
 import GameObjects.Entites.PlayerCharacter;
 import GameObjects.Worlds.Zones.Area;
-import Global.Slowprint;
 import Global.Utility;
+import Global.Utility.Slowprint; // Add this line to import Slowprint
 
 public class Tavern extends Zone {
     public Tavern() {
@@ -29,7 +29,7 @@ public class Tavern extends Zone {
 
     public void setOut(PlayerCharacter pc, Area zone) {
         Utility.clearConsole();
-        Slowprint.sp("You leave the tavern and head out in the looming dark forest.");
+        Global.Utility.Slowprint.sp("You leave the tavern and head out in the looming dark forest.");
         pc.setCurrentZone(zone.FOREST);
         Utility.promptEnterKey(sc);
         

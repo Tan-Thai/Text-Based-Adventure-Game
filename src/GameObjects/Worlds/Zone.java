@@ -2,6 +2,7 @@ package GameObjects.Worlds;
 
 import GameObjects.Entites.PlayerCharacter;
 import Global.*;
+import Global.Utility.Slowprint;
 import GameObjects.Worlds.Zones.Area;
 import java.util.Scanner;
 
