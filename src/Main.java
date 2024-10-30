@@ -5,6 +5,7 @@ import GameObjects.Items.Potion;
 import GameObjects.Worlds.*;
 import GameObjects.Worlds.Zones.Area;
 import Global.*;
+import Global.Utility.Slowprint;
 
 import java.util.Scanner;
 import java.text.MessageFormat; 
@@ -24,18 +25,32 @@ public class Main {
         Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", 7, false);
 
     //      MESSING AROUND WITH ZONES AND TRAVEL
-        Tavern tavern = new Tavern();
         Zone room = new Zone();
-        
-        
-        tavern.takeRest(pc);
-        tavern.openShop(pc);
-     //   tavern.setOut(pc, Area.FOREST);
-
+        room.displayCurrentZone(pc, pc.getCurrentZone());
         while (Utility.checkGameOver() == false) {
-            room.displayCurrentZone(pc, pc.getCurrentZone());
-            room.travelInsideZone(pc, pc.getCurrentZone());
-            room.zoneTravel(pc, pc.getCurrentZone(), sc);
+            Utility.clearConsole();
+
+            Slowprint.sp("Choose an action:");
+            System.out.println("1. Wander (travel inside zone)");
+            System.out.println("2. Look around (display current zone)");
+            System.out.println("3. Travel (zone travel)");
+
+            int choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    room.travelInsideZone(pc, pc.getCurrentZone());
+                    break;
+                case 2:
+                    room.displayCurrentZone(pc, pc.getCurrentZone());
+                    break;
+                case 3:
+                    room.zoneTravel(pc, pc.getCurrentZone(), sc);
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
         }
 
 

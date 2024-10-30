@@ -80,7 +80,7 @@ public class Utility {
             }
         }
     }
-    public static boolean checkGameOver() {
+    public static boolean checkGameOver() { // ############ TEMPORARY ############
         if (Basement.bossDefeated == true) {
             return true;
         } else {

@@ -50,7 +50,7 @@ public class Zone extends World {
         return zoneCleared;
     }
 
-    public Area displayTraveableZones() {
+    public Area displayTraveableZones(PlayerCharacter pc) {
         int index = 1;
 
         System.out.println("Travelable Zones:");
@@ -64,11 +64,20 @@ public class Zone extends World {
 
         if (choice > 0 && choice <= traveableZones.size()) {
             Area[] zonesArray = traveableZones.toArray(new Area[0]);
-            Slowprint.sp("You travel to the " + zonesArray[choice - 1].getName());
-            return zonesArray[choice - 1];
+            Area selectedZone = zonesArray[choice - 1];
+
+            if (pc.getCurrentZone().equals(selectedZone)) {
+                Utility.clearConsole();
+                System.out.println("You are already in " + selectedZone.getName() + ". Please choose a different zone.");
+                return displayTraveableZones(pc); // Recursively call the method again for a valid choice
+            }
+
+            Slowprint.sp("You travel to the " + selectedZone.getName());
+            Utility.promptEnterKey(sc);
+            return selectedZone;
         } else {
             System.out.println("Invalid choice. Please try again.");
-            return displayTraveableZones(); // Recursively call the method again for a valid choice
+            return displayTraveableZones(pc); // Recursively call the method again for a valid choice
         }
     }
 
@@ -76,8 +85,6 @@ public class Zone extends World {
         Utility.clearConsole();
         Slowprint.sp("You are in " + pc.getCurrentZone().getName() + ". " + zone.getDescription() + " Zone cleared: " + zone.getZoneCleared());
         Utility.promptEnterKey(sc);
-        
-
     }
     
     public void travelInsideZone(PlayerCharacter pc, Area zone) { // ONLY FOR FOREST, SWAMP, CAVE
@@ -107,23 +114,23 @@ public class Zone extends World {
                     traveableZones.add(Area.FOREST);
     //                Slowprint.sp("You travel to the Forest");
                     traveableZones.add(pc.getCurrentZone());
-                    pc.setCurrentZone(displayTraveableZones());
+                    pc.setCurrentZone(displayTraveableZones(pc));
 
                     break;
                 case Area.FOREST:
                     traveableZones.add(Area.SWAMP);
           //          displayCurrentZone(pc, Area.FOREST);
-                    pc.setCurrentZone(displayTraveableZones());
+                    pc.setCurrentZone(displayTraveableZones(pc));
                     break;
                 case Area.SWAMP:
                     traveableZones.add(Area.CAVE);
          //           displayCurrentZone(pc, Area.SWAMP);
-                    pc.setCurrentZone(displayTraveableZones());
+                    pc.setCurrentZone(displayTraveableZones(pc));
                     break;
                 case Area.CAVE:
                     traveableZones.add(Area.BASEMENT);
             //        displayCurrentZone(pc, Area.CAVE);
-                    pc.setCurrentZone(displayTraveableZones());
+                    pc.setCurrentZone(displayTraveableZones(pc));
                     Utility.promptEnterKey(sc);
                     if (pc.getCurrentZone() == Area.BASEMENT) {
                         Basement basement = new Basement();
