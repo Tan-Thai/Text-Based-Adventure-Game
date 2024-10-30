@@ -51,6 +51,7 @@ public class Zone extends World {
     }
 
     public Area displayTraveableZones(PlayerCharacter pc) {
+        Utility.clearConsole();
         int index = 1;
 
         System.out.println("Travelable Zones:");
@@ -69,9 +70,10 @@ public class Zone extends World {
             if (pc.getCurrentZone().equals(selectedZone)) {
                 Utility.clearConsole();
                 Slowprint.sp("You are already in " + selectedZone.getName() + ". Please choose a different zone.");
+                Utility.promptEnterKey(sc);
                 return displayTraveableZones(pc); // Recursively call the method again for a valid choice
             }
-
+            Utility.clearConsole();
             Slowprint.sp("You travel to the " + selectedZone.getName());
             Utility.promptEnterKey(sc);
             return selectedZone;
@@ -138,6 +140,8 @@ public class Zone extends World {
     
         } else {
             Slowprint.sp("You have not cleared this zone yet.");
+            Utility.clearScanner(sc);
+            
         }
         Utility.promptEnterKey(sc);
         
