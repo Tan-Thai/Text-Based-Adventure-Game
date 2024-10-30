@@ -22,7 +22,9 @@ public class Tavern extends Zone {
 
     public void openShop(PlayerCharacter pc) {
         Utility.clearConsole();
+     //   pc.getInventory();
         Slowprint.sp("You open the shop and see a variety of items for sale.");
+        System.out.printf("Items for sale:");
         // call a method to open shop from items class?
         Utility.promptEnterKey(sc);
         
