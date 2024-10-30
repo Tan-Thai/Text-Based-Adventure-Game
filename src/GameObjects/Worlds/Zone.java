@@ -72,24 +72,24 @@ public class Zone extends World {
 
         if (room.getZoneCleared() == true) {
             switch (pc.getCurrentZone()) {
-                case Area.TAVERN: // THIS WILL BE REMOVED, RIGHT?!? RIGHT?!?!?!?... Yes, I think so.. Use other means to set pc currentzone Forest at start after Tavern.
-                    System.out.println("You are in the Tavern");
-                    Slowprint.sp("You travel to the " + "Forest");
+                case Area.TAVERN: 
+     //               System.out.println("You are in the Tavern");
+                    Slowprint.sp("You travel to the Forest");
                     pc.setCurrentZone(Area.FOREST);
                     break;
                 case Area.FOREST:
           //          displayCurrentZone(pc, Area.FOREST);
-                    Slowprint.sp("You travel to the " + "Swamp");
+                    Slowprint.sp("You travel to the Swamp");
                     pc.setCurrentZone(Area.SWAMP);
                     break;
                 case Area.SWAMP:
          //           displayCurrentZone(pc, Area.SWAMP);
-                    Slowprint.sp("You travel to the " + "Cave");
+                    Slowprint.sp("You travel to the Cave");
                     pc.setCurrentZone(Area.CAVE);
                     break;
                 case Area.CAVE:
             //        displayCurrentZone(pc, Area.CAVE);
-                    Slowprint.sp("You travel to the " + "Basement");
+                    Slowprint.sp("You travel to the Basement");
                     Utility.promptEnterKey(sc);
                     // call on Basement class to display specific events ??
                     Basement basement = new Basement();
