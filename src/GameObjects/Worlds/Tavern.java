@@ -6,7 +6,7 @@ import Global.Utility.Slowprint; // Add this line to import Slowprint
 
 public class Tavern extends Zone {
     public Tavern() {
-        super( "Tavern", "A lively tavern filled with patrons and the smell of ale", true); //????????????
+        super( "Tavern", "A lively tavern filled with patrons and the smell of ale.", true); //????????????
 
     }
     
@@ -30,7 +30,7 @@ public class Tavern extends Zone {
         
     }
 
-    public void setOut(PlayerCharacter pc, Area zone) {
+    public void setOut(PlayerCharacter pc, Area zone) { //not needed now?
         Utility.clearConsole();
         Global.Utility.Slowprint.sp("You leave the tavern and head out in the looming dark forest.");
         pc.setCurrentZone(zone.FOREST);

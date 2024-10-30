@@ -2,6 +2,8 @@ package Global;
 
 import java.util.Scanner;
 
+import GameObjects.Worlds.Basement;
+
 public class Utility {
     public static String checkIfValidString(Scanner sc) {
         String userInput;
@@ -77,6 +79,14 @@ public class Utility {
                 System.out.println();
             }
         }
+    }
+    public static boolean checkGameOver() {
+        if (Basement.bossDefeated == true) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     public class Slowprint {

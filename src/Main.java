@@ -25,34 +25,19 @@ public class Main {
 
     //      MESSING AROUND WITH ZONES AND TRAVEL
         Tavern tavern = new Tavern();
-        Basement basement = new Basement();
         Zone room = new Zone();
         
-        room.displayCurrentZone(pc, pc.getCurrentZone());
         
         tavern.takeRest(pc);
         tavern.openShop(pc);
-        tavern.setOut(pc, Area.FOREST);
+     //   tavern.setOut(pc, Area.FOREST);
 
-        room.displayCurrentZone(pc, pc.getCurrentZone()); //TESTING IF TRAVEL WORKS
-        
-        room.travelInsideZone(pc, pc.getCurrentZone());
-        
-        room.zoneTravel(pc, pc.getCurrentZone());
+        while (Utility.checkGameOver() == false) {
+            room.displayCurrentZone(pc, pc.getCurrentZone());
+            room.travelInsideZone(pc, pc.getCurrentZone());
+            room.zoneTravel(pc, pc.getCurrentZone(), sc);
+        }
 
-        room.displayCurrentZone(pc, pc.getCurrentZone());
-
-        room.travelInsideZone(pc, pc.getCurrentZone());
-
-        room.zoneTravel(pc, pc.getCurrentZone());
-
-        room.displayCurrentZone(pc, pc.getCurrentZone());
-
-        room.travelInsideZone(pc, pc.getCurrentZone());
-
-        room.zoneTravel(pc, pc.getCurrentZone());
-        
-        
 
         HostileCharacter goblin = new HostileCharacter("Goblin", 6);
  /* 
