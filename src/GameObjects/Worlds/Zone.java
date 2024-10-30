@@ -61,14 +61,14 @@ public class Zone extends World {
 
         System.out.println("Enter the number of the zone you want to travel to:");
         int choice = sc.nextInt();
-
+        String clear = sc.nextLine(); // consume the newline character
         if (choice > 0 && choice <= traveableZones.size()) {
             Area[] zonesArray = traveableZones.toArray(new Area[0]);
             Area selectedZone = zonesArray[choice - 1];
 
             if (pc.getCurrentZone().equals(selectedZone)) {
                 Utility.clearConsole();
-                System.out.println("You are already in " + selectedZone.getName() + ". Please choose a different zone.");
+                Slowprint.sp("You are already in " + selectedZone.getName() + ". Please choose a different zone.");
                 return displayTraveableZones(pc); // Recursively call the method again for a valid choice
             }
 
