@@ -14,6 +14,7 @@ public class Tavern extends Zone {
         Utility.clearConsole();
         Slowprint.sp("You take a rest and regain some health.");
         pc.setHealth(pc.getMaxHealth());
+        Slowprint.sp("Your health is now " + pc.getHealth());
         Utility.promptEnterKey(sc);
         
         

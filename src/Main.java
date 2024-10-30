@@ -26,7 +26,8 @@ public class Main {
         Tavern tavern = new Tavern();
         Basement basement = new Basement();
         Zone room = new Zone();
-        System.out.println("Current Zone: " + pc.getCurrentZone());
+        
+        room.displayCurrentZone(pc, pc.getCurrentZone());
         
         tavern.takeRest(pc);
         tavern.openShop(pc);
