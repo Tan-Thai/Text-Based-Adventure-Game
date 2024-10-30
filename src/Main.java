@@ -7,7 +7,7 @@ import GameObjects.Worlds.Zones.Area;
 import Global.*;
 
 import java.util.Scanner;
-import java.text.MessageFormat;
+import java.text.MessageFormat; 
 
 public class Main {
     public static void main(String[] args) {
@@ -15,8 +15,9 @@ public class Main {
         // currently just slapping everything into main - will create a "game" package later to put all game logic into.
         Scanner sc = new Scanner(System.in);
         PlayerCharacter pc = setupUser(sc);
-        System.out.println(MessageFormat.format("Your name is {0} and your current health is {1}",
-                pc.getName(), pc.getHealth()));
+        System.out.printf("Your name is %s and your current health is %d",
+                pc.getName(), pc.getHealth());
+        Utility.promptEnterKey(sc);
 
         Item sword = new Item("A Simple Sword", "Your standard blade as a new adventurer.");
         Potion potion = new Potion("Health Potion", "Chug when ouch", 5, true);
