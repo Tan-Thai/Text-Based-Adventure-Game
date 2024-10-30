@@ -23,11 +23,18 @@ public class Combat
     Random random =new Random();
     int foeHp;
     int heroHp;
+    PlayerCharacter player;
+    HostileCharacter enemy;
     
 
-    public void Combat(PlayerCharacter player,HostileCharacter enemy)
+    public Combat(PlayerCharacter player,HostileCharacter enemy)
     {
-
+        this.player=player;
+        this.enemy=enemy;
+        entityOneStr=player.getStrength();
+        entitytwoStr=enemy.getStrength();
+        foeHp=enemy.getHealth();
+        heroHp=player.getHealth();
     }
     /*public static void fight(PlayerCharacter player,HostileCharacter enemy)
     {
@@ -106,7 +113,6 @@ public class Combat
     public void calcFoeHP()
     {
         foeHp=foeHp-amountOfHits;
-        hp.setEnemieHealth(foeHp);
         amountOfHits=0;
         
     }
@@ -114,7 +120,7 @@ public class Combat
     {
         
         heroHp=heroHp-enemieAmountOfHits;
-        hp.setPlayerHealth(heroHp);
+        player.setHealth(heroHp);
         enemieAmountOfHits=0;
     }   
     
@@ -135,11 +141,11 @@ public class Combat
     }
     public void printHeroHP()
     {
-        hp.PrintPlayerHp();
+        player.PrintColorHealthbar(1);
     }
     public void printFoeHP()
     {
-        hp.PrintfoeHp();
+        enemy.PrintColorHealthbar(2);
     }
     public void calcVictory()
     {
@@ -150,7 +156,7 @@ public class Combat
         }
         if(foeHp<=0)
         {
-            hp.PrintPlayerHp();
+            player.PrintColorHealthbar(1);
             System.out.println("You have vanquished your foe!");
             playerExp=+5;
             System.out.println("You gain 5 experiance points and a rusty longsword");

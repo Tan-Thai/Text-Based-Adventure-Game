@@ -39,7 +39,9 @@ public class Entity {
     public int getLevel() {
         return level;
     }
-
+    public int getStrength() {
+        return strength;
+    }
     public void setHealth(int health) {
         this.health = health;
     }

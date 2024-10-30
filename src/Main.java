@@ -3,6 +3,7 @@ import GameObjects.Entites.PlayerCharacter;
 import GameObjects.Items.Item;
 import GameObjects.Items.Potion;
 import Global.*;
+import Interaction.Combat;
 
 import java.util.Scanner;
 import java.text.MessageFormat;
@@ -13,6 +14,7 @@ public class Main {
         // currently just slapping everything into main - will create a "game" package later to put all game logic into.
         Scanner sc = new Scanner(System.in);
         PlayerCharacter pc = setupUser(sc);
+        
         System.out.println(MessageFormat.format("Your name is {0} and your current health is {1}",
                 pc.getName(), pc.getHealth()));
 
@@ -21,7 +23,7 @@ public class Main {
         Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", 7, false);
 
 
-        HostileCharacter goblin = new HostileCharacter("Goblin", 6);
+        HostileCharacter goblin = new HostileCharacter("Goblin", 6,2);
 
         pc.getInventory().addItem(sword);
         pc.getInventory().addItem(potion);
@@ -40,6 +42,8 @@ public class Main {
 
         goblin.displayStats();
         goblin.displayHealth();
+        Combat cc=new Combat(pc,goblin);
+        cc.entireCombat();
 
     }
 

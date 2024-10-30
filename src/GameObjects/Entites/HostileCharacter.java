@@ -2,7 +2,7 @@ package GameObjects.Entites;
 
 public class HostileCharacter extends Entity {
 
-    public HostileCharacter(String name, int health) {
+    public HostileCharacter(String name, int health, int strength) {
         super(name, health, 1);
     }
 
