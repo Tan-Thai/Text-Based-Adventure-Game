@@ -112,24 +112,19 @@ public class Zone extends World {
             switch (pc.getCurrentZone()) {
                 case Area.TAVERN:
                     traveableZones.add(Area.FOREST);
-    //                Slowprint.sp("You travel to the Forest");
                     traveableZones.add(pc.getCurrentZone());
                     pc.setCurrentZone(displayTraveableZones(pc));
-
                     break;
                 case Area.FOREST:
                     traveableZones.add(Area.SWAMP);
-          //          displayCurrentZone(pc, Area.FOREST);
                     pc.setCurrentZone(displayTraveableZones(pc));
                     break;
                 case Area.SWAMP:
                     traveableZones.add(Area.CAVE);
-         //           displayCurrentZone(pc, Area.SWAMP);
                     pc.setCurrentZone(displayTraveableZones(pc));
                     break;
                 case Area.CAVE:
                     traveableZones.add(Area.BASEMENT);
-            //        displayCurrentZone(pc, Area.CAVE);
                     pc.setCurrentZone(displayTraveableZones(pc));
                     Utility.promptEnterKey(sc);
                     if (pc.getCurrentZone() == Area.BASEMENT) {
