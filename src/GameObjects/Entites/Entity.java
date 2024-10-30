@@ -72,4 +72,26 @@ public class Entity {
         System.out.println(this.getName() + " just reached level: " + this.level);
         System.out.println(getName() + "'s max hp is now: " + maxHealth);
     }
+    String RESET = "\u001B[0m";
+    String RED = "\u001B[31m";
+    String GREEN = "\u001B[32m";
+    String healthbarColor;
+      
+    public void PrintColorHealthbar(int healthbarColorNum)
+    {
+        if(healthbarColorNum==1)
+        {
+            healthbarColor=GREEN;
+        }
+        else
+        {
+            healthbarColor=RED;
+        }
+        System.out.println(healthbarColor+getName()+" health: "+getHealth()+RESET);
+                    for(int i=1; i<=getHealth(); i++)
+                    {
+                        System.out.print(GREEN+"|"+RESET);
+                    }
+                    System.out.println();                    
+    } 
 }
