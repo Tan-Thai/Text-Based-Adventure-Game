@@ -32,7 +32,7 @@ public class Zone  {
         initializeTravelableZones();
     }
 
-    private void initializeTravelableZones() {
+    private void initializeTravelableZones() { // this is so dirty, but it works for now.
         this.traveableZones.add(Area.TAVERN);
         this.traveableZones.add(Area.FOREST);
         if (Area.FOREST.getZoneCleared() == true) {
@@ -210,12 +210,6 @@ public class Zone  {
                 case Area.CAVE:
                     this.traveableZones.add(Area.BASEMENT);
                     pc.setCurrentZone(displayTraveableZones(pc));
-                    break;
-                case Area.BASEMENT:
-                    System.out.println("BASEMENT TEST");
-                    Utility.promptEnterKey(sc);
-                    Basement basement = new Basement();
-                    basement.bossfight();
                     break;
                 default:
                     System.out.println("Unavailable to travel");

@@ -23,7 +23,7 @@ public class Tavern extends Zone {
      //   pc.getInventory();
         Slowprint.sp("You open the shop and see a variety of items for sale.");
         System.out.printf("Items for sale:");
-        // call a method to open shop from items class?
+        // make npc to shop from since they have inventory
         
     }
 /* 
