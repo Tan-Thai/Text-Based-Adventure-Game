@@ -9,7 +9,7 @@ public class Zones {
         FOREST("Forest", "A dense forest with tall trees.", false),
         SWAMP("Swamp", "A wetland area with muddy ground.", false),
         CAVE("Cave", "A dark and damp cave.", false),
-        BASEMENT(basement.getName(), basement.getDescription(), false); // AND THIS
+        BASEMENT(basement.getName(), basement.getDescription(), true); // AND THIS
 
 
         private final String name;
