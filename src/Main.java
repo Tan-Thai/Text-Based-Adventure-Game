@@ -26,31 +26,12 @@ public class Main {
 
     //      MESSING AROUND WITH ZONES AND TRAVEL
         Zone room = new Zone();
-        room.displayCurrentZone(pc, pc.getCurrentZone());
+        room.displayCurrentZone(pc); // Temporary intro to the game
+        Utility.promptEnterKey(sc);
         while (Utility.checkGameOver() == false) {
             Utility.clearConsole();
-
-            Slowprint.sp("Choose an action:");
-            System.out.println("1. Wander (travel inside zone)");
-            System.out.println("2. Look around (display current zone)");
-            System.out.println("3. Travel (travel between zones)");
-
-            int choice = sc.nextInt();
-
-            switch (choice) {
-                case 1:
-                    room.travelInsideZone(pc, pc.getCurrentZone());
-                    break;
-                case 2:
-                    room.displayCurrentZone(pc, pc.getCurrentZone());
-                    break;
-                case 3:
-                    room.zoneTravel(pc, pc.getCurrentZone(), sc);
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-                    break;
-            }
+            room.travelMenu(pc, room);
+            Utility.promptEnterKey(sc);
         }
 
 
