@@ -33,7 +33,7 @@ public class Main {
             Slowprint.sp("Choose an action:");
             System.out.println("1. Wander (travel inside zone)");
             System.out.println("2. Look around (display current zone)");
-            System.out.println("3. Travel (zone travel)");
+            System.out.println("3. Travel (travel between zones)");
 
             int choice = sc.nextInt();
 
