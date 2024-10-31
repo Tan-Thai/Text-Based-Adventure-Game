@@ -1,42 +1,43 @@
 package GameObjects.Items;
 
-import GameObjects.Entites.PlayerCharacter;
+import GameObjects.Entities.PlayerCharacter;
+import Global.Utility;
+
+import java.util.Scanner;
 
 public class Potion extends Item implements Consumable {
+    private final Effect potionEffect;
 
-    public boolean healingPotion;
-    public int potionEffect = 0;
-
-    public Potion(String name, String desc, int potionEffect, boolean healingPotion) {
+    public Potion(String name, String desc, Effect effect) {
         super(name, desc);
-        this.potionEffect = potionEffect;
-        this.healingPotion = healingPotion;
+        this.potionEffect = effect;
     }
 
     @Override
     public void consume(PlayerCharacter player) {
         System.out.println();
-        if (healingPotion) {
-            if (!player.isFullHP()) {
-                player.changeHealth(potionEffect);
-                System.out.println("You consumed " + getName());
-                System.out.println("Your health is now " + player.getHealth());
-                player.getInventory().removeItem(this);
-            } else {
-                System.out.println("You don't need to consume " + getName() + " right now");
-            }
-
-        } else {
-            int damage = -potionEffect;
-            player.changeHealth(damage);
-            System.out.println("You consumed an ooga booga potion and took " + damage + " damage.");
-            System.out.println("Your health is now " + player.getHealth());
+            System.out.println("You consumed " + getName());
+            potionEffect.apply(player);
             player.getInventory().removeItem(this);
+    }
+
+    @Override
+    public void promptUse(Scanner sc, PlayerCharacter player, Item selectedItem) {
+        System.out.print("Do you want to use this item? (Y/N): ");
+        boolean response = Utility.checkYesOrNo(sc);
+
+        if (potionEffect instanceof HealingEffect && player.isFullHP()) {
+            System.out.println("You are currently at full health and put the potion back in your inventory.");
+            Utility.promptEnterKey(sc);
+            return;
         }
 
-        if (player.isFullHP()) {
-            player.setHealth(player.getMaxHealth());
+        if (response) {
+            consume(player);
+        } else {
+            System.out.println("You decided not to use the item.");
         }
+        Utility.promptEnterKey(sc);
     }
 
 }

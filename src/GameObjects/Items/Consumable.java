@@ -1,6 +1,6 @@
 package GameObjects.Items;
 
-import GameObjects.Entites.PlayerCharacter;
+import GameObjects.Entities.PlayerCharacter;
 
 public interface Consumable {
     void consume(PlayerCharacter player);

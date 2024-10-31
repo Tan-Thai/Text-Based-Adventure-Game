@@ -1,4 +1,4 @@
-package GameObjects.Entites;
+package GameObjects.Entities;
 
 public class NeutralCharacter extends Entity {
 

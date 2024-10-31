@@ -1,7 +1,6 @@
-import GameObjects.Entites.HostileCharacter;
-import GameObjects.Entites.PlayerCharacter;
-import GameObjects.Items.Item;
-import GameObjects.Items.Potion;
+import GameObjects.Entities.HostileCharacter;
+import GameObjects.Entities.PlayerCharacter;
+import GameObjects.Items.*;
 import Global.*;
 
 import java.util.Scanner;
@@ -16,9 +15,9 @@ public class Main {
         System.out.println(MessageFormat.format("Your name is {0} and your current health is {1}",
                 pc.getName(), pc.getHealth()));
 
-        Item sword = new Item("A Simple Sword", "Your standard blade as a new adventurer.");
-        Potion potion = new Potion("Health Potion", "Chug when ouch", 5, true);
-        Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", 7, false);
+        Equipment sword = new Equipment("A Simple Sword", "Your standard blade as a new adventurer.", new DamageEffect(2));
+        Potion potion = new Potion("Health Potion", "Chug when ouch", new HealingEffect(5));
+        Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", new DamageEffect(7));
 
 
         HostileCharacter goblin = new HostileCharacter("Goblin", 6);
@@ -29,7 +28,7 @@ public class Main {
 
         pc.getInventory().inspectInventory(sc, pc);
 
-        pc.getInventory().removeItem(sword);
+        //pc.getInventory().removeItem(sword);
 
         pc.setHealth(pc.getHealth() - 10);
         Utility.clearConsole();
@@ -38,6 +37,8 @@ public class Main {
         pc.gainExperience(110);
         Utility.promptEnterKey(sc);
 
+        goblin.attack(pc);
+        Utility.promptEnterKey(sc);
         goblin.displayStats();
         goblin.displayHealth();
 
