@@ -40,6 +40,8 @@ public class Main {
         pc.gainExperience(110);
         Utility.promptEnterKey(sc);
 
+        goblin.attack(pc);
+        Utility.promptEnterKey(sc);
         goblin.displayStats();
         goblin.displayHealth();
 
