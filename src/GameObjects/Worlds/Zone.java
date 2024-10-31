@@ -174,7 +174,7 @@ public class Zone  {
     
     public void travelInsideZone(PlayerCharacter pc) { // ONLY FOR FOREST, SWAMP, CAVE
         if (pc.getCurrentZone() == Area.TAVERN || pc.getCurrentZone() == Area.BASEMENT) { // maybe not needed, just remove option to travel when inside those zones?
-            
+            Utility.clearConsole();
             Slowprint.sp("You cannot travel inside the " + pc.getCurrentZone().getName());
             return;
         }
@@ -189,7 +189,7 @@ public class Zone  {
         pc.getCurrentZone().setZoneCleared(true);
     }
 
-    public void zoneTravel(PlayerCharacter pc) { // pc IMPLEMENT BACKTRACKING TO TAVERN HERE PLZ
+    public void zoneTravel(PlayerCharacter pc) { 
 
         Utility.clearConsole();
         initializeTravelableZones();
@@ -200,7 +200,7 @@ public class Zone  {
                     pc.setCurrentZone(displayTraveableZones(pc));
                     break;
                 case Area.FOREST:
-                    this.traveableZones.add(Area.SWAMP);
+                    this.traveableZones.add(Area.SWAMP); // are these needed now? TODO test without them.
                     pc.setCurrentZone(displayTraveableZones(pc));
                     break;
                 case Area.SWAMP:
@@ -225,7 +225,6 @@ public class Zone  {
             Slowprint.sp("You have not cleared this zone yet. However, do you want to backtrack to the tavern?");
             if (Utility.checkYesOrNo(sc)) {
                 pc.setCurrentZone(Area.TAVERN);
-                Utility.clearScanner(sc);
                 tavernMenu(pc);
             }
             
