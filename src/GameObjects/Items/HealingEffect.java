@@ -14,4 +14,9 @@ public class HealingEffect implements Effect {
     public void apply(Entity actor) {
         actor.heal(healingValue);
     }
+
+    @Override
+    public int getValue(){
+        return healingValue;
+    }
 }

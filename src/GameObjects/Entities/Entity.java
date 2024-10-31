@@ -1,8 +1,11 @@
 package GameObjects.Entities;
 
+import GameObjects.Items.Inventory;
+
 public class Entity {
     private static final int DEFAULT_STAT = 10;
 
+    private final Inventory inventory;
     private final String name;
     protected int health;
     protected int maxHealth;
@@ -20,6 +23,7 @@ public class Entity {
         this.strength = str;
         this.dexterity = dex;
         this.intelligence = intelligence;
+        this.inventory = new Inventory();
     }
 
     // Constructor with base stats (Standard NPC)
@@ -28,6 +32,7 @@ public class Entity {
                 DEFAULT_STAT, DEFAULT_STAT, DEFAULT_STAT);
     }
 
+    public Inventory getInventory() {return inventory;}
     public String getName() {
         return name;
     }

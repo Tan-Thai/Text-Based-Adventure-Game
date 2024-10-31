@@ -8,7 +8,6 @@ import java.util.Scanner;
 public class Potion extends Item implements Consumable {
     private final Effect potionEffect;
 
-
     public Potion(String name, String desc, Effect effect) {
         super(name, desc);
         this.potionEffect = effect;
@@ -27,12 +26,17 @@ public class Potion extends Item implements Consumable {
         System.out.print("Do you want to use this item? (Y/N): ");
         boolean response = Utility.checkYesOrNo(sc);
 
+        if (potionEffect instanceof HealingEffect && player.isFullHP()) {
+            System.out.println("You are currently at full health and put the potion back in your inventory.");
+            Utility.promptEnterKey(sc);
+            return;
+        }
+
         if (response) {
             consume(player);
         } else {
             System.out.println("You decided not to use the item.");
         }
-
         Utility.promptEnterKey(sc);
     }
 

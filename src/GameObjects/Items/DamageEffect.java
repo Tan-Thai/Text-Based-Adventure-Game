@@ -14,4 +14,9 @@ public class DamageEffect implements Effect {
     public void apply(Entity actor) {
         actor.takeDamage(damageValue);
     }
+
+    @Override
+    public int getValue(){
+        return damageValue;
+    }
 }

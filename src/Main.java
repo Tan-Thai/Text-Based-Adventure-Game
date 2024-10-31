@@ -1,9 +1,6 @@
 import GameObjects.Entities.HostileCharacter;
 import GameObjects.Entities.PlayerCharacter;
-import GameObjects.Items.DamageEffect;
-import GameObjects.Items.HealingEffect;
-import GameObjects.Items.Item;
-import GameObjects.Items.Potion;
+import GameObjects.Items.*;
 import Global.*;
 
 import java.util.Scanner;
@@ -18,14 +15,14 @@ public class Main {
         System.out.println(MessageFormat.format("Your name is {0} and your current health is {1}",
                 pc.getName(), pc.getHealth()));
 
-        //Item sword = new Item("A Simple Sword", "Your standard blade as a new adventurer.");
+        Equipment sword = new Equipment("A Simple Sword", "Your standard blade as a new adventurer.", new DamageEffect(2));
         Potion potion = new Potion("Health Potion", "Chug when ouch", new HealingEffect(5));
         Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", new DamageEffect(7));
 
 
         HostileCharacter goblin = new HostileCharacter("Goblin", 6);
 
-        //pc.getInventory().addItem(sword);
+        pc.getInventory().addItem(sword);
         pc.getInventory().addItem(potion);
         pc.getInventory().addItem(poison);
 

@@ -3,32 +3,34 @@ package GameObjects.Items;
 import GameObjects.Entities.PlayerCharacter;
 import Global.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Collections;
-import java.util.Scanner;
+import java.util.*;
 
 public class Inventory {
-    private final List<Item> items;
+    private final Map<Item, Integer> items;
 
     public Inventory() {
-        this.items = new ArrayList<>();
+        this.items = new HashMap<>();
     }
 
-    public List<Item> getItems() {
-        return Collections.unmodifiableList(items);
+    public Map<Item, Integer> getItems() {
+        return Collections.unmodifiableMap(items);
     }
 
     public void addItem(Item item) {
         if (item != null) {
-            items.add(item);
-            System.out.println(item.getName() + " was put into your inventory");
+            items.merge(item, 1, Integer::sum);
+            System.out.println(item.getName() + " was put into your inventory.");
         }
     }
 
     public void removeItem(Item item) {
-        if (item != null && items.contains(item)) {
-            items.remove(item);
+        if (item != null && items.containsKey(item)) {
+            int count = items.get(item);
+            if (count > 1) {
+                items.put(item, count - 1);
+            } else {
+                items.remove(item);
+            }
             System.out.println("\n" + item.getName() + " was removed from your inventory");
         } else {
             System.out.println("You do not posses a " + item.getName());
@@ -39,8 +41,10 @@ public class Inventory {
         if (checkIfEmpty()) return;
 
         System.out.println("Inventory:");
-        for (int i = 0; i < items.size(); i++) {
-            System.out.println((i + 1) + ". " + items.get(i).getName());
+        int i = 1; // Kind of a cursed enhanced loop
+        for (Map.Entry<Item, Integer> entry : items.entrySet()) {
+            System.out.println(i + ". " + entry.getKey().getName() + " x" + entry.getValue());
+            i++;
         }
 
     }
@@ -61,7 +65,9 @@ public class Inventory {
             }
 
             if (input > 0 && input <= items.size()) {
-                Item selectedItem = items.get(input - 1);
+                // generate a new arraylist to print an index with associated numbers.
+                // input -1 is due to index starting at 0
+                Item selectedItem = (new ArrayList<>(items.keySet())).get(input - 1);
                 selectedItem.displayItem();
                 selectedItem.promptUse(sc, player, selectedItem);
             } else {
