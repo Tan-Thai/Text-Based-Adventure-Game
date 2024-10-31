@@ -92,7 +92,7 @@ public class Entity {
         System.out.println(healthbarColor+getName()+" health: "+getHealth()+RESET);
                     for(int i=1; i<=getHealth(); i++)
                     {
-                        System.out.print(GREEN+"|"+RESET);
+                        System.out.print(healthbarColor+"|"+RESET);
                     }
                     System.out.println();                    
     } 
