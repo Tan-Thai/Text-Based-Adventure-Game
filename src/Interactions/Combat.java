@@ -55,11 +55,12 @@ public class Combat
             // Prints all hp's
             printEntityHP(player, GREEN);
             printEntityHP(enemy, RED);
-            System.out.println("to attack press 1, to end combat press 2");
+            System.out.print("to attack press 1, to end combat press 2: ");
 
             // loop for combat.
             if(Utility.checkIfNumber(sc) == 1)
             {
+                Utility.clearConsole();
                 // can make it so we send in a defender as well if we add a defence formula.
                 attackEntity(player, GREEN);
                 attackEntity(enemy, RED);
@@ -128,19 +129,22 @@ public class Combat
     {
         // will prolly have to change this due to us hardcoding a win message and all other handling here.
         if(player.getHealth() <= 0 && enemy.getHealth() <= 0) {
+            Utility.clearConsole();
             System.out.println("Both of you perish");
             isCombatInProgress =false;
 
         } else if (enemy.getHealth()<=0) {
+            Utility.clearConsole();
             printEntityHP(player, GREEN);
             System.out.println("You have vanquished your foe!");
-            int playerExp= + 5;
+            int playerExp = 5;
             System.out.println("You gain 5 experience points and a rusty longsword");
             System.out.println("your current experience is " + playerExp);
             isCombatInProgress =false;
 
         } else if(player.getHealth()<=0) {
-            System.out.println("You have been slayed");
+            Utility.clearConsole();
+            System.out.println("You have been slain");
             isCombatInProgress =false;
         }
     }
