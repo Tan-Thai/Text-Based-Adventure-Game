@@ -3,12 +3,9 @@ import GameObjects.Entites.PlayerCharacter;
 import GameObjects.Items.Item;
 import GameObjects.Items.Potion;
 import GameObjects.Worlds.*;
-import GameObjects.Worlds.Zones.Area;
 import Global.*;
-import Global.Utility.Slowprint;
 
 import java.util.Scanner;
-import java.text.MessageFormat; 
 
 public class Main {
     public static void main(String[] args) {
@@ -24,16 +21,16 @@ public class Main {
         Potion potion = new Potion("Health Potion", "Chug when ouch", 5, true);
         Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", 7, false);
 
-    //      MESSING AROUND WITH ZONES AND TRAVEL
+    //       MESSING AROUND WITH ZONES AND TRAVEL
         Zone room = new Zone();
         room.displayCurrentZone(pc); // Temporary intro to the game
         Utility.promptEnterKey(sc);
-        while (Utility.checkGameOver() == false) {
+        while (room.checkGameOver() == false) {
             Utility.clearConsole();
             room.travelMenu(pc, room);
             Utility.promptEnterKey(sc);
         }
-
+         
 
         HostileCharacter goblin = new HostileCharacter("Goblin", 6);
  /* 
