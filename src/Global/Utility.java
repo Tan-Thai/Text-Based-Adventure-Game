@@ -79,7 +79,7 @@ public class Utility {
         }
     }
 
-    public class Slowprint {
+    public class Slowprint { // TODO make method instead of class.
 
         private static int delay = 40; // Default delay
     

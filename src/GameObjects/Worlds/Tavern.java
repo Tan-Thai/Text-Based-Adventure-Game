@@ -1,5 +1,5 @@
 package GameObjects.Worlds;
-import GameObjects.Entites.PlayerCharacter;
+import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
 import Global.Utility.Slowprint; // Add this line to import Slowprint
 

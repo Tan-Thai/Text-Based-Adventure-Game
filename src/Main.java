@@ -1,7 +1,7 @@
 import GameObjects.Entities.HostileCharacter;
 import GameObjects.Entities.PlayerCharacter;
-import GameObjects.Items.Item;
-import GameObjects.Items.Potion;
+import GameObjects.Items.*;
+import GameObjects.Worlds.Zone;
 import Global.*;
 
 import java.util.Scanner;

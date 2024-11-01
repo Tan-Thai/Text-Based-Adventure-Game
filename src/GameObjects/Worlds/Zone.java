@@ -1,6 +1,6 @@
 package GameObjects.Worlds;
 
-import GameObjects.Entites.PlayerCharacter;
+import GameObjects.Entities.PlayerCharacter;
 import Global.*;
 import Global.Utility.Slowprint;
 import GameObjects.Worlds.Zones.Area;
@@ -183,6 +183,7 @@ public class Zone  {
     public void zoneTravel(PlayerCharacter pc) { // Travel between zones method, 
 
         Utility.clearConsole();
+        initializeTravelableZones();
         if (pc.getCurrentZone().getZoneCleared() == true) { // checks if currentzone is clrared, if not, player can't travel.
             switch (pc.getCurrentZone()) { // 
                 case Area.TAVERN:
@@ -207,6 +208,7 @@ public class Zone  {
     
         } else if (pc.getCurrentZone().getZoneCleared() == false && pc.getCurrentZone() != Area.TAVERN) { // allows player to backtrack to tavern if zone is not cleared.
             Slowprint.sp("You have not cleared this zone yet. However, do you want to backtrack to the tavern?");
+            Utility.clearScanner(sc);
             if (Utility.checkYesOrNo(sc)) {
                 pc.setCurrentZone(Area.TAVERN);
                 tavernMenu(pc);
