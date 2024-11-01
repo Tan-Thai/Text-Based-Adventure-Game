@@ -1,5 +1,4 @@
-import GameObjects.Entities.Entity;
-import GameObjects.Entities.PlayerCharacter;
+import GameObjects.Entities.*;
 import GameObjects.Items.*;
 import GameObjects.Worlds.Zone;
 import Global.*;
@@ -18,12 +17,14 @@ public class Main {
         Utility.promptEnterKey(sc);
 
         HostileCharacter goblin = new HostileCharacter("Goblin", 6);
-        HostileCharacter angyBoi = new HostileCharacter("Big MAN", 30);
 
         // Item and goblin tests.
-        itemAndDisplayTest(pc, goblin, sc);
+        // itemAndDisplayTest(pc, goblin, sc);
 
-    //       MESSING AROUND WITH ZONES AND TRAVEL
+        // Combat test.
+        // combatTest(pc, goblin, sc);
+
+        //MESSING AROUND WITH ZONES AND TRAVEL
         Zone room = new Zone();
         room.displayCurrentZone(pc); // Temporary intro to the game
         Utility.promptEnterKey(sc);
@@ -33,14 +34,6 @@ public class Main {
             Utility.promptEnterKey(sc);
         }
 
-        // new up A COMBAT object, and it will be the only one since its a singleton.
-        Combat combat = Combat.getInstance();
-        // this is what we call and send in when a combat between 2 entities happens.
-        combat.initiateCombat(pc, goblin, sc);
-
-        pc.getInventory().inspectInventory(sc, pc);
-
-        combat.initiateCombat(pc, angyBoi, sc);
         sc.close();
     }
 
@@ -59,14 +52,12 @@ public class Main {
         Potion potion = new Potion("Health Potion", "Chug when ouch", new HealingEffect(5));
         Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", new DamageEffect(7));
 
-
         pc.getInventory().addItem(sword);
         pc.getInventory().addItem(potion);
         pc.getInventory().addItem(poison);
 
         pc.getInventory().inspectInventory(sc, pc);
 
-        pc.setHealth(pc.getHealth() - 10);
         Utility.clearConsole();
         pc.displayHealth();
         pc.displayStats();
@@ -76,7 +67,17 @@ public class Main {
         goblin.displayStats();
         goblin.displayHealth();
         Utility.promptEnterKey(sc);
-
     }
 
+    private static void combatTest(PlayerCharacter pc, HostileCharacter goblin, Scanner sc) {
+        HostileCharacter angyBoi = new HostileCharacter("Big MAN", 30);
+
+        // new up A COMBAT object, and it will be the only one since it's a singleton.
+        Combat combat = Combat.getInstance();
+        // this is what we call and send in when a combat between 2 entities happens.
+
+        combat.initiateCombat(pc, goblin, sc);
+        combat.initiateCombat(pc, angyBoi, sc);
+        sc.close();
+    }
 }
