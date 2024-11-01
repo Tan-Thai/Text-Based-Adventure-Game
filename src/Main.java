@@ -25,14 +25,12 @@ public class Main {
 
 
         // Item and goblin tests.
-       /*
+
         pc.getInventory().addItem(sword);
         pc.getInventory().addItem(potion);
         pc.getInventory().addItem(poison);
 
         pc.getInventory().inspectInventory(sc, pc);
-
-        //pc.getInventory().removeItem(sword);
 
         pc.setHealth(pc.getHealth() - 10);
         Utility.clearConsole();
@@ -41,15 +39,16 @@ public class Main {
         pc.gainExperience(110);
         Utility.promptEnterKey(sc);
 
-        goblin.attack(pc);
-        Utility.promptEnterKey(sc);
         goblin.displayStats();
-        goblin.displayHealth(); */
+        goblin.displayHealth();
+        Utility.promptEnterKey(sc);
 
         // new up A COMBAT object, and it will be the only one since its a singleton.
         Combat combat = Combat.getInstance();
         // this is what we call and send in when a combat between 2 entities happens.
         combat.initiateCombat(pc, goblin, sc);
+
+        pc.getInventory().inspectInventory(sc, pc);
 
         combat.initiateCombat(pc, angyBoi, sc);
         sc.close();

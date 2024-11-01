@@ -22,14 +22,15 @@ public class Combat
     private static final int CRIT_VALUE = 6;
     private static final int SUCCESS_VALUE = 4;
 
-    private int playerHitCount =0;
-    private int enemyHitCount =0;
+    private int playerHitCount = 0;
+    private int enemyHitCount = 0;
 
     // colour for prints
     private static final String RESET = "\u001B[0m";
     private static final String RED = "\u001B[31m";
     private static final String GREEN = "\u001B[32m";
 
+    // new up A COMBAT object, and it will be the only one since its a singleton.
     public static synchronized Combat getInstance() {
         if (instance == null) {
             instance = new Combat();
@@ -56,13 +57,13 @@ public class Combat
     {
 
         while(isCombatInProgress) {
-
             // Prints all hp's
             printEntityHP(player, GREEN);
             printEntityHP(enemy, RED);
             System.out.print("to attack press 1, to end combat press 2: ");
 
             // loop for combat.
+            // TODO: add switch statements for when we add different actions.
             if(Utility.checkIfNumber(sc) == 1)
             {
                 Utility.clearConsole();
@@ -76,9 +77,8 @@ public class Combat
 
                 checkVictoryConditionMet();
             } else {
-                isCombatInProgress =false;
+                isCombatInProgress = false;
             }
-
         }
     }
 
@@ -130,24 +130,24 @@ public class Combat
 
     }
 
-    private void checkVictoryConditionMet()
-    {
+    private void checkVictoryConditionMet() {
         // will prolly have to change this due to us hardcoding a win message and all other handling here.
         if(player.getHealth() <= 0 && enemy.getHealth() <= 0) {
             Utility.clearConsole();
             System.out.println("Both of you perish");
             exitingCombat();
 
-        } else if (enemy.getHealth()<=0) {
+        } else if (enemy.getHealth() <= 0) {
             Utility.clearConsole();
             printEntityHP(player, GREEN);
             System.out.println("You have vanquished your foe!");
+            // GainExperience method should be called to give the player exp over hardcoding it.
             int playerExp = 5;
             System.out.println("You gain 5 experience points and a rusty longsword");
             System.out.println("your current experience is " + playerExp);
             exitingCombat();
 
-        } else if(player.getHealth()<=0) {
+        } else if(player.getHealth() <= 0) {
             Utility.clearConsole();
             System.out.println("You have been slain");
             exitingCombat();
@@ -155,10 +155,9 @@ public class Combat
     }
 
     private void exitingCombat() {
-        isCombatInProgress =false;
+        isCombatInProgress = false;
         Utility.promptEnterKey(sc);
         Utility.clearConsole();
     }
-
 }
 
