@@ -53,8 +53,7 @@ public class Combat
         combatLoop();
     }
 
-    private void combatLoop()
-    {
+    private void combatLoop() {
 
         while(isCombatInProgress) {
             // Prints all hp's
@@ -92,7 +91,7 @@ public class Combat
         System.out.println();
     }
 
-    // calc's the attack values and etc.
+    // calc's the attack values etc.
     private void attackEntity(Entity actor, String colour) {
         int currentValue;
         int hitCount = 0;

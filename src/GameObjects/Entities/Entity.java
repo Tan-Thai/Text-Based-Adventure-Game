@@ -91,7 +91,6 @@ public class Entity {
         maxHealth += incomingValue;
     }
 
-
     public void levelUp() {
         level++;
         changeMaxHealth(strength / 2);
