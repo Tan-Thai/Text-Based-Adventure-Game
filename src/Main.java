@@ -2,6 +2,7 @@ import GameObjects.Entities.HostileCharacter;
 import GameObjects.Entities.PlayerCharacter;
 import GameObjects.Items.*;
 import Global.*;
+import Interactions.Combat;
 
 import java.util.Scanner;
 import java.text.MessageFormat;
@@ -22,6 +23,8 @@ public class Main {
 
         HostileCharacter goblin = new HostileCharacter("Goblin", 6);
 
+        // Item and goblin tests.
+       /*
         pc.getInventory().addItem(sword);
         pc.getInventory().addItem(potion);
         pc.getInventory().addItem(poison);
@@ -40,8 +43,14 @@ public class Main {
         goblin.attack(pc);
         Utility.promptEnterKey(sc);
         goblin.displayStats();
-        goblin.displayHealth();
+        goblin.displayHealth(); */
 
+        // new up A COMBAT object, and it will be 1 since its a singleton.
+        Combat combat = Combat.getInstance();
+        // this is what we call and send in when a combat between 2 entities happens.
+        combat.initiateCombat(pc, goblin, sc);
+
+        sc.close();
     }
 
     private static PlayerCharacter setupUser(Scanner sc) {

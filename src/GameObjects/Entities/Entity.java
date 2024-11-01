@@ -36,9 +36,17 @@ public class Entity {
     public String getName() {
         return name;
     }
-
     public int getHealth() {
         return health;
+    }
+    public int getStrength() {
+        return strength;
+    }
+    public int getDexterity() {
+        return dexterity;
+    }
+    public int getIntelligence() {
+        return intelligence;
     }
 
     public void setHealth(int health) {
