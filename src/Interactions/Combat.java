@@ -13,7 +13,7 @@ public class Combat
     private Random random =new Random();
     private Scanner sc;
 
-    //Actors/Entities in play - had first and second actor, but ill start with Player + second.
+    //Actors/ Entities in play - had first and second actor, but ill start with Player + enemy.
     private Entity player;
     private Entity enemy;
 
@@ -60,15 +60,15 @@ public class Combat
             // loop for combat.
             if(Utility.checkIfNumber(sc) == 1)
             {
+                // can make it so we send in a defender as well if we add a defence formula.
                 attackEntity(player, GREEN);
                 attackEntity(enemy, RED);
 
                 printHits();
 
-                resolveHP(player, GREEN);
-                resolveHP(enemy, RED);
+                resolveHP();
 
-                isVictoryConditionMet();
+                checkVictoryConditionMet();
             } else {
                 isCombatInProgress =false;
             }
@@ -89,22 +89,24 @@ public class Combat
     // calc's the attack values and etc.
     private void attackEntity(Entity actor, String colour) {
         int currentValue;
+        int hitCount = 0;
 
         for(int i = 0; i < actor.getStrength(); i++) {
             currentValue=random.nextInt(AMOUNT_OF_SIDES)+1;
             System.out.print(colour + "["+currentValue+"]" + RESET);
 
-            if(currentValue>= SUCCESS_VALUE) {
-                if(currentValue== CRIT_VALUE) {
-                    i--;
+            if(currentValue >= SUCCESS_VALUE) {
+                if(currentValue == CRIT_VALUE) {
+                    i--; // does this give another roll if you crit?
                 }
-
-                if (colour.equals(GREEN)) {
-                    playerHitCount++;
-                } else {
-                    enemyHitCount++;
-                }
+                hitCount++;
             }
+        }
+
+        if (colour.equals(GREEN)) {
+            playerHitCount = hitCount;
+        } else {
+            enemyHitCount = hitCount;
         }
         System.out.println();
     }
@@ -114,36 +116,30 @@ public class Combat
         System.out.println("Your enemy got " + enemyHitCount + " hits!");
     }
 
-    private void resolveHP(Entity actor, String colour) {
-
-        if (colour.equals(GREEN)) {
-            actor.setHealth(actor.getHealth() - enemyHitCount);
-            enemyHitCount = 0;
-
-        } else {
-            actor.setHealth(actor.getHealth() - playerHitCount);
-            playerHitCount = 0;
-        }
+    private void resolveHP() {
+        player.setHealth(player.getHealth() - enemyHitCount);
+        enemy.setHealth(enemy.getHealth() - playerHitCount);
+        playerHitCount = 0;
+        enemyHitCount = 0;
 
     }
 
-    private void isVictoryConditionMet()
+    private void checkVictoryConditionMet()
     {
+        // will prolly have to change this due to us hardcoding a win message and all other handling here.
         if(player.getHealth() <= 0 && enemy.getHealth() <= 0) {
             System.out.println("Both of you perish");
             isCombatInProgress =false;
-        }
 
-        if(enemy.getHealth()<=0) {
+        } else if (enemy.getHealth()<=0) {
             printEntityHP(player, GREEN);
             System.out.println("You have vanquished your foe!");
             int playerExp= + 5;
             System.out.println("You gain 5 experience points and a rusty longsword");
             System.out.println("your current experience is " + playerExp);
             isCombatInProgress =false;
-        }
 
-        if(player.getHealth()<=0) {
+        } else if(player.getHealth()<=0) {
             System.out.println("You have been slayed");
             isCombatInProgress =false;
         }
