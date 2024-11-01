@@ -45,11 +45,15 @@ public class Combat
         this.enemy = secondActor;
         this.sc = sc;
 
+        System.out.println("You have entered combat with a " + enemy.getName() + "!");
+        Utility.promptEnterKey(sc);
+        Utility.clearConsole();
         combatLoop();
     }
 
-    public void combatLoop()
+    private void combatLoop()
     {
+
         while(isCombatInProgress) {
 
             // Prints all hp's

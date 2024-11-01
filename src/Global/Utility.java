@@ -56,7 +56,7 @@ public class Utility {
     }
 
     public static void promptEnterKey(Scanner sc) {
-        System.out.println("\nPress \"ENTER\" to continue.");
+        System.out.print("\nPress \"ENTER\" to continue.");
         sc.nextLine();
     }
 
