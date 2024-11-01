@@ -3,7 +3,7 @@ package GameObjects.Entities;
 import GameObjects.Items.Inventory;
 
 public class Entity {
-    private static final int DEFAULT_STAT = 10;
+    private static final int DEFAULT_STAT = 3;
 
     private final Inventory inventory;
     private final String name;
@@ -36,9 +36,17 @@ public class Entity {
     public String getName() {
         return name;
     }
-
     public int getHealth() {
         return health;
+    }
+    public int getStrength() {
+        return strength;
+    }
+    public int getDexterity() {
+        return dexterity;
+    }
+    public int getIntelligence() {
+        return intelligence;
     }
 
     public void setHealth(int health) {
@@ -82,7 +90,6 @@ public class Entity {
     public void changeMaxHealth(int incomingValue) {
         maxHealth += incomingValue;
     }
-
 
     public void levelUp() {
         level++;

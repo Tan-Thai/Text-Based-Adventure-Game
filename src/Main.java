@@ -1,8 +1,8 @@
-import GameObjects.Entities.HostileCharacter;
-import GameObjects.Entities.PlayerCharacter;
+import GameObjects.Entities.*;
 import GameObjects.Items.*;
 import GameObjects.Worlds.Zone;
 import Global.*;
+import Interactions.Combat;
 
 import java.util.Scanner;
 
@@ -16,11 +16,15 @@ public class Main {
                 pc.getName(), pc.getHealth());
         Utility.promptEnterKey(sc);
 
-        Equipment sword = new Equipment("A Simple Sword", "Your standard blade as a new adventurer.", new DamageEffect(2));
-        Potion potion = new Potion("Health Potion", "Chug when ouch", new HealingEffect(5));
-        Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", new DamageEffect(7));
+        HostileCharacter goblin = new HostileCharacter("Goblin", 6);
 
-    //       MESSING AROUND WITH ZONES AND TRAVEL
+        // Item and goblin tests.
+        // itemAndDisplayTest(pc, goblin, sc);
+
+        // Combat test.
+        // combatTest(pc, goblin, sc);
+
+        //MESSING AROUND WITH ZONES AND TRAVEL
         Zone room = new Zone();
         room.displayCurrentZone(pc); // Temporary intro to the game
         Utility.promptEnterKey(sc);
@@ -29,30 +33,7 @@ public class Main {
             room.travelMenu(pc, room);
             Utility.promptEnterKey(sc);
         }
-         
 
-        HostileCharacter goblin = new HostileCharacter("Goblin", 6);
- /* 
-        pc.getInventory().addItem(sword);
-        pc.getInventory().addItem(potion);
-        pc.getInventory().addItem(poison);
-
-        pc.getInventory().inspectInventory(sc, pc);
-
-        //pc.getInventory().removeItem(sword);
-
-        pc.setHealth(pc.getHealth() - 10);
-        Utility.clearConsole();
-        pc.displayHealth();
-        pc.displayStats();
-        pc.gainExperience(110);
-        Utility.promptEnterKey(sc);
-
-        goblin.attack(pc);
-        Utility.promptEnterKey(sc);
-        goblin.displayStats();
-        goblin.displayHealth();
-*/
         sc.close();
     }
 
@@ -63,6 +44,40 @@ public class Main {
         int healthInput = Utility.checkIfNumber(sc);
 
         // temp input of stats since i got no idea what we are basing it on.
-        return new PlayerCharacter(nameInput, healthInput, 9, 12, 15);
+        return new PlayerCharacter(nameInput, healthInput, 3, 2, 4);
+    }
+
+    private static void itemAndDisplayTest(PlayerCharacter pc, Entity goblin, Scanner sc) {
+        Equipment sword = new Equipment("A Simple Sword", "Your standard blade as a new adventurer.", new DamageEffect(2));
+        Potion potion = new Potion("Health Potion", "Chug when ouch", new HealingEffect(5));
+        Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", new DamageEffect(7));
+
+        pc.getInventory().addItem(sword);
+        pc.getInventory().addItem(potion);
+        pc.getInventory().addItem(poison);
+
+        pc.getInventory().inspectInventory(sc, pc);
+
+        Utility.clearConsole();
+        pc.displayHealth();
+        pc.displayStats();
+        pc.gainExperience(110);
+        Utility.promptEnterKey(sc);
+
+        goblin.displayStats();
+        goblin.displayHealth();
+        Utility.promptEnterKey(sc);
+    }
+
+    private static void combatTest(PlayerCharacter pc, HostileCharacter goblin, Scanner sc) {
+        HostileCharacter angyBoi = new HostileCharacter("Big MAN", 30);
+
+        // new up A COMBAT object, and it will be the only one since it's a singleton.
+        Combat combat = Combat.getInstance();
+        // this is what we call and send in when a combat between 2 entities happens.
+
+        combat.initiateCombat(pc, goblin, sc);
+        combat.initiateCombat(pc, angyBoi, sc);
+        sc.close();
     }
 }
