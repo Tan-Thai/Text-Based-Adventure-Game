@@ -21,7 +21,7 @@ public class Main {
         HostileCharacter angyBoi = new HostileCharacter("Big MAN", 30);
 
         // Item and goblin tests.
-        itemAndDisplayTest(pc, goblin, sc);
+        // itemAndDisplayTest(pc, goblin, sc);
 
         // new up A COMBAT object, and it will be the only one since its a singleton.
         Combat combat = Combat.getInstance();
@@ -41,7 +41,7 @@ public class Main {
         int healthInput = Utility.checkIfNumber(sc);
 
         // temp input of stats since i got no idea what we are basing it on.
-        return new PlayerCharacter(nameInput, healthInput, 9, 12, 15);
+        return new PlayerCharacter(nameInput, healthInput, 3, 2, 4);
     }
 
     private static void itemAndDisplayTest(PlayerCharacter pc, Entity goblin, Scanner sc) {

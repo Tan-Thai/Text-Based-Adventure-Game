@@ -3,7 +3,7 @@ package GameObjects.Entities;
 import GameObjects.Items.Inventory;
 
 public class Entity {
-    private static final int DEFAULT_STAT = 10;
+    private static final int DEFAULT_STAT = 3;
 
     private final Inventory inventory;
     private final String name;
