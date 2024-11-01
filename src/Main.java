@@ -20,8 +20,9 @@ public class Main {
         Potion potion = new Potion("Health Potion", "Chug when ouch", new HealingEffect(5));
         Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", new DamageEffect(7));
 
-
         HostileCharacter goblin = new HostileCharacter("Goblin", 6);
+        HostileCharacter angyBoi = new HostileCharacter("Big MAN", 30);
+
 
         // Item and goblin tests.
        /*
@@ -45,11 +46,12 @@ public class Main {
         goblin.displayStats();
         goblin.displayHealth(); */
 
-        // new up A COMBAT object, and it will be 1 since its a singleton.
+        // new up A COMBAT object, and it will be the only one since its a singleton.
         Combat combat = Combat.getInstance();
         // this is what we call and send in when a combat between 2 entities happens.
         combat.initiateCombat(pc, goblin, sc);
 
+        combat.initiateCombat(pc, angyBoi, sc);
         sc.close();
     }
 

@@ -48,6 +48,7 @@ public class Combat
         System.out.println("You have entered combat with a " + enemy.getName() + "!");
         Utility.promptEnterKey(sc);
         Utility.clearConsole();
+        isCombatInProgress = true;
         combatLoop();
     }
 
@@ -135,7 +136,7 @@ public class Combat
         if(player.getHealth() <= 0 && enemy.getHealth() <= 0) {
             Utility.clearConsole();
             System.out.println("Both of you perish");
-            isCombatInProgress =false;
+            exitingCombat();
 
         } else if (enemy.getHealth()<=0) {
             Utility.clearConsole();
@@ -144,13 +145,19 @@ public class Combat
             int playerExp = 5;
             System.out.println("You gain 5 experience points and a rusty longsword");
             System.out.println("your current experience is " + playerExp);
-            isCombatInProgress =false;
+            exitingCombat();
 
         } else if(player.getHealth()<=0) {
             Utility.clearConsole();
             System.out.println("You have been slain");
-            isCombatInProgress =false;
+            exitingCombat();
         }
+    }
+
+    private void exitingCombat() {
+        isCombatInProgress =false;
+        Utility.promptEnterKey(sc);
+        Utility.clearConsole();
     }
 
 }
