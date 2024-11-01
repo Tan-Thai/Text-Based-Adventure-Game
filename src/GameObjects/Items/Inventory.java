@@ -23,6 +23,12 @@ public class Inventory {
         }
     }
 
+    public void spawnItem(Item item) { // add items to npcs/enemies
+        if (item != null) {
+            items.merge(item, 1, Integer::sum);
+        }
+    }
+
     public void removeItem(Item item) {
         if (item != null && items.containsKey(item)) {
             int count = items.get(item);

@@ -21,7 +21,7 @@ public class Zone  {
         this.zoneCleared = zoneCleared;
     }
 
-    public Zone() { // called in main to initialize the zones
+    public Zone() { // 
         this.traveableZones = new HashSet<>();
         initializeTravelableZones();
     }

@@ -17,25 +17,26 @@ public class Main {
         Utility.promptEnterKey(sc);
 
         HostileCharacter goblin = new HostileCharacter("Goblin", 6);
-
         // Item and goblin tests.
         // itemAndDisplayTest(pc, goblin, sc);
 
         // Combat test.
         // combatTest(pc, goblin, sc);
-
-        //MESSING AROUND WITH ZONES AND TRAVEL
-        Zone room = new Zone();
-        room.displayCurrentZone(pc); // Temporary intro to the game
-        Utility.promptEnterKey(sc);
-        while (room.checkGameOver() == false) {
-            Utility.clearConsole();
-            room.travelMenu(pc, room);
-            Utility.promptEnterKey(sc);
-        }
-
-        sc.close();
+        zoneTest(pc, sc);
     }
+        //MESSING AROUND WITH ZONES AND TRAVEL
+        
+        private static void zoneTest(PlayerCharacter pc, Scanner sc) {
+            Zone room = new Zone();
+            room.displayCurrentZone(pc); // Temporary intro to the game
+            Utility.promptEnterKey(sc);
+            while (room.checkGameOver() == false) {
+                Utility.clearConsole();
+                room.travelMenu(pc, room);
+                Utility.promptEnterKey(sc);
+            }
+        }
+    
 
     private static PlayerCharacter setupUser(Scanner sc) {
         System.out.print("What is your name?: ");
@@ -48,9 +49,9 @@ public class Main {
     }
 
     private static void itemAndDisplayTest(PlayerCharacter pc, Entity goblin, Scanner sc) {
-        Equipment sword = new Equipment("A Simple Sword", "Your standard blade as a new adventurer.", new DamageEffect(2));
-        Potion potion = new Potion("Health Potion", "Chug when ouch", new HealingEffect(5));
-        Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", new DamageEffect(7));
+        Equipment sword = new Equipment("A Simple Sword", "Your standard blade as a new adventurer.", 10, new DamageEffect(2));
+        Potion potion = new Potion("Health Potion", "Chug when ouch", 5, new HealingEffect(5));
+        Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", 5, new DamageEffect(7));
 
         pc.getInventory().addItem(sword);
         pc.getInventory().addItem(potion);

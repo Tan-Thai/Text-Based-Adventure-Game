@@ -8,10 +8,12 @@ import java.util.Scanner;
 public abstract class Item {
     private final String name;
     private final String description;
+    private final int price;
 
-    public Item(String name, String desc) {
+    public Item(String name, String desc, int price) {
         this.name = name;
         this.description = desc;
+        this.price = price;
     }
 
     public String getName() {
@@ -24,7 +26,7 @@ public abstract class Item {
 
     // temp to check if item behaves right.
     public void displayItem() {
-        System.out.println("\n--" + name + "--\nDescription: " + description + "\n");
+        System.out.println("\n--" + name + "--\nDescription: " + description + "\n" + "Price: " + price + " gold");
     }
 
     public abstract void promptUse(Scanner sc, PlayerCharacter player, Item selectedItem);

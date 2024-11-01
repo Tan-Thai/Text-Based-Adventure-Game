@@ -2,6 +2,10 @@ package GameObjects.Worlds;
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
 import Global.Utility.Slowprint; // Add this line to import Slowprint
+import GameObjects.Entities.NPCs.*;
+import GameObjects.Items.DamageEffect;
+import GameObjects.Items.Equipment;
+import GameObjects.Items.Item;
 
 public class Tavern extends Zone {
     public Tavern() {
@@ -20,12 +24,27 @@ public class Tavern extends Zone {
 
     public void openShop(PlayerCharacter pc) { // open shop method, WIP
         Utility.clearConsole();
+        Shopkeeper shopkeeper = new Shopkeeper("Shopkeeper", 10);
+        populateShop(shopkeeper);
      //   pc.getInventory();
         Slowprint.sp("You open the shop and see a variety of items for sale.");
-        System.out.printf("Items for sale:");
+        System.out.println("Items for sale:");
+        shopkeeper.getInventory().printInventory();
         // make npc to shop from since they have inventory
-        
+        Utility.promptEnterKey(sc);
     }
+
+    private void populateShop(Shopkeeper shopkeeper) {
+        shopkeeper.getInventory().spawnItem(new Equipment("Sword", "A simple sword", 5, new DamageEffect(2)));
+        shopkeeper.getInventory().spawnItem(new Equipment("Axe", "A simple axe", 10, new DamageEffect(3)));
+        shopkeeper.getInventory().spawnItem(new Equipment("Bow", "A simple bow", 5, new DamageEffect(2)));
+        shopkeeper.getInventory().spawnItem(new Equipment("Staff", "A simple staff", 2, new DamageEffect(1)));
+        shopkeeper.getInventory().spawnItem(new Equipment("Dagger", "A simple dagger", 2, new DamageEffect(1)));
+        shopkeeper.getInventory().spawnItem(new Equipment("Mace", "A simple mace", 10, new DamageEffect(3)));
+        // populate shop with items
+    }
+
+
 /* 
     public void setOut(PlayerCharacter pc, Area zone) { //not needed now?
         Utility.clearConsole();
