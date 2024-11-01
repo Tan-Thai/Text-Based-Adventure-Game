@@ -5,11 +5,11 @@ import Global.Utility.Slowprint; // Add this line to import Slowprint
 
 public class Tavern extends Zone {
     public Tavern() {
-        super( "Tavern", "A lively tavern filled with patrons and the smell of ale.", true); //????????????
+        super( "Tavern", "A lively tavern filled with patrons and the smell of ale.", true); 
 
     }
     
-    public void takeRest(PlayerCharacter pc) {
+    public void takeRest(PlayerCharacter pc) { // take rest method
         Utility.clearConsole();
         Slowprint.sp("You take a rest and regain some health.");
         pc.setHealth(pc.getMaxHealth());
@@ -18,7 +18,7 @@ public class Tavern extends Zone {
         
     }
 
-    public void openShop(PlayerCharacter pc) {
+    public void openShop(PlayerCharacter pc) { // open shop method, WIP
         Utility.clearConsole();
      //   pc.getInventory();
         Slowprint.sp("You open the shop and see a variety of items for sale.");
