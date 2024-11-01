@@ -1,12 +1,11 @@
 import GameObjects.Entities.Entity;
-import GameObjects.Entities.HostileCharacter;
 import GameObjects.Entities.PlayerCharacter;
 import GameObjects.Items.*;
+import GameObjects.Worlds.Zone;
 import Global.*;
 import Interactions.Combat;
 
 import java.util.Scanner;
-import java.text.MessageFormat;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,14 +13,25 @@ public class Main {
         // currently just slapping everything into main - will create a "game" package later to put all game logic into.
         Scanner sc = new Scanner(System.in);
         PlayerCharacter pc = setupUser(sc);
-        System.out.println(MessageFormat.format("Your name is {0} and your current health is {1}",
-                pc.getName(), pc.getHealth()));
+        System.out.printf("Your name is %s and your current health is %d",
+                pc.getName(), pc.getHealth());
+        Utility.promptEnterKey(sc);
 
         HostileCharacter goblin = new HostileCharacter("Goblin", 6);
         HostileCharacter angyBoi = new HostileCharacter("Big MAN", 30);
 
         // Item and goblin tests.
-        // itemAndDisplayTest(pc, goblin, sc);
+        itemAndDisplayTest(pc, goblin, sc);
+
+    //       MESSING AROUND WITH ZONES AND TRAVEL
+        Zone room = new Zone();
+        room.displayCurrentZone(pc); // Temporary intro to the game
+        Utility.promptEnterKey(sc);
+        while (room.checkGameOver() == false) {
+            Utility.clearConsole();
+            room.travelMenu(pc, room);
+            Utility.promptEnterKey(sc);
+        }
 
         // new up A COMBAT object, and it will be the only one since its a singleton.
         Combat combat = Combat.getInstance();
@@ -49,6 +59,7 @@ public class Main {
         Potion potion = new Potion("Health Potion", "Chug when ouch", new HealingEffect(5));
         Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", new DamageEffect(7));
 
+
         pc.getInventory().addItem(sword);
         pc.getInventory().addItem(potion);
         pc.getInventory().addItem(poison);
@@ -65,6 +76,7 @@ public class Main {
         goblin.displayStats();
         goblin.displayHealth();
         Utility.promptEnterKey(sc);
+
     }
 
 }
