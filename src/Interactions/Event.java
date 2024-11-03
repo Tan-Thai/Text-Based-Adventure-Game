@@ -13,15 +13,12 @@ public class Event {
 
 	private HostileCharacter enemy;
 
-	// TODO: These needs to be set at construction instead and so won't be static
-	// final from then on.
 	private String description;
+	private String successfulmessage;
+	private String failureMessage;
 
 	private int challengeThreshold;
 	private ChallengeType challengeType;
-
-	private String successfulmessage;
-	private String failureMessage;
 
 	// If we want, can later on add rewards for failing here as well...
 	private int experienceReward;
@@ -58,6 +55,18 @@ public class Event {
 			System.out.println("This event did not contain an enemy, and so one couldn't be returned.");
 			return null;
 		}
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public String getSuccessfulmessage() {
+		return successfulmessage;
+	}
+
+	public String getFailureMessage() {
+		return failureMessage;
 	}
 
 	public int getChallengeThreshold() {
