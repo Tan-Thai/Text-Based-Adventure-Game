@@ -2,8 +2,12 @@ import GameObjects.Entities.*;
 import GameObjects.Items.*;
 import GameObjects.Worlds.Zone;
 import Global.*;
+import Interactions.ChallengeType;
 import Interactions.Combat;
+import Interactions.Encounter;
+import Interactions.EncounterHandler;
 
+import java.beans.EventHandler;
 import java.util.Scanner;
 
 public class Main {
@@ -26,7 +30,7 @@ public class Main {
         // combatTest(pc, goblin, sc);
 
         // Event test
-        eventTest(pc);
+        eventTest(pc, sc);
 
         // MESSING AROUND WITH ZONES AND TRAVEL
         Zone room = new Zone();
@@ -41,8 +45,21 @@ public class Main {
         sc.close();
     }
 
-    private static void eventTest(PlayerCharacter pc) {
+    private static void eventTest(PlayerCharacter pc, Scanner myScanner) {
 
+        Encounter encounter = new Encounter(
+                "Oh, between the trees you see an old woman. Her donkey refuses to cross the stream.",
+                2,
+                ChallengeType.STRENGTH,
+                "You heroically lift and carry the donkey across the stream.",
+                "Your feeble attempt wasn't enough to even budge the donkey",
+                100,
+                100,
+                null);
+
+        EncounterHandler encounterHandler = EncounterHandler.getInstance();
+
+        encounterHandler.initiateEvent(pc, encounter, myScanner);
         /*
          * Set up event
          * Get eventHandler,
@@ -50,8 +67,6 @@ public class Main {
          * Go through
          */
 
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'eventTest'");
     }
 
     private static PlayerCharacter setupUser(Scanner sc) {

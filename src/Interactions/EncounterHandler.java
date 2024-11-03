@@ -7,9 +7,9 @@ import GameObjects.Entities.Entity;
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
 
-public class EventHandler {
+public class EncounterHandler {
 
-	private static EventHandler instance;
+	private static EncounterHandler instance;
 	private Random random = new Random();
 	private Scanner scanner;
 
@@ -18,11 +18,11 @@ public class EventHandler {
 	private static final int SUCCESS_VALUE = 4;
 
 	private Entity player;
-	private Event event;
+	private Encounter event;
 
-	private static synchronized EventHandler getInstance() {
+	public static synchronized EncounterHandler getInstance() {
 		if (instance == null) {
-			instance = new EventHandler();
+			instance = new EncounterHandler();
 		}
 		return instance;
 	}
@@ -35,30 +35,30 @@ public class EventHandler {
 	 * Reward if success
 	 */
 
-	public void initiateEvent(Entity player, Event event) {
+	public void initiateEvent(Entity player, Encounter event, Scanner myScanner) {
 		// TODO: Discuss adding check here for if player and event contains what they
 		// should.
 		this.player = player;
 		this.event = event;
 
 		System.out.println(event.getDescription());
-		Utility.promptEnterKey(scanner);
+		Utility.promptEnterKey(myScanner);
 		Utility.clearConsole();
 
 		if (attemptChallenge()) {
-			event.getSuccessfulmessage();
+			System.out.println(event.getSuccessfulmessage());
 			// TODO: Could move this out of being method I suppose, but it seemed easier if
 			// we want to display things.
 			gainRewards();
 		} else {
-			event.getFailureMessage();
+			System.out.println(event.getFailureMessage());
 		}
 
 		// TODO: Discuss if failure should cause disadvantage, if events should be
 		// possible to restart again.
 		// TODO: If failure causes damage, need to add check after event for death?
 
-		Utility.promptEnterKey(scanner);
+		Utility.promptEnterKey(myScanner);
 		Utility.clearConsole();
 
 		// TODO Add cleaning up methods etc.
@@ -135,6 +135,12 @@ public class EventHandler {
 
 		// TODO: player is unable to hold money right now, is that by design? When to
 		// add if it is mvp?
+
+		// TODO: Add check and how player gains equipment here, check if player has way
+		// of handling receiving too much equipment first.
+
+		// TODO: Rethink, maybe best to then remove money and equipment here? If
+		// functionality for that doesn't exist already?
 	}
 
 }
