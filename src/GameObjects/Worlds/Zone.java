@@ -2,7 +2,7 @@ package GameObjects.Worlds;
 
 import GameObjects.Entities.PlayerCharacter;
 import Global.*;
-import Global.Utility.Slowprint;
+import Global.Utility;
 import GameObjects.Worlds.Zones.Area;
 import java.util.Scanner;
 import java.util.HashSet;
@@ -60,7 +60,7 @@ public class Zone  {
         Tavern tavern = new Tavern();
         Utility.clearConsole();
   //      Slowprint.sp("You are in the " + pc.getCurrentZone().getName());
-        Slowprint.sp("Choose an action:");
+        Utility.slowPrint("Choose an action:");
         System.out.println("1. Rest (restore health)");
         System.out.println("2. Open shop (buy items)");
         System.out.println("3. Set out (travel to a zone)");
@@ -98,8 +98,8 @@ public class Zone  {
         }
 
         Utility.clearConsole();
-        Slowprint.sp("You are in the " + pc.getCurrentZone().getName());
-        Slowprint.sp("Choose an action:");
+        Utility.slowPrint("You are in the " + pc.getCurrentZone().getName());
+        Utility.slowPrint("Choose an action:");
         System.out.println("1. Wander (travel inside zone)");
         System.out.println("2. Look around (display current zone)");
         System.out.println("3. Travel (travel between zones)");
@@ -147,11 +147,11 @@ public class Zone  {
 
             if (pc.getCurrentZone().equals(selectedZone)) { // check if player is already in the selected zone
                 Utility.clearConsole();
-                Slowprint.sp("You return to the " + selectedZone.getName());
+                Utility.slowPrint("You return to the " + selectedZone.getName());
                 return pc.getCurrentZone(); // Put pc back in same zone if already there.
             }
             Utility.clearConsole();
-            Slowprint.sp("You travel to the " + selectedZone.getName());
+            Utility.slowPrint("You travel to the " + selectedZone.getName());
             return selectedZone;
         } else { // error handling for invalid choice
             System.out.println("Invalid choice. Please try again. Or: ");
@@ -161,19 +161,20 @@ public class Zone  {
 
     public void displayCurrentZone(PlayerCharacter pc) { // Just displays the current zone and its description + if it's cleared or not.
         Utility.clearConsole();
-        Slowprint.sp("You are in " + pc.getCurrentZone().getName() + ". " + pc.getCurrentZone().getDescription() + " Zone cleared: " + pc.getCurrentZone().getZoneCleared());
+        Utility.slowPrint("You are in " + pc.getCurrentZone().getName() + ". " + pc.getCurrentZone().getDescription() + " Zone cleared: " + pc.getCurrentZone().getZoneCleared());
     }
     
     public void travelInsideZone(PlayerCharacter pc) { // Wander/explore inside zone function. 
         if (pc.getCurrentZone() == Area.TAVERN || pc.getCurrentZone() == Area.BASEMENT) { // maybe not needed, just remove option to travel when inside those zones?
             Utility.clearConsole();
-            Slowprint.sp("You cannot travel inside the " + pc.getCurrentZone().getName());
+            Utility.slowPrint("You cannot travel inside the " + pc.getCurrentZone().getName());
             return;
         }
 
         Utility.clearConsole();
-        Slowprint.sp("You wander around the " + pc.getCurrentZone().getName());
-        Slowprint.sp("A monster appears!\nHuzzah! You killed it, and on it you find a map leading to the next area!"); // sample text
+        Utility.slowPrint("You wander around the " + pc.getCurrentZone().getName());
+        Utility.slowPrint("A monster appears!\nHuzzah! You killed it, and on it you find a map leading to the next area!"); // sample text
+
         // fight?
         // EVENTS??
         pc.getCurrentZone().setZoneCleared(true); // sets the zone to cleared after wandering around and killing monster or clearing event.
@@ -206,7 +207,7 @@ public class Zone  {
             }
     
         } else if (pc.getCurrentZone().getZoneCleared() == false && pc.getCurrentZone() != Area.TAVERN) { // allows player to backtrack to tavern if zone is not cleared.
-            Slowprint.sp("You have not cleared this zone yet. However, do you want to backtrack to the tavern?");
+            Utility.slowPrint("You have not cleared this zone yet. However, do you want to backtrack to the tavern?");
             Utility.clearScanner(sc);
             if (Utility.checkYesOrNo(sc)) {
                 pc.setCurrentZone(Area.TAVERN);
@@ -216,7 +217,7 @@ public class Zone  {
         }
         
         else {
-            Slowprint.sp("You have not cleared this zone yet.");
+            Utility.slowPrint("You have not cleared this zone yet.");
             Utility.clearScanner(sc);
             
         }

@@ -76,17 +76,11 @@ public class Utility {
                 System.out.println();
             }
         }
-    }
+            }
 
-    public class Slowprint { // TODO make method instead of class.
+        public static void slowPrint(String text) { // Add int in parameter to change delay
 
-        private static int delay = 40; // Default delay
-    
-        public void setDelay(int delay) {
-            this.delay = delay;
-        }
-    
-        public static void sp(String text) {
+            int delay = 40;
             for (int i = 0; i < text.length(); i++) {
                 char currentChar = text.charAt(i);
                 System.out.print(currentChar);
@@ -100,14 +94,14 @@ public class Utility {
             }
             System.out.println();
         }
-    
-        public void sp(int number) {
-            sp(Integer.toString(number)); // Convert int to String
-        }
-    
-        public void sp(Object obj) {
-            // Handle any object by converting it to a String
-            sp(obj.toString());
-        }
+
+        public static void howToPlay() {
+
+        System.out.println("Welcome to the game! Here are some basic instructions on how to play:");
+        System.out.println("1. You will choose a character and name it. The character will have different stats and abilities.");
+        System.out.println("2. You interact with the game through text-based commands. E.g. You will be given choices to be made with numbers.");
+        System.out.println("3. You will explore different zones and interact with different entities.");
+        System.out.println("4. Navigate to your inventory to view your items and stats.");
+        System.out.println("5. Have fun and enjoy the game!");
     }
 }
