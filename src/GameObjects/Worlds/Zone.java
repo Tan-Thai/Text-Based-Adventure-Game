@@ -13,7 +13,7 @@ public class Zone  {
     private String description;
     private boolean zoneCleared;
     public Scanner sc = new Scanner(System.in);
-    private Set<Area> traveableZones = new HashSet<>();   
+    private Set<Area> traveableZones = new HashSet<>();
 
     public Zone (String name, String desc, boolean zoneCleared) { // constructor handles tavern, basement, enums.
         this.name = name;
@@ -229,6 +229,6 @@ public class Zone  {
         } else {
             return false;
         }
-
+        
     }
 }
