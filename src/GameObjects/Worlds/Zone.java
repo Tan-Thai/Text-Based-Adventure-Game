@@ -29,10 +29,9 @@ public class Zone  {
     private void initializeTravelableZones() { // Zoneclear check and adds zones to travelable zones
         this.traveableZones.add(Area.TAVERN);
         this.traveableZones.add(Area.FOREST);
-        if (Area.FOREST.getZoneCleared() == true) {
-            this.traveableZones.add(Area.SWAMP);
-        }
-        if (Area.SWAMP.getZoneCleared() == true) {
+        this.traveableZones.add(Area.SWAMP);
+
+        if (Area.SWAMP.getZoneCleared() == true || Area.FOREST.getZoneCleared() == true) {
             this.traveableZones.add(Area.CAVE);
         }
         if (Area.CAVE.getZoneCleared() == true) {
