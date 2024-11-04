@@ -103,8 +103,9 @@ public class Zone  {
         System.out.println("1. Wander (travel inside zone)");
         System.out.println("2. Look around (display current zone)");
         System.out.println("3. Travel (travel between zones)");
+        System.out.println("4. Remind me how to play again.");
         if (pc.getCurrentZone() == Area.TAVERN) {
-            System.out.println("4. Tavern menu (to rest and shop for items)");
+            System.out.println("5. Tavern menu (to rest and shop for items)");
         }
 
         int choice = sc.nextInt();
@@ -120,6 +121,9 @@ public class Zone  {
                     room.zoneTravel(pc);
                     break;
                 case 4:
+                    Utility.howToPlay();
+                    break;
+                case 5:
                     if (pc.getCurrentZone() == Area.TAVERN) {
                         room.tavernMenu(pc);
                     }
@@ -127,6 +131,7 @@ public class Zone  {
                         System.out.println("Invalid choice. Please try again.");
                     }
                     break;
+                    
                 default:
                     System.out.println("Invalid choice. Please try again.");
                     break;
