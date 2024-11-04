@@ -14,7 +14,8 @@ public class Entity {
     protected int dexterity;
     protected int intelligence;
 
-    // constructor for all entities that requires specific stats setups (enemies, or the player char)
+    // constructor for all entities that requires specific stats setups (enemies, or
+    // the player char)
     public Entity(String name, int health, int level, int str, int dex, int intelligence) {
         this.name = name;
         this.health = health;
@@ -32,19 +33,26 @@ public class Entity {
                 DEFAULT_STAT, DEFAULT_STAT, DEFAULT_STAT);
     }
 
-    public Inventory getInventory() {return inventory;}
+    public Inventory getInventory() {
+        return inventory;
+    }
+
     public String getName() {
         return name;
     }
+
     public int getHealth() {
         return health;
     }
+
     public int getStrength() {
         return strength;
     }
+
     public int getDexterity() {
         return dexterity;
     }
+
     public int getIntelligence() {
         return intelligence;
     }
