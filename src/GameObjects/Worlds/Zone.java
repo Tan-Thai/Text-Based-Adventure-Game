@@ -174,6 +174,7 @@ public class Zone  {
 
         Utility.clearConsole();
         Slowprint.sp("You wander around the " + pc.getCurrentZone().getName());
+
         Slowprint.sp("A monster appears!\nHuzzah! You killed it, and on it you find a map leading to the next area!"); // sample text
         // fight?
         // EVENTS??
