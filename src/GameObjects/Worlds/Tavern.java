@@ -34,9 +34,4 @@ public class Tavern extends Zone {
         
     }   */
 
-   // @Override //testar Override
-  //  public void populateEvents(String event, String description) {
-        //${0: TODO Auto-generated method stub
-  //      super.populateEvents(event, description);
- //   }
 }

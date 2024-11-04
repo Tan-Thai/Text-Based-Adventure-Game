@@ -10,7 +10,8 @@ public class Game {
     public static void gameMenu(PlayerCharacter pc, Scanner sc) {
 
         while (true) {
-
+        Utility.clearScanner(sc);
+        Utility.clearConsole();
         System.out.println("Welcome to the game!");
         System.out.println("1. Start Game");
         System.out.println("2. How to Play");
@@ -26,7 +27,7 @@ public class Game {
                 // startGame(); call main game loop
                 break;
             case 2:
-                Utility.howToPlay();
+                Utility.howToPlay(sc);
                 break;
             case 3:
                 System.out.println("Exiting game...");
@@ -42,13 +43,10 @@ public class Game {
 
     private static void travelTest(PlayerCharacter pc, Scanner sc) {
         Zone room = new Zone();
-     room.displayCurrentZone(pc); // Temporary intro to the game, change to display intro etc.
-     Utility.promptEnterKey(sc);
      while (room.checkGameOver() == false) {
          Utility.clearConsole();
          room.travelMenu(pc, room);
-         Utility.promptEnterKey(sc);
-     } 
-     }
+        } 
+    }
     
 }

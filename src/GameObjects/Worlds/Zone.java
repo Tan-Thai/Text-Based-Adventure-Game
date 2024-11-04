@@ -56,13 +56,12 @@ public class Zone  {
     }
 
     public void tavernMenu(PlayerCharacter pc) { // opnens up tavern menu for resting and shopping for items
-        Tavern tavern = new Tavern();
+        Tavern tavern = new Tavern(); //create tavern object outside?
         Utility.clearConsole();
-  //      Slowprint.sp("You are in the " + pc.getCurrentZone().getName());
         Utility.slowPrint("Choose an action:");
         System.out.println("1. Rest (restore health)");
         System.out.println("2. Open shop (buy items)");
-        System.out.println("3. Set out (travel to a zone)");
+        System.out.println("3. Set out (Back to travel menu)");
         // talk to npcs? Listen to rumours? etc.
 
         int choice = sc.nextInt();
@@ -120,7 +119,7 @@ public class Zone  {
                     room.zoneTravel(pc);
                     break;
                 case 4:
-                    Utility.howToPlay();
+                    Utility.howToPlay(sc);
                     break;
                 case 5:
                     if (pc.getCurrentZone() == Area.TAVERN) {
@@ -196,11 +195,9 @@ public class Zone  {
         if (pc.getCurrentZone().getZoneCleared() == true) { // checks if currentzone is clrared, if not, player can't travel.
             switch (pc.getCurrentZone()) { // 
                 case Area.TAVERN:
-                    
                     pc.setCurrentZone(displayTraveableZones(pc));
                     break;
                 case Area.FOREST:
-                    this.traveableZones.add(Area.SWAMP); 
                     pc.setCurrentZone(displayTraveableZones(pc));
                     break;
                 case Area.SWAMP:
