@@ -139,7 +139,7 @@ public class Zone  {
             index++;
         }
 
-        System.out.println("Enter the number of the zone you want to travel to:");
+        System.out.println("Enter the number of the zone you want to travel to: ");
         int choice = sc.nextInt();
         if (choice > 0 && choice <= traveableZones.size()) {
             Area[] zonesArray = traveableZones.toArray(new Area[0]); // make array of traveablezones Set to be able to index it for selection
@@ -147,15 +147,14 @@ public class Zone  {
 
             if (pc.getCurrentZone().equals(selectedZone)) { // check if player is already in the selected zone
                 Utility.clearConsole();
-                Slowprint.sp("You are already in " + selectedZone.getName() + ". Please choose a different zone.");
-                Utility.promptEnterKey(sc);
-                return displayTraveableZones(pc); // Recursively call the method again for a valid choice
+                Slowprint.sp("You return to the " + selectedZone.getName());
+                return pc.getCurrentZone(); // Put pc back in same zone if already there.
             }
             Utility.clearConsole();
             Slowprint.sp("You travel to the " + selectedZone.getName());
             return selectedZone;
         } else { // error handling for invalid choice
-            System.out.println("Invalid choice. Please try again.");
+            System.out.println("Invalid choice. Please try again. Or: ");
             return displayTraveableZones(pc); // Recursively call the method again for a valid choice
         }
     }

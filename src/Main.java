@@ -25,17 +25,19 @@ public class Main {
         // combatTest(pc, goblin, sc);
 
         //MESSING AROUND WITH ZONES AND TRAVEL
-        Zone room = new Zone();
-        room.displayCurrentZone(pc); // Temporary intro to the game
-        Utility.promptEnterKey(sc);
-        while (room.checkGameOver() == false) {
-            Utility.clearConsole();
-            room.travelMenu(pc, room);
-            Utility.promptEnterKey(sc);
-        }
-
-        sc.close();
+        travelTest(pc, sc);
     }
+
+    private static void travelTest(PlayerCharacter pc, Scanner sc) {
+        Zone room = new Zone();
+     room.displayCurrentZone(pc); // Temporary intro to the game, change to display intro etc.
+     Utility.promptEnterKey(sc);
+     while (room.checkGameOver() == false) {
+         Utility.clearConsole();
+         room.travelMenu(pc, room);
+         Utility.promptEnterKey(sc);
+     } 
+     }
 
     private static PlayerCharacter setupUser(Scanner sc) {
         System.out.print("What is your name?: ");
