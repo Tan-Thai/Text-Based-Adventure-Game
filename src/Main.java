@@ -2,14 +2,19 @@ import GameObjects.Entities.*;
 import GameObjects.Items.*;
 import GameObjects.Worlds.Zone;
 import Global.*;
+import Interactions.ChallengeType;
 import Interactions.Combat;
+import Interactions.Encounter;
+import Interactions.EncounterHandler;
 
+import java.beans.EventHandler;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
 
-        // currently just slapping everything into main - will create a "game" package later to put all game logic into.
+        // currently just slapping everything into main - will create a "game" package
+        // later to put all game logic into.
         Scanner sc = new Scanner(System.in);
         PlayerCharacter pc = setupUser(sc);
         System.out.printf("Your name is %s and your current health is %d",
@@ -24,7 +29,10 @@ public class Main {
         // Combat test.
         // combatTest(pc, goblin, sc);
 
-        //MESSING AROUND WITH ZONES AND TRAVEL
+        // Event test
+        eventTest(pc, sc);
+
+        // MESSING AROUND WITH ZONES AND TRAVEL
         Zone room = new Zone();
         room.displayCurrentZone(pc); // Temporary intro to the game
         Utility.promptEnterKey(sc);
@@ -35,6 +43,30 @@ public class Main {
         }
 
         sc.close();
+    }
+
+    private static void eventTest(PlayerCharacter pc, Scanner myScanner) {
+
+        Encounter encounter = new Encounter(
+                "Oh, between the trees you see an old woman. Her donkey refuses to cross the stream.",
+                2,
+                ChallengeType.STRENGTH,
+                "You heroically lift and carry the donkey across the stream.",
+                "Your feeble attempt wasn't enough to even budge the donkey",
+                100,
+                100,
+                null);
+
+        EncounterHandler encounterHandler = EncounterHandler.getInstance();
+
+        encounterHandler.initiateEvent(pc, encounter, myScanner);
+        /*
+         * Set up event
+         * Get eventHandler,
+         * Throw both in
+         * Go through
+         */
+
     }
 
     private static PlayerCharacter setupUser(Scanner sc) {
@@ -48,7 +80,8 @@ public class Main {
     }
 
     private static void itemAndDisplayTest(PlayerCharacter pc, Entity goblin, Scanner sc) {
-        Equipment sword = new Equipment("A Simple Sword", "Your standard blade as a new adventurer.", new DamageEffect(2));
+        Equipment sword = new Equipment("A Simple Sword", "Your standard blade as a new adventurer.",
+                new DamageEffect(2));
         Potion potion = new Potion("Health Potion", "Chug when ouch", new HealingEffect(5));
         Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", new DamageEffect(7));
 
