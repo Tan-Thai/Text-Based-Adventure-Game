@@ -1,10 +1,15 @@
 import java.util.Scanner;
+
+import GameObjects.Entities.PlayerCharacter;
+import GameObjects.Worlds.Zone;
 import Global.Utility;
 
 public class Game {
     Scanner sc = new Scanner(System.in);
 
-    public void gameMenu(Scanner sc) {
+    public static void gameMenu(PlayerCharacter pc, Scanner sc) {
+
+        while (true) {
 
         System.out.println("Welcome to the game!");
         System.out.println("1. Start Game");
@@ -17,6 +22,7 @@ public class Game {
 
             case 1:
                 System.out.println("Starting game...");
+                travelTest(pc, sc);
                 // startGame(); call main game loop
                 break;
             case 2:
@@ -28,8 +34,21 @@ public class Game {
                 break;
         }
 
+    }
+
 
         
     }
+
+    private static void travelTest(PlayerCharacter pc, Scanner sc) {
+        Zone room = new Zone();
+     room.displayCurrentZone(pc); // Temporary intro to the game, change to display intro etc.
+     Utility.promptEnterKey(sc);
+     while (room.checkGameOver() == false) {
+         Utility.clearConsole();
+         room.travelMenu(pc, room);
+         Utility.promptEnterKey(sc);
+     } 
+     }
     
 }

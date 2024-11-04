@@ -120,7 +120,12 @@ public class Zone  {
                     room.zoneTravel(pc);
                     break;
                 case 4:
-                    tavernMenu(pc);
+                    if (pc.getCurrentZone() == Area.TAVERN) {
+                        room.tavernMenu(pc);
+                    }
+                    else {
+                        System.out.println("Invalid choice. Please try again.");
+                    }
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
