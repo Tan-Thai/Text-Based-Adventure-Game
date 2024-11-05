@@ -1,7 +1,6 @@
 package GameObjects.Items;
 
 import GameObjects.Entities.PlayerCharacter;
-import Global.Utility;
 
 import java.util.Scanner;
 

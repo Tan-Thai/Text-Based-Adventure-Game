@@ -1,7 +1,6 @@
 package GameObjects.Items;
 
 import GameObjects.Entities.Entity;
-import GameObjects.Entities.PlayerCharacter;
 
 public class DamageEffect implements Effect {
     private final int damageValue;
