@@ -145,8 +145,8 @@ public class Utility {
 
         public static void howToPlay(Scanner sc) {
             Utility.clearConsole();
-            Utility.clearScanner(sc);
-            System.out.println("Welcome to the game! Here are some basic instructions on how to play:\n");
+            
+            System.out.println("Here are some basic instructions on how to play:\n");
             System.out.println("Please choose the number corresponding to the option you need help with:");
             System.out.println("1. My character, it's stats and abilities");
             System.out.println("2. How does combat work?");
@@ -155,12 +155,12 @@ public class Utility {
             System.out.println("5. How to rest and shop for items in the tavern");
             System.out.println("6. Exit menu.");
             System.out.print("Enter your choice: ");
-
+            Utility.clearScanner(sc);
             int choice = sc.nextInt();
             Utility.clearConsole();
 
             switch (choice) {
-
+                
                 case 1:
                     System.out.println("Your character has different stats that determine how well they perform in different situations.");
                     System.out.println("Health: Determines how much damage you can take before you die.");
@@ -168,36 +168,47 @@ public class Utility {
                     System.out.println("Dexterity:");
                     System.out.println("Experience: Determines how close you are to leveling up.");
                     promptEnterKey(sc);
+                    Utility.clearScanner(sc);
+                    howToPlay(sc);
                     break;
                 case 2:
                     System.out.println("Combat is turn-based. You and your enemy take turns attacking each other.");
                     System.out.println("You can choose to attack, use an item, or run away.");
                     System.out.println("The combat ends when either you or your enemy's health reaches 0.");
                     promptEnterKey(sc);
+                    Utility.clearScanner(sc);
+                    howToPlay(sc);
                     break;
                 case 3:
+                    Utility.clearScanner(sc);
                     System.out.println("You can navigate between different zones by using the travel menu. You may travel to the Forest or the Swamp freely but advancing more requires you to explore these zones.");
                     System.out.println("You can also explore different areas within a zone by choosing to wander in the travel menu.");
                     promptEnterKey(sc);
+                    howToPlay(sc);
                     break;
                 case 4:
+                    Utility.clearScanner(sc);
                     System.out.println("You can interact with items by choosing to use them in the inventory menu.");
                     System.out.println("You can also inspect items to view their descriptions and effects.");
                     promptEnterKey(sc);
+                    howToPlay(sc);
                     break;
                 case 5:
+                    Utility.clearScanner(sc);
                     System.out.println("You can rest and shop for items in the tavern. Resting will restore your health and shopping will allow you to buy items.");
                     System.out.println("This is all accessible through the tavern menu.");
                     promptEnterKey(sc);
+                    howToPlay(sc);
                     break;
                 case 6:
                     System.out.println("Exiting menu...");
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    slowPrint("Invalid choice. Please try again.");
                     promptEnterKey(sc);
+                    howToPlay(sc);
                     break;
             }
-            Utility.clearScanner(sc);
+            
     }   
 }
