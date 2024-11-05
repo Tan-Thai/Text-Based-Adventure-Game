@@ -60,13 +60,6 @@ public class Main {
         EncounterHandler encounterHandler = EncounterHandler.getInstance();
 
         encounterHandler.initiateEvent(pc, encounter, myScanner);
-        /*
-         * Set up event
-         * Get eventHandler,
-         * Throw both in
-         * Go through
-         */
-
     }
 
     private static PlayerCharacter setupUser(Scanner sc) {
