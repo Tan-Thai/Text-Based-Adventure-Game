@@ -56,7 +56,7 @@ public class Zone  {
     }
 
     public void tavernMenu(PlayerCharacter pc) { // opnens up tavern menu for resting and shopping for items
-        Tavern tavern = new Tavern(); //create tavern object outside?
+        Tavern tavern = new Tavern(); //create tavern object outside? 
         Utility.clearConsole();
         Utility.slowPrint("Choose an action:");
         System.out.println("1. Rest (restore health)");
@@ -180,15 +180,10 @@ public class Zone  {
         }
 
         Utility.clearConsole();
-<<<<<<< HEAD
+
         Utility.slowPrint("You wander around the " + pc.getCurrentZone().getName());
         Utility.slowPrint("A monster appears!\nHuzzah! You killed it, and on it you find a map leading to the next area!"); // sample text
 
-=======
-        Slowprint.sp("You wander around the " + pc.getCurrentZone().getName());
-
-        Slowprint.sp("A monster appears!\nHuzzah! You killed it, and on it you find a map leading to the next area!"); // sample text
->>>>>>> f09ea37c00bfc1b1f5c88295a339c13b84709198
         // fight?
         // EVENTS??
         pc.getCurrentZone().setZoneCleared(true); // sets the zone to cleared after wandering around and killing monster or clearing event.
