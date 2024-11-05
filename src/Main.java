@@ -7,7 +7,6 @@ import Interactions.Combat;
 import Interactions.Encounter;
 import Interactions.EncounterHandler;
 
-import java.beans.EventHandler;
 import java.util.Scanner;
 
 public class Main {
@@ -27,10 +26,12 @@ public class Main {
         // itemAndDisplayTest(pc, goblin, sc);
 
         // Combat test.
-        // combatTest(pc, goblin, sc);
+        combatTest(pc, goblin, sc);
 
-        // Event test
-        eventTest(pc, sc);
+        // Encounter test
+        encounterTest(pc, sc);
+
+        combatTest(pc, new HostileCharacter("Wimpy boyo", 4), sc);
 
         // MESSING AROUND WITH ZONES AND TRAVEL
         Zone room = new Zone();
@@ -45,11 +46,11 @@ public class Main {
         sc.close();
     }
 
-    private static void eventTest(PlayerCharacter pc, Scanner myScanner) {
+    private static void encounterTest(PlayerCharacter pc, Scanner myScanner) {
 
         Encounter encounter = new Encounter(
                 "Oh, between the trees you see an old woman. Her donkey refuses to cross the stream.",
-                2,
+                1,
                 ChallengeType.STRENGTH,
                 "You heroically lift and carry the donkey across the stream.",
                 "Your feeble attempt wasn't enough to even budge the donkey",
@@ -59,14 +60,7 @@ public class Main {
 
         EncounterHandler encounterHandler = EncounterHandler.getInstance();
 
-        encounterHandler.initiateEvent(pc, encounter, myScanner);
-        /*
-         * Set up event
-         * Get eventHandler,
-         * Throw both in
-         * Go through
-         */
-
+        encounterHandler.initiateEncounter(pc, encounter, myScanner);
     }
 
     private static PlayerCharacter setupUser(Scanner sc) {
@@ -103,14 +97,14 @@ public class Main {
     }
 
     private static void combatTest(PlayerCharacter pc, HostileCharacter goblin, Scanner sc) {
-        HostileCharacter angyBoi = new HostileCharacter("Big MAN", 30);
+        // HostileCharacter angyBoi = new HostileCharacter("Big MAN", 30);
 
         // new up A COMBAT object, and it will be the only one since it's a singleton.
         Combat combat = Combat.getInstance();
         // this is what we call and send in when a combat between 2 entities happens.
 
         combat.initiateCombat(pc, goblin, sc);
-        combat.initiateCombat(pc, angyBoi, sc);
-        sc.close();
+        // combat.initiateCombat(pc, angyBoi, sc);
+        // sc.close();
     }
 }
