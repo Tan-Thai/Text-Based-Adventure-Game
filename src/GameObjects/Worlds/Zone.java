@@ -64,7 +64,7 @@ public class Zone  {
         System.out.println("3. Set out (Back to travel menu)");
         // talk to npcs? Listen to rumours? etc.
 
-        int choice = sc.nextInt();
+        int choice = Utility.checkIfNumber(sc);
 
         switch (choice) {
             case 1:
@@ -106,7 +106,7 @@ public class Zone  {
             System.out.println("5. Tavern menu (to rest and shop for items)");
         }
 
-        int choice = sc.nextInt();
+        int choice = Utility.checkIfNumber(sc);
 
             switch (choice) {
                 case 1:
@@ -148,7 +148,7 @@ public class Zone  {
         }
 
         System.out.println("Enter the number of the zone you want to travel to: ");
-        int choice = sc.nextInt();
+        int choice = Utility.checkIfNumber(sc);
         if (choice > 0 && choice <= traveableZones.size()) {
             Area[] zonesArray = traveableZones.toArray(new Area[0]); // make array of traveablezones Set to be able to index it for selection
             Area selectedZone = zonesArray[choice - 1]; // select zone to travel to, index - 1.
