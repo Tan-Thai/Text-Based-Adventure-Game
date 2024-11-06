@@ -38,6 +38,8 @@ public class EncounterHandler {
 			System.out.println(encounter.getSuccessfulmessage());
 			// TODO: Could move this out of being method I suppose, but it seemed easier if
 			// we want to display things.
+
+			encounter.setIsCleared(true);
 			gainRewards();
 		} else {
 			System.out.println(encounter.getFailureMessage());
@@ -103,12 +105,5 @@ public class EncounterHandler {
 
 	private void gainRewards() {
 		((PlayerCharacter) player).gainExperience(encounter.getExperienceReward());
-
-		// TODO: player is unable to hold money right now, is that by design? When to
-		// add if it is mvp?
-
-		// TODO: If hostile entities should also be held within encounters. Do we want
-		// the encounter to extract xp and equipment and such from hostile enities as
-		// well?
 	}
 }
