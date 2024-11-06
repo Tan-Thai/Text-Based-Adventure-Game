@@ -1,162 +1,141 @@
 package Interactions;
+
 import GameObjects.Entities.*;
 import Global.Utility;
 
-import java.util.Random;
+import java.util.OptionalInt;
 import java.util.Scanner;
 
-public class Combat
-{
-    // Needed for combat loop
-    private static Combat instance;
-    private boolean isCombatInProgress = true;
-    private Random random =new Random();
-    private Scanner sc;
+public class Combat {
+	// Needed for combat loop
+	private static Combat instance;
+	private boolean isCombatInProgress = true;
+	private Scanner sc;
 
-    //Actors/ Entities in play - had first and second actor, but ill start with Player + enemy.
-    private Entity player;
-    private Entity enemy;
+	// Actors/ Entities in play - had first and second actor, but ill start with
+	// Player + enemy.
+	private Entity player;
+	private Entity enemy;
 
-    //Dice related
-    private static final int AMOUNT_OF_SIDES = 6;
-    private static final int CRIT_VALUE = 6;
-    private static final int SUCCESS_VALUE = 4;
+	private int playerHitCount = 0;
+	private int enemyHitCount = 0;
 
-    private int playerHitCount = 0;
-    private int enemyHitCount = 0;
+	// new up A COMBAT object, and it will be the only one since its a singleton.
+	public static synchronized Combat getInstance() {
+		if (instance == null) {
+			instance = new Combat();
+		}
+		return instance;
+	}
 
-    // colour for prints
-    private static final String RESET = "\u001B[0m";
-    private static final String RED = "\u001B[31m";
-    private static final String GREEN = "\u001B[32m";
+	private Combat() {
+	}
 
-    // new up A COMBAT object, and it will be the only one since its a singleton.
-    public static synchronized Combat getInstance() {
-        if (instance == null) {
-            instance = new Combat();
-        }
-        return instance;
-    }
+	// news up the combat situation and then starts the combat logic
+	public void initiateCombat(Entity firstActor, Entity secondActor, Scanner sc) {
+		this.player = firstActor;
+		this.enemy = secondActor;
+		this.sc = sc;
 
-    private Combat() {}
+		System.out.println("You have entered combat with a " + enemy.getName() + "!");
+		Utility.promptEnterKey(sc);
+		Utility.clearConsole();
+		isCombatInProgress = true;
+		combatLoop();
+	}
 
-    // news up the combat situation and then starts the combat logic
-    public void initiateCombat(Entity firstActor, Entity secondActor, Scanner sc) {
-        this.player = firstActor;
-        this.enemy = secondActor;
-        this.sc = sc;
+	private void combatLoop() {
 
-        System.out.println("You have entered combat with a " + enemy.getName() + "!");
-        Utility.promptEnterKey(sc);
-        Utility.clearConsole();
-        isCombatInProgress = true;
-        combatLoop();
-    }
+		while (isCombatInProgress) {
+			// Prints all hp's
+			printEntityHP(player, Utility.GREEN);
+			printEntityHP(enemy, Utility.RED);
+			System.out.print("to attack press 1, to end combat press 2: ");
 
-    private void combatLoop() {
+			// loop for combat.
+			// TODO: add switch statements for when we add different actions.
+			if (Utility.checkIfNumber(sc) == 1) {
+				Utility.clearConsole();
+				// can make it so we send in a defender as well if we add a defence formula.
 
-        while(isCombatInProgress) {
-            // Prints all hp's
-            printEntityHP(player, GREEN);
-            printEntityHP(enemy, RED);
-            System.out.print("to attack press 1, to end combat press 2: ");
+				// TODO Suggest to TT renaming function, because the entity is the one attacking
+				// correct? Might be confusing naming? Calculate attack might be better?
+				playerHitCount = attackEntity(player, Utility.GREEN);
+				enemyHitCount = attackEntity(enemy, Utility.RED);
 
-            // loop for combat.
-            // TODO: add switch statements for when we add different actions.
-            if(Utility.checkIfNumber(sc) == 1)
-            {
-                Utility.clearConsole();
-                // can make it so we send in a defender as well if we add a defence formula.
-                attackEntity(player, GREEN);
-                attackEntity(enemy, RED);
+				printHits();
 
-                printHits();
+				resolveHP();
 
-                resolveHP();
+				checkVictoryConditionMet();
+			} else {
+				isCombatInProgress = false;
+			}
+		}
+	}
 
-                checkVictoryConditionMet();
-            } else {
-                isCombatInProgress = false;
-            }
-        }
-    }
+	// Prints out the bars.
+	private void printEntityHP(Entity actor, String colour) {
+		System.out.println(colour + actor.getName() + " health: " + actor.getHealth() + Utility.RESET);
+		for (int i = 1; i <= actor.getHealth(); i++) {
+			System.out.print(colour + "|" + Utility.RESET);
+		}
+		System.out.println();
+	}
 
-    // Prints out the bars.
-    private void printEntityHP(Entity actor, String colour) {
-        System.out.println(colour + actor.getName() + " health: " + actor.getHealth() + RESET);
-        for(int i = 1; i <= actor.getHealth(); i++)
-        {
-            System.out.print(colour + "|" + RESET);
-        }
-        System.out.println();
-    }
+	// calc's the attack values etc.
+	private int attackEntity(Entity actor, String colour) {
 
-    // calc's the attack values etc.
-    private void attackEntity(Entity actor, String colour) {
-        int currentValue;
-        int hitCount = 0;
+		int hitCount = Utility.rollDicePool(actor.getStrength(), colour, OptionalInt.empty(), OptionalInt.empty(),
+				OptionalInt.empty());
 
-        for(int i = 0; i < actor.getStrength(); i++) {
-            currentValue=random.nextInt(AMOUNT_OF_SIDES)+1;
-            System.out.print(colour + "["+currentValue+"]" + RESET);
+		//Used to add break inbetween lines in the console
+		System.out.println();
+		return hitCount;
+	}
 
-            if(currentValue >= SUCCESS_VALUE) {
-                if(currentValue == CRIT_VALUE) {
-                    i--; // does this give another roll if you crit?
-                }
-                hitCount++;
-            }
-        }
+	private void printHits() {
+		System.out.println("You got " + playerHitCount + " hits!");
+		System.out.println("Your enemy got " + enemyHitCount + " hits!");
+	}
 
-        if (colour.equals(GREEN)) {
-            playerHitCount = hitCount;
-        } else {
-            enemyHitCount = hitCount;
-        }
-        System.out.println();
-    }
+	private void resolveHP() {
+		player.setHealth(player.getHealth() - enemyHitCount);
+		enemy.setHealth(enemy.getHealth() - playerHitCount);
+		playerHitCount = 0;
+		enemyHitCount = 0;
 
-    private void printHits() {
-        System.out.println("You got " + playerHitCount + " hits!");
-        System.out.println("Your enemy got " + enemyHitCount + " hits!");
-    }
+	}
 
-    private void resolveHP() {
-        player.setHealth(player.getHealth() - enemyHitCount);
-        enemy.setHealth(enemy.getHealth() - playerHitCount);
-        playerHitCount = 0;
-        enemyHitCount = 0;
+	private void checkVictoryConditionMet() {
+		// will prolly have to change this due to us hardcoding a win message and all
+		// other handling here.
+		if (player.getHealth() <= 0 && enemy.getHealth() <= 0) {
+			Utility.clearConsole();
+			System.out.println("Both of you perish");
+			exitingCombat();
 
-    }
+		} else if (enemy.getHealth() <= 0) {
+			Utility.clearConsole();
+			printEntityHP(player, Utility.GREEN);
+			System.out.println("You have vanquished your foe!");
+			// GainExperience method should be called to give the player exp over hardcoding
+			// it.
+			int playerExp = 5;
+			System.out.println("You gain 5 experience points and a rusty longsword");
+			System.out.println("your current experience is " + playerExp);
+			exitingCombat();
 
-    private void checkVictoryConditionMet() {
-        // will prolly have to change this due to us hardcoding a win message and all other handling here.
-        if(player.getHealth() <= 0 && enemy.getHealth() <= 0) {
-            Utility.clearConsole();
-            System.out.println("Both of you perish");
-            exitingCombat();
+		} else if (player.getHealth() <= 0) {
+			Utility.clearConsole();
+			System.out.println("You have been slain");
+			exitingCombat();
+		}
+	}
 
-        } else if (enemy.getHealth() <= 0) {
-            Utility.clearConsole();
-            printEntityHP(player, GREEN);
-            System.out.println("You have vanquished your foe!");
-            // GainExperience method should be called to give the player exp over hardcoding it.
-            int playerExp = 5;
-            System.out.println("You gain 5 experience points and a rusty longsword");
-            System.out.println("your current experience is " + playerExp);
-            exitingCombat();
-
-        } else if(player.getHealth() <= 0) {
-            Utility.clearConsole();
-            System.out.println("You have been slain");
-            exitingCombat();
-        }
-    }
-
-    private void exitingCombat() {
-        isCombatInProgress = false;
-        Utility.promptEnterKey(sc);
-        Utility.clearConsole();
-    }
+	private void exitingCombat() {
+		isCombatInProgress = false;
+		Utility.promptEnterKey(sc);
+		Utility.clearConsole();
+	}
 }
-

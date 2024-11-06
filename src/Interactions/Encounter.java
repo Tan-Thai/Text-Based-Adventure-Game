@@ -7,9 +7,6 @@ import GameObjects.Entities.HostileCharacter;
 import GameObjects.Items.Item;
 
 public class Encounter {
-	// TODO: At the moment I have just getters for values and such,
-	// and the EventHandler will be the one that decides things, but obviously we
-	// can change that so that things are thought through here.
 
 	private HostileCharacter enemy;
 
