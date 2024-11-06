@@ -148,12 +148,7 @@ public class Utility {
             
             System.out.println("Here are some basic instructions on how to play:\n");
             System.out.println("Please choose the number corresponding to the option you need help with:");
-            System.out.println("1. My character, it's stats and abilities");
-            System.out.println("2. How does combat work?");
-            System.out.println("3. How to navigate between or inside zones.");
-            System.out.println("4. How to interact with items");
-            System.out.println("5. How to rest and shop for items in the tavern");
-            System.out.println("6. Exit menu.");
+            System.out.println("1. My character, it's stats and abilities\n2. How does combat work?\n3. How to navigate between or inside zones.\n4. How to interact with items\n5. How to rest and shop for items in the tavern\n6. Exit menu.");
             System.out.print("Enter your choice: ");
             Utility.clearScanner(sc);
             int choice = sc.nextInt();
@@ -162,19 +157,13 @@ public class Utility {
             switch (choice) {
                 
                 case 1:
-                    System.out.println("Your character has different stats that determine how well they perform in different situations.");
-                    System.out.println("Health: Determines how much damage you can take before you die.");
-                    System.out.println("Strength: Determines how much damage you deal in combat.");
-                    System.out.println("Dexterity:");
-                    System.out.println("Experience: Determines how close you are to leveling up.");
+                    System.out.println("Your character has different stats that determine how well they perform in different situations.\nHealth: Determines how much damage you can take before you die.\nStrength: Determines how much damage you deal in combat.\nDexterity:\nExperience: Determines how close you are to leveling up.");
                     promptEnterKey(sc);
                     Utility.clearScanner(sc);
                     howToPlay(sc);
                     break;
                 case 2:
-                    System.out.println("Combat is turn-based. You and your enemy take turns attacking each other.");
-                    System.out.println("You can choose to attack, use an item, or run away.");
-                    System.out.println("The combat ends when either you or your enemy's health reaches 0.");
+                    System.out.println("Combat is turn-based. You and your enemy take turns attacking each other.\nYou can choose to attack, use an item, or run away.\nThe combat ends when either you or your enemy's health reaches 0.");
                     promptEnterKey(sc);
                     Utility.clearScanner(sc);
                     howToPlay(sc);

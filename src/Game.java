@@ -12,10 +12,7 @@ public class Game {
         while (true) {
         Utility.clearScanner(sc);
         Utility.clearConsole();
-        System.out.println("Welcome to the game!");
-        System.out.println("1. Start Game");
-        System.out.println("2. How to Play");
-        System.out.println("3. Exit");
+        System.out.println("Welcome to the game!\n1. Start Game\n2. How to Play\n3. Exit");
 
         int choice = sc.nextInt();
 

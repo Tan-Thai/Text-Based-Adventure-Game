@@ -26,12 +26,12 @@ public class Main {
         // itemAndDisplayTest(pc, goblin, sc);
 
         // Combat test.
-        combatTest(pc, goblin, sc);
+   //     combatTest(pc, goblin, sc);
 
         // Encounter test
-        encounterTest(pc, sc);
+   //     encounterTest(pc, sc);
 
-        combatTest(pc, new HostileCharacter("Wimpy boyo", 4), sc);
+   //     combatTest(pc, new HostileCharacter("Wimpy boyo", 4), sc);
 
         // MESSING AROUND WITH ZONES AND TRAVEL
         Game.gameMenu(pc, sc);
