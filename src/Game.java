@@ -5,16 +5,14 @@ import GameObjects.Worlds.Zone;
 import Global.Utility;
 
 public class Game {
-    Scanner sc = new Scanner(System.in);
 
     public static void gameMenu(PlayerCharacter pc, Scanner sc) {
 
         while (true) {
-        Utility.clearScanner(sc);
         Utility.clearConsole();
         System.out.println("Welcome to the game!\n1. Start Game\n2. How to Play\n3. Exit");
 
-        int choice = sc.nextInt();
+        int choice = Utility.checkIfNumber(sc);
 
         switch (choice) {
 
@@ -34,8 +32,7 @@ public class Game {
 
     }
 
-
-        
+    
     }
 
     private static void travelTest(PlayerCharacter pc, Scanner sc) {
