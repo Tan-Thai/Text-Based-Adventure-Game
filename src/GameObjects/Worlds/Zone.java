@@ -176,6 +176,7 @@ public class Zone {
 
     }
 
+
     public Zone displayTraveableZones(PlayerCharacter pc) { // displays traveable zones and lets player choose where to
                                                             // travel
         Utility.clearConsole();
@@ -276,6 +277,7 @@ public class Zone {
             // if zone is
             // not
             // cleared.
+
             Utility.slowPrint("You have not cleared this zone yet. However, do you want to backtrack to the tavern?");
             Utility.clearScanner(sc);
             if (Utility.checkYesOrNo(sc)) {

@@ -133,6 +133,7 @@ public class Utility {
                 successAmount++;
             }
         }
+
         // To give space between the result and the following text.
         System.out.println();
 

@@ -7,6 +7,7 @@ import GameObjects.Worlds.ZoneType;
 import Global.*;
 import Interactions.Combat;
 import Interactions.EncounterHandler;
+import Interactions.EncounterRepository;
 
 import java.util.Scanner;
 
@@ -30,6 +31,7 @@ public class Main {
         // combatTest(pc, goblin, sc);
 
         // Encounter test
+
         // encounterTest(pc, sc);
 
         // combatTest(pc, new HostileCharacter("Wimpy boyo", 4), sc);
