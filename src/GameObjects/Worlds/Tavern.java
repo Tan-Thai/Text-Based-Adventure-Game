@@ -23,7 +23,6 @@ public class Tavern extends Zone {
      Utility.slowPrint("You open the shop and see a variety of items for sale.");
         System.out.printf("Items for sale:");
         // make npc to shop from since they have inventory
-        Utility.promptEnterKey(sc);
     }
 /* 
     public void setOut(PlayerCharacter pc, Area zone) { //not needed now?

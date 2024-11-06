@@ -146,8 +146,7 @@ public class Utility {
         public static void howToPlay(Scanner sc) {
             Utility.clearConsole();
             
-            System.out.println("Here are some basic instructions on how to play:\n");
-            System.out.println("Please choose the number corresponding to the option you need help with:");
+            System.out.println("Here are some basic instructions on how to play:\nPlease choose the number corresponding to the option you need help with:");
             System.out.println("1. My character, it's stats and abilities\n2. How does combat work?\n3. How to navigate between or inside zones.\n4. How to interact with items\n5. How to rest and shop for items in the tavern\n6. Exit menu.");
             System.out.print("Enter your choice: ");
             int choice = checkIfNumber(sc);

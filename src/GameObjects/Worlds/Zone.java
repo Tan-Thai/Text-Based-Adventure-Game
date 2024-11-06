@@ -59,9 +59,7 @@ public class Zone  {
         Tavern tavern = new Tavern(); //create tavern object outside? 
         Utility.clearConsole();
         Utility.slowPrint("Choose an action:");
-        System.out.println("1. Rest (restore health)");
-        System.out.println("2. Open shop (buy items)");
-        System.out.println("3. Set out (Back to travel menu)");
+        System.out.println("1. Rest (restore health)\n2. Open shop (buy items)\n3. Set out (Back to travel menu)");
         // talk to npcs? Listen to rumours? etc.
 
         int choice = Utility.checkIfNumber(sc);
@@ -98,10 +96,7 @@ public class Zone  {
         Utility.clearConsole();
         Utility.slowPrint("You are in the " + pc.getCurrentZone().getName());
         Utility.slowPrint("Choose an action:");
-        System.out.println("1. Wander (travel inside zone)");
-        System.out.println("2. Look around (display current zone)");
-        System.out.println("3. Travel (travel between zones)");
-        System.out.println("4. Remind me how to play again.");
+        System.out.println("1. Wander (travel inside zone)\n2. Look around (display current zone)\n3. Travel (travel between zones)\n4. Remind me how to play again.");
         if (pc.getCurrentZone() == Area.TAVERN) {
             System.out.println("5. Tavern menu (to rest and shop for items)");
         }
@@ -156,13 +151,16 @@ public class Zone  {
             if (pc.getCurrentZone().equals(selectedZone)) { // check if player is already in the selected zone
                 Utility.clearConsole();
                 Utility.slowPrint("You return to the " + selectedZone.getName());
+                Utility.promptEnterKey(sc);
                 return pc.getCurrentZone(); // Put pc back in same zone if already there.
             }
             Utility.clearConsole();
             Utility.slowPrint("You travel to the " + selectedZone.getName());
+            Utility.promptEnterKey(sc);
             return selectedZone;
         } else { // error handling for invalid choice
             System.out.println("Invalid choice. Please try again. Or: ");
+            Utility.promptEnterKey(sc);
             return displayTraveableZones(pc); // Recursively call the method again for a valid choice
         }
     }
@@ -170,6 +168,7 @@ public class Zone  {
     public void displayCurrentZone(PlayerCharacter pc) { // Just displays the current zone and its description + if it's cleared or not.
         Utility.clearConsole();
         Utility.slowPrint("You are in " + pc.getCurrentZone().getName() + ". " + pc.getCurrentZone().getDescription() + " Zone cleared: " + pc.getCurrentZone().getZoneCleared());
+        Utility.promptEnterKey(sc);
     }
     
     public void travelInsideZone(PlayerCharacter pc) { // Wander/explore inside zone function. 
