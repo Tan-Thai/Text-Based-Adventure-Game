@@ -5,7 +5,7 @@ import Global.Utility;
 
 public class Tavern extends Zone {
     public Tavern() {
-        super("Tavern", "A lively tavern filled with patrons and the smell of ale.", true, null);
+        super("Tavern", "A lively tavern filled with patrons and the smell of ale.", true, ZoneType.TAVERN, null);
     }
 
     public void takeRest(PlayerCharacter pc) { // take rest method
@@ -24,7 +24,7 @@ public class Tavern extends Zone {
         // make npc to shop from since they have inventory
     }
     /*
-     * public void setOut(PlayerCharacter pc, Area zone) { //not needed now?
+     * public void setOut(PlayerCharacter pc, Zone zone) { //not needed now?
      * Utility.clearConsole();
      * Global.Utility.Slowprint.
      * sp("You leave the tavern and head out in the looming dark forest.");

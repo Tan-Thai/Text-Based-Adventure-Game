@@ -1,10 +1,10 @@
+import GameObjects.Data.EncounterRepository;
 import GameObjects.Entities.*;
 import GameObjects.Items.*;
 import GameObjects.Worlds.Zone;
 import Global.*;
 import Interactions.Combat;
 import Interactions.EncounterHandler;
-import Interactions.EncounterRepository;
 
 import java.util.Scanner;
 
@@ -39,7 +39,7 @@ public class Main {
     private static void encounterTest(PlayerCharacter pc, Scanner myScanner) {
 
         Zone testZone = new Zone("testZone", "This is a very testy testzone", false,
-                EncounterRepository.getFirstZoneEncounters());
+                null, EncounterRepository.getForestEncounters());
 
         EncounterHandler encounterHandler = EncounterHandler.getInstance();
 

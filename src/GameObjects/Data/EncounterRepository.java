@@ -1,10 +1,12 @@
-package Interactions;
+package GameObjects.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import Interactions.ChallengeType;
+import Interactions.Encounter;
+
 public class EncounterRepository {
-	// TODO Discuss moving this to global since it will be holding data
 	// TODO Consider if we want one of these for enemies later then? Or the same for
 	// both if enemies should be inside encounters?
 
@@ -13,7 +15,7 @@ public class EncounterRepository {
 	// being Forest.
 	private static List<Encounter> firstZoneEncounters = new ArrayList<>();
 
-	public static List<Encounter> getFirstZoneEncounters() {
+	public static List<Encounter> getForestEncounters() {
 
 		firstZoneEncounters = new ArrayList<Encounter>();
 
