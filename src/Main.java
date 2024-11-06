@@ -1,6 +1,9 @@
+import GameObjects.Data.EncounterRepository;
 import GameObjects.Entities.*;
 import GameObjects.Items.*;
 import GameObjects.Worlds.Zone;
+import GameObjects.Worlds.ZoneManager;
+import GameObjects.Worlds.ZoneType;
 import Global.*;
 import Interactions.Combat;
 import Interactions.EncounterHandler;
@@ -28,7 +31,8 @@ public class Main {
         // combatTest(pc, goblin, sc);
 
         // Encounter test
-        encounterTest(pc, sc);
+
+        // encounterTest(pc, sc);
 
         // combatTest(pc, new HostileCharacter("Wimpy boyo", 4), sc);
 
@@ -38,15 +42,16 @@ public class Main {
 
     private static void encounterTest(PlayerCharacter pc, Scanner myScanner) {
 
-        Zone testZone = new Zone("testZone", "This is a very testy testzone", false,
-                EncounterRepository.getFirstZoneEncounters());
+        // This one is my bad, currently the ZoneManager needs to get instantiated for
+        // the rest to work.
+        // I will fix this later I promise! Just let it be for now!
+        ZoneManager.getInstance();
 
         EncounterHandler encounterHandler = EncounterHandler.getInstance();
 
-        while (true) {
-            System.out.println(testZone.getName());
-            encounterHandler.initiateEncounter(pc, testZone.getUnclearedEncounter(), myScanner);
-
+        while (ZoneManager.getZone(ZoneType.FOREST).hasUnclearedEncounters()) {
+            System.out.println(ZoneManager.getZone(ZoneType.FOREST).getName());
+            encounterHandler.runEncounter(pc, ZoneManager.getZone(ZoneType.FOREST).getUnclearedEncounter(), myScanner);
         }
     }
 

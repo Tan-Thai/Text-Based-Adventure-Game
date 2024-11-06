@@ -40,11 +40,11 @@ public class Encounter {
 		this.loot = loot;
 	}
 
-	public boolean getIsCleared() {
+	public boolean isCleared() {
 		return isCleared;
 	}
 
-	public void setIsCleared(boolean state) {
+	public void isCleared(boolean state) {
 		isCleared = state;
 	}
 
