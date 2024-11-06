@@ -2,6 +2,8 @@ import GameObjects.Data.EncounterRepository;
 import GameObjects.Entities.*;
 import GameObjects.Items.*;
 import GameObjects.Worlds.Zone;
+import GameObjects.Worlds.ZoneManager;
+import GameObjects.Worlds.ZoneType;
 import Global.*;
 import Interactions.Combat;
 import Interactions.EncounterHandler;
@@ -26,7 +28,11 @@ public class Main {
 
         // Combat test.
         // combatTest(pc, goblin, sc);
+        ZoneManager.getInstance();
 
+        System.out.println(ZoneManager.getZone(ZoneType.FOREST).getName());
+
+        System.out.println(ZoneManager.getZone(ZoneType.FOREST).getUnclearedEncounter().getDescription());
         // Encounter test
         encounterTest(pc, sc);
 
@@ -45,7 +51,7 @@ public class Main {
 
         while (true) {
             System.out.println(testZone.getName());
-            encounterHandler.initiateEncounter(pc, testZone.getUnclearedEncounter(), myScanner);
+            encounterHandler.runEncounter(pc, testZone.getUnclearedEncounter(), myScanner);
 
         }
     }

@@ -96,7 +96,20 @@ public class Utility {
         }
     }
 
-    // TODO: Write explaining summary of this function
+    /**
+     * Function that rolls a given set of dice and returns the number of dice who's
+     * results where equal or above the success value.
+     * If not otherwise specified, success value, as well as crit value and how many
+     * sides each die has is set to the default values of the variables in this
+     * script.
+     * 
+     * @param diceAmount
+     * @param colour
+     * @param optionalSuccessValue Optional argument for what value the dies needs to be equal or above to count as successess
+     * @param optionalCritValue Optional argument for what value the dies needs to be equal or above to count as a critical success
+     * @param optionalDiceSideAmount Optional argument for how many sides you want the dies to have.
+     * @return
+     */
     public static int rollDicePool(int diceAmount, String colour, OptionalInt optionalSuccessValue,
             OptionalInt optionalCritValue, OptionalInt optionalDiceSideAmount) {
 
@@ -114,15 +127,13 @@ public class Utility {
             System.out.print(colour + "[" + currentValue + "]" + RESET);
 
             if (currentValue >= successValue) {
-                if (currentValue == critValue) {
-                    // TODO Check with WV if all die pools are "exploding" or if this should be
-                    // controlled by a bool.
+                if (currentValue >= critValue) {
                     i--;
                 }
                 successAmount++;
             }
         }
-        // To give space between the result and the text.
+        // To give space between the result and the following text.
         System.out.println();
 
         return successAmount;

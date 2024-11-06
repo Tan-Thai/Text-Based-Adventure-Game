@@ -72,7 +72,7 @@ public class Zone {
      */
     public boolean hasUnclearedEncounters() {
         for (Encounter encounter : encounters) {
-            if (!encounter.getIsCleared()) {
+            if (!encounter.isCleared()) {
                 return true;
             }
         }
@@ -88,7 +88,7 @@ public class Zone {
      */
     public Encounter getUnclearedEncounter() {
         for (Encounter encounter : encounters) {
-            if (!encounter.getIsCleared()) {
+            if (!encounter.isCleared()) {
                 return encounter;
             }
         }

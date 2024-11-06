@@ -7,23 +7,18 @@ import Interactions.ChallengeType;
 import Interactions.Encounter;
 
 public class EncounterRepository {
-	// TODO Consider if we want one of these for enemies later then? Or the same for
-	// both if enemies should be inside encounters?
 
-	// TODO: Discuss renamning this List to forestEncounters, might be easier to
-	// work with more direct name, even if it "marries" us to the concept of it
-	// being Forest.
-	private static List<Encounter> firstZoneEncounters = new ArrayList<>();
+	private static List<Encounter> forestEncounters = new ArrayList<>();
 
 	public static List<Encounter> getForestEncounters() {
 
-		firstZoneEncounters = new ArrayList<Encounter>();
+		forestEncounters = new ArrayList<Encounter>();
 
-		firstZoneEncounters.add(getLureWillOWispEncounter());
-		firstZoneEncounters.add(getHuntersForgottenTrapEncounter());
-		firstZoneEncounters.add(getGristlyMealEncounter());
+		forestEncounters.add(getLureWillOWispEncounter());
+		forestEncounters.add(getHuntersForgottenTrapEncounter());
+		forestEncounters.add(getGristlyMealEncounter());
 
-		return firstZoneEncounters;
+		return forestEncounters;
 	}
 
 	private static Encounter getLureWillOWispEncounter() {
