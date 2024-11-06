@@ -5,7 +5,6 @@ import GameObjects.Worlds.Zones.*;
 public class PlayerCharacter extends Entity {
     private int experience;
     private Area currentZone = Area.TAVERN; // stores the current zone you are in
-    private int gold;
     // private Room location = blabla
     // wondering if the player or even entity needs a room to "spawn" in let alone know where it's at in the world map.
 
@@ -15,14 +14,6 @@ public class PlayerCharacter extends Entity {
 
     public int getExperience() {
         return experience;
-    }
-
-    public int getGold() {
-        return gold;
-    }
-
-    public void setGold(int gold) {
-        this.gold = gold;
     }
 
     public void gainExperience(int exp) {
