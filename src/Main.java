@@ -28,13 +28,9 @@ public class Main {
 
         // Combat test.
         // combatTest(pc, goblin, sc);
-        ZoneManager.getInstance();
 
-        System.out.println(ZoneManager.getZone(ZoneType.FOREST).getName());
-
-        System.out.println(ZoneManager.getZone(ZoneType.FOREST).getUnclearedEncounter().getDescription());
         // Encounter test
-        encounterTest(pc, sc);
+        // encounterTest(pc, sc);
 
         // combatTest(pc, new HostileCharacter("Wimpy boyo", 4), sc);
 
@@ -44,15 +40,16 @@ public class Main {
 
     private static void encounterTest(PlayerCharacter pc, Scanner myScanner) {
 
-        Zone testZone = new Zone("testZone", "This is a very testy testzone", false,
-                null, EncounterRepository.getForestEncounters());
+        // This one is my bad, currently the ZoneManager needs to get instantiated for
+        // the rest to work.
+        // I will fix this later I promise! Just let it be for now!
+        ZoneManager.getInstance();
 
         EncounterHandler encounterHandler = EncounterHandler.getInstance();
 
-        while (true) {
-            System.out.println(testZone.getName());
-            encounterHandler.runEncounter(pc, testZone.getUnclearedEncounter(), myScanner);
-
+        while (ZoneManager.getZone(ZoneType.FOREST).hasUnclearedEncounters()) {
+            System.out.println(ZoneManager.getZone(ZoneType.FOREST).getName());
+            encounterHandler.runEncounter(pc, ZoneManager.getZone(ZoneType.FOREST).getUnclearedEncounter(), myScanner);
         }
     }
 
