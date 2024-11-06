@@ -114,7 +114,7 @@ public class Zone  {
                     room.zoneTravel(pc);
                     break;
                 case 4:
-                    Utility.howToPlay(sc);
+                    Info.howToPlay(sc);
                     break;
                 case 5:
                     if (pc.getCurrentZone() == Area.TAVERN) {

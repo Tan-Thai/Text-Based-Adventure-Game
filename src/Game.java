@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 import GameObjects.Entities.PlayerCharacter;
 import GameObjects.Worlds.Zone;
-import Global.Utility;
+import Global.*;
 
 public class Game {
 
@@ -22,7 +22,7 @@ public class Game {
                 // startGame(); call main game loop
                 break;
             case 2:
-                Utility.howToPlay(sc);
+                Info.howToPlay(sc);
                 break;
             case 3:
                 System.out.println("Exiting game...");
