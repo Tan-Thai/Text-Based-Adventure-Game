@@ -1,7 +1,6 @@
 package GameObjects.Worlds;
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
-import Global.Utility.Slowprint; // Add this line to import Slowprint
 
 public class Tavern extends Zone {
     public Tavern() {
@@ -11,9 +10,9 @@ public class Tavern extends Zone {
     
     public void takeRest(PlayerCharacter pc) { // take rest method
         Utility.clearConsole();
-        Slowprint.sp("You take a rest and regain some health.");
+        Utility.slowPrint("You take a rest and regain some health.");
         pc.setHealth(pc.getMaxHealth());
-        Slowprint.sp("Your health is now " + pc.getHealth());
+        Utility.slowPrint("Your health is now " + pc.getHealth());
         
         
     }
@@ -21,10 +20,9 @@ public class Tavern extends Zone {
     public void openShop(PlayerCharacter pc) { // open shop method, WIP
         Utility.clearConsole();
      //   pc.getInventory();
-        Slowprint.sp("You open the shop and see a variety of items for sale.");
+     Utility.slowPrint("You open the shop and see a variety of items for sale.");
         System.out.printf("Items for sale:");
         // make npc to shop from since they have inventory
-        
     }
 /* 
     public void setOut(PlayerCharacter pc, Area zone) { //not needed now?
@@ -35,9 +33,4 @@ public class Tavern extends Zone {
         
     }   */
 
-   // @Override //testar Override
-  //  public void populateEvents(String event, String description) {
-        //${0: TODO Auto-generated method stub
-  //      super.populateEvents(event, description);
- //   }
 }

@@ -26,24 +26,15 @@ public class Main {
         // itemAndDisplayTest(pc, goblin, sc);
 
         // Combat test.
-        combatTest(pc, goblin, sc);
+   //     combatTest(pc, goblin, sc);
 
         // Encounter test
-        encounterTest(pc, sc);
+   //     encounterTest(pc, sc);
 
-        combatTest(pc, new HostileCharacter("Wimpy boyo", 4), sc);
+   //     combatTest(pc, new HostileCharacter("Wimpy boyo", 4), sc);
 
         // MESSING AROUND WITH ZONES AND TRAVEL
-        Zone room = new Zone();
-        room.displayCurrentZone(pc); // Temporary intro to the game
-        Utility.promptEnterKey(sc);
-        while (room.checkGameOver() == false) {
-            Utility.clearConsole();
-            room.travelMenu(pc, room);
-            Utility.promptEnterKey(sc);
-        }
-
-        sc.close();
+        Game.gameMenu(pc, sc);
     }
 
     private static void encounterTest(PlayerCharacter pc, Scanner myScanner) {
