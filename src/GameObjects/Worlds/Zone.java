@@ -1,24 +1,30 @@
 package GameObjects.Worlds;
 
 import GameObjects.Entities.PlayerCharacter;
-import Global.*;
 import Global.Utility;
+import Interactions.Encounter;
 import GameObjects.Worlds.Zones.Area;
 import java.util.Scanner;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-public class Zone  {
+public class Zone {
     private String name;
     private String description;
     private boolean zoneCleared;
     public Scanner sc = new Scanner(System.in);
     private Set<Area> traveableZones = new HashSet<>();
 
-    public Zone (String name, String desc, boolean zoneCleared) { // constructor handles tavern, basement, enums.
+    private List<Encounter> encounters = new ArrayList<>();
+
+    public Zone(String name, String desc, boolean zoneCleared, List<Encounter> encounters) { // constructor handles
+                                                                                             // tavern, basement, enums.
         this.name = name;
         this.description = desc;
         this.zoneCleared = zoneCleared;
+        this.encounters = encounters;
     }
 
     public Zone() { // called in main to initialize the zones
@@ -55,8 +61,29 @@ public class Zone  {
         return zoneCleared;
     }
 
+    public boolean hasUnclearedEncounters() {
+        for (Encounter encounter : encounters) {
+            if (!encounter.getIsCleared()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public Encounter getUnclearedEncounter() {
+        for (Encounter encounter : encounters) {
+            if (!encounter.getIsCleared()) {
+                return encounter;
+            }
+        }
+        System.out.println("Couldn't find any uncleared encounters within zone: " + this.name + "." +
+                "Returned null for now.");
+        return null;
+    }
+
     public void tavernMenu(PlayerCharacter pc) { // opnens up tavern menu for resting and shopping for items
-        Tavern tavern = new Tavern(); //create tavern object outside? 
+        Tavern tavern = new Tavern(); // create tavern object outside?
         Utility.clearConsole();
         Utility.slowPrint("Choose an action:");
         System.out.println("1. Rest (restore health)\n2. Open shop (buy items)\n3. Set out (Back to travel menu)");
@@ -82,7 +109,7 @@ public class Zone  {
                 System.out.println("Invalid choice. Please try again.");
                 break;
         }
-        
+
     }
 
     public void travelMenu(PlayerCharacter pc, Zone room) { // opens up travel menu for player.
@@ -96,43 +123,44 @@ public class Zone  {
         Utility.clearConsole();
         Utility.slowPrint("You are in the " + pc.getCurrentZone().getName());
         Utility.slowPrint("Choose an action:");
-        System.out.println("1. Wander (travel inside zone)\n2. Look around (display current zone)\n3. Travel (travel between zones)\n4. Remind me how to play again.");
+        System.out.println(
+                "1. Wander (travel inside zone)\n2. Look around (display current zone)\n3. Travel (travel between zones)\n4. Remind me how to play again.");
         if (pc.getCurrentZone() == Area.TAVERN) {
             System.out.println("5. Tavern menu (to rest and shop for items)");
         }
 
         int choice = Utility.checkIfNumber(sc);
 
-            switch (choice) {
-                case 1:
-                    room.travelInsideZone(pc);
-                    break;
-                case 2:
-                    room.displayCurrentZone(pc);
-                    break;
-                case 3:
-                    room.zoneTravel(pc);
-                    break;
-                case 4:
-                    Utility.howToPlay(sc);
-                    break;
-                case 5:
-                    if (pc.getCurrentZone() == Area.TAVERN) {
-                        room.tavernMenu(pc);
-                    }
-                    else {
-                        System.out.println("Invalid choice. Please try again.");
-                    }
-                    break;
-                    
-                default:
+        switch (choice) {
+            case 1:
+                room.travelInsideZone(pc);
+                break;
+            case 2:
+                room.displayCurrentZone(pc);
+                break;
+            case 3:
+                room.zoneTravel(pc);
+                break;
+            case 4:
+                Utility.howToPlay(sc);
+                break;
+            case 5:
+                if (pc.getCurrentZone() == Area.TAVERN) {
+                    room.tavernMenu(pc);
+                } else {
                     System.out.println("Invalid choice. Please try again.");
-                    break;
-            }
+                }
+                break;
+
+            default:
+                System.out.println("Invalid choice. Please try again.");
+                break;
+        }
 
     }
 
-    public Area displayTraveableZones(PlayerCharacter pc) { // displays traveable zones and lets player choose where to travel
+    public Area displayTraveableZones(PlayerCharacter pc) { // displays traveable zones and lets player choose where to
+                                                            // travel
         Utility.clearConsole();
         int index = 1;
 
@@ -145,7 +173,8 @@ public class Zone  {
         System.out.println("Enter the number of the zone you want to travel to: ");
         int choice = Utility.checkIfNumber(sc);
         if (choice > 0 && choice <= traveableZones.size()) {
-            Area[] zonesArray = traveableZones.toArray(new Area[0]); // make array of traveablezones Set to be able to index it for selection
+            Area[] zonesArray = traveableZones.toArray(new Area[0]); // make array of traveablezones Set to be able to
+                                                                     // index it for selection
             Area selectedZone = zonesArray[choice - 1]; // select zone to travel to, index - 1.
 
             if (pc.getCurrentZone().equals(selectedZone)) { // check if player is already in the selected zone
@@ -165,14 +194,18 @@ public class Zone  {
         }
     }
 
-    public void displayCurrentZone(PlayerCharacter pc) { // Just displays the current zone and its description + if it's cleared or not.
+    public void displayCurrentZone(PlayerCharacter pc) { // Just displays the current zone and its description + if it's
+                                                         // cleared or not.
         Utility.clearConsole();
-        Utility.slowPrint("You are in " + pc.getCurrentZone().getName() + ". " + pc.getCurrentZone().getDescription() + " Zone cleared: " + pc.getCurrentZone().getZoneCleared());
+        Utility.slowPrint("You are in " + pc.getCurrentZone().getName() + ". " + pc.getCurrentZone().getDescription()
+                + " Zone cleared: " + pc.getCurrentZone().getZoneCleared());
         Utility.promptEnterKey(sc);
     }
-    
-    public void travelInsideZone(PlayerCharacter pc) { // Wander/explore inside zone function. 
-        if (pc.getCurrentZone() == Area.TAVERN || pc.getCurrentZone() == Area.BASEMENT) { // maybe not needed, just remove option to travel when inside those zones?
+
+    public void travelInsideZone(PlayerCharacter pc) { // Wander/explore inside zone function.
+        if (pc.getCurrentZone() == Area.TAVERN || pc.getCurrentZone() == Area.BASEMENT) { // maybe not needed, just
+                                                                                          // remove option to travel
+                                                                                          // when inside those zones?
             Utility.clearConsole();
             Utility.slowPrint("You cannot travel inside the " + pc.getCurrentZone().getName());
             return;
@@ -181,19 +214,23 @@ public class Zone  {
         Utility.clearConsole();
 
         Utility.slowPrint("You wander around the " + pc.getCurrentZone().getName());
-        Utility.slowPrint("A monster appears!\nHuzzah! You killed it, and on it you find a map leading to the next area!"); // sample text
+        Utility.slowPrint(
+                "A monster appears!\nHuzzah! You killed it, and on it you find a map leading to the next area!"); // sample
+                                                                                                                  // text
 
         // fight?
         // EVENTS??
-        pc.getCurrentZone().setZoneCleared(true); // sets the zone to cleared after wandering around and killing monster or clearing event.
+        pc.getCurrentZone().setZoneCleared(true); // sets the zone to cleared after wandering around and killing monster
+                                                  // or clearing event.
     }
 
-    public void zoneTravel(PlayerCharacter pc) { // Travel between zones method, 
+    public void zoneTravel(PlayerCharacter pc) { // Travel between zones method,
 
         Utility.clearConsole();
         initializeTravelableZones();
-        if (pc.getCurrentZone().getZoneCleared() == true) { // checks if currentzone is clrared, if not, player can't travel.
-            switch (pc.getCurrentZone()) { // 
+        if (pc.getCurrentZone().getZoneCleared() == true) { // checks if currentzone is clrared, if not, player can't
+                                                            // travel.
+            switch (pc.getCurrentZone()) { //
                 case Area.TAVERN:
                     pc.setCurrentZone(displayTraveableZones(pc));
                     break;
@@ -211,23 +248,29 @@ public class Zone  {
                 default:
                     System.out.println("Unavailable to travel");
             }
-    
-        } else if (pc.getCurrentZone().getZoneCleared() == false && pc.getCurrentZone() != Area.TAVERN) { // allows player to backtrack to tavern if zone is not cleared.
+
+        } else if (pc.getCurrentZone().getZoneCleared() == false && pc.getCurrentZone() != Area.TAVERN) { // allows
+                                                                                                          // player to
+                                                                                                          // backtrack
+                                                                                                          // to tavern
+                                                                                                          // if zone is
+                                                                                                          // not
+                                                                                                          // cleared.
             Utility.slowPrint("You have not cleared this zone yet. However, do you want to backtrack to the tavern?");
             Utility.clearScanner(sc);
             if (Utility.checkYesOrNo(sc)) {
                 pc.setCurrentZone(Area.TAVERN);
                 tavernMenu(pc);
             }
-            
+
         }
-        
+
         else {
             Utility.slowPrint("You have not cleared this zone yet.");
             Utility.clearScanner(sc);
-            
+
         }
-        
+
     }
 
     public boolean checkGameOver() { // ############ TEMPORARY ############
@@ -236,6 +279,6 @@ public class Zone  {
         } else {
             return false;
         }
-        
+
     }
 }

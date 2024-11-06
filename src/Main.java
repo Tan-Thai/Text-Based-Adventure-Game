@@ -2,10 +2,9 @@ import GameObjects.Entities.*;
 import GameObjects.Items.*;
 import GameObjects.Worlds.Zone;
 import Global.*;
-import Interactions.ChallengeType;
 import Interactions.Combat;
-import Interactions.Encounter;
 import Interactions.EncounterHandler;
+import Interactions.EncounterRepository;
 
 import java.util.Scanner;
 
@@ -20,18 +19,18 @@ public class Main {
                 pc.getName(), pc.getHealth());
         Utility.promptEnterKey(sc);
 
-        HostileCharacter goblin = new HostileCharacter("Goblin", 6);
+        // HostileCharacter goblin = new HostileCharacter("Goblin", 6);
 
         // Item and goblin tests.
         // itemAndDisplayTest(pc, goblin, sc);
 
         // Combat test.
-   //     combatTest(pc, goblin, sc);
+        // combatTest(pc, goblin, sc);
 
         // Encounter test
-   //     encounterTest(pc, sc);
+        encounterTest(pc, sc);
 
-   //     combatTest(pc, new HostileCharacter("Wimpy boyo", 4), sc);
+        // combatTest(pc, new HostileCharacter("Wimpy boyo", 4), sc);
 
         // MESSING AROUND WITH ZONES AND TRAVEL
         Game.gameMenu(pc, sc);
@@ -39,19 +38,16 @@ public class Main {
 
     private static void encounterTest(PlayerCharacter pc, Scanner myScanner) {
 
-        Encounter encounter = new Encounter(
-                "Oh, between the trees you see an old woman. Her donkey refuses to cross the stream.",
-                1,
-                ChallengeType.STRENGTH,
-                "You heroically lift and carry the donkey across the stream.",
-                "Your feeble attempt wasn't enough to even budge the donkey",
-                100,
-                100,
-                null);
+        Zone testZone = new Zone("testZone", "This is a very testy testzone", false,
+                EncounterRepository.getFirstZoneEncounters());
 
         EncounterHandler encounterHandler = EncounterHandler.getInstance();
 
-        encounterHandler.initiateEncounter(pc, encounter, myScanner);
+        while (true) {
+            System.out.println(testZone.getName());
+            encounterHandler.initiateEncounter(pc, testZone.getUnclearedEncounter(), myScanner);
+
+        }
     }
 
     private static PlayerCharacter setupUser(Scanner sc) {

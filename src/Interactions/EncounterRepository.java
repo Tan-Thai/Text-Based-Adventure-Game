@@ -5,7 +5,8 @@ import java.util.List;
 
 public class EncounterRepository {
 	// TODO Discuss moving this to global since it will be holding data
-	// TODO Consider if we want one of these for enemies later then? Or the same for both if enemies should be inside encounters?
+	// TODO Consider if we want one of these for enemies later then? Or the same for
+	// both if enemies should be inside encounters?
 
 	// TODO: Discuss renamning this List to forestEncounters, might be easier to
 	// work with more direct name, even if it "marries" us to the concept of it
@@ -23,7 +24,7 @@ public class EncounterRepository {
 		return firstZoneEncounters;
 	}
 
-	public static Encounter getLureWillOWispEncounter() {
+	private static Encounter getLureWillOWispEncounter() {
 		return new Encounter(
 				"""
 						You walk deeper into the dense forest, ancient pines wrapped in gray moss towers over you.
@@ -54,7 +55,7 @@ public class EncounterRepository {
 				null);
 	}
 
-	public static Encounter getHuntersForgottenTrapEncounter() {
+	private static Encounter getHuntersForgottenTrapEncounter() {
 		return new Encounter(
 				"""
 						You are walking along a narrow hunting trail when you feel something first catch onto, and then
@@ -79,7 +80,7 @@ public class EncounterRepository {
 				null);
 	}
 
-	public static Encounter getGristlyMealEncounter() {
+	private static Encounter getGristlyMealEncounter() {
 		return new Encounter(
 				"""
 						Wandering through the forest you come upon a strange gathering. A group of wart-covered trolls
@@ -109,7 +110,7 @@ public class EncounterRepository {
 				null);
 	}
 
-	public static Encounter getUnfinishedEncounter() {
+	private static Encounter getUnfinishedEncounter() {
 		return new Encounter(
 				null,
 				0,
