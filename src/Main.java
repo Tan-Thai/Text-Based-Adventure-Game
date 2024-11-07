@@ -1,10 +1,11 @@
+import GameObjects.Data.EncounterRepository;
 import GameObjects.Entities.*;
 import GameObjects.Items.*;
 import GameObjects.Worlds.Zone;
+import GameObjects.Worlds.ZoneManager;
+import GameObjects.Worlds.ZoneType;
 import Global.*;
-import Interactions.ChallengeType;
 import Interactions.Combat;
-import Interactions.Encounter;
 import Interactions.EncounterHandler;
 
 import java.util.Scanner;
@@ -20,18 +21,19 @@ public class Main {
                 pc.getName(), pc.getHealth());
         Utility.promptEnterKey(sc);
 
-        HostileCharacter goblin = new HostileCharacter("Goblin", 6);
+        // HostileCharacter goblin = new HostileCharacter("Goblin", 6);
 
         // Item and goblin tests.
         // itemAndDisplayTest(pc, goblin, sc);
 
         // Combat test.
-   //     combatTest(pc, goblin, sc);
+        // combatTest(pc, goblin, sc);
 
         // Encounter test
-   //     encounterTest(pc, sc);
 
-   //     combatTest(pc, new HostileCharacter("Wimpy boyo", 4), sc);
+        // encounterTest(pc, sc);
+
+        // combatTest(pc, new HostileCharacter("Wimpy boyo", 4), sc);
 
         // MESSING AROUND WITH ZONES AND TRAVEL
         Game.gameMenu(pc, sc);
@@ -39,19 +41,17 @@ public class Main {
 
     private static void encounterTest(PlayerCharacter pc, Scanner myScanner) {
 
-        Encounter encounter = new Encounter(
-                "Oh, between the trees you see an old woman. Her donkey refuses to cross the stream.",
-                1,
-                ChallengeType.STRENGTH,
-                "You heroically lift and carry the donkey across the stream.",
-                "Your feeble attempt wasn't enough to even budge the donkey",
-                100,
-                100,
-                null);
+        // This one is my bad, currently the ZoneManager needs to get instantiated for
+        // the rest to work.
+        // I will fix this later I promise! Just let it be for now!
+        ZoneManager.getInstance();
 
         EncounterHandler encounterHandler = EncounterHandler.getInstance();
 
-        encounterHandler.initiateEncounter(pc, encounter, myScanner);
+        while (ZoneManager.getZone(ZoneType.FOREST).hasUnclearedEncounters()) {
+            System.out.println(ZoneManager.getZone(ZoneType.FOREST).getName());
+            encounterHandler.runEncounter(pc, ZoneManager.getZone(ZoneType.FOREST).getUnclearedEncounter(), myScanner);
+        }
     }
 
     private static PlayerCharacter setupUser(Scanner sc) {

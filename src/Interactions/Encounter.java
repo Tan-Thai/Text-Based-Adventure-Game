@@ -8,6 +8,8 @@ import GameObjects.Items.Item;
 
 public class Encounter {
 
+	private boolean isCleared = false;
+
 	private HostileCharacter enemy;
 
 	private String description;
@@ -36,6 +38,14 @@ public class Encounter {
 		this.experienceReward = experienceReward;
 		this.currencyReward = currencyReward;
 		this.loot = loot;
+	}
+
+	public boolean isCleared() {
+		return isCleared;
+	}
+
+	public void isCleared(boolean state) {
+		isCleared = state;
 	}
 
 	public boolean isCombatEncounter() {

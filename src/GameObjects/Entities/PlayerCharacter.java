@@ -1,15 +1,19 @@
 package GameObjects.Entities;
 
-import GameObjects.Worlds.Zones.*;
+import GameObjects.Worlds.Zone;
+import GameObjects.Worlds.ZoneManager;
+import GameObjects.Worlds.ZoneType;
 
 public class PlayerCharacter extends Entity {
     private int experience;
-    private Area currentZone = Area.TAVERN; // stores the current zone you are in
+    private Zone currentZone; // stores the current zone you are in
     // private Room location = blabla
     // wondering if the player or even entity needs a room to "spawn" in let alone know where it's at in the world map.
 
     public PlayerCharacter(String name, int health, int str, int dex, int intel) {
         super(name, health, 1, str, dex, intel);
+
+        currentZone = ZoneManager.getZone(ZoneType.TAVERN);
         }
 
     public int getExperience() {
@@ -26,11 +30,11 @@ public class PlayerCharacter extends Entity {
         }
     }
 
-    public Area getCurrentZone() {
+    public Zone getCurrentZone() {
         return currentZone;
     }
 
-    public void setCurrentZone(Area zone) {
+    public void setCurrentZone(Zone zone) {
         this.currentZone = zone;
     }
 

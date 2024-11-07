@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 import GameObjects.Entities.PlayerCharacter;
 import GameObjects.Worlds.Zone;
+import GameObjects.Worlds.ZoneType;
 import Global.*;
 
 public class Game {
@@ -9,12 +10,12 @@ public class Game {
     public static void gameMenu(PlayerCharacter pc, Scanner sc) {
 
         while (true) {
-        Utility.clearConsole();
-        System.out.println("Welcome to the game!\n1. Start Game\n2. How to Play\n3. Exit");
+            Utility.clearConsole();
+            System.out.println("Welcome to the game!\n1. Start Game\n2. How to Play\n3. Exit");
 
-        int choice = Utility.checkIfNumber(sc);
+            int choice = Utility.checkIfNumber(sc);
 
-        switch (choice) {
+            switch (choice) {
 
             case 1:
                 System.out.println("Starting game...");
@@ -30,17 +31,16 @@ public class Game {
                 break;
         }
 
-    }
+        }
 
-    
     }
 
     private static void travelTest(PlayerCharacter pc, Scanner sc) {
-        Zone room = new Zone();
-     while (room.checkGameOver() == false) {
-         Utility.clearConsole();
-         room.travelMenu(pc, room);
-        } 
+        Zone room = new Zone("testZone", "this is a very testy testZone", false, ZoneType.FOREST, null);
+        while (room.checkGameOver() == false) {
+            Utility.clearConsole();
+            room.travelMenu(pc, room);
+        }
     }
-    
+
 }
