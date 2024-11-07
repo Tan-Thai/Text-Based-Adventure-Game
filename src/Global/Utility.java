@@ -140,9 +140,10 @@ public class Utility {
         return successAmount;
     }
 
-    public static void slowPrint(String text) { // Add int in parameter to change delay
+    public static void slowPrint(String text, int... optDelay) { // Add int in parameter to change delay
 
-            int delay = 40;
+            int delay = optDelay.length > 0 ? optDelay[0] : 40;
+       //     int delay = 40; 
             for (int i = 0; i < text.length(); i++) {
                 char currentChar = text.charAt(i);
                 System.out.print(currentChar);
