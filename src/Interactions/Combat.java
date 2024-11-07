@@ -14,8 +14,8 @@ public class Combat {
 
 	// Actors/ Entities in play - had first and second actor, but ill start with
 	// Player + enemy.
-	private PlayerCharacter player;
-	private HostileCharacter enemy;
+	private Entity player;
+	private Entity enemy;
 
 	private int playerHitCount = 0;
 	private int enemyHitCount = 0;
@@ -33,7 +33,7 @@ public class Combat {
 
 	// news up the combat situation and then starts the combat logic
 	// Currently takes in playerchar and hostilechar as a simple combat, but also to reach their respective methods.
-	public void initiateCombat(PlayerCharacter firstActor, HostileCharacter secondActor, Scanner sc) {
+	public void initiateCombat(Entity firstActor, Entity secondActor, Scanner sc) {
 		this.player = firstActor;
 		this.enemy = secondActor;
 		this.sc = sc;
@@ -121,7 +121,7 @@ public class Combat {
 			Utility.clearConsole();
 			printEntityHP(player, Utility.GREEN);
 			System.out.println("You have vanquished your foe!");;
-			player.gainExperience(enemy.calcExperienceGiven());
+			((PlayerCharacter) player).gainExperience(((HostileCharacter)enemy).calcExperienceGiven());
 			exitingCombat();
 
 		} else if (player.getHealth() <= 0) {
