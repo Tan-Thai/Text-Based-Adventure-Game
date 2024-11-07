@@ -20,7 +20,6 @@ public class HostileCharacter extends Entity {
     }
 
     //calculates the experience based on the level. numbers TBD
-    //Currently having it in entity since it can't otherwise be reached in combat.
     public int calcExperienceGiven(){
         return (int)(Math.round((level * 20 * 1.25)));
     }
