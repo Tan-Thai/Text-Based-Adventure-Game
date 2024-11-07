@@ -14,8 +14,8 @@ public class Combat {
 
 	// Actors/ Entities in play - had first and second actor, but ill start with
 	// Player + enemy.
-	private Entity player;
-	private Entity enemy;
+	private PlayerCharacter player;
+	private HostileCharacter enemy;
 
 	private int playerHitCount = 0;
 	private int enemyHitCount = 0;
@@ -32,7 +32,8 @@ public class Combat {
 	}
 
 	// news up the combat situation and then starts the combat logic
-	public void initiateCombat(Entity firstActor, Entity secondActor, Scanner sc) {
+	// Currently takes in playerchar and hostilechar as a simple combat, but also to reach their respective methods.
+	public void initiateCombat(PlayerCharacter firstActor, HostileCharacter secondActor, Scanner sc) {
 		this.player = firstActor;
 		this.enemy = secondActor;
 		this.sc = sc;
@@ -60,8 +61,9 @@ public class Combat {
 
 				// TODO Suggest to TT renaming function, because the entity is the one attacking
 				// correct? Might be confusing naming? Calculate attack might be better?
-				playerHitCount = attackEntity(player, Utility.GREEN);
-				enemyHitCount = attackEntity(enemy, Utility.RED);
+				// You are right and i agree, changed name to calcAttack for clearer indication.
+				playerHitCount = calcAttack(player, Utility.GREEN);
+				enemyHitCount = calcAttack(enemy, Utility.RED);
 
 				printHits();
 
@@ -84,7 +86,7 @@ public class Combat {
 	}
 
 	// calc's the attack values etc.
-	private int attackEntity(Entity actor, String colour) {
+	private int calcAttack(Entity actor, String colour) {
 
 		int hitCount = Utility.rollDicePool(actor.getStrength(), colour, OptionalInt.empty(), OptionalInt.empty(),
 				OptionalInt.empty());
@@ -118,12 +120,8 @@ public class Combat {
 		} else if (enemy.getHealth() <= 0) {
 			Utility.clearConsole();
 			printEntityHP(player, Utility.GREEN);
-			System.out.println("You have vanquished your foe!");
-			// GainExperience method should be called to give the player exp over hardcoding
-			// it.
-			int playerExp = 5;
-			System.out.println("You gain 5 experience points and a rusty longsword");
-			System.out.println("your current experience is " + playerExp);
+			System.out.println("You have vanquished your foe!");;
+			player.gainExperience(enemy.calcExperienceGiven());
 			exitingCombat();
 
 		} else if (player.getHealth() <= 0) {
