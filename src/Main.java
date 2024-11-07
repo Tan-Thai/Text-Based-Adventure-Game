@@ -7,7 +7,6 @@ import GameObjects.Worlds.ZoneType;
 import Global.*;
 import Interactions.Combat;
 import Interactions.EncounterHandler;
-import Interactions.EncounterRepository;
 
 import java.util.Scanner;
 
