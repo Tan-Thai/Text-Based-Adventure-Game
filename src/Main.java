@@ -16,6 +16,7 @@ public class Main {
         // currently just slapping everything into main - will create a "game" package
         // later to put all game logic into.
         Scanner sc = new Scanner(System.in);
+        ZoneManager.getInstance();
         PlayerCharacter pc = setupUser(sc);
         System.out.printf("Your name is %s and your current health is %d",
                 pc.getName(), pc.getHealth());

@@ -101,7 +101,7 @@ public class Zone {
         Tavern tavern = new Tavern(); // create tavern object outside?
         Utility.clearConsole();
         Utility.slowPrint("Choose an action:");
-        System.out.println("1. Rest (restore health)\n2. Inspect self (character sheet)\n3. Open shop (buy items)\n4. Set out (Back to travel menu)");
+        System.out.println("1. Rest (restore health)\n2. Open shop (buy items)\n3. Set out (Back to travel menu)");
         // talk to npcs? Listen to rumours? etc.
         // Temporarily using "inspect self" which brings up the character sheet.
 
@@ -114,14 +114,11 @@ public class Zone {
                 tavernMenu(pc);
                 break;
             case 2:
-                pc.inspectEntity(sc);
-                tavernMenu(pc);
-            case 3:
                 tavern.openShop(pc);
                 Utility.promptEnterKey(sc);
                 tavernMenu(pc);
                 break;
-            case 4:
+            case 3:
                 travelMenu(pc, tavern);
                 break;
             default:
@@ -145,7 +142,11 @@ public class Zone {
         Utility.slowPrint("You are in the " + pc.getCurrentZone().getName());
         Utility.slowPrint("Choose an action:");
         System.out.println(
-                "1. Wander (travel inside zone)\n2. Look around (display current zone)\n3. Travel (travel between zones)\n4. Remind me how to play again.");
+                "1. Wander (travel inside zone)\n" +
+                        "2. Look around (display current zone)\n" +
+                        "3. Inspect yourself (Character sheet)\n" +
+                        "4. Travel (travel between zones)\n" +
+                        "5. Remind me how to play again.");
         if (pc.getCurrentZone().getZoneType() == ZoneType.TAVERN) {
             System.out.println("5. Tavern menu (to rest and shop for items)");
         }
@@ -160,12 +161,15 @@ public class Zone {
                 room.displayCurrentZone(pc);
                 break;
             case 3:
-                room.zoneTravel(pc);
+                pc.inspectEntity(sc);
                 break;
             case 4:
-                Utility.howToPlay(sc);
+                room.zoneTravel(pc);
                 break;
             case 5:
+                Utility.howToPlay(sc);
+                break;
+            case 6:
                 if (pc.getCurrentZone().getZoneType() == ZoneType.TAVERN) {
                     room.tavernMenu(pc);
                 } else {
