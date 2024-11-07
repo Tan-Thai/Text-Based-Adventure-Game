@@ -9,8 +9,7 @@ public class Info {
             Utility.clearConsole();
             
             System.out.println("Here are some basic instructions on how to play:\nPlease choose the number corresponding to the option you need help with:");
-            System.out.println("1. My character, it's stats and abilities\n2. How does combat work?\n3. How to navigate between or inside zones.\n4. How to interact with items\n5. How to rest and shop for items in the tavern\n6. Exit menu.");
-            System.out.print("Enter your choice: ");
+            System.out.println("1. My character, it's stats and abilities\n2. How does combat work?\n3. How to navigate between or inside zones.\n4. How to interact with items\n5. How to rest and shop for items in the tavern\n6. Exit menu.\nEnter your choice: ");
             int choice = Utility.checkIfNumber(sc);
             Utility.clearConsole();
 
@@ -27,20 +26,17 @@ public class Info {
                     howToPlay(sc);
                     break;
                 case 3:
-                    System.out.println("You can navigate between different zones by using the travel menu. You may travel to the Forest or the Swamp freely but advancing more requires you to explore these zones.");
-                    System.out.println("You can also explore different areas within a zone by choosing to wander in the travel menu.");
+                    System.out.println("You can navigate between different zones by using the travel menu. You may travel to the Forest or the Swamp freely but advancing more requires you to explore these zones.\nYou can also explore different areas within a zone by choosing to wander in the travel menu.");
                     Utility.promptEnterKey(sc);
                     howToPlay(sc);
                     break;
                 case 4:
-                    System.out.println("You can interact with items by choosing to use them in the inventory menu.");
-                    System.out.println("You can also inspect items to view their descriptions and effects.");
+                    System.out.println("You can interact with items by choosing to use them in the inventory menu.\nYou can also inspect items to view their descriptions and effects.");
                     Utility.promptEnterKey(sc);
                     howToPlay(sc);
                     break;
                 case 5:
-                    System.out.println("You can rest and shop for items in the tavern. Resting will restore your health and shopping will allow you to buy items.");
-                    System.out.println("This is all accessible through the tavern menu.");
+                    System.out.println("You can rest and shop for items in the tavern. Resting will restore your health and shopping will allow you to buy items.\nThis is all accessible through the tavern menu when your character is in the tavern.");
                     Utility.promptEnterKey(sc);
                     howToPlay(sc);
                     break;
