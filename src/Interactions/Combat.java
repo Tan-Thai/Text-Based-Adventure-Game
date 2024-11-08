@@ -59,9 +59,6 @@ public class Combat {
 				Utility.clearConsole();
 				// can make it so we send in a defender as well if we add a defence formula.
 
-				// TODO Suggest to TT renaming function, because the entity is the one attacking
-				// correct? Might be confusing naming? Calculate attack might be better?
-				// You are right and i agree, changed name to calcAttack for clearer indication.
 				playerHitCount = calcAttack(player, Utility.GREEN);
 				enemyHitCount = calcAttack(enemy, Utility.RED);
 
