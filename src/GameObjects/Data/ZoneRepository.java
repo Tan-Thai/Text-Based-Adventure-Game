@@ -2,6 +2,7 @@ package GameObjects.Data;
 
 import java.util.HashMap;
 
+import GameObjects.Worlds.Tavern;
 import GameObjects.Worlds.Zone;
 import GameObjects.Worlds.ZoneType;
 
@@ -44,14 +45,9 @@ public class ZoneRepository { // This class is a repository for all the zones in
                 null);
     }
 
-    private static Zone tavernZone() {
-        return new Zone("Tavern",
-                """
-                        A lively tavern filled with patrons and the smell of ale.
-                        """,
-                true,
-                ZoneType.TAVERN,
-                null);
+    private static Zone tavernZone() { // Is tavern and basement needed? How to with special zones?
+         Zone tavern = new Tavern();
+         return tavern;
     }
 
     private static Zone basementZone() {
