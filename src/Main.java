@@ -12,7 +12,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
+        Utility.clearConsole();
+        ZoneManager.getInstance();
         // currently just slapping everything into main - will create a "game" package
         // later to put all game logic into.
         Scanner sc = new Scanner(System.in);
@@ -37,6 +38,7 @@ public class Main {
 
         // MESSING AROUND WITH ZONES AND TRAVEL
         Game.gameMenu(pc, sc);
+        
     }
 
     private static void encounterTest(PlayerCharacter pc, Scanner myScanner) {

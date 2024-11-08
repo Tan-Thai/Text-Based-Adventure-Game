@@ -90,6 +90,16 @@ public class ZoneManager {
 	}
 
 	public static Zone getZone(ZoneType zoneType) {
+		if (zones.get(zoneType) == null) {
+			System.err.println("Zone not found");
+			return null;
+		}
 		return zones.get(zoneType);
 	}
+
+	public static void displayZones() {
+		System.out.println("Zones:");
+		zones.forEach((k, v) -> System.out.println(v.getName()));
+	}
+
 }
