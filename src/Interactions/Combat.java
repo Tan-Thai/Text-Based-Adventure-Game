@@ -32,6 +32,7 @@ public class Combat {
 	}
 
 	// news up the combat situation and then starts the combat logic
+	// Currently takes in playerchar and hostilechar as a simple combat, but also to reach their respective methods.
 	public void initiateCombat(Entity firstActor, Entity secondActor, Scanner sc) {
 		this.player = firstActor;
 		this.enemy = secondActor;
@@ -58,10 +59,8 @@ public class Combat {
 				Utility.clearConsole();
 				// can make it so we send in a defender as well if we add a defence formula.
 
-				// TODO Suggest to TT renaming function, because the entity is the one attacking
-				// correct? Might be confusing naming? Calculate attack might be better?
-				playerHitCount = attackEntity(player, Utility.GREEN);
-				enemyHitCount = attackEntity(enemy, Utility.RED);
+				playerHitCount = calcAttack(player, Utility.GREEN);
+				enemyHitCount = calcAttack(enemy, Utility.RED);
 
 				printHits();
 
@@ -84,7 +83,7 @@ public class Combat {
 	}
 
 	// calc's the attack values etc.
-	private int attackEntity(Entity actor, String colour) {
+	private int calcAttack(Entity actor, String colour) {
 
 		int hitCount = Utility.rollDicePool(actor.getStrength(), colour, OptionalInt.empty(), OptionalInt.empty(),
 				OptionalInt.empty());
@@ -118,12 +117,8 @@ public class Combat {
 		} else if (enemy.getHealth() <= 0) {
 			Utility.clearConsole();
 			printEntityHP(player, Utility.GREEN);
-			System.out.println("You have vanquished your foe!");
-			// GainExperience method should be called to give the player exp over hardcoding
-			// it.
-			int playerExp = 5;
-			System.out.println("You gain 5 experience points and a rusty longsword");
-			System.out.println("your current experience is " + playerExp);
+			System.out.println("You have vanquished your foe!");;
+			((PlayerCharacter) player).gainExperience(((HostileCharacter)enemy).calcExperienceGiven());
 			exitingCombat();
 
 		} else if (player.getHealth() <= 0) {
