@@ -197,7 +197,8 @@ public class Zone {
         
         System.out.println("Enter the number of the zone you want to travel to: ");
         int choice = Utility.checkIfNumber(sc);
-    
+
+        // currently having 2 prints for checks, to be removed later.
         if (choice > 0 && choice <= traveableZones.size()) {
             Zone[] zonesArray = traveableZones.toArray(new Zone[0]); // make array of traveablezones Set to be able to
             System.out.println(zonesArray);                                                            // index it for selection
