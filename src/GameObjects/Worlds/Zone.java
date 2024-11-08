@@ -147,9 +147,13 @@ public class Zone {
             Utility.slowPrint("You are in the " + pc.getCurrentZone().getName());
             Utility.slowPrint("Choose an action:");
             System.out.println(
-                    "1. Wander (travel inside zone)\n2. Look around (display current zone)\n3. Travel (travel between zones)\n4. Remind me how to play again.");
+                    "1. Wander (travel inside zone)" +
+                            "\n2. Look around (display current zone)" +
+                            "\n3. Inspect yourself" + //Character sheet.
+                            "\n4. Travel (travel between zones)" +
+                            "\n5. Remind me how to play again.");
             if (pc.getCurrentZone().getZoneType() == ZoneType.TAVERN) {
-                System.out.println("5. Tavern menu (to rest and shop for items)");
+                System.out.println("6. Tavern menu (to rest and shop for items)");
             }
             int choice = Utility.checkIfNumber(sc);
 
@@ -161,12 +165,15 @@ public class Zone {
                 displayCurrentZone(pc);
                 break;
             case 3:
-                zoneTravel(pc);
+                pc.inspectEntity(sc);
                 break;
             case 4:
-                Info.howToPlay(sc);
+                zoneTravel(pc);
                 break;
             case 5:
+                Info.howToPlay(sc);
+                break;
+            case 6:
                 if (pc.getCurrentZone().getZoneType() == ZoneType.TAVERN) {
                     tavernMenu(pc);
                 } else {

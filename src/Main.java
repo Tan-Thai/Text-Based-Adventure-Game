@@ -27,6 +27,7 @@ public class Main {
 
         // Item and goblin tests.
         // itemAndDisplayTest(pc, goblin, sc);
+        addItems(pc);
 
         // Combat test.
         // combatTest(pc, goblin, sc);
@@ -41,6 +42,7 @@ public class Main {
         Game.gameMenu(pc, sc);
         
     }
+
 
     private static void encounterTest(PlayerCharacter pc, Scanner myScanner) {
 
@@ -67,7 +69,8 @@ public class Main {
         return new PlayerCharacter(nameInput, healthInput, 3, 2, 4);
     }
 
-    private static void itemAndDisplayTest(PlayerCharacter pc, Entity goblin, Scanner sc) {
+    // temp add items method.
+    private static void addItems(PlayerCharacter pc) {
         Equipment sword = new Equipment("A Simple Sword", "Your standard blade as a new adventurer.",
                 new DamageEffect(2));
         Potion potion = new Potion("Health Potion", "Chug when ouch", new HealingEffect(5));
@@ -76,8 +79,9 @@ public class Main {
         pc.getInventory().addItem(sword);
         pc.getInventory().addItem(potion);
         pc.getInventory().addItem(poison);
+    }
 
-        pc.getInventory().inspectInventory(sc, pc);
+    private static void itemAndDisplayTest(PlayerCharacter pc, Entity goblin, Scanner sc) {
 
         Utility.clearConsole();
         pc.displayHealth();

@@ -83,14 +83,9 @@ public class Entity {
     // method is planned to be able to inspect any entity and behave differently if it's a PC
     // Idea is to bake in the access to inventory through this as well.
     public void inspectEntity(Scanner sc) {
+        Utility.clearConsole();
         displayStats();
         displayHealth();
-        if (this instanceof PlayerCharacter) {
-            System.out.println("\n1. Open inventory.\n2. Exit inspection.");
-            if (Utility.checkIfNumber(sc) == 1) {
-                getInventory().inspectInventory(sc, (PlayerCharacter) this);
-            }
-        }
         Utility.promptEnterKey(sc);
     }
 
