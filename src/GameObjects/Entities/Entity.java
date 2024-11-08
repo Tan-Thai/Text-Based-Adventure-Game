@@ -101,9 +101,10 @@ public class Entity {
 
     public void levelUp() {
         level++;
+        // Temporarily set strength to be the stat for hp.
         changeMaxHealth(strength / 2);
         changeHealth(strength / 2);
-        System.out.println(name + " just reached level: " + level);
+        System.out.println("\n" + name + " just reached level: " + level);
         System.out.println(name + "'s max hp is now: " + maxHealth);
     }
 
