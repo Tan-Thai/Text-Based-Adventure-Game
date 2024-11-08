@@ -92,4 +92,10 @@ public class ZoneManager {
 	public static Zone getZone(ZoneType zoneType) {
 		return zones.get(zoneType);
 	}
+
+	public static void displayZones() {
+		System.out.println("Zones:");
+		zones.forEach((k, v) -> System.out.println(v.getName()));
+	}
+
 }

@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 import GameObjects.Entities.PlayerCharacter;
 import GameObjects.Worlds.Zone;
+import GameObjects.Worlds.ZoneManager;
 import GameObjects.Worlds.ZoneType;
 import Global.*;
 
@@ -36,11 +37,12 @@ public class Game {
     }
 
     private static void travelTest(PlayerCharacter pc, Scanner sc) {
-        Zone room = new Zone("testZone", "this is a very testy testZone", false, ZoneType.FOREST, null);
-        while (room.checkGameOver() == false) {
-            Utility.clearConsole();
+        Zone room = pc.getCurrentZone();
+        while (room.checkGameOver() != true) {
             room.travelMenu(pc, room);
+            Utility.promptEnterKey(sc);
         }
+
     }
 
 }

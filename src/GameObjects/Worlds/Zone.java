@@ -14,140 +14,143 @@ public class Zone {
     private String name;
     private String description;
     private boolean zoneCleared;
-    public Scanner sc = new Scanner(System.in);
-    private Set<Zone> traveableZones = new HashSet<>();
+    public static Scanner sc = new Scanner(System.in);
+        private Set<Zone> traveableZones = new HashSet<>();
+    
+        private ZoneType zoneType;
+    
+        private List<Encounter> encounters = new ArrayList<>();
+    
+        /**
+         * Constructor for Zones, does not populate the set of travelable zones.
+         * 
+         * @param name
+         * @param desc
+         * @param zoneCleared
+         * @param zoneType
+         * @param encounters
+         */
+        public Zone(String name, String desc, boolean zoneCleared, ZoneType zoneType, List<Encounter> encounters) {
+            this.name = name;
+            this.description = desc;
+            this.zoneCleared = zoneCleared;
+            this.zoneType = zoneType;
+            this.encounters = encounters;
+        }
+    
+        public void setTravelableZones(Set<Zone> traveableZones) {
+            this.traveableZones = traveableZones;
+        }
+    
+        public String getDescription() {
+            return description;
+        }
+    
+        public String getName() {
+            return name;
+        }
+    
+        public ZoneType getZoneType() {
+            return zoneType;
+        }
+    
+        public void setEncounters(List<Encounter> encounters) {
+            this.encounters = encounters;
+        }
+    
+        public void setZoneCleared(boolean zoneCleared) {
+            this.zoneCleared = zoneCleared;
+        }
+    
+        public boolean getZoneCleared() {
+            return zoneCleared;
+        }
 
-    private ZoneType zoneType;
-
-    private List<Encounter> encounters = new ArrayList<>();
-
-    /**
-     * Constructor for Zones, does not populate the set of travelable zones.
-     * 
-     * @param name
-     * @param desc
-     * @param zoneCleared
-     * @param zoneType
-     * @param encounters
-     */
-    public Zone(String name, String desc, boolean zoneCleared, ZoneType zoneType, List<Encounter> encounters) {
-        this.name = name;
-        this.description = desc;
-        this.zoneCleared = zoneCleared;
-        this.zoneType = zoneType;
-        this.encounters = encounters;
-    }
-
-    public void setTravelableZones(Set<Zone> traveableZones) {
-        this.traveableZones = traveableZones;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public ZoneType getZoneType() {
-        return zoneType;
-    }
-
-    public void setEncounters(List<Encounter> encounters) {
-        this.encounters = encounters;
-    }
-
-    public void setZoneCleared(boolean zoneCleared) {
-        this.zoneCleared = zoneCleared;
-    }
-
-    public boolean getZoneCleared() {
-        return zoneCleared;
-    }
-
-    /**
-     * Function returning true if any encounter isCleared returns false.
-     * 
-     * @return
-     */
-    public boolean hasUnclearedEncounters() {
-        for (Encounter encounter : encounters) {
-            if (!encounter.isCleared()) {
-                return true;
+        public Set<Zone> getTraveableZones() {
+            return traveableZones;
+        }
+    
+        /**
+         * Function returning true if any encounter isCleared returns false.
+         * 
+         * @return
+         */
+        public boolean hasUnclearedEncounters() {
+            for (Encounter encounter : encounters) {
+                if (!encounter.isCleared()) {
+                    return true;
+                }
             }
+    
+            return false;
         }
-
-        return false;
-    }
-
-    /**
-     * Returns the first encounter where getIsCleared returns false. Otherwise
-     * returns null.
-     * 
-     * @return
-     */
-    public Encounter getUnclearedEncounter() {
-        for (Encounter encounter : encounters) {
-            if (!encounter.isCleared()) {
-                return encounter;
+    
+        /**
+         * Returns the first encounter where getIsCleared returns false. Otherwise
+         * returns null.
+         * 
+         * @return
+         */
+        public Encounter getUnclearedEncounter() {
+            for (Encounter encounter : encounters) {
+                if (!encounter.isCleared()) {
+                    return encounter;
+                }
             }
+            System.out.println("Couldn't find any uncleared encounters within zone: " + this.name + "." +
+                    "Returned null for now.");
+            return null;
         }
-        System.out.println("Couldn't find any uncleared encounters within zone: " + this.name + "." +
-                "Returned null for now.");
-        return null;
-    }
-
-    public void tavernMenu(PlayerCharacter pc) { // opnens up tavern menu for resting and shopping for items
-        Tavern tavern = new Tavern(); // create tavern object outside?
-        Utility.clearConsole();
-        Utility.slowPrint("Choose an action:");
-        System.out.println("1. Rest (restore health)\n2. Open shop (buy items)\n3. Set out (Back to travel menu)");
-        // talk to npcs? Listen to rumours? etc.
-
-        int choice = Utility.checkIfNumber(sc);
-
-        switch (choice) {
-            case 1:
-                tavern.takeRest(pc);
-                Utility.promptEnterKey(sc);
-                tavernMenu(pc);
-                break;
-            case 2:
-                tavern.openShop(pc);
-                Utility.promptEnterKey(sc);
-                tavernMenu(pc);
-                break;
-            case 3:
-                travelMenu(pc, tavern);
-                break;
-            default:
-                System.out.println("Invalid choice. Please try again.");
-                break;
+    
+        public void tavernMenu(PlayerCharacter pc) { // opnens up tavern menu for resting and shopping for items
+            Tavern tavern = new Tavern(); // create tavern object outside?
+            Utility.clearConsole();
+            Utility.slowPrint("Choose an action:");
+            System.out.println("1. Rest (restore health)\n2. Open shop (buy items)\n3. Set out (Back to travel menu)");
+            // talk to npcs? Listen to rumours? etc.
+    
+            int choice = Utility.checkIfNumber(sc);
+    
+            switch (choice) {
+                case 1:
+                    tavern.takeRest(pc);
+                    Utility.promptEnterKey(sc);
+                    tavernMenu(pc);
+                    break;
+                case 2:
+                    tavern.openShop(pc);
+                    Utility.promptEnterKey(sc);
+                    tavernMenu(pc);
+                    break;
+                case 3:
+                    travelMenu(pc, tavern);
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
+    
         }
-
-    }
-
-    public void travelMenu(PlayerCharacter pc, Zone room) { // opens up travel menu for player.
-
-        if (pc.getCurrentZone().getZoneType() == ZoneType.BASEMENT) { // dirty bossfight check, ignores travelmenu and
-                                                                      // starts
-            // bossfight.
-            Basement basement = new Basement();
-            basement.bossfight();
-            return;
-        }
-
-        Utility.clearConsole();
-        Utility.slowPrint("You are in the " + pc.getCurrentZone().getName());
-        Utility.slowPrint("Choose an action:");
-        System.out.println(
-                "1. Wander (travel inside zone)\n2. Look around (display current zone)\n3. Travel (travel between zones)\n4. Remind me how to play again.");
-        if (pc.getCurrentZone().getZoneType() == ZoneType.TAVERN) {
-            System.out.println("5. Tavern menu (to rest and shop for items)");
-        }
-
-        int choice = Utility.checkIfNumber(sc);
+    
+        public void travelMenu(PlayerCharacter pc, Zone room) { // opens up travel menu for player.
+    //        Zone room = pc.getCurrentZone();
+            if (pc.getCurrentZone().getZoneType() == ZoneType.BASEMENT) { // dirty bossfight check, ignores travelmenu and
+                                                                          // starts
+                // bossfight.
+                Basement basement = new Basement();
+                basement.bossfight();
+                return;
+            }
+    
+            Utility.clearConsole();
+            Utility.slowPrint("You are in the " + pc.getCurrentZone().getName());
+            Utility.slowPrint("Choose an action:");
+            System.out.println(
+                    "1. Wander (travel inside zone)\n2. Look around (display current zone)\n3. Travel (travel between zones)\n4. Remind me how to play again.");
+            if (pc.getCurrentZone().getZoneType() == ZoneType.TAVERN) {
+                System.out.println("5. Tavern menu (to rest and shop for items)");
+            }
+            int choice = Utility.checkIfNumber(sc);
 
         switch (choice) {
             case 1:
