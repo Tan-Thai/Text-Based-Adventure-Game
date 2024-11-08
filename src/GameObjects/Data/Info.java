@@ -1,6 +1,8 @@
-package Global;
+package GameObjects.Data;
 
 import java.util.Scanner;
+
+import Global.Utility;
 
 public class Info {
     

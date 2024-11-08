@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+import GameObjects.Data.Info;
 import GameObjects.Entities.PlayerCharacter;
 import GameObjects.Worlds.Zone;
 import GameObjects.Worlds.ZoneManager;
@@ -37,9 +38,9 @@ public class Game {
     }
 
     private static void travelTest(PlayerCharacter pc, Scanner sc) {
-        Zone room = pc.getCurrentZone();
-        while (room.checkGameOver() != true) {
-            room.travelMenu(pc, room);
+        while (true) {
+            pc.getCurrentZone().travelMenu(pc);
+            
             Utility.promptEnterKey(sc);
         }
 

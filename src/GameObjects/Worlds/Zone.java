@@ -1,14 +1,15 @@
 package GameObjects.Worlds;
 
+import GameObjects.Data.Info;
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
 import Interactions.Encounter;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import Global.Info;
 
 public class Zone {
     private String name;
@@ -123,7 +124,7 @@ public class Zone {
                     tavernMenu(pc);
                     break;
                 case 3:
-                    travelMenu(pc, tavern);
+                    travelMenu(pc);
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -132,8 +133,8 @@ public class Zone {
     
         }
     
-        public void travelMenu(PlayerCharacter pc, Zone room) { // opens up travel menu for player.
-    //        Zone room = pc.getCurrentZone();
+        public void travelMenu(PlayerCharacter pc) { // opens up travel menu for player.
+            ZoneManager.getInstance();
             if (pc.getCurrentZone().getZoneType() == ZoneType.BASEMENT) { // dirty bossfight check, ignores travelmenu and
                                                                           // starts
                 // bossfight.
@@ -154,20 +155,20 @@ public class Zone {
 
         switch (choice) {
             case 1:
-                room.travelInsideZone(pc);
+                travelInsideZone(pc);
                 break;
             case 2:
-                room.displayCurrentZone(pc);
+                displayCurrentZone(pc);
                 break;
             case 3:
-                room.zoneTravel(pc);
+                zoneTravel(pc);
                 break;
             case 4:
                 Info.howToPlay(sc);
                 break;
             case 5:
                 if (pc.getCurrentZone().getZoneType() == ZoneType.TAVERN) {
-                    room.tavernMenu(pc);
+                    tavernMenu(pc);
                 } else {
                     System.out.println("Invalid choice. Please try again.");
                 }
@@ -181,24 +182,27 @@ public class Zone {
     }
 
 
-    public Zone displayTraveableZones(PlayerCharacter pc) { // displays traveable zones and lets player choose where to
-                                                            // travel
+    public Zone displayTraveableZones(PlayerCharacter pc) { // displays traveable zones and lets player choose where to travel
+        ZoneManager.getInstance(); 
         Utility.clearConsole();
         int index = 1;
 
         System.out.println("Travelable Zones:");
-        for (Zone zone : traveableZones) { // display traveable zones
-            System.out.println(index + ". " + zone.getName());
+        Iterator<Zone> zones = traveableZones.iterator();
+        while (zones.hasNext()) { // display traveable zones
+            System.out.println(index + ". " + zones.next().getName());
             index++;
         }
 
+        
         System.out.println("Enter the number of the zone you want to travel to: ");
         int choice = Utility.checkIfNumber(sc);
+    
         if (choice > 0 && choice <= traveableZones.size()) {
             Zone[] zonesArray = traveableZones.toArray(new Zone[0]); // make array of traveablezones Set to be able to
-                                                                     // index it for selection
+            System.out.println(zonesArray);                                                            // index it for selection
             Zone selectedZone = zonesArray[choice - 1]; // select zone to travel to, index - 1.
-
+            System.out.println(selectedZone);
             if (pc.getCurrentZone().equals(selectedZone)) { // check if player is already in the selected zone
                 Utility.clearConsole();
                 Utility.slowPrint("You return to the " + selectedZone.getName());
@@ -262,11 +266,11 @@ public class Zone {
                     pc.setCurrentZone(displayTraveableZones(pc));
                     break;
                 case ZoneType.SWAMP:
-                    this.traveableZones.add(ZoneManager.getZone(ZoneType.CAVE));
+            //        this.traveableZones.add(ZoneManager.getZone(ZoneType.CAVE));
                     pc.setCurrentZone(displayTraveableZones(pc));
                     break;
                 case ZoneType.CAVE:
-                    this.traveableZones.add(ZoneManager.getZone(ZoneType.BASEMENT));
+      //              this.traveableZones.add(ZoneManager.getZone(ZoneType.BASEMENT));
                     pc.setCurrentZone(displayTraveableZones(pc));
                     break;
                 default:
