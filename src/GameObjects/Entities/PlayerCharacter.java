@@ -23,7 +23,7 @@ public class PlayerCharacter extends Entity {
     public void gainExperience(int exp) {
         experience += exp;
         System.out.println("You gained " + exp + " EXP!");
-        if (experience >= 100) {
+        while (experience >= 100) {
             experience -= 100;
             levelUp();
         }
