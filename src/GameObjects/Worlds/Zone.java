@@ -4,11 +4,11 @@ import GameObjects.Data.Info;
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
 import Interactions.Encounter;
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 public class Zone {
@@ -103,25 +103,24 @@ public class Zone {
             return null;
         }
     
-        public void tavernMenu(PlayerCharacter pc) { // opnens up tavern menu for resting and shopping for items
-            Tavern tavern = new Tavern(); // create tavern object outside?
-            Utility.clearConsole();
-            Utility.slowPrint("Choose an action:");
-            System.out.println("1. Rest (restore health)\n2. Open shop (buy items)\n3. Set out (Back to travel menu)");
-            // talk to npcs? Listen to rumours? etc.
-    
-            int choice = Utility.checkIfNumber(sc);
-    
-            switch (choice) {
-                case 1:
-                    tavern.takeRest(pc);
-                    Utility.promptEnterKey(sc);
-                    tavernMenu(pc);
-                    break;
-                case 2:
-                    tavern.openShop(pc);
-                    Utility.promptEnterKey(sc);
-                    tavernMenu(pc);
+        public void tavernMenu(PlayerCharacter pc, Tavern tavern) { // opnens up tavern menu for resting and shopping for items
+                    Utility.clearConsole();
+                    Utility.slowPrint("Choose an action:");
+                    System.out.println("1. Rest (restore health)\n2. Open shop (buy items)\n3. Set out (Back to travel menu)");
+                    // talk to npcs? Listen to rumours? etc.
+            
+                    int choice = Utility.checkIfNumber(sc);
+            
+                    switch (choice) {
+                        case 1:
+                            tavern.takeRest(pc);
+                            Utility.promptEnterKey(sc);
+                            tavernMenu(pc, tavern);
+                            break;
+                        case 2:
+                            tavern.openShop(pc);
+                            Utility.promptEnterKey(sc);
+                            tavernMenu(pc, tavern);
                     break;
                 case 3:
                     travelMenu(pc);
@@ -168,7 +167,7 @@ public class Zone {
                 break;
             case 5:
                 if (pc.getCurrentZone().getZoneType() == ZoneType.TAVERN) {
-                    tavernMenu(pc);
+                    tavernMenu(pc, (Tavern) ZoneManager.getZone(ZoneType.TAVERN)); // cast to tavern to access tavern
                 } else {
                     System.out.println("Invalid choice. Please try again.");
                 }
@@ -200,10 +199,8 @@ public class Zone {
 
         // currently having 2 prints for checks, to be removed later.
         if (choice > 0 && choice <= traveableZones.size()) {
-            Zone[] zonesArray = traveableZones.toArray(new Zone[0]); // make array of traveablezones Set to be able to
-            System.out.println(zonesArray);                                                            // index it for selection
+            Zone[] zonesArray = traveableZones.toArray(new Zone[0]); // make array of traveablezones Set to be able to                                                         // index it for selection
             Zone selectedZone = zonesArray[choice - 1]; // select zone to travel to, index - 1.
-            System.out.println(selectedZone);
             if (pc.getCurrentZone().equals(selectedZone)) { // check if player is already in the selected zone
                 Utility.clearConsole();
                 Utility.slowPrint("You return to the " + selectedZone.getName());
@@ -291,7 +288,7 @@ public class Zone {
             Utility.clearScanner(sc);
             if (Utility.checkYesOrNo(sc)) {
                 pc.setCurrentZone(ZoneManager.getZone(ZoneType.TAVERN));
-                tavernMenu(pc);
+                tavernMenu(pc, (Tavern) ZoneManager.getZone(ZoneType.TAVERN)); // cast to tavern to access tavern
             }
 
         }

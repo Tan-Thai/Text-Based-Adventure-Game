@@ -7,7 +7,7 @@ import GameObjects.Worlds.ZoneType;
 public class ZoneRepository { // This class is a repository for all the zones in the game.
 
 
-    private static Zone forestZone() {
+    public static Zone forestZone() {
         return new Zone("Wraithwood depths",
                 """
                         A dark tranquil old forest where every step taken sinks into the deep soft moss muffling all sound,
@@ -20,7 +20,7 @@ public class ZoneRepository { // This class is a repository for all the zones in
                 null);
     }
 
-    private static Zone swampZone() {
+    public static Zone swampZone() {
         return new Zone("Mistmoor Marsh",
                 """
                         A foul-smelling yellow brown morass with slow moving stagnant water. Ever shrouded in smothering fog
@@ -33,7 +33,7 @@ public class ZoneRepository { // This class is a repository for all the zones in
                 null);
     }
 
-    private static Zone caveZone() {
+    public static Zone caveZone() {
         return new Zone("Cave",
                 """
                         A dark and damp cave with a musty smell.
@@ -43,11 +43,11 @@ public class ZoneRepository { // This class is a repository for all the zones in
                 null);
     }
 
-    private static Zone tavernZone() { // Is tavern and basement needed? How to with special zones?
+    public static Zone tavernZone() { // Is tavern and basement needed? How to with special zones?
         return new Tavern();
     }
 
-    private static Zone basementZone() {
+    public static Zone basementZone() {
         return new Basement();
     }
 
