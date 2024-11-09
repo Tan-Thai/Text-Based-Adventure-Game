@@ -257,32 +257,16 @@ public class Zone {
         if (pc.getCurrentZone().getZoneCleared() == true) { // checks if currentzone is clrared, if not, player can't
                                                             // travel.
             switch (pc.getCurrentZone().getZoneType()) { //
-                case ZoneType.TAVERN:
-                    pc.setCurrentZone(displayTraveableZones(pc));
-                    break;
-                case ZoneType.FOREST:
-                    pc.setCurrentZone(displayTraveableZones(pc));
-                    break;
-                case ZoneType.SWAMP:
-            //        this.traveableZones.add(ZoneManager.getZone(ZoneType.CAVE));
-                    pc.setCurrentZone(displayTraveableZones(pc));
-                    break;
-                case ZoneType.CAVE:
-      //              this.traveableZones.add(ZoneManager.getZone(ZoneType.BASEMENT));
-                    pc.setCurrentZone(displayTraveableZones(pc));
-                    break;
-                default:
-                    System.out.println("Unavailable to travel");
+                case ZoneType.TAVERN -> pc.setCurrentZone(displayTraveableZones(pc));
+                case ZoneType.FOREST -> pc.setCurrentZone(displayTraveableZones(pc));
+                case ZoneType.SWAMP ->  pc.setCurrentZone(displayTraveableZones(pc));
+                case ZoneType.CAVE ->   pc.setCurrentZone(displayTraveableZones(pc));
+                default -> System.out.println("Unavailable to travel");
             }
-
+            //
+            
         } else if (pc.getCurrentZone().getZoneCleared() == false
-                && pc.getCurrentZone().getZoneType() != ZoneType.TAVERN) { // allows
-            // player to
-            // backtrack
-            // to tavern
-            // if zone is
-            // not
-            // cleared.
+                && pc.getCurrentZone().getZoneType() != ZoneType.TAVERN) { // allows player to backtrack to tavern if zone is not cleared.
 
             Utility.slowPrint("You have not cleared this zone yet. However, do you want to backtrack to the tavern?");
             Utility.clearScanner(sc);
