@@ -87,12 +87,12 @@ public class PlayerCharacter extends Entity {
             throw new IllegalArgumentException("Damage value must be positive");
         }
         health -= damageValue;
-        if (!isAlive()) {
+        if (isAlive()) {
+            System.out.println(getName() + " took " + damageValue + " damage. Current health: " + health);
+        } else {
             health = 0;
             System.out.println(getName() + " took " + damageValue + " damage. " + getName() + " is dead.");
             checkGameOverCondition();
-        } else {
-            System.out.println(getName() + " took " + damageValue + " damage. Current health: " + health);
         }
     }
 

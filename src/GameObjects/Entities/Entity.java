@@ -73,7 +73,7 @@ public class Entity {
     }
 
     public boolean isAlive() {
-        return this.health > 0;
+        return health > 0;
     }
 
     public boolean isFullHP() {
