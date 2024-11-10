@@ -59,7 +59,8 @@ public class Inventory {
             int input = Utility.checkIfNumber(sc);
 
             if (input == 0) {
-                System.out.println("exiting inventory view");//temp since i dunno how to phrase this.
+                //temp since I don't know how to phrase this.
+                System.out.println("You close your inventory.");
                 Utility.promptEnterKey(sc);
                 return;
             }

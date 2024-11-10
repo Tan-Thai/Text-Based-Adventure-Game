@@ -85,16 +85,20 @@ public class Entity {
     public void inspectEntity(Scanner sc) {
         Utility.clearConsole();
         displayStats();
-        displayHealth();
         Utility.promptEnterKey(sc);
     }
 
+    // display health and stats can be merged into 1 if we don't use display health explicitly somewhere.
     public void displayHealth() {
         System.out.println("Health Points: " + this.health +"/"+this.maxHealth);
     }
 
     public void displayStats() {
-        System.out.println(name + "'s stats: ");
+        System.out.println("Name: " + this.name);
+        System.out.println("level: " + this.level);
+        System.out.println("Health: " + this.health + " / " + this.maxHealth);
+
+        System.out.println("Stats:");
         System.out.println("Strength: " + strength);
         System.out.println("Dexterity: " + dexterity);
         System.out.println("Intelligence: " + intelligence);

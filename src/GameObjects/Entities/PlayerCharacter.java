@@ -40,15 +40,16 @@ public class PlayerCharacter extends Entity {
         while (inspecting) {
             Utility.clearConsole();
             displayStats();
-            displayHealth();
-            System.out.println("\n1. Open inventory.\n2. Exit inspection.");
+            System.out.println("\n1. Open inventory.\n0. Exit inspection.");
             switch (Utility.checkIfNumber(sc)) {
+                case 0:
+                    inspecting = false;
+                    break;
                 case 1:
                     getInventory().inspectInventory(sc, this);
                     break;
-                default: //Temporarily put this at default.
-                    System.out.println("Exiting inspection.");
-                    inspecting = false;
+                default:
+                    System.out.println("Please input one of the shown options.");
                     break;
             }
         }
