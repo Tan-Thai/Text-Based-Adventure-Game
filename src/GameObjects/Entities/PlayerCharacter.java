@@ -29,6 +29,7 @@ public class PlayerCharacter extends Entity {
         while (experience >= 100) {
             experience -= 100;
             levelUp();
+            checkGameClearCondition();
         }
         System.out.println("\nYour current experience is: " + experience + "/100");
     }
@@ -61,6 +62,38 @@ public class PlayerCharacter extends Entity {
 
     public void setCurrentZone(Zone zone) {
         this.currentZone = zone;
+    }
+
+    public void checkGameOverCondition() {
+        if (!isAlive()) {
+            System.out.println("you died blabla.");
+            //Call on a method within Game file due to not having access to scanner
+            //Would also be more fitting due to it handling the game flow and not the player itself.
+        } else {
+            System.out.println("You died to idk, rolling a 1 on an event or something.");
+        }
+    }
+
+    public void checkGameClearCondition() {
+        if (getLevel() == 10) { //or x boss is dead, but we can prolly add a specific method for when it dies.
+            System.out.println("Ya won woop.");
+        }
+    }
+
+    // override method do include a game over check for when the player specifically took damage.
+    @Override
+    public void takeDamage(int damageValue) {
+        if (damageValue < 0) {
+            throw new IllegalArgumentException("Damage value must be positive");
+        }
+        health -= damageValue;
+        if (!isAlive()) {
+            health = 0;
+            System.out.println(getName() + " took " + damageValue + " damage. " + getName() + " is dead.");
+            checkGameOverCondition();
+        } else {
+            System.out.println(getName() + " took " + damageValue + " damage. Current health: " + health);
+        }
     }
 
 }

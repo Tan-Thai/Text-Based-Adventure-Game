@@ -124,6 +124,7 @@ public class Entity {
         System.out.println(name + "'s max hp is now: " + maxHealth);
     }
 
+    // TODO implement heal/take damage into combat since it's not making use of it currently.
     public void heal(int healingValue) {
         if (healingValue < 0) {
             throw new IllegalArgumentException("Healing value must be positive");
