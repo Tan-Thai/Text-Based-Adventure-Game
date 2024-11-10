@@ -33,6 +33,7 @@ public class Inventory {
             }
             System.out.println("\n" + item.getName() + " was removed from your inventory");
         } else {
+            assert item != null;
             System.out.println("You do not posses a " + item.getName());
         }
     }

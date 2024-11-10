@@ -27,7 +27,7 @@ public class Main {
 
         // Item and goblin tests.
         // itemAndDisplayTest(pc, goblin, sc);
-        addItems(pc);
+        //addItems(pc);
 
         // Combat test.
         // combatTest(pc, goblin, sc);
