@@ -3,6 +3,9 @@ package GameObjects.Entities;
 import GameObjects.Worlds.Zone;
 import GameObjects.Worlds.ZoneManager;
 import GameObjects.Worlds.ZoneType;
+import Global.Utility;
+
+import java.util.Scanner;
 
 public class PlayerCharacter extends Entity {
     private int experience;
@@ -14,7 +17,7 @@ public class PlayerCharacter extends Entity {
         super(name, health, 1, str, dex, intel);
 
         currentZone = ZoneManager.getZone(ZoneType.TAVERN);
-        }
+    }
 
     public int getExperience() {
         return experience;
@@ -28,6 +31,28 @@ public class PlayerCharacter extends Entity {
             levelUp();
         }
         System.out.println("\nYour current experience is: " + experience + "/100");
+    }
+
+    @Override
+    public void inspectEntity(Scanner sc) {
+        boolean inspecting = true;
+
+        while (inspecting) {
+            Utility.clearConsole();
+            displayStats();
+            System.out.println("\n1. Open inventory.\n0. Exit inspection.");
+            switch (Utility.checkIfNumber(sc)) {
+                case 0:
+                    inspecting = false;
+                    break;
+                case 1:
+                    getInventory().inspectInventory(sc, this);
+                    break;
+                default:
+                    System.out.println("Please input one of the shown options.");
+                    break;
+            }
+        }
     }
 
     public Zone getCurrentZone() {

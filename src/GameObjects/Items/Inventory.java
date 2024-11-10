@@ -33,6 +33,7 @@ public class Inventory {
             }
             System.out.println("\n" + item.getName() + " was removed from your inventory");
         } else {
+            assert item != null;
             System.out.println("You do not posses a " + item.getName());
         }
     }
@@ -59,7 +60,8 @@ public class Inventory {
             int input = Utility.checkIfNumber(sc);
 
             if (input == 0) {
-                System.out.println("exiting inventory view");//temp since i dunno how to phrase this.
+                //temp since I don't know how to phrase this.
+                System.out.println("You close your inventory.");
                 Utility.promptEnterKey(sc);
                 return;
             }
