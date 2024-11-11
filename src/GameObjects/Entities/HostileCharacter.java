@@ -1,5 +1,7 @@
 package GameObjects.Entities;
 
+import GameObjects.Items.Inventory;
+
 public class HostileCharacter extends Entity {
 
     private final HostileEntityType hostileEntityType;
@@ -9,8 +11,9 @@ public class HostileCharacter extends Entity {
         this.hostileEntityType = HostileEntityType.UNDEFINED;
     }
 
-    public HostileCharacter(String name, int health, HostileEntityType hostileEntityType) {
-        super(name, health, 1);
+    public HostileCharacter(String name, int health, int level, int strength, int dexterity, int intelligence,
+            HostileEntityType hostileEntityType) {
+        super(name, health, level, strength, dexterity, intelligence);
         this.hostileEntityType = hostileEntityType;
     }
 
@@ -19,7 +22,7 @@ public class HostileCharacter extends Entity {
         return hostileEntityType;
     }
 
-    //calculates the experience based on the level. numbers TBD
+    // calculates the experience based on the level. numbers TBD
     public int calcExperienceGiven() {
         return (int) (Math.round((level * 20 * 1.25)));
     }
