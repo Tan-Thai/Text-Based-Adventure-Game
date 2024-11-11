@@ -2,7 +2,7 @@ package GameObjects.Entities;
 
 public class HostileCharacter extends Entity {
 
-    private HostileEntityType hostileEntityType;
+    private final HostileEntityType hostileEntityType;
 
     public HostileCharacter(String name, int health) {
         super(name, health, 1);
@@ -20,7 +20,7 @@ public class HostileCharacter extends Entity {
     }
 
     //calculates the experience based on the level. numbers TBD
-    public int calcExperienceGiven(){
-        return (int)(Math.round((level * 20 * 1.25)));
+    public int calcExperienceGiven() {
+        return (int) (Math.round((level * 20 * 1.25)));
     }
 }
