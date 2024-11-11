@@ -12,13 +12,13 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class Zone {
-    private String name;
-    private String description;
+    private final String name;
+    private final String description;
     private boolean zoneCleared;
     public static Scanner sc = new Scanner(System.in);
         private Set<Zone> traveableZones = new HashSet<>();
     
-        private ZoneType zoneType;
+        private final ZoneType zoneType;
     
         private List<Encounter> encounters = new ArrayList<>();
     
@@ -106,28 +106,27 @@ public class Zone {
         public void tavernMenu(PlayerCharacter pc, Tavern tavern) { // opnens up tavern menu for resting and shopping for items
                     Utility.clearConsole();
                     Utility.slowPrint("Choose an action:");
-                    System.out.println("1. Rest (restore health)\n2. Open shop (buy items)\n3. Set out (Back to travel menu)");
+                    System.out.println("1. Rest (restore health)\n2. Open shop (buy items)\n3. Set out (Back to travel menu)\n4. Retire (Exit game)");
                     // talk to npcs? Listen to rumours? etc.
             
                     int choice = Utility.checkIfNumber(sc);
             
                     switch (choice) {
-                        case 1:
+                        case 1 -> {
                             tavern.takeRest(pc);
                             Utility.promptEnterKey(sc);
                             tavernMenu(pc, tavern);
-                            break;
-                        case 2:
+            }
+                        case 2 -> {
                             tavern.openShop(pc);
                             Utility.promptEnterKey(sc);
                             tavernMenu(pc, tavern);
-                    break;
-                case 3:
-                    travelMenu(pc);
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-                    break;
+            }
+                case 3 -> { travelMenu(pc); }
+                case 4-> { Utility.slowPrint("You retire from your adventures and live out the rest of your days in the tavern.");
+                System.exit(0); //Restart game??
+            }
+                default -> System.out.println("Invalid choice. Please try again.");
             }
     
         }
@@ -181,9 +180,9 @@ public class Zone {
     }
 
 
-    public Zone displayTraveableZones(PlayerCharacter pc) { // displays traveable zones and lets player choose where to travel
-        ZoneManager.getInstance(); 
+    public Zone displayTraveableZones(PlayerCharacter pc, Zone... optionalZone) { // displays traveable zones and lets player choose where to travel
         Utility.clearConsole();
+   
         int index = 1;
 
         System.out.println("Travelable Zones:");
@@ -198,19 +197,22 @@ public class Zone {
         int choice = Utility.checkIfNumber(sc);
 
         // currently having 2 prints for checks, to be removed later.
-        if (choice > 0 && choice <= traveableZones.size()) {
-            Zone[] zonesArray = traveableZones.toArray(new Zone[0]); // make array of traveablezones Set to be able to                                                         // index it for selection
+        if (choice > 0 && choice <= traveableZones.size() && optionalZone.length == 0) { // check if choice is valid
+            Zone[] zonesArray = traveableZones.toArray(Zone[]::new); // make array of traveablezones Set to be able to                                                         // index it for selection
             Zone selectedZone = zonesArray[choice - 1]; // select zone to travel to, index - 1.
             if (pc.getCurrentZone().equals(selectedZone)) { // check if player is already in the selected zone
                 Utility.clearConsole();
                 Utility.slowPrint("You return to the " + selectedZone.getName());
-                Utility.promptEnterKey(sc);
                 return pc.getCurrentZone(); // Put pc back in same zone if already there.
             }
             Utility.clearConsole();
             Utility.slowPrint("You travel to the " + selectedZone.getName());
             Utility.promptEnterKey(sc);
             return selectedZone;
+        } else if (optionalZone.length > 0) { // check if optional zone is passed in, used to backtrack to tavern.
+            System.out.println("You backtrack to the " + optionalZone[0].getName());
+            Utility.promptEnterKey(sc);
+            return optionalZone[0];
         } else { // error handling for invalid choice
             System.out.println("Invalid choice. Please try again. Or: ");
             Utility.promptEnterKey(sc);
@@ -254,8 +256,7 @@ public class Zone {
 
         Utility.clearConsole();
 
-        if (pc.getCurrentZone().getZoneCleared() == true) { // checks if currentzone is clrared, if not, player can't
-                                                            // travel.
+        if (pc.getCurrentZone().getZoneCleared() == true) { // checks if currentzone is clrared, if not, player can't travel.
             switch (pc.getCurrentZone().getZoneType()) { //
                 case ZoneType.TAVERN -> pc.setCurrentZone(displayTraveableZones(pc));
                 case ZoneType.FOREST -> pc.setCurrentZone(displayTraveableZones(pc));
@@ -268,11 +269,10 @@ public class Zone {
         } else if (pc.getCurrentZone().getZoneCleared() == false
                 && pc.getCurrentZone().getZoneType() != ZoneType.TAVERN) { // allows player to backtrack to tavern if zone is not cleared.
 
-            Utility.slowPrint("You have not cleared this zone yet. However, do you want to backtrack to the tavern?");
-            Utility.clearScanner(sc);
+            Utility.slowPrint("You have not cleared this zone yet. However, do you want to backtrack to the tavern?\nPress Y for yes and N for no");
             if (Utility.checkYesOrNo(sc)) {
                 pc.setCurrentZone(ZoneManager.getZone(ZoneType.TAVERN));
-                tavernMenu(pc, (Tavern) ZoneManager.getZone(ZoneType.TAVERN)); // cast to tavern to access tavern
+                travelMenu(pc); // cast to tavern to access tavern
             }
 
         }
@@ -283,6 +283,17 @@ public class Zone {
 
         }
 
+    }
+
+    public Zone updateTravelableZones() { // updates traveable zones after clearing an encounter.
+        Set<Zone> travelableZones = new HashSet<>();
+        for (Encounter encounter : encounters) {
+            if (encounter.isCleared()) {
+                travelableZones.add(encounter.getZone());
+            }
+        }
+        setTravelableZones(travelableZones);
+        return this;
     }
 
     public boolean checkGameOver() { // ############ TEMPORARY ############

@@ -1,11 +1,7 @@
-import java.util.Scanner;
-
 import GameObjects.Data.Info;
 import GameObjects.Entities.PlayerCharacter;
-import GameObjects.Worlds.Zone;
-import GameObjects.Worlds.ZoneManager;
-import GameObjects.Worlds.ZoneType;
 import Global.*;
+import java.util.Scanner;
 
 public class Game {
 
@@ -19,18 +15,16 @@ public class Game {
 
             switch (choice) {
 
-            case 1:
+            case 1 -> {
                 System.out.println("Starting game...");
                 travelTest(pc, sc);
-                // startGame(); call main game loop
-                break;
-            case 2:
-                Info.howToPlay(sc);
-                break;
-            case 3:
+                    // startGame(); call main game loop
+                }
+            case 2 -> Info.howToPlay(sc);
+            case 3 -> {
                 System.out.println("Exiting game...");
                 System.exit(0);
-                break;
+                }
         }
 
         }
