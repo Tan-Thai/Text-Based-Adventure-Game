@@ -1,10 +1,11 @@
-import java.util.Scanner;
 import GameObjects.Data.Info;
 import GameObjects.Entities.*;
 import GameObjects.Items.*;
 import GameObjects.Worlds.ZoneManager;
 import GameObjects.Worlds.ZoneType;
 import Global.*;
+import Interactions.*;
+import java.util.Scanner;
 
 public class Game {
 
