@@ -1,4 +1,3 @@
-import java.util.Scanner;
 import GameObjects.Data.Info;
 import GameObjects.Entities.*;
 import GameObjects.Items.*;
@@ -6,6 +5,7 @@ import GameObjects.Worlds.ZoneManager;
 import GameObjects.Worlds.ZoneType;
 import Global.*;
 import Interactions.*;
+import java.util.Scanner;
 
 public class Game {
 
@@ -49,19 +49,17 @@ public class Game {
 
             switch (choice) {
 
-            case 1:
+            case 1 -> {
                 System.out.println("Starting game...");
                 travelTest(pc, sc);
-                // startGame(); call main game loop
-                break;
-            case 2:
-                Info.howToPlay(sc);
-                break;
-            case 3:
+                    // startGame(); call main game loop
+                }
+            case 2 -> Info.howToPlay(sc);
+            case 3 -> {
                 System.out.println("Exiting game...");
                 exitGame = true;
-                break;
-            }
+                }
+        }
 
 
     }
