@@ -1,4 +1,5 @@
-import Global.*;
+import Global.Utility;
+
 import java.util.Scanner;
 
 public class Main {

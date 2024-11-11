@@ -1,93 +1,89 @@
 package Interactions;
 
-import java.util.OptionalInt;
-import java.util.Scanner;
-
 import GameObjects.Entities.Entity;
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
 
+import java.util.OptionalInt;
+import java.util.Scanner;
+
 public class EncounterHandler {
 
-	private static EncounterHandler instance;
+    private static EncounterHandler instance;
 
-	private Scanner myScanner;
-	private Entity player;
-	private Encounter encounter;
+    private Scanner myScanner;
+    private Entity player;
+    private Encounter encounter;
 
-	public static synchronized EncounterHandler getInstance() {
-		if (instance == null) {
-			instance = new EncounterHandler();
-		}
-		return instance;
-	}
+    public static synchronized EncounterHandler getInstance() {
+        if (instance == null) {
+            instance = new EncounterHandler();
+        }
+        return instance;
+    }
 
-	public void runEncounter(Entity player, Encounter encounter, Scanner scanner) {
+    public void runEncounter(Entity player, Encounter encounter, Scanner scanner) {
 
-		this.player = player;
-		this.encounter = encounter;
-		this.myScanner = scanner;
+        this.player = player;
+        this.encounter = encounter;
+        this.myScanner = scanner;
 
-		System.out.println(this.encounter.getDescription());
-		Utility.promptEnterKey(myScanner);
-		Utility.clearConsole();
+        System.out.println(this.encounter.getDescription());
+        Utility.promptEnterKey(myScanner);
+        Utility.clearConsole();
 
-		if (attemptChallenge()) {
-			System.out.println(this.encounter.getSuccessfulmessage());
-			this.encounter.isCleared(true);
-			gainRewards();
-		} else {
-			System.out.println(this.encounter.getFailureMessage());
-		}
+        if (attemptChallenge()) {
+            System.out.println(this.encounter.getSuccessfulmessage());
+            this.encounter.isCleared(true);
+            gainRewards();
+        } else {
+            System.out.println(this.encounter.getFailureMessage());
+        }
 
-		Utility.promptEnterKey(myScanner);
-		Utility.clearConsole();
-	}
+        Utility.promptEnterKey(myScanner);
+        Utility.clearConsole();
+    }
 
-	private boolean attemptChallenge() {
+    private boolean attemptChallenge() {
 
-		int playerSkillValue = getRelevantPlayerSkillValue();
+        int playerSkillValue = getRelevantPlayerSkillValue();
 
-		if (playerSkillValue < 0) {
-			System.out.println(
-					"The relevant skill had a negative value, this shouldn't be possible. And so couldn't attempt the encounter.");
-			return false;
-		}
+        if (playerSkillValue < 0) {
+            System.out.println(
+                    "The relevant skill had a negative value, this shouldn't be possible. And so couldn't attempt the encounter.");
+            return false;
+        }
 
-		if (Utility.rollDicePool(playerSkillValue, Utility.GREEN, OptionalInt.empty(), OptionalInt.empty(),
-				OptionalInt.empty()) >= encounter.getChallengeThreshold()) {
-			// Indicates success on challenge,
-			return true;
-		} else {
-			return false;
-		}
-	}
+        // Indicates success on challenge,
+        return Utility.rollDicePool(playerSkillValue, Utility.GREEN, OptionalInt.empty(), OptionalInt.empty(),
+                OptionalInt.empty()) >= encounter.getChallengeThreshold();
+    }
 
-	private int getRelevantPlayerSkillValue() {
+    private void gainRewards() {
+        ((PlayerCharacter) player).gainExperience(encounter.getExperienceReward());
+    }
 
-		if (encounter.getChallengeType() == null) {
-			System.out.println("Was unable to find a challenge type in encounter.");
-			return -1;
-		}
+    private int getRelevantPlayerSkillValue() {
 
-		switch (encounter.getChallengeType()) {
-			case DEXTERITY:
-				return player.getDexterity();
-			case HEALTH:
-				return player.getHealth();
-			case INTELLIGENCE:
-				return player.getIntelligence();
-			case LEVEL:
-				return player.getLevel();
-			case STRENGTH:
-				return player.getStrength();
-			default:
-				System.out.println("Couldn't find a case for the challenge type in the " + getClass().toString());
-				return -1;
-		}
-	}
+        if (encounter.getChallengeType() == null) {
+            System.out.println("Was unable to find a challenge type in encounter.");
+            return -1;
+        }
 
-	private void gainRewards() {
-		((PlayerCharacter) player).gainExperience(encounter.getExperienceReward());
-	}
+        switch (encounter.getChallengeType()) {
+            case DEXTERITY:
+                return player.getDexterity();
+            case HEALTH:
+                return player.getHealth();
+            case INTELLIGENCE:
+                return player.getIntelligence();
+            case LEVEL:
+                return player.getLevel();
+            case STRENGTH:
+                return player.getStrength();
+            default:
+                System.out.println("Couldn't find a case for the challenge type in the " + getClass());
+                return -1;
+        }
+    }
 }

@@ -1,6 +1,6 @@
 package GameObjects.Worlds;
 
-import Global.*;
+import Global.Utility;
 
 public class Basement extends Zone {
     public static boolean bossDefeated = false;

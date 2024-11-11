@@ -48,6 +48,10 @@ public class Entity {
         return health;
     }
 
+    public void setHealth(int health) {
+        this.health = Math.min(health, maxHealth);
+    }
+
     public int getStrength() {
         return strength;
     }
@@ -58,10 +62,6 @@ public class Entity {
 
     public int getIntelligence() {
         return intelligence;
-    }
-
-    public void setHealth(int health) {
-        this.health = Math.min(health, maxHealth);
     }
 
     public int getMaxHealth() {
@@ -90,7 +90,7 @@ public class Entity {
 
     // display health and stats can be merged into 1 if we don't use display health explicitly somewhere.
     public void displayHealth() {
-        System.out.println("Health Points: " + this.health +"/"+this.maxHealth);
+        System.out.println("Health Points: " + this.health + "/" + this.maxHealth);
     }
 
     public void displayStats() {

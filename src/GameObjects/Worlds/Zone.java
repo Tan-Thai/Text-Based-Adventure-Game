@@ -4,27 +4,21 @@ import GameObjects.Data.Info;
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
 import Interactions.Encounter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
+
+import java.util.*;
 
 public class Zone {
+    public static Scanner sc = new Scanner(System.in);
     private final String name;
     private final String description;
-    private boolean zoneCleared;
-    public static Scanner sc = new Scanner(System.in);
-    private Set<Zone> traveableZones = new HashSet<>();
-
     private final ZoneType zoneType;
-
+    private boolean zoneCleared;
+    private Set<Zone> traveableZones = new HashSet<>();
     private List<Encounter> encounters = new ArrayList<>();
 
     /**
      * Constructor for Zones, does not populate the set of travelable zones.
-     * 
+     *
      * @param name
      * @param desc
      * @param zoneCleared
@@ -59,12 +53,12 @@ public class Zone {
         this.encounters = encounters;
     }
 
-    public void setZoneCleared(boolean zoneCleared) {
-        this.zoneCleared = zoneCleared;
-    }
-
     public boolean getZoneCleared() {
         return zoneCleared;
+    }
+
+    public void setZoneCleared(boolean zoneCleared) {
+        this.zoneCleared = zoneCleared;
     }
 
     public Set<Zone> getTraveableZones() {
@@ -73,7 +67,7 @@ public class Zone {
 
     /**
      * Function returning true if any encounter isCleared returns false.
-     * 
+     *
      * @return
      */
     public boolean hasUnclearedEncounters() {
@@ -89,7 +83,7 @@ public class Zone {
     /**
      * Returns the first encounter where getIsCleared returns false. Otherwise
      * returns null.
-     * 
+     *
      * @return
      */
     public Encounter getUnclearedEncounter() {
@@ -104,7 +98,7 @@ public class Zone {
     }
 
     public void tavernMenu(PlayerCharacter pc, Tavern tavern) { // opnens up tavern menu for resting and shopping for
-                                                                // items
+        // items
         Utility.clearConsole();
         Utility.slowPrint("Choose an action:");
         System.out.println(
@@ -141,7 +135,7 @@ public class Zone {
     public void travelMenu(PlayerCharacter pc) { // opens up travel menu for player.
         ZoneManager.getInstance();
         if (pc.getCurrentZone().getZoneType() == ZoneType.BASEMENT) { // dirty bossfight check, ignores travelmenu and
-                                                                      // starts
+            // starts
             // bossfight.
             Basement basement = new Basement();
             basement.bossfight();
@@ -194,7 +188,7 @@ public class Zone {
     }
 
     public Zone displayTraveableZones(PlayerCharacter pc, Zone... optionalZone) { // displays traveable zones and lets
-                                                                                  // player choose where to travel
+        // player choose where to travel
         Utility.clearConsole();
 
         int index = 1;
@@ -212,7 +206,7 @@ public class Zone {
         // currently having 2 prints for checks, to be removed later.
         if (choice > 0 && choice <= traveableZones.size() && optionalZone.length == 0) { // check if choice is valid
             Zone[] zonesArray = traveableZones.toArray(Zone[]::new); // make array of traveablezones Set to be able to
-                                                                     // // index it for selection
+            // // index it for selection
             Zone selectedZone = zonesArray[choice - 1]; // select zone to travel to, index - 1.
             if (pc.getCurrentZone().equals(selectedZone)) { // check if player is already in the selected zone
                 Utility.clearConsole();
@@ -235,7 +229,7 @@ public class Zone {
     }
 
     public void displayCurrentZone(PlayerCharacter pc) { // Just displays the current zone and its description + if it's
-                                                         // cleared or not.
+        // cleared or not.
         Utility.clearConsole();
         Utility.slowPrint("You are in " + pc.getCurrentZone().getName() + ". " + pc.getCurrentZone().getDescription()
                 + " Zone cleared: " + pc.getCurrentZone().getZoneCleared());
@@ -255,19 +249,19 @@ public class Zone {
         Utility.slowPrint("You wander around the " + pc.getCurrentZone().getName());
         Utility.slowPrint(
                 "A monster appears!\nHuzzah! You killed it, and on it you find a map leading to the next area!"); // sample
-                                                                                                                  // text
+        // text
 
         // fight?
         // EVENTS??
         pc.getCurrentZone().setZoneCleared(true); // sets the zone to cleared after wandering around and killing monster
-                                                  // or clearing event.
+        // or clearing event.
     }
 
     public void zoneTravel(PlayerCharacter pc) { // Travel between zones method,
 
         Utility.clearConsole();
 
-        if (pc.getCurrentZone().getZoneCleared() == true) { // checks if currentzone is clrared
+        if (pc.getCurrentZone().getZoneCleared()) { // checks if currentzone is clrared
             switch (pc.getCurrentZone().getZoneType()) {
                 case ZoneType.TAVERN -> pc.setCurrentZone(displayTraveableZones(pc));
                 case ZoneType.FOREST -> pc.setCurrentZone(displayTraveableZones(pc));
@@ -276,9 +270,9 @@ public class Zone {
                 default -> System.out.println("Unavailable to travel");
             }
 
-        } else if (pc.getCurrentZone().getZoneCleared() == false
+        } else if (!pc.getCurrentZone().getZoneCleared()
                 && pc.getCurrentZone().getZoneType() != ZoneType.TAVERN) { // allows player to backtrack to tavern if
-                                                                           // zone is not cleared.
+            // zone is not cleared.
 
             Utility.slowPrint(
                     "You have not cleared this zone yet. However, do you want to backtrack to the tavern?\nPress Y for yes and N for no");
@@ -287,9 +281,7 @@ public class Zone {
                 travelMenu(pc); // cast to tavern to access tavern
             }
 
-        }
-
-        else {
+        } else {
             Utility.slowPrint("You have not cleared this zone yet.");
             Utility.clearScanner(sc);
 
@@ -298,11 +290,7 @@ public class Zone {
     }
 
     public boolean checkGameOver() { // ############ TEMPORARY ############
-        if (Basement.bossDefeated == true) {
-            return true;
-        } else {
-            return false;
-        }
+        return Basement.bossDefeated;
 
     }
 }
