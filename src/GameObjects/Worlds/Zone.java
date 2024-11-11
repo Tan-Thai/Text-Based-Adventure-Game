@@ -103,8 +103,7 @@ public class Zone {
         return null;
     }
 
-    public void tavernMenu(PlayerCharacter pc, Tavern tavern) { // opnens up tavern menu for resting and shopping for
-                                                                // items
+    public void tavernMenu(PlayerCharacter pc, Tavern tavern) { // opnens up tavern menu for resting and shop
         Utility.clearConsole();
         Utility.slowPrint("Choose an action:");
         System.out.println(
@@ -154,7 +153,7 @@ public class Zone {
         Utility.promptEnterKey(sc);
         if (pc.getCurrentZone().getZoneType() == ZoneType.BASEMENT) { // dirty bossfight check
 
-            ((Basement) ZoneManager.getZone(ZoneType.BASEMENT)).bossFight();
+            ((Basement) ZoneManager.getZone(ZoneType.BASEMENT)).bossFight(); //type cast Basement to call on bossfight method
 
      }
 
@@ -203,7 +202,7 @@ public class Zone {
 
     }
 
-    public Zone displayTraveableZones(PlayerCharacter pc, Zone... optionalZone) { // displays traveable zones and lets
+    public Zone displayTraveableZones(PlayerCharacter pc) { // displays traveable zones and lets
                                                                                   // player choose where to travel
         Utility.clearConsole();
 
@@ -220,7 +219,7 @@ public class Zone {
         int choice = Utility.checkIfNumber(sc);
 
         // currently having 2 prints for checks, to be removed later.
-        if (choice > 0 && choice <= traveableZones.size() && optionalZone.length == 0) { // check if choice is valid
+        if (choice > 0 && choice <= traveableZones.size()) { // check if choice is valid
             Zone[] zonesArray = traveableZones.toArray(Zone[]::new); // make array of traveablezones Set to be able to
                                                                      // // index it for selection
             Zone selectedZone = zonesArray[choice - 1]; // select zone to travel to, index - 1.
@@ -233,10 +232,6 @@ public class Zone {
             Utility.slowPrint("You travel to the " + selectedZone.getName());
  //           Utility.promptEnterKey(sc);
             return selectedZone;
-        } else if (optionalZone.length > 0) { // check if optional zone is passed in, used to backtrack to tavern.
-            System.out.println("You backtrack to the " + optionalZone[0].getName());
- //           Utility.promptEnterKey(sc);
-            return optionalZone[0];
         } else { // error handling for invalid choice
             System.out.println("Invalid choice. Please try again. Or: ");
             Utility.promptEnterKey(sc);
@@ -271,14 +266,8 @@ public class Zone {
 
         // JANK BELOW, WATCH OUT.
         pc.getCurrentZone().setZoneCleared(true); // sets the zone to cleared after wandering around and killing monster
-        if (ZoneManager.getZone(ZoneType.FOREST).getZoneCleared() == true || ZoneManager.getZone(ZoneType.SWAMP).getZoneCleared() == true) {
-            addTraveableZone(ZoneManager.getZone(ZoneType.TAVERN), ZoneType.CAVE);
-        }
-        if (pc.getCurrentZone().getZoneType() == ZoneType.CAVE && pc.getCurrentZone().getZoneCleared() == true) {
-            addTraveableZone(pc.getCurrentZone(), ZoneType.BASEMENT);
-            addTraveableZone(ZoneManager.getZone(ZoneType.TAVERN), ZoneType.BASEMENT);
-        }
-        addTraveableZone(pc.getCurrentZone(), ZoneType.CAVE); // adds traveable zone to current zone
+        checkTraveableZones(pc); // checks if zones are cleared and adds them to traveable zones
+
         
     }
     ///
@@ -312,6 +301,21 @@ public class Zone {
         if (zone != null) {
             zone.getTraveableZones().add(ZoneManager.getZone(zonetype));
         }
+    }
+
+    public static void checkTraveableZones(PlayerCharacter pc) {
+
+        if (ZoneManager.getZone(ZoneType.FOREST).getZoneCleared() == true || ZoneManager.getZone(ZoneType.SWAMP).getZoneCleared() == true) {
+            addTraveableZone(pc.getCurrentZone(), ZoneType.CAVE);
+            addTraveableZone(ZoneManager.getZone(ZoneType.TAVERN), ZoneType.CAVE);
+        }
+        if (pc.getCurrentZone().getZoneType() == ZoneType.CAVE && pc.getCurrentZone().getZoneCleared() == true) {
+            addTraveableZone(pc.getCurrentZone(), ZoneType.BASEMENT);
+            addTraveableZone(ZoneManager.getZone(ZoneType.TAVERN), ZoneType.BASEMENT);
+            addTraveableZone(ZoneManager.getZone(ZoneType.FOREST), ZoneType.BASEMENT);
+            addTraveableZone(ZoneManager.getZone(ZoneType.SWAMP), ZoneType.BASEMENT);
+        }
+        
     }
 
 }
