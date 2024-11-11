@@ -57,7 +57,7 @@ public class Game {
             case 2 -> Info.howToPlay(sc);
             case 3 -> {
                 System.out.println("Exiting game...");
-                exitGame = True;
+                exitGame = true;
                 }
         }
 
