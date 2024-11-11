@@ -40,6 +40,11 @@ public class ZoneManager {
 				new HashSet<Zone>(Arrays.asList(
 						zones.get(ZoneType.TAVERN),
 						zones.get(ZoneType.FOREST))));
+		zones.get(ZoneType.CAVE).setTravelableZones(
+				new HashSet<Zone>(Arrays.asList(
+					zones.get(ZoneType.TAVERN),
+					zones.get(ZoneType.FOREST),
+					zones.get(ZoneType.SWAMP))));
 	}
 
 	public static synchronized ZoneManager getInstance() {
@@ -74,5 +79,7 @@ public class ZoneManager {
 		}
 		return zones.get(zoneType);
 	}
+
+	
 
 }

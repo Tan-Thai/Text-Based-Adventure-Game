@@ -108,7 +108,7 @@ public class Zone {
         Utility.clearConsole();
         Utility.slowPrint("Choose an action:");
         System.out.println(
-                "1. Rest (restore health)\n2. Open shop (buy items)\n3. Set out (Back to travel menu)\n4. Retire (Exit game)");
+                "1. Rest (restore health)\n2. Open shop (buy items)\n3. Set out (Back to travel menu)\n4. Retire");
         // talk to npcs? Listen to rumours? etc.
 
         int choice = Utility.checkIfNumber(sc);
@@ -128,8 +128,19 @@ public class Zone {
                 travelMenu(pc);
                 break;
             case 4:
-                Utility.slowPrint("You retire from your adventures and live out the rest of your days in the tavern.");
-                System.exit(0); // Restart game??
+                if (pc.getLevel() < 3) {
+                    Utility.slowPrint("You are not experienced enough to retire yet. You must reach even higher heights!");
+                    Utility.promptEnterKey(sc);
+                    tavernMenu(pc, tavern);
+                    break;
+                } else {
+                    Utility.slowPrint("Are you sure you want to retire? (Y/N)");
+                    if (Utility.checkYesOrNo(sc)) {
+                        tavern.retireCharacter(pc);
+                    } else {
+                        tavernMenu(pc, tavern);
+                    }
+                }
                 break;
             default:
                 System.out.println("Invalid choice. Please try again.");
@@ -138,15 +149,14 @@ public class Zone {
 
     }
 
-    public void travelMenu(PlayerCharacter pc) { // opens up travel menu for player.
-        ZoneManager.getInstance();
-        if (pc.getCurrentZone().getZoneType() == ZoneType.BASEMENT) { // dirty bossfight check, ignores travelmenu and
-                                                                      // starts
-            // bossfight.
-            Basement basement = new Basement();
-            basement.bossfight();
-            return;
-        }
+    public void travelMenu(PlayerCharacter pc) { // opens up travel menu for player.     
+        System.out.println("Debug check PC currentzone:  " + pc.getCurrentZone().getZoneType());
+        Utility.promptEnterKey(sc);
+        if (pc.getCurrentZone().getZoneType() == ZoneType.BASEMENT) { // dirty bossfight check
+
+            ((Basement) ZoneManager.getZone(ZoneType.BASEMENT)).bossFight();
+
+     }
 
         Utility.clearConsole();
         Utility.slowPrint("You are in the " + pc.getCurrentZone().getName());
@@ -221,11 +231,11 @@ public class Zone {
             }
             Utility.clearConsole();
             Utility.slowPrint("You travel to the " + selectedZone.getName());
-            Utility.promptEnterKey(sc);
+ //           Utility.promptEnterKey(sc);
             return selectedZone;
         } else if (optionalZone.length > 0) { // check if optional zone is passed in, used to backtrack to tavern.
             System.out.println("You backtrack to the " + optionalZone[0].getName());
-            Utility.promptEnterKey(sc);
+ //           Utility.promptEnterKey(sc);
             return optionalZone[0];
         } else { // error handling for invalid choice
             System.out.println("Invalid choice. Please try again. Or: ");
@@ -257,34 +267,35 @@ public class Zone {
                 "A monster appears!\nHuzzah! You killed it, and on it you find a map leading to the next area!"); // sample
                                                                                                                   // text
 
-        // fight?
-        // EVENTS??
-        pc.getCurrentZone().setZoneCleared(true); // sets the zone to cleared after wandering around and killing monster
-                                                  // or clearing event.
-    }
+        // EVENTS STUFF PROBABLY HERE
 
+        // JANK BELOW, WATCH OUT.
+        pc.getCurrentZone().setZoneCleared(true); // sets the zone to cleared after wandering around and killing monster
+        if (ZoneManager.getZone(ZoneType.FOREST).getZoneCleared() == true || ZoneManager.getZone(ZoneType.SWAMP).getZoneCleared() == true) {
+            addTraveableZone(ZoneManager.getZone(ZoneType.TAVERN), ZoneType.CAVE);
+        }
+        if (pc.getCurrentZone().getZoneType() == ZoneType.CAVE && pc.getCurrentZone().getZoneCleared() == true) {
+            addTraveableZone(pc.getCurrentZone(), ZoneType.BASEMENT);
+            addTraveableZone(ZoneManager.getZone(ZoneType.TAVERN), ZoneType.BASEMENT);
+        }
+        addTraveableZone(pc.getCurrentZone(), ZoneType.CAVE); // adds traveable zone to current zone
+        
+    }
+    ///
+    ///  @param zoneTravel
     public void zoneTravel(PlayerCharacter pc) { // Travel between zones method,
 
         Utility.clearConsole();
 
         if (pc.getCurrentZone().getZoneCleared() == true) { // checks if currentzone is clrared
-            switch (pc.getCurrentZone().getZoneType()) {
-                case ZoneType.TAVERN -> pc.setCurrentZone(displayTraveableZones(pc));
-                case ZoneType.FOREST -> pc.setCurrentZone(displayTraveableZones(pc));
-                case ZoneType.SWAMP -> pc.setCurrentZone(displayTraveableZones(pc));
-                case ZoneType.CAVE -> pc.setCurrentZone(displayTraveableZones(pc));
-                default -> System.out.println("Unavailable to travel");
-            }
+                pc.setCurrentZone(displayTraveableZones(pc));
 
         } else if (pc.getCurrentZone().getZoneCleared() == false
-                && pc.getCurrentZone().getZoneType() != ZoneType.TAVERN) { // allows player to backtrack to tavern if
-                                                                           // zone is not cleared.
-
+                && pc.getCurrentZone().getZoneType() != ZoneType.TAVERN) { // allows player to backtrack to tavern
             Utility.slowPrint(
                     "You have not cleared this zone yet. However, do you want to backtrack to the tavern?\nPress Y for yes and N for no");
             if (Utility.checkYesOrNo(sc)) {
                 pc.setCurrentZone(ZoneManager.getZone(ZoneType.TAVERN));
-                travelMenu(pc); // cast to tavern to access tavern
             }
 
         }
@@ -297,12 +308,10 @@ public class Zone {
 
     }
 
-    public boolean checkGameOver() { // ############ TEMPORARY ############
-        if (Basement.bossDefeated == true) {
-            return true;
-        } else {
-            return false;
+    public static void addTraveableZone(Zone zone, ZoneType zonetype) { // Adds traveable zones to a zone.
+        if (zone != null) {
+            zone.getTraveableZones().add(ZoneManager.getZone(zonetype));
         }
-
     }
+
 }
