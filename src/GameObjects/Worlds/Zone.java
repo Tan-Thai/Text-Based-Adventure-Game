@@ -285,17 +285,6 @@ public class Zone {
 
     }
 
-    public Zone updateTravelableZones() { // updates traveable zones after clearing an encounter.
-        Set<Zone> travelableZones = new HashSet<>();
-        for (Encounter encounter : encounters) {
-            if (encounter.isCleared()) {
-                travelableZones.add(encounter.getZone());
-            }
-        }
-        setTravelableZones(travelableZones);
-        return this;
-    }
-
     public boolean checkGameOver() { // ############ TEMPORARY ############
         if (Basement.bossDefeated == true) {
             return true;
