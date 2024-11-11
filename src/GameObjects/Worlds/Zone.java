@@ -261,10 +261,8 @@ public class Zone {
         Utility.slowPrint(
                 "A monster appears!\nHuzzah! You killed it, and on it you find a map leading to the next area!"); // sample
                                                                                                                   // text
-
         // EVENTS STUFF PROBABLY HERE
 
-        // JANK BELOW, WATCH OUT.
         pc.getCurrentZone().setZoneCleared(true); // sets the zone to cleared after wandering around and killing monster
         checkTraveableZones(pc); // checks if zones are cleared and adds them to traveable zones
 
@@ -303,10 +301,12 @@ public class Zone {
         }
     }
 
-    public static void checkTraveableZones(PlayerCharacter pc) {
+    public static void checkTraveableZones(PlayerCharacter pc) { // adds traveable zones based on cleared zones.
 
         if (ZoneManager.getZone(ZoneType.FOREST).getZoneCleared() == true || ZoneManager.getZone(ZoneType.SWAMP).getZoneCleared() == true) {
-            addTraveableZone(pc.getCurrentZone(), ZoneType.CAVE);
+            if (pc.getCurrentZone().getZoneType() == ZoneType.FOREST || pc.getCurrentZone().getZoneType() == ZoneType.SWAMP) {
+                addTraveableZone(pc.getCurrentZone(), ZoneType.CAVE);
+            }  
             addTraveableZone(ZoneManager.getZone(ZoneType.TAVERN), ZoneType.CAVE);
         }
         if (pc.getCurrentZone().getZoneType() == ZoneType.CAVE && pc.getCurrentZone().getZoneCleared() == true) {

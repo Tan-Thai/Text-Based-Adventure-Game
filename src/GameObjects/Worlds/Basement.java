@@ -3,7 +3,6 @@ package GameObjects.Worlds;
 import Global.*;
 
 public class Basement extends Zone {
-    public static boolean bossDefeated = false;
 
     public Basement() {
         super("the deepest recesses of the cave..", "A musty moist marred basement filled with spiderwebs", false,
