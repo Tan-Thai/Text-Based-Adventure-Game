@@ -17,7 +17,7 @@ import java.util.Scanner;
 public class Game {
 
     Scanner sc;
-    //Boolean here to exit the game when the user chooses to, OR dies in game.
+    // Boolean here to exit the game when the user chooses to, OR dies in game.
     private boolean exitGame = false;
 
     // stuff we can start generating as soon as the program starts running.
@@ -28,7 +28,7 @@ public class Game {
     }
 
     private static HostileCharacter addEnemyTemp() {
-        return new HostileCharacter("Troll", 6, HostileEntityType.TROLLKIN);
+        return new HostileCharacter("Test Troll", 6, 1, 1, 1, 1, HostileEntityType.TROLLKIN);
     }
 
     private static void combatTest(PlayerCharacter pc, HostileCharacter enemy, Scanner sc) {
@@ -65,7 +65,7 @@ public class Game {
 
         // Encounter test
         // encounterTest(pc, sc);
-        //----------------------------------
+        // ----------------------------------
         while (!exitGame) {
             gameMenu(pc, sc);
         }
@@ -93,7 +93,8 @@ public class Game {
     }
 
     // There are a few mega temporary methods atm, combat related ones being a few.
-    // Wherever we invoke the combat method, we need to make sure it calls "Combat combat = Combat.getInstance();"
+    // Wherever we invoke the combat method, we need to make sure it calls "Combat
+    // combat = Combat.getInstance();"
     private void gameMenu(PlayerCharacter pc, Scanner sc) {
         Utility.clearConsole();
         System.out.println("Welcome to the game!\n1. Start Game\n2. How to Play\n3. Exit");
