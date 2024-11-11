@@ -34,9 +34,11 @@ public class ZoneRepository { // This class is a repository for all the zones in
     }
 
     public static Zone caveZone() {
-        return new Zone("Cave",
+        return new Zone("Weeping caverns",
                 """
-                        A dark and damp cave with a musty smell.
+                        A labyrinthine series of deep granite caves, 
+                        named for the roof that weeps eternal and the wind which carries 
+                        the anguished and mournful howls of the lost soul that are said to dwell in the depths. 
                         """,
                 false,
                 ZoneType.CAVE,
