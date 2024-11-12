@@ -3,7 +3,9 @@ package GameObjects.Worlds;
 import GameObjects.Data.Info;
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
+import Interactions.Combat;
 import Interactions.Encounter;
+import Interactions.EncounterHandler;
 
 import java.util.*;
 
@@ -13,6 +15,7 @@ public class Zone {
     private final String description;
     private final ZoneType zoneType;
     private boolean zoneCleared;
+    private int zoneClearThreshold;
     private Set<Zone> traveableZones = new HashSet<>();
     private List<Encounter> encounters = new ArrayList<>();
 
@@ -25,12 +28,13 @@ public class Zone {
      * @param zoneType
      * @param encounters
      */
-    public Zone(String name, String desc, boolean zoneCleared, ZoneType zoneType, List<Encounter> encounters) {
+    public Zone(String name, String desc, boolean zoneCleared, ZoneType zoneType, List<Encounter> encounters, int zoneClearThreshold) {
         this.name = name;
         this.description = desc;
         this.zoneCleared = zoneCleared;
         this.zoneType = zoneType;
         this.encounters = encounters;
+        this.zoneClearThreshold = zoneClearThreshold;
     }
 
     public void setTravelableZones(Set<Zone> traveableZones) {
@@ -97,7 +101,20 @@ public class Zone {
         return null;
     }
 
-    public void tavernMenu(PlayerCharacter pc, Tavern tavern) { // opnens up tavern menu for resting and shopping for
+    private int getUnclearedEncountersAmount() {
+        
+        int i = 0;
+
+        for (Encounter encounter : encounters) {
+            if (!encounter.isCleared()) {
+                i++;
+            }
+        }
+
+        return i;
+    }
+
+    private void tavernMenu(PlayerCharacter pc, Tavern tavern) { // opnens up tavern menu for resting and shopping for
         // items
         Utility.clearConsole();
         Utility.slowPrint("Choose an action:");
@@ -242,39 +259,35 @@ public class Zone {
         Utility.promptEnterKey(sc);
     }
 
-    public Encounter exploreZone(PlayerCharacter pc) { // Wander/explore inside zone function.
+    private void exploreZone(PlayerCharacter pc) { // Wander/explore inside zone function.
         
         if (pc.getCurrentZone().getZoneType() == ZoneType.TAVERN
                 || pc.getCurrentZone().getZoneType() == ZoneType.BASEMENT) { // maybe not needed
             Utility.clearConsole();
             Utility.slowPrint("You cannot travel inside the " + pc.getCurrentZone().getName());
-            return null;
+            return;
         }
 
         Utility.clearConsole();
 
         Utility.slowPrint("You wander around the " + pc.getCurrentZone().getName());
+
+    if (getUnclearedEncounter() == null) {
         Utility.slowPrint(
-                "A monster appears!\nHuzzah! You killed it, and on it you find a map leading to the next area!"); 
-        // EVENTS STUFF PROBABLY HERE
-
-//check if there is encounter? If yes, get encounter. (do encounter)
-//After encounter, check if zone is "cleared"
-
-        if(getUnclearedEncounter()==null) {
-            Utility.slowPrint(
                 "You wander the area, but the roads are known to you, and the lands are peaceful, there are no more adventures to be had for you here.");
-                return null;
-        }
-        else {
-            return getUnclearedEncounter();
-            }
-
-        //pc.getCurrentZone().setZoneCleared(true); // sets the zone to cleared after wandering around and killing monster
-        //checkTraveableZones(pc); // checks if zones are cleared and adds them to traveable zones
-
-        
+    } else if (getUnclearedEncounter().isCombatEncounter()) {
+        Combat.getInstance().initiateCombat(pc, getUnclearedEncounter().getEnemy(), sc);
+    } else {
+        EncounterHandler.getInstance().runEncounter(pc, getUnclearedEncounter(), sc);
     }
+        
+        if(zoneClearThreshold >= getUnclearedEncountersAmount()) {
+            setZoneCleared(true);
+            checkTraveableZones(pc);
+            }
+    }
+
+    
     ///
     ///  @param zoneTravel
     public void zoneTravel(PlayerCharacter pc) { // Travel between zones method,

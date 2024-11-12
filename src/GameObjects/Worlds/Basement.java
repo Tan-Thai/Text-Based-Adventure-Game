@@ -6,7 +6,7 @@ public class Basement extends Zone {
 
     public Basement() {
         super("the deepest recesses of the cave..", "A musty moist marred basement filled with spiderwebs", false,
-                ZoneType.BASEMENT, null);
+                ZoneType.BASEMENT, null, 0);
 
     }
 
@@ -19,7 +19,7 @@ public class Basement extends Zone {
         Utility.slowPrint(
                 "You destroy his stash of old HDDs and he dies on the spot");
         
-        EndOfGameScreen.gameOverCheck();
+        
         
 
     }

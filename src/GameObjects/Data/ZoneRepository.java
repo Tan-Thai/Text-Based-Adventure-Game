@@ -19,7 +19,8 @@ public class ZoneRepository { // This class is a repository for all the zones in
                         """,
                 false,
                 ZoneType.FOREST,
-                null);
+                null,
+                3);
     }
 
     public static Zone swampZone() {
@@ -33,7 +34,8 @@ public class ZoneRepository { // This class is a repository for all the zones in
                         """,
                 false,
                 ZoneType.SWAMP,
-                null);
+                null,
+                3);
     }
 
     public static Zone caveZone() {
@@ -46,7 +48,8 @@ public class ZoneRepository { // This class is a repository for all the zones in
                         """,
                 false,
                 ZoneType.CAVE,
-                null);
+                null,
+                3);
     }
 
     public static Zone tavernZone() { // Is tavern and basement needed? How to with special zones?
