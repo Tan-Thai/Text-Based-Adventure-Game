@@ -5,7 +5,7 @@ import Global.Utility;
 
 import java.util.Scanner;
 
-public class Equipment extends Item{
+public class Equipment extends Item {
     private final Effect weaponEffect;
 
     public Equipment(String name, String desc, Effect effect) {
@@ -25,6 +25,6 @@ public class Equipment extends Item{
         } else {
             System.out.println("You decided not to use the item.");
         }
-       // add some equip functionality; awaiting equipment function.
+        // add some equip functionality; awaiting equipment function.
     }
 }

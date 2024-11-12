@@ -23,6 +23,14 @@ public class PlayerCharacter extends Entity {
         return experience;
     }
 
+    public Zone getCurrentZone() {
+        return currentZone;
+    }
+
+    public void setCurrentZone(Zone zone) {
+        this.currentZone = zone;
+    }
+
     public void gainExperience(int exp) {
         experience += exp;
         System.out.println("You gained " + exp + " EXP!");
@@ -56,13 +64,6 @@ public class PlayerCharacter extends Entity {
         }
     }
 
-    public Zone getCurrentZone() {
-        return currentZone;
-    }
-
-    public void setCurrentZone(Zone zone) {
-        this.currentZone = zone;
-    }
 
     public void checkGameOverCondition() {
         if (!isAlive()) {
