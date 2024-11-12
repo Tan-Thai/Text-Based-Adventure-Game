@@ -39,6 +39,7 @@ public class Tavern extends Zone {
         //Removed call to EndofGameScreen due to it being phased out.
         //check of state should not exist here because the only time this will be visible is if
         //the player already are in a state of VICTORY. --- TT
+
         
     }
 
