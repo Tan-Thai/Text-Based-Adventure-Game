@@ -5,7 +5,12 @@ import Global.Utility;
 
 public class Tavern extends Zone {
     public Tavern() {
-        super("Tavern", "A lively tavern filled with patrons and the smell of ale.", true, ZoneType.TAVERN, null);
+        super("Rothollow tavern",
+        """
+                A giant hollowed out log, covered in deep green moss and large red mushrooms. 
+                With a small door and tiny windows from which warm light emit. 
+                Ruckus song can be heard from within. 
+        """,    true, ZoneType.TAVERN, null, 0);
     }
 
     // Heals character.
@@ -23,8 +28,19 @@ public class Tavern extends Zone {
         // pc.getInventory();
         // make npc to shop from since they have inventory
         Utility.slowPrint("You open the shop and see a variety of items for sale.");
-        System.out.print("Items for sale:");
+        System.out.printf("Items for sale:");
+        // make npc to shop from since they have inventory
     }
 
+    public void retireCharacter(PlayerCharacter pc) { // retire method
+        Utility.clearConsole();
+        Utility.slowPrint("You retire from adventuring and live out the rest of your days in peace.");
+        Utility.promptEnterKey(sc);
+        //Removed call to EndofGameScreen due to it being phased out.
+        //check of state should not exist here because the only time this will be visible is if
+        //the player already are in a state of VICTORY. --- TT
+
+        
+    }
 
 }

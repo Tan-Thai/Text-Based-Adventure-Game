@@ -29,7 +29,7 @@ public class Encounter {
     }
 
     public Encounter(String description, int challengeThreshold, ChallengeType challengeType, String successfulMessage,
-                     String failureMessage, int experienceReward, int currencyReward, List<Item> loot) {
+            String failureMessage, int experienceReward, int currencyReward, List<Item> loot) {
         this.description = description;
         this.challengeThreshold = challengeThreshold;
         this.challengeType = challengeType;
@@ -46,6 +46,17 @@ public class Encounter {
 
     public void isCleared(boolean state) {
         isCleared = state;
+    }
+
+    /**
+     * If the encounter is a combat encounter, and the enemy has zero health, or
+     * less, this sets isCleared to true.
+     */
+    public void checkClearedState() {
+
+        if (isCombatEncounter() && getEnemy().getHealth() <= 0) {
+            isCleared(true);
+        }
     }
 
     public HostileCharacter getEnemy() {

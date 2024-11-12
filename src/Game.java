@@ -3,19 +3,16 @@ import Core.GameStateManager;
 import GameObjects.Data.Info;
 import GameObjects.Data.PlayerClassRepository;
 import GameObjects.Entities.HostileCharacter;
-import GameObjects.Entities.HostileEntityType;
 import GameObjects.Entities.PlayerCharacter;
 import GameObjects.Items.DamageEffect;
 import GameObjects.Items.Equipment;
 import GameObjects.Items.HealingEffect;
 import GameObjects.Items.Potion;
 import GameObjects.Worlds.ZoneManager;
-import GameObjects.Worlds.ZoneType;
 import Global.Utility;
 import Interactions.Combat;
 import Interactions.EncounterHandler;
 import java.lang.classfile.instruction.ThrowInstruction;
-
 import java.util.Scanner;
 
 public class Game {
@@ -77,8 +74,7 @@ public class Game {
             case 1 -> {
                 // TODO: adding player should be here inside game menu when we select start game
                 System.out.println("Starting game...");
-                travelTest(pc, sc);
-                // startGame(); call main game loop
+                runGame(pc, sc);
             }
             case 2 -> Info.howToPlay(sc);
             case 3 -> {
@@ -99,37 +95,23 @@ public class Game {
     }
 
     // methods down here are most likely tests methods.
-    private static void travelTest(PlayerCharacter pc, Scanner sc) {
+    private static void runGame(PlayerCharacter pc, Scanner sc) {
         while (true) {
             pc.getCurrentZone().travelMenu(pc);
             Utility.promptEnterKey(sc);
         }
     }
 
-    private static HostileCharacter addEnemyTemp() {
-        return new HostileCharacter("Troll", 5, HostileEntityType.TROLLKIN);
-    }
 
+    private static HostileCharacter addEnemyTemp() {
+        return new HostileCharacter("Troll", 5, 3, 2, 1, 1, HostileEntityType.TROLLKIN);
+    }
+  
     private static void combatTest(PlayerCharacter pc, HostileCharacter enemy, Scanner sc) {
         // new up A COMBAT object, and it will be the only one since it's a singleton.
         Combat combat = Combat.getInstance();
         // this is what we call and send in when a combat between 2 entities happens.
         combat.initiateCombat(pc, enemy, sc);
-    }
-
-    private static void encounterTest(PlayerCharacter pc, Scanner myScanner) {
-
-        // This one is my bad, currently the ZoneManager needs to get instantiated for
-        // the rest to work.
-        // I will fix this later I promise! Just let it be for now!
-        ZoneManager.getInstance();
-
-        EncounterHandler encounterHandler = EncounterHandler.getInstance();
-
-        while (ZoneManager.getZone(ZoneType.FOREST).hasUnclearedEncounters()) {
-            System.out.println(ZoneManager.getZone(ZoneType.FOREST).getName());
-            encounterHandler.runEncounter(pc, ZoneManager.getZone(ZoneType.FOREST).getUnclearedEncounter(), myScanner);
-        }
     }
 
     private static void addItems(PlayerCharacter pc) {
