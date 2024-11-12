@@ -64,6 +64,9 @@ public class ZoneManager {
 
     private void setUpEncounters(HashMap<ZoneType, Zone> zones) {
         zones.get(ZoneType.FOREST).setEncounters(EncounterRepository.getForestEncounters());
+		zones.get(ZoneType.SWAMP).setEncounters(EncounterRepository.getSwampEncounters());
+		zones.get(ZoneType.CAVE).setEncounters(EncounterRepository.getCaveEncounters());
+		zones.get(ZoneType.BASEMENT).setEncounters(EncounterRepository.getBasementEncounters());
     }
 
     public static synchronized ZoneManager getInstance() {

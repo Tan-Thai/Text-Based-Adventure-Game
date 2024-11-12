@@ -101,7 +101,7 @@ public class Game {
     }
 
     private static HostileCharacter addEnemyTemp() {
-        return new HostileCharacter("Troll", 5, HostileEntityType.TROLLKIN);
+        return new HostileCharacter("Troll", 5, 3, 2, 1, 1, HostileEntityType.TROLLKIN);
     }
 
     private static void combatTest(PlayerCharacter pc, HostileCharacter enemy, Scanner sc) {
