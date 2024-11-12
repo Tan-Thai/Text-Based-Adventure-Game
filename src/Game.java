@@ -3,12 +3,14 @@ import Core.GameStateManager;
 import GameObjects.Data.Info;
 import GameObjects.Data.PlayerClassRepository;
 import GameObjects.Entities.HostileCharacter;
+import GameObjects.Entities.HostileEntityType;
 import GameObjects.Entities.PlayerCharacter;
 import GameObjects.Items.DamageEffect;
 import GameObjects.Items.Equipment;
 import GameObjects.Items.HealingEffect;
 import GameObjects.Items.Potion;
 import GameObjects.Worlds.ZoneManager;
+import GameObjects.Worlds.ZoneType;
 import Global.Utility;
 import Interactions.Combat;
 import Interactions.EncounterHandler;
@@ -97,7 +99,6 @@ public class Game {
 
     // methods down here are most likely tests methods.
     private static void runGame(PlayerCharacter pc, Scanner sc) {
-    private static void runGame(PlayerCharacter pc, Scanner sc) {
         while (true) {
             pc.getCurrentZone().travelMenu(pc);
             Utility.promptEnterKey(sc);
@@ -106,7 +107,6 @@ public class Game {
 
 
     private static HostileCharacter addEnemyTemp() {
-        return new HostileCharacter("Troll", 5, 3, 2, 1, 1, HostileEntityType.TROLLKIN);
         return new HostileCharacter("Troll", 5, 3, 2, 1, 1, HostileEntityType.TROLLKIN);
     }
   

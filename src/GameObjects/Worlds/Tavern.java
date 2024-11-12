@@ -1,7 +1,6 @@
 package GameObjects.Worlds;
 
 import GameObjects.Entities.PlayerCharacter;
-import Global.EndOfGameScreen;
 import Global.Utility;
 
 public class Tavern extends Zone {
