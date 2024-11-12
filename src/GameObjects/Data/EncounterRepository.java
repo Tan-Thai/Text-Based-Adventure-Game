@@ -40,6 +40,37 @@ public class EncounterRepository {
 		return swampEncounters;
 	}
 
+	private static List<Encounter> caveEncounters = new ArrayList<>();
+
+	public static List<Encounter> getCaveEncounters() {
+		caveEncounters = new ArrayList<>();
+
+		caveEncounters.add(getUnluckyAdventurerEncounter());
+		caveEncounters.add(getASlipperySlopEncounter());
+		caveEncounters.add(getBlockedByRubbleEncounter());
+		caveEncounters.add(getMossDrenchedUndeadEncounter());
+		caveEncounters.add(getDrownedCrawlerEncounter());
+		caveEncounters.add(getGiantBloodsuckingBatEncounter());
+
+		return caveEncounters;
+	}
+
+	private static List<Encounter> basementEncounters = new ArrayList<>();
+
+	public static List<Encounter> getBasementEncounters() {
+		basementEncounters = new ArrayList<>();
+
+		basementEncounters.add(getBossEncounter());
+
+		return basementEncounters;
+	}
+
+	private static Encounter getBossEncounter() {
+
+		return new Encounter(HostileEntitiesRepository.getTyrannicLizardKing());
+
+	}
+
 	private static Encounter getLureWillOWispEncounter() {
 		return new Encounter(
 				"""
@@ -106,8 +137,8 @@ public class EncounterRepository {
 						Instead of attacking you, the evil creatures invite you to take part in their filthy game. You are
 						about to refuse when you notice that the trolls are betting quite a lot of gold and other plunder.
 						""",
-				0,
-				ChallengeType.UNDEFINED,
+				2,
+				ChallengeType.HEALTH,
 				"""
 						You take your place in the ring as the game starts up again. Within a few rounds it is clear to
 						you that you cannot possibly last against creatures that habitually feast on carrion. Luckily, you
@@ -231,6 +262,98 @@ public class EncounterRepository {
 
 	private static Encounter getSlimyToadManEncounter() {
 		return new Encounter(HostileEntitiesRepository.getSlimyToadMan());
+	}
+
+	private static Encounter getUnluckyAdventurerEncounter() {
+		return new Encounter(
+				"""
+										As you walk deeper into the cold wet tunnels you stumble over a sorry pile of bones and rotten
+										pieces of cloth. Some sorry soul must have gotten lost in these lightless caverns and died
+										before seeing the sky again.
+						""",
+				2,
+				ChallengeType.INTELLIGENCE,
+				"""
+						You take a moment to pray over the corpse of the unknown explorer, asking whatever god they
+						followed in life to see their soul free from this subterranean warren. As you leave, you feel as if
+						you carry a sense of calm and serenity away with you.
+								""",
+				"""
+						You instinctively shy away from the rotten corpse, your skin seems to crawl when you are
+						reminded of your own mortality. Muttering some half remembered prayer that you hope will keep
+						the spirit of the dead from noticing you, you quickly slink away.
+
+						""",
+				15,
+				0,
+				null);
+	}
+
+	private static Encounter getASlipperySlopEncounter() {
+		return new Encounter(
+				"""
+						Deep into the caves you come across an underground stream. The current is fierce as the water
+						foams around the razor sharp rocks strewn along the streambed. You are able to make out a
+						narrow faultline in the cliff face that you think you might use to climb across without getting
+						drenched.
+						""",
+				2,
+				ChallengeType.DEXTERITY,
+				"""
+						Slowly and carefully you are able to make your way across the stream, finding purchase
+						between the moss-slick rocks, until you are once again standing on firm ground on the other
+						side.
+						""",
+				"""
+						Tenuously you make your way along the cave wall from grip to grip. However, you
+						underestimated how slick the moss and mold would make the stone. Halfway across you notice
+						how you're starting to lose your grip. Desperately you throw yourself forward, barely making it,
+						but slamming into the sharp rocks on the other side in the process.
+						Laboriously you climb to your feet again, you're bruised and bleeding, but at least you managed
+						to avoid being pulled under by the current.
+						""",
+				15,
+				0,
+				null);
+	}
+
+	private static Encounter getBlockedByRubbleEncounter() {
+		return new Encounter(
+				"""
+						You come across a part of the tunnel that has collapsed completely blocking your progress.
+						""",
+				2,
+				ChallengeType.STRENGTH,
+				"""
+						After having moved several of the smaller stones out of the way you are able to get a good grip
+						on the larger boulder that fills most of the passage. Straining with all your might you are able to
+						shift the boulder and roll it away.
+						On the other side the dark tunnel beckons you deeper into the mountain. Bravely you step
+						forward on your journey.
+						""",
+				"""
+						After having spent an hour laboriously shifting the smaller rocks out of the way you are able to
+						start shifting the larger stones out of the way. You strain and heave with all your might, but you
+						are unable to get the rock to do more than shift slightly in its place.
+						Finally, exhausted, you must concede defeat.
+						You are forced to turn back, and spend many long hours backtracking before you are able to
+						find a new route that lets you circumvent the blockage.
+						""",
+				15,
+				0,
+				null);
+	}
+
+	private static Encounter getMossDrenchedUndeadEncounter() {
+		return new Encounter(HostileEntitiesRepository.getMossDrenchedUndead());
+	}
+
+	private static Encounter getDrownedCrawlerEncounter() {
+		return new Encounter(HostileEntitiesRepository.getDrownedCrawler());
+	}
+
+	private static Encounter getGiantBloodsuckingBatEncounter() {
+		return new Encounter(HostileEntitiesRepository.getGiantBloodsuckingBat());
 	}
 
 	private static Encounter getUnfinishedEncounter() {

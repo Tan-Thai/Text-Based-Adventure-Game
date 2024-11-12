@@ -1,6 +1,7 @@
 package GameObjects.Entities;
 
 public enum HostileEntityType {
+	DRACONIC, //halved damage from fire,
 	HUMAN,
 	TOADKIN, // halved damage from fire,
 	TROLLKIN, // weak against fire & sunlight
