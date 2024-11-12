@@ -15,7 +15,7 @@ public class DamageEffect implements Effect {
     }
 
     @Override
-    public int getValue(){
+    public int getValue() {
         return damageValue;
     }
 }

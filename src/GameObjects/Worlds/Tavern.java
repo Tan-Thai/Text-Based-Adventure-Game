@@ -14,7 +14,8 @@ public class Tavern extends Zone {
         """,    true, ZoneType.TAVERN, null);
     }
 
-    public void takeRest(PlayerCharacter pc) { // take rest method
+    // Heals character.
+    public void takeRest(PlayerCharacter pc) {
         Utility.clearConsole();
         Utility.slowPrint("You take a rest and regain some health.");
         pc.setHealth(pc.getMaxHealth());
@@ -22,9 +23,11 @@ public class Tavern extends Zone {
 
     }
 
+    // TODO: add method to call to sell OR call to buy.
     public void openShop(PlayerCharacter pc) { // open shop method, WIP
         Utility.clearConsole();
         // pc.getInventory();
+        // make npc to shop from since they have inventory
         Utility.slowPrint("You open the shop and see a variety of items for sale.");
         System.out.printf("Items for sale:");
         // make npc to shop from since they have inventory

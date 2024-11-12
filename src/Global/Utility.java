@@ -6,18 +6,16 @@ import java.util.Scanner;
 
 public class Utility {
 
-    // #region vars for standard dice values
-    private static Random random = new Random();
-
-    private static final int AMOUNT_OF_SIDES = 6;
-    private static final int CRIT_VALUE = 6;
-    private static final int SUCCESS_VALUE = 4;
-    // #endregion
-
     // #region colour for prints
     public static final String RESET = "\u001B[0m";
     public static final String RED = "\u001B[31m";
     public static final String GREEN = "\u001B[32m";
+    private static final int AMOUNT_OF_SIDES = 6;
+    // #endregion
+    private static final int CRIT_VALUE = 6;
+    private static final int SUCCESS_VALUE = 4;
+    // #region vars for standard dice values
+    private static final Random random = new Random();
     // #endregion
 
     public static String checkIfValidString(Scanner sc) {
@@ -45,6 +43,23 @@ public class Utility {
                 sc.next();
             }
             System.err.print("Invalid input, please enter a number: ");
+        }
+    }
+
+    public static int checkIfNumberTest(Scanner sc, int maxInput) {
+        int userInput;
+
+        while (true) { // forced loop in while
+            if (sc.hasNextInt()) {
+                userInput = sc.nextInt();
+                if (userInput >= 0 && userInput <= maxInput) {
+                    clearScanner(sc);
+                    return userInput;
+                }
+            } else {
+                sc.next();
+            }
+            System.err.print("Invalid input, please enter a number between 0 - " + maxInput + ": ");
         }
     }
 
@@ -102,16 +117,16 @@ public class Utility {
      * If not otherwise specified, success value, as well as crit value and how many
      * sides each die has is set to the default values of the variables in this
      * script.
-     * 
+     *
      * @param diceAmount
      * @param colour
-     * @param optionalSuccessValue Optional argument for what value the dies needs to be equal or above to count as successess
-     * @param optionalCritValue Optional argument for what value the dies needs to be equal or above to count as a critical success
+     * @param optionalSuccessValue   Optional argument for what value the dies needs to be equal or above to count as successess
+     * @param optionalCritValue      Optional argument for what value the dies needs to be equal or above to count as a critical success
      * @param optionalDiceSideAmount Optional argument for how many sides you want the dies to have.
      * @return
      */
     public static int rollDicePool(int diceAmount, String colour, OptionalInt optionalSuccessValue,
-            OptionalInt optionalCritValue, OptionalInt optionalDiceSideAmount) {
+                                   OptionalInt optionalCritValue, OptionalInt optionalDiceSideAmount) {
 
         int successValue = optionalSuccessValue.orElse(SUCCESS_VALUE);
         int critValue = optionalCritValue.orElse(CRIT_VALUE);
@@ -142,20 +157,20 @@ public class Utility {
 
     public static void slowPrint(String text, int... optDelay) { // Add int in parameter to change delay
 
-            int delay = optDelay.length > 0 ? optDelay[0] : 40;
-       //     int delay = 40; 
-            for (int i = 0; i < text.length(); i++) {
-                char currentChar = text.charAt(i);
-                System.out.print(currentChar);
-                if (currentChar != ' ') {
-                    try {
-                        Thread.sleep(delay);
-                    } catch (InterruptedException e) {
-                        System.err.println("Interrupted: " + e.getMessage());
-                    }
+        int delay = optDelay.length > 0 ? optDelay[0] : 40;
+        //     int delay = 40;
+        for (int i = 0; i < text.length(); i++) {
+            char currentChar = text.charAt(i);
+            System.out.print(currentChar);
+            if (currentChar != ' ') {
+                try {
+                    Thread.sleep(delay);
+                } catch (InterruptedException e) {
+                    System.err.println("Interrupted: " + e.getMessage());
                 }
             }
-            System.out.println();
         }
-   
+        System.out.println();
+    }
+
 }

@@ -47,7 +47,6 @@ public class Inventory {
             System.out.println(i + ". " + entry.getKey().getName() + " x" + entry.getValue());
             i++;
         }
-
     }
 
     public void inspectInventory(Scanner sc, PlayerCharacter player) {
@@ -77,7 +76,6 @@ public class Inventory {
                 Utility.promptEnterKey(sc);
             }
         }
-
     }
 
     private boolean checkIfEmpty() {

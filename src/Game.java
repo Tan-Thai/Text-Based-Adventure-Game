@@ -1,31 +1,40 @@
+import Core.GameState;
+import Core.GameStateManager;
 import GameObjects.Data.Info;
-import GameObjects.Entities.*;
-import GameObjects.Items.*;
+import GameObjects.Entities.HostileCharacter;
+import GameObjects.Entities.HostileEntityType;
+import GameObjects.Entities.PlayerCharacter;
+import GameObjects.Items.DamageEffect;
+import GameObjects.Items.Equipment;
+import GameObjects.Items.HealingEffect;
+import GameObjects.Items.Potion;
 import GameObjects.Worlds.ZoneManager;
 import GameObjects.Worlds.ZoneType;
-import Global.*;
-import Interactions.*;
+import Global.Utility;
+import Interactions.Combat;
+import Interactions.EncounterHandler;
+
 import java.util.Scanner;
 
 public class Game {
-
     Scanner sc;
-    //Boolean here to exit the game when the user chooses to, OR dies in game.
-    private boolean exitGame = false;
+    GameStateManager gameManager;
 
+    // TODO: migrate Game.java to core package.
     // stuff we can start generating as soon as the program starts running.
     public Game(Scanner sc) {
         // All instances and such can be made here such as zones etc.
-        this.sc = sc;
+        gameManager = GameStateManager.getInstance();
         ZoneManager.getInstance();
+        this.sc = sc;
     }
 
     // the core game loop
-    public void run () {
+    public void run() {
         Utility.clearConsole();
         // adding player char and basic items(temp items for now.)
         PlayerCharacter pc = setupUser(sc);
-        addItems(pc);
+        // addItems(pc);
         // --- TESTS -----------------------
         // Combat Test
         // combatTest(pc, addEnemyTemp(), sc);
@@ -33,35 +42,45 @@ public class Game {
         // Encounter test
         // encounterTest(pc, sc);
         //----------------------------------
-        while (!exitGame) {
-            gameMenu(pc, sc);
+        while (gameManager.getCurrentState() != GameState.EXIT) {
+            switch (gameManager.getCurrentState()) {
+                case RUNNING:
+                    gameMenu(pc, sc);
+                    break;
+                case VICTORY:
+                    handleVictory();
+                    break;
+                case GAME_OVER:
+                    handleGameOver();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
     // There are a few mega temporary methods atm, combat related ones being a few.
     // Wherever we invoke the combat method, we need to make sure it calls "Combat combat = Combat.getInstance();"
     private void gameMenu(PlayerCharacter pc, Scanner sc) {
+        Utility.clearConsole();
+        System.out.println("Welcome to the game!\n1. Start Game\n2. How to Play\n3. Exit");
 
-            Utility.clearConsole();
-            System.out.println("Welcome to the game!\n1. Start Game\n2. How to Play\n3. Exit");
+        int choice = Utility.checkIfNumber(sc);
 
-            int choice = Utility.checkIfNumber(sc);
-
-            switch (choice) {
+        switch (choice) {
 
             case 1 -> {
+                // TODO: adding player should be here inside game menu when we select start game
                 System.out.println("Starting game...");
                 travelTest(pc, sc);
-                    // startGame(); call main game loop
-                }
+                // startGame(); call main game loop
+            }
             case 2 -> Info.howToPlay(sc);
             case 3 -> {
                 System.out.println("Exiting game...");
-                exitGame = true;
-                }
+                gameManager.setCurrentState(GameState.EXIT);
+            }
         }
-
-
     }
 
     private static PlayerCharacter setupUser(Scanner sc) {
@@ -73,26 +92,19 @@ public class Game {
         Utility.promptEnterKey(sc);
         return new PlayerCharacter(nameInput, 18, 3, 2, 4);
     }
-    private static void addItems(PlayerCharacter pc) {
-        Equipment sword = new Equipment("A Simple Sword", "Your standard blade as a new adventurer.",
-                new DamageEffect(2));
-        Potion potion = new Potion("Health Potion", "Chug when ouch", new HealingEffect(5));
-        Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", new DamageEffect(7));
-
-        pc.getInventory().addItem(sword);
-        pc.getInventory().addItem(potion);
-        pc.getInventory().addItem(poison);
-    }
 
     // methods down here are most likely tests methods.
     private static void travelTest(PlayerCharacter pc, Scanner sc) {
         while (true) {
             pc.getCurrentZone().travelMenu(pc);
-
             Utility.promptEnterKey(sc);
         }
     }
-    private static HostileCharacter addEnemyTemp() {return new HostileCharacter("Goblin", 6);}
+
+    private static HostileCharacter addEnemyTemp() {
+        return new HostileCharacter("Troll", 5, HostileEntityType.TROLLKIN);
+    }
+
     private static void combatTest(PlayerCharacter pc, HostileCharacter enemy, Scanner sc) {
         // new up A COMBAT object, and it will be the only one since it's a singleton.
         Combat combat = Combat.getInstance();
@@ -113,5 +125,26 @@ public class Game {
             System.out.println(ZoneManager.getZone(ZoneType.FOREST).getName());
             encounterHandler.runEncounter(pc, ZoneManager.getZone(ZoneType.FOREST).getUnclearedEncounter(), myScanner);
         }
+    }
+
+    private static void addItems(PlayerCharacter pc) {
+        Equipment sword = new Equipment("A Simple Sword", "Your standard blade as a new adventurer.",
+                new DamageEffect(2));
+        Potion potion = new Potion("Health Potion", "Chug when ouch", new HealingEffect(5));
+        Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", new DamageEffect(7));
+
+        pc.getInventory().addItem(sword);
+        pc.getInventory().addItem(potion);
+        pc.getInventory().addItem(poison);
+    }
+
+    private void handleVictory() {
+        System.out.println("Victory!");
+        gameManager.setCurrentState(GameState.EXIT);
+    }
+
+    private void handleGameOver() {
+        System.out.println("Game Over!");
+        gameManager.setCurrentState(GameState.EXIT);
     }
 }

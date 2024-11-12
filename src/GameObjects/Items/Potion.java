@@ -16,9 +16,9 @@ public class Potion extends Item implements Consumable {
     @Override
     public void consume(PlayerCharacter player) {
         System.out.println();
-            System.out.println("You consumed " + getName());
-            potionEffect.apply(player);
-            player.getInventory().removeItem(this);
+        System.out.println("You consumed " + getName());
+        potionEffect.apply(player);
+        player.getInventory().removeItem(this);
     }
 
     @Override
