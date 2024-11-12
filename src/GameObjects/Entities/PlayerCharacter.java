@@ -1,5 +1,7 @@
 package GameObjects.Entities;
 
+import Core.GameState;
+import Core.GameStateManager;
 import GameObjects.Worlds.Zone;
 import GameObjects.Worlds.ZoneManager;
 import GameObjects.Worlds.ZoneType;
@@ -64,23 +66,14 @@ public class PlayerCharacter extends Entity {
         }
     }
 
-
-    public void checkGameOverCondition() {
-        if (!isAlive()) {
-            System.out.println("you died blabla.");
-            //Call on a method within Game file due to not having access to scanner
-            //Would also be more fitting due to it handling the game flow and not the player itself.
-        } else {
-            System.out.println("You died to idk, rolling a 1 on an event or something.");
-        }
-    }
-
+    // TODO: Streamline location for level. and implement "retire" from tavern.
     public void checkGameClearCondition() {
-        if (getLevel() == 10) { //or x boss is dead, but we can prolly add a specific method for when it dies.
-            System.out.println("Ya won woop.");
+        if (getLevel() == 2) { //or x boss is dead, but we can prolly add a specific method for when it dies.
+            GameStateManager.getInstance().setCurrentState(GameState.VICTORY);
         }
     }
 
+    // CURRENTLY not in use in combat at all and only connected to item usage.
     // override method do include a game over check for when the player specifically took damage.
     @Override
     public void takeDamage(int damageValue) {
@@ -88,12 +81,12 @@ public class PlayerCharacter extends Entity {
             throw new IllegalArgumentException("Damage value must be positive");
         }
         health -= damageValue;
-        if (isAlive()) {
-            System.out.println(getName() + " took " + damageValue + " damage. Current health: " + health);
-        } else {
+        if (isDead()) {
             health = 0;
             System.out.println(getName() + " took " + damageValue + " damage. " + getName() + " is dead.");
-            checkGameOverCondition();
+            GameStateManager.getInstance().setCurrentState(GameState.GAME_OVER);
+        } else {
+            System.out.println(getName() + " took " + damageValue + " damage. Current health: " + health);
         }
     }
 
