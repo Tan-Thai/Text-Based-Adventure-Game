@@ -174,7 +174,7 @@ public class Zone {
 
         switch (choice) {
             case 1:
-                travelInsideZone(pc);
+                exploreZone(pc);
                 break;
             case 2:
                 displayCurrentZone(pc);
@@ -247,12 +247,13 @@ public class Zone {
         Utility.promptEnterKey(sc);
     }
 
-    public void travelInsideZone(PlayerCharacter pc) { // Wander/explore inside zone function.
+    public Encounter exploreZone(PlayerCharacter pc) { // Wander/explore inside zone function.
+        
         if (pc.getCurrentZone().getZoneType() == ZoneType.TAVERN
                 || pc.getCurrentZone().getZoneType() == ZoneType.BASEMENT) { // maybe not needed
             Utility.clearConsole();
             Utility.slowPrint("You cannot travel inside the " + pc.getCurrentZone().getName());
-            return;
+            return null;
         }
 
         Utility.clearConsole();
@@ -262,8 +263,20 @@ public class Zone {
                 "A monster appears!\nHuzzah! You killed it, and on it you find a map leading to the next area!"); 
         // EVENTS STUFF PROBABLY HERE
 
-        pc.getCurrentZone().setZoneCleared(true); // sets the zone to cleared after wandering around and killing monster
-        checkTraveableZones(pc); // checks if zones are cleared and adds them to traveable zones
+//check if there is encounter? If yes, get encounter. (do encounter)
+//After encounter, check if zone is "cleared"
+
+        if(getUnclearedEncounter()==null) {
+            Utility.slowPrint(
+                "You wander the area, but the roads are known to you, and the lands are peaceful, there are no more adventures to be had for you here.");
+                return null;
+        }
+        else {
+            return getUnclearedEncounter();
+            }
+
+        //pc.getCurrentZone().setZoneCleared(true); // sets the zone to cleared after wandering around and killing monster
+        //checkTraveableZones(pc); // checks if zones are cleared and adds them to traveable zones
 
         
     }
