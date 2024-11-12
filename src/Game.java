@@ -1,19 +1,18 @@
 import Core.GameState;
 import Core.GameStateManager;
 import GameObjects.Data.Info;
+import GameObjects.Data.PlayerClassRepository;
 import GameObjects.Entities.HostileCharacter;
-import GameObjects.Entities.HostileEntityType;
 import GameObjects.Entities.PlayerCharacter;
 import GameObjects.Items.DamageEffect;
 import GameObjects.Items.Equipment;
 import GameObjects.Items.HealingEffect;
 import GameObjects.Items.Potion;
 import GameObjects.Worlds.ZoneManager;
-import GameObjects.Worlds.ZoneType;
 import Global.Utility;
 import Interactions.Combat;
 import Interactions.EncounterHandler;
-
+import java.lang.classfile.instruction.ThrowInstruction;
 import java.util.Scanner;
 
 public class Game {
@@ -24,6 +23,7 @@ public class Game {
     // stuff we can start generating as soon as the program starts running.
     public Game(Scanner sc) {
         // All instances and such can be made here such as zones etc.
+
         gameManager = GameStateManager.getInstance();
         ZoneManager.getInstance();
         this.sc = sc;
@@ -41,7 +41,8 @@ public class Game {
 
         // Encounter test
         // encounterTest(pc, sc);
-        //----------------------------------
+
+        // ----------------------------------
         while (gameManager.getCurrentState() != GameState.EXIT) {
             switch (gameManager.getCurrentState()) {
                 case RUNNING:
@@ -60,7 +61,8 @@ public class Game {
     }
 
     // There are a few mega temporary methods atm, combat related ones being a few.
-    // Wherever we invoke the combat method, we need to make sure it calls "Combat combat = Combat.getInstance();"
+    // Wherever we invoke the combat method, we need to make sure it calls "Combat
+    // combat = Combat.getInstance();"
     private void gameMenu(PlayerCharacter pc, Scanner sc) {
         Utility.clearConsole();
         System.out.println("Welcome to the game!\n1. Start Game\n2. How to Play\n3. Exit");
@@ -72,6 +74,7 @@ public class Game {
             case 1 -> {
                 // TODO: adding player should be here inside game menu when we select start game
                 System.out.println("Starting game...");
+                runGame(pc, sc);
                 runGame(pc, sc);
             }
             case 2 -> Info.howToPlay(sc);
@@ -89,10 +92,11 @@ public class Game {
 
         System.out.println("Your name is " + nameInput + "!");
         Utility.promptEnterKey(sc);
-        return new PlayerCharacter(nameInput, 18, 3, 2, 4);
+        return playerCharacterClassSelect(nameInput,sc);
     }
 
     // methods down here are most likely tests methods.
+    private static void runGame(PlayerCharacter pc, Scanner sc) {
     private static void runGame(PlayerCharacter pc, Scanner sc) {
         while (true) {
             pc.getCurrentZone().travelMenu(pc);
@@ -100,10 +104,12 @@ public class Game {
         }
     }
 
+
     private static HostileCharacter addEnemyTemp() {
         return new HostileCharacter("Troll", 5, 3, 2, 1, 1, HostileEntityType.TROLLKIN);
+        return new HostileCharacter("Troll", 5, 3, 2, 1, 1, HostileEntityType.TROLLKIN);
     }
-
+  
     private static void combatTest(PlayerCharacter pc, HostileCharacter enemy, Scanner sc) {
         // new up A COMBAT object, and it will be the only one since it's a singleton.
         Combat combat = Combat.getInstance();
@@ -145,5 +151,31 @@ public class Game {
     private void handleGameOver() {
         System.out.println("Game Over!");
         gameManager.setCurrentState(GameState.EXIT);
+    }
+
+    
+    private static PlayerCharacter playerCharacterClassSelect(String nameInput,Scanner sc) {
+        Utility.clearConsole();
+        Utility.slowPrint("Choose a class:");
+        System.out.println(
+                "1. Barbarian (Strong with lots of health)\n2. Rogue (dexterous and swift)\n3. Wizard (Clever and astmatic)");
+
+        int choice = Utility.checkIfNumber(sc);
+
+        switch (choice) {
+            case 1 -> {
+                return PlayerClassRepository.getBarbarian(nameInput);
+            }
+            case 2 -> {
+                return PlayerClassRepository.getRogue(nameInput);
+            }
+            case 3 -> {
+                return PlayerClassRepository.getWizard(nameInput);
+            }
+            default -> {
+                System.out.println("Invalid choice. Please try again.");
+                return playerCharacterClassSelect(nameInput, sc);
+            }
+        }
     }
 }
