@@ -1,7 +1,6 @@
 import Core.GameState;
 import Core.GameStateManager;
 import Global.Utility;
-
 import java.util.Scanner;
 
 public class Main {

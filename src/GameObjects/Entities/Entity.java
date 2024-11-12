@@ -2,7 +2,6 @@ package GameObjects.Entities;
 
 import GameObjects.Items.Inventory;
 import Global.Utility;
-
 import java.util.Scanner;
 
 public class Entity {
@@ -117,9 +116,13 @@ public class Entity {
 
     public void levelUp() {
         level++;
+        strength++;
+        dexterity++;
+        intelligence++;
         // Temporarily set strength to be the stat for hp.
         changeMaxHealth(strength / 2);
         changeHealth(strength / 2);
+        
         System.out.println("\n" + name + " just reached level: " + level);
         System.out.println(name + "'s max hp is now: " + maxHealth);
     }

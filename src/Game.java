@@ -1,6 +1,7 @@
 import Core.GameState;
 import Core.GameStateManager;
 import GameObjects.Data.Info;
+import GameObjects.Data.PlayerClassRepository;
 import GameObjects.Entities.HostileCharacter;
 import GameObjects.Entities.HostileEntityType;
 import GameObjects.Entities.PlayerCharacter;
@@ -13,12 +14,14 @@ import GameObjects.Worlds.ZoneType;
 import Global.Utility;
 import Interactions.Combat;
 import Interactions.EncounterHandler;
+import java.lang.classfile.instruction.ThrowInstruction;
 
 import java.util.Scanner;
 
 public class Game {
     Scanner sc;
     GameStateManager gameManager;
+
     // TODO: migrate Game.java to core package.
     // stuff we can start generating as soon as the program starts running.
     public Game(Scanner sc) {
@@ -42,7 +45,7 @@ public class Game {
         // Encounter test
         // encounterTest(pc, sc);
 
-        //----------------------------------
+        // ----------------------------------
         while (gameManager.getCurrentState() != GameState.EXIT) {
             switch (gameManager.getCurrentState()) {
                 case RUNNING:
@@ -92,7 +95,7 @@ public class Game {
 
         System.out.println("Your name is " + nameInput + "!");
         Utility.promptEnterKey(sc);
-        return new PlayerCharacter(nameInput, 18, 3, 2, 4);
+        return playerCharacterClassSelect(nameInput,sc);
     }
 
     // methods down here are most likely tests methods.
@@ -148,5 +151,31 @@ public class Game {
     private void handleGameOver() {
         System.out.println("Game Over!");
         gameManager.setCurrentState(GameState.EXIT);
+    }
+
+    
+    private static PlayerCharacter playerCharacterClassSelect(String nameInput,Scanner sc) {
+        Utility.clearConsole();
+        Utility.slowPrint("Choose a class:");
+        System.out.println(
+                "1. Barbarian (Strong with lots of health)\n2. Rogue (dexterous and swift)\n3. Wizard (Clever and astmatic)");
+
+        int choice = Utility.checkIfNumber(sc);
+
+        switch (choice) {
+            case 1 -> {
+                return PlayerClassRepository.getBarbarian(nameInput);
+            }
+            case 2 -> {
+                return PlayerClassRepository.getRogue(nameInput);
+            }
+            case 3 -> {
+                return PlayerClassRepository.getWizard(nameInput);
+            }
+            default -> {
+                System.out.println("Invalid choice. Please try again.");
+                return playerCharacterClassSelect(nameInput, sc);
+            }
+        }
     }
 }
