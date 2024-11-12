@@ -1,5 +1,7 @@
 package GameObjects.Entities;
 
+import GameObjects.Items.Inventory;
+
 public class HostileCharacter extends Entity {
 
     private final HostileEntityType hostileEntityType;

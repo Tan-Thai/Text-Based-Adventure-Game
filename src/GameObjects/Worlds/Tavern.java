@@ -1,7 +1,6 @@
 package GameObjects.Worlds;
 
 import GameObjects.Entities.PlayerCharacter;
-import Global.EndOfGameScreen;
 import Global.Utility;
 
 public class Tavern extends Zone {
@@ -37,7 +36,10 @@ public class Tavern extends Zone {
         Utility.clearConsole();
         Utility.slowPrint("You retire from adventuring and live out the rest of your days in peace.");
         Utility.promptEnterKey(sc);
-        EndOfGameScreen.gameOverCheck();
+        //Removed call to EndofGameScreen due to it being phased out.
+        //check of state should not exist here because the only time this will be visible is if
+        //the player already are in a state of VICTORY. --- TT
+
         
     }
 

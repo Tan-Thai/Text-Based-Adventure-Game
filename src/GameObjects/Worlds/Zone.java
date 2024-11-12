@@ -165,9 +165,7 @@ public class Zone {
         System.out.println("Debug check PC currentzone:  " + pc.getCurrentZone().getZoneType());
         Utility.promptEnterKey(sc);
         if (pc.getCurrentZone().getZoneType() == ZoneType.BASEMENT) { // dirty bossfight check
-
             ((Basement) ZoneManager.getZone(ZoneType.BASEMENT)).bossFight(); //type cast Basement to call on bossfight method
-
      }
 
         Utility.clearConsole();
@@ -294,9 +292,12 @@ public class Zone {
     public void zoneTravel(PlayerCharacter pc) { // Travel between zones method,
 
         Utility.clearConsole();
-
-        if (pc.getCurrentZone().getZoneCleared() == true) { // checks if currentzone is clrared
+       
+        if (pc.getCurrentZone().getZoneCleared() == true) { // checks if currentzone is cleared
                 pc.setCurrentZone(displayTraveableZones(pc));
+                if (pc.getCurrentZone().getZoneType() == ZoneType.BASEMENT) { // dirty bossfight check
+                    ((Basement) ZoneManager.getZone(ZoneType.BASEMENT)).bossIntro(); //type cast Basement to call on bossIntro
+             }
 
         } else if (pc.getCurrentZone().getZoneCleared() == false
                 && pc.getCurrentZone().getZoneType() != ZoneType.TAVERN) { // allows player to backtrack to tavern

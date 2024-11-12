@@ -15,11 +15,11 @@ import java.util.Scanner;
 public class Game {
     Scanner sc;
     GameStateManager gameManager;
-
     // TODO: migrate Game.java to core package.
     // stuff we can start generating as soon as the program starts running.
     public Game(Scanner sc) {
         // All instances and such can be made here such as zones etc.
+
         gameManager = GameStateManager.getInstance();
         ZoneManager.getInstance();
         this.sc = sc;
@@ -37,6 +37,7 @@ public class Game {
 
         // Encounter test
         // encounterTest(pc, sc);
+
         //----------------------------------
         while (gameManager.getCurrentState() != GameState.EXIT) {
             switch (gameManager.getCurrentState()) {
@@ -56,7 +57,8 @@ public class Game {
     }
 
     // There are a few mega temporary methods atm, combat related ones being a few.
-    // Wherever we invoke the combat method, we need to make sure it calls "Combat combat = Combat.getInstance();"
+    // Wherever we invoke the combat method, we need to make sure it calls "Combat
+    // combat = Combat.getInstance();"
     private void gameMenu(PlayerCharacter pc, Scanner sc) {
         Utility.clearConsole();
         System.out.println("Welcome to the game!\n1. Start Game\n2. How to Play\n3. Exit");
@@ -96,6 +98,11 @@ public class Game {
         }
     }
 
+
+    private static HostileCharacter addEnemyTemp() {
+        return new HostileCharacter("Troll", 5, 3, 2, 1, 1, HostileEntityType.TROLLKIN);
+    }
+  
     private static void combatTest(PlayerCharacter pc, HostileCharacter enemy, Scanner sc) {
         // new up A COMBAT object, and it will be the only one since it's a singleton.
         Combat combat = Combat.getInstance();
