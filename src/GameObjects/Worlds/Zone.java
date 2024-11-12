@@ -107,7 +107,8 @@ public class Zone {
         Utility.clearConsole();
         Utility.slowPrint("Choose an action:");
         System.out.println(
-                "1. Rest (restore health)\n2. Open shop (buy items)\n3. Set out (Back to travel menu)\n4. Retire");
+                "1. Rest (restore health)\n2. Open shop (buy items)\n3. Set out (Back to travel menu)");
+        if (pc.getLevel() >= 3) { System.out.println("4. Retire (End game)"); } // retire character, end game.
         // talk to npcs? Listen to rumours? etc.
 
         int choice = Utility.checkIfNumber(sc);
@@ -218,7 +219,6 @@ public class Zone {
         System.out.println("Enter the number of the zone you want to travel to: ");
         int choice = Utility.checkIfNumber(sc);
 
-        // currently having 2 prints for checks, to be removed later.
         if (choice > 0 && choice <= traveableZones.size()) { // check if choice is valid
             Zone[] zonesArray = traveableZones.toArray(Zone[]::new); // make array of traveablezones Set to be able to
                                                                      // // index it for selection
@@ -259,8 +259,7 @@ public class Zone {
 
         Utility.slowPrint("You wander around the " + pc.getCurrentZone().getName());
         Utility.slowPrint(
-                "A monster appears!\nHuzzah! You killed it, and on it you find a map leading to the next area!"); // sample
-                                                                                                                  // text
+                "A monster appears!\nHuzzah! You killed it, and on it you find a map leading to the next area!"); 
         // EVENTS STUFF PROBABLY HERE
 
         pc.getCurrentZone().setZoneCleared(true); // sets the zone to cleared after wandering around and killing monster
