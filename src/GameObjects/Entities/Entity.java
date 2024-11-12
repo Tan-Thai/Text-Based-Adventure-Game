@@ -142,7 +142,7 @@ public class Entity {
             throw new IllegalArgumentException("Damage value must be positive");
         }
         health -= damageValue;
-        if (!isDead()) {
+        if (isDead()) {
             health = 0;
             System.out.println(name + " took " + damageValue + " damage. " + name + " is dead.");
         } else {
