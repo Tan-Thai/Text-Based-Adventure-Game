@@ -17,13 +17,14 @@ public class HostileCharacter extends Entity {
         this.hostileEntityType = hostileEntityType;
     }
 
-    // Expand logic
+    // TODO: Expand logic for enemy types and experience.
     public HostileEntityType getHostileEntityType() {
         return hostileEntityType;
     }
 
     // calculates the experience based on the level. numbers TBD
     public int calcExperienceGiven() {
-        return (int) (Math.round((level * 20 * 1.25)));
+        return 100;
+        // return (int) (Math.round((level * 20 * 1.25)));
     }
 }

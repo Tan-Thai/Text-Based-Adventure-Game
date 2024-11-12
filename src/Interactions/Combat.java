@@ -1,5 +1,7 @@
 package Interactions;
 
+import Core.GameState;
+import Core.GameStateManager;
 import GameObjects.Entities.Entity;
 import GameObjects.Entities.HostileCharacter;
 import GameObjects.Entities.PlayerCharacter;
@@ -105,27 +107,28 @@ public class Combat {
         enemy.setHealth(enemy.getHealth() - playerHitCount);
         playerHitCount = 0;
         enemyHitCount = 0;
-
     }
 
     private void checkVictoryConditionMet() {
         // will prolly have to change this due to us hardcoding a win message and all
         // other handling here.
-        if (player.getHealth() <= 0 && enemy.getHealth() <= 0) {
+        if (player.isDead() && enemy.isDead()) {
             Utility.clearConsole();
             System.out.println("Both of you perish");
             exitingCombat();
 
-        } else if (enemy.getHealth() <= 0) {
+        } else if (enemy.isDead()) {
             Utility.clearConsole();
             printEntityHP(player, Utility.GREEN);
             System.out.println("You have vanquished your foe!");
             ((PlayerCharacter) player).gainExperience(((HostileCharacter) enemy).calcExperienceGiven());
             exitingCombat();
 
-        } else if (player.getHealth() <= 0) {
+        } else if (player.isDead()) {
             Utility.clearConsole();
             System.out.println("You have been slain");
+            // currently calling the state to game over on death here.
+            GameStateManager.getInstance().setCurrentState(GameState.GAME_OVER);
             exitingCombat();
         }
     }

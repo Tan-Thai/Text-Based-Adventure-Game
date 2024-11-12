@@ -72,8 +72,8 @@ public class Entity {
         return level;
     }
 
-    public boolean isAlive() {
-        return this.health > 0;
+    public boolean isDead() {
+        return health <= 0;
     }
 
     public boolean isFullHP() {
@@ -124,6 +124,7 @@ public class Entity {
         System.out.println(name + "'s max hp is now: " + maxHealth);
     }
 
+    // TODO implement heal/take damage into combat since it's not making use of it currently.
     public void heal(int healingValue) {
         if (healingValue < 0) {
             throw new IllegalArgumentException("Healing value must be positive");
@@ -135,12 +136,13 @@ public class Entity {
         System.out.println(name + " healed by " + healingValue + " points. Current health: " + health);
     }
 
+    // used to deal damage to an entity with items. EX: Drink poison, throw bomb.
     public void takeDamage(int damageValue) {
         if (damageValue < 0) {
             throw new IllegalArgumentException("Damage value must be positive");
         }
         health -= damageValue;
-        if (!isAlive()) {
+        if (isDead()) {
             health = 0;
             System.out.println(name + " took " + damageValue + " damage. " + name + " is dead.");
         } else {
