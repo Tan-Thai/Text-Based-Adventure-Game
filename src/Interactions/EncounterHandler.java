@@ -55,6 +55,7 @@ public class EncounterHandler {
         }
 
         // Indicates success on challenge,
+        displayRelevantSkill();
         return Utility.rollDicePool(playerSkillValue, Utility.GREEN, OptionalInt.empty(), OptionalInt.empty(),
                 OptionalInt.empty()) >= encounter.getChallengeThreshold();
     }
@@ -84,6 +85,41 @@ public class EncounterHandler {
             default:
                 System.out.println("Couldn't find a case for the challenge type in the " + getClass());
                 return -1;
+        }
+    }
+
+    private void displayRelevantSkill() {
+
+        if (encounter.getChallengeType() == null) {
+            System.out.println("Was unable to find a challenge type in encounter.");
+            return;
+        }
+
+        switch (encounter.getChallengeType()) {
+            case DEXTERITY:
+                System.out.println("You use your Dexterity to attempt this challenge.\nYour current Dex is: " + player.getDexterity());
+                Utility.promptEnterKey(myScanner);
+                break;
+            case HEALTH:
+                System.out.println("You use your Health to attempt this challenge.\nYour current Health is: " + player.getHealth());
+                Utility.promptEnterKey(myScanner);
+                break;
+            case INTELLIGENCE:
+                System.out.println("You use your Intelligence to attempt this challenge.\nYour current Int is: " + player.getIntelligence());
+                Utility.promptEnterKey(myScanner);
+                break;
+            case LEVEL:
+                System.out.println("You use your experience to attempt this challenge.\nYour current level is: " + player.getLevel());
+                Utility.promptEnterKey(myScanner);
+                break;
+            case STRENGTH:
+                System.out.println("You use your Strength to attempt this challenge.\nYour current Str is: " + player.getStrength());
+                Utility.promptEnterKey(myScanner);
+                break;
+            default:
+                System.out.println("Couldn't find a case for the challenge type in the " + getClass());
+                Utility.promptEnterKey(myScanner);
+                break;
         }
     }
 }

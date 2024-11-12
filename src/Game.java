@@ -74,8 +74,7 @@ public class Game {
             case 1 -> {
                 // TODO: adding player should be here inside game menu when we select start game
                 System.out.println("Starting game...");
-                travelTest(pc, sc);
-                // startGame(); call main game loop
+                runGame(pc, sc);
             }
             case 2 -> Info.howToPlay(sc);
             case 3 -> {
@@ -96,7 +95,7 @@ public class Game {
     }
 
     // methods down here are most likely tests methods.
-    private static void travelTest(PlayerCharacter pc, Scanner sc) {
+    private static void runGame(PlayerCharacter pc, Scanner sc) {
         while (true) {
             pc.getCurrentZone().travelMenu(pc);
             Utility.promptEnterKey(sc);
@@ -104,7 +103,7 @@ public class Game {
     }
 
     private static HostileCharacter addEnemyTemp() {
-        return new HostileCharacter("Troll", 5, HostileEntityType.TROLLKIN);
+        return new HostileCharacter("Troll", 5, 3, 2, 1, 1, HostileEntityType.TROLLKIN);
     }
 
     private static void combatTest(PlayerCharacter pc, HostileCharacter enemy, Scanner sc) {
