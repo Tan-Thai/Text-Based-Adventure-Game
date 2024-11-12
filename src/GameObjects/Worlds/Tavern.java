@@ -37,7 +37,7 @@ public class Tavern extends Zone {
         Utility.clearConsole();
         Utility.slowPrint("You retire from adventuring and live out the rest of your days in peace.");
         Utility.promptEnterKey(sc);
-        EndOfGameScreen.victoryScreen();
+        EndOfGameScreen.gameOverCheck();
         
     }
 
