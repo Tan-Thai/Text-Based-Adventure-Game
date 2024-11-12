@@ -68,9 +68,12 @@ public class PlayerCharacter extends Entity {
 
     // TODO: Streamline location for level. and implement "retire" from tavern.
     public void checkGameClearCondition() {
-        if (getLevel() == 2) { //or x boss is dead, but we can prolly add a specific method for when it dies.
+        if (getLevel() == 2) {
+            System.out.println("You have reached high enough level and can now retire in the Tavern!");
+            // easy to create an if check of printing the option if player is x(max) level inside the tavern.
             GameStateManager.getInstance().setCurrentState(GameState.VICTORY);
         }
+        // "else if" x boss is dead, but we can prolly add a specific method for when it dies.
     }
 
     // CURRENTLY not in use in combat at all and only connected to item usage.
