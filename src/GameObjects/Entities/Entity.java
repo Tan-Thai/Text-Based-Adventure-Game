@@ -11,6 +11,7 @@ import java.util.Scanner;
 public class Entity {
     private static final int DEFAULT_STAT = 3;
 
+    // TODO break out the equipment slot/hashmap of equipment into its own class. TT
     private final HashMap<EquipmentSlot, Equipment> equipment;
     private final Inventory inventory;
     private final String name;
@@ -39,7 +40,6 @@ public class Entity {
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             equipment.put(slot, null);
         }
-
     }
 
     // Constructor with base stats (Standard NPC)
@@ -85,6 +85,10 @@ public class Entity {
     }
 
     public Equipment getEquipment(EquipmentSlot slot) {return equipment.get(slot);}
+
+    public HashMap<EquipmentSlot, Equipment> getEquipmentList() {
+        return equipment;
+    }
 
     public boolean isDead() {
         return health <= 0;
