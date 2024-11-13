@@ -1,6 +1,5 @@
 import Core.GameState;
 import Core.GameStateManager;
-import GameObjects.Data.Info;
 import GameObjects.Data.PlayerClassRepository;
 import GameObjects.Entities.HostileCharacter;
 import GameObjects.Entities.HostileEntityType;
@@ -30,8 +29,8 @@ public class Game {
         Utility.clearConsole();
         // adding player char and basic items(temp items for now.)
         PlayerCharacter pc = setupUser(sc);
-        // addItems(pc);
         // --- TESTS -----------------------
+        addItems(pc);
         // Combat Test
         // combatTest(pc, addEnemyTemp(), sc);
 
@@ -91,12 +90,12 @@ public class Game {
         Equipment sword = new Equipment(
                 "'A Simple Sword'",
                 "Your standard blade as a new adventurer.",
-                EquipmentSlot.WEAPON,
+                EquipmentType.WEAPON,
                 new DamageEffect(2));
         Equipment bow = new Equipment(
                 "'bow temp'",
                 "Your standard blade as a new adventurer.",
-                EquipmentSlot.WEAPON,
+                EquipmentType.WEAPON,
                 new DamageEffect(2));
         Potion potion = new Potion("Health Potion", "Chug when ouch", new HealingEffect(5));
         Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", new DamageEffect(7));

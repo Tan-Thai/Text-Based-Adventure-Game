@@ -1,12 +1,9 @@
 package GameObjects.Entities;
 
-import GameObjects.Items.Equipment;
 import GameObjects.Items.EquipmentManager;
-import GameObjects.Items.EquipmentSlot;
 import GameObjects.Items.Inventory;
 import Global.Utility;
 
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class Entity {

@@ -64,7 +64,7 @@ public class PlayerCharacter extends Entity {
                     getInventory().inspectInventory(sc, this);
                     break;
                 case 2:
-                    System.out.println("Printing of equipped gear.");
+                    getEquipmentList().inspectWornEquipment(sc, this);
                 default:
                     System.out.println("Please input one of the shown options.");
                     break;

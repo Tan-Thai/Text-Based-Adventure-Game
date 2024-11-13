@@ -7,20 +7,24 @@ import java.util.Scanner;
 
 public class Equipment extends Item {
     private final Effect weaponEffect;
-    private final EquipmentSlot eqSlot;
+    private final EquipmentType eqSlot;
 
-    public Equipment(String name, String desc, EquipmentSlot slot, Effect effect) {
+    public Equipment(String name, String desc, EquipmentType slot, Effect effect) {
         super(name, desc);
         this.weaponEffect = effect;
         this.eqSlot = slot;
     }
 
-    public EquipmentSlot getEQSlot() {
+    public EquipmentType getEQSlot() {
         return eqSlot;
     }
 
     public int getDamageValue() {
         return weaponEffect.getValue();
+    }
+
+    public void displayItem() {
+        System.out.println("\n--" + getName() + "--\nDescription: " + getDescription() + "\n");
     }
 
     @Override
