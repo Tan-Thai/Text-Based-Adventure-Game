@@ -10,6 +10,9 @@ import Resources.Config;
 
 import java.util.*;
 
+import Core.GameState;
+import Core.GameStateManager;
+
 public class Zone {
     public static Scanner sc = new Scanner(System.in);
     private final String name;
@@ -122,7 +125,7 @@ public class Zone {
         Utility.slowPrint("Choose an action:");
         System.out.println(
                 "1. Rest (restore health)\n2. Open shop (buy items)\n3. Set out (Back to travel menu)");
-        if (pc.getLevel() >= Config.PCRETIRMENTLEVEL) {
+        if (pc.getLevel() >= Config.PC_RETIREMENT_LEVEL) {
             System.out.println("4. Retire (End game)");
         } // retire character, end game.
         // talk to npcs? Listen to rumours? etc.
@@ -144,7 +147,7 @@ public class Zone {
                 travelMenu(pc);
                 break;
             case 4:
-                if (pc.getLevel() < Config.PCRETIRMENTLEVEL) {
+                if (GameStateManager.getInstance().getCurrentState() != GameState.VICTORY) {
                     Utility.slowPrint(
                             "You are not experienced enough to retire yet. You must reach even higher heights!");
                     Utility.promptEnterKey(sc);

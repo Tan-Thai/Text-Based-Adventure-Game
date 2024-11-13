@@ -77,7 +77,6 @@ public class Game {
                 // TODO: adding player should be here inside game menu when we select start game
                 System.out.println("Starting game...");
                 runGame(pc, sc);
-                runGame(pc, sc);
             }
             case 2 -> Info.howToPlay(sc);
             case 3 -> {
