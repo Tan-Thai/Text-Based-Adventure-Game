@@ -165,7 +165,7 @@ public class Zone {
         System.out.println("Debug check PC currentzone:  " + pc.getCurrentZone().getZoneType());
         Utility.promptEnterKey(sc);
         if (pc.getCurrentZone().getZoneType() == ZoneType.BASEMENT) { // dirty bossfight check
-            ((Basement) ZoneManager.getZone(ZoneType.BASEMENT)).bossFight(); //type cast Basement to call on bossfight method
+            ((Basement) ZoneManager.getZone(ZoneType.BASEMENT)).bossIntro(); //type cast Basement to call on bossfight method
      }
 
         Utility.clearConsole();

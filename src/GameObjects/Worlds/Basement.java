@@ -9,12 +9,6 @@ public class Basement extends Zone {
                 ZoneType.BASEMENT, null, 0);
     }
 
-   // odd line conflict that didnt look like it had any issues
-   // In case something break, check here.
-    public void bossFight() {
-                ZoneType.BASEMENT, null, 1);
-    }
-
     public void bossIntro() {
         Utility.clearConsole();
         System.out.println("You continue even deeper and notice a few loose rocks that could crumble at any moment");
