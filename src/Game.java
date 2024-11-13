@@ -99,7 +99,7 @@ public class Game {
     // methods down here are most likely tests methods.
     private static void runGame(PlayerCharacter pc, Scanner sc) {
         while (true) {
-            pc.getCurrentZone().travelMenu(pc);
+            pc.getCurrentZone().adventureMenu(pc, sc);
             Utility.promptEnterKey(sc);
         }
     }

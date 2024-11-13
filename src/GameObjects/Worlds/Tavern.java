@@ -1,5 +1,7 @@
 package GameObjects.Worlds;
 
+import Core.GameState;
+import Core.GameStateManager;
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
 
@@ -41,6 +43,56 @@ public class Tavern extends Zone {
         //the player already are in a state of VICTORY. --- TT
 
         
+    }
+
+    
+    public void tavernMenu(PlayerCharacter pc) { // opnens up tavern menu for resting and shopping for
+        // items
+        Utility.clearConsole();
+        Utility.slowPrint("Choose an action:");
+        System.out.println(
+                "1. Rest (restore health)\n2. Open shop (buy items)\n3. Set out (Back to travel menu)");
+        if (GameStateManager.getInstance().getCurrentState() == GameState.VICTORY) {
+            System.out.println("4. Retire (End game)");
+        } // retire character, end game.
+        // talk to npcs? Listen to rumours? etc.
+
+        int choice = Utility.checkIfNumber(sc);
+
+        switch (choice) {
+            case 1:
+                takeRest(pc);
+                Utility.promptEnterKey(sc);
+                tavernMenu(pc);
+                break;
+            case 2:
+                openShop(pc);
+                Utility.promptEnterKey(sc);
+                tavernMenu(pc);
+                break;
+            case 3:
+                adventureMenu(pc, sc);
+                break;
+            case 4:
+                if (GameStateManager.getInstance().getCurrentState() != GameState.VICTORY) {
+                    Utility.slowPrint(
+                            "You are not experienced enough to retire yet. You must reach even higher heights!");
+                    Utility.promptEnterKey(sc);
+                    tavernMenu(pc);
+                    break;
+                } else {
+                    Utility.slowPrint("Are you sure you want to retire? (Y/N)");
+                    if (Utility.checkYesOrNo(sc)) {
+                        retireCharacter(pc);
+                    } else {
+                        tavernMenu(pc);
+                    }
+                }
+                break;
+            default:
+                System.out.println("Invalid choice. Please try again.");
+                break;
+        }
     }
 
 }
