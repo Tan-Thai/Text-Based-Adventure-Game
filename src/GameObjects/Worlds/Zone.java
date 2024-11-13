@@ -125,7 +125,7 @@ public class Zone {
         Utility.slowPrint("Choose an action:");
         System.out.println(
                 "1. Rest (restore health)\n2. Open shop (buy items)\n3. Set out (Back to travel menu)");
-        if (pc.getLevel() >= Config.PC_RETIREMENT_LEVEL) {
+        if (GameStateManager.getInstance().getCurrentState() == GameState.VICTORY) {
             System.out.println("4. Retire (End game)");
         } // retire character, end game.
         // talk to npcs? Listen to rumours? etc.

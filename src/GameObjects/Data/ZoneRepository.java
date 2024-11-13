@@ -21,7 +21,7 @@ public class ZoneRepository { // This class is a repository for all the zones in
                 false,
                 ZoneType.FOREST,
                 null,
-                Config.ZONE_CLEARTHRESHOLD);
+                Config.ZONE_CLEAR_THRESHOLD);
     }
 
     public static Zone swampZone() {
@@ -36,7 +36,7 @@ public class ZoneRepository { // This class is a repository for all the zones in
                 false,
                 ZoneType.SWAMP,
                 null,
-                Config.ZONE_CLEARTHRESHOLD);
+                Config.ZONE_CLEAR_THRESHOLD);
     }
 
     public static Zone caveZone() {
@@ -50,7 +50,7 @@ public class ZoneRepository { // This class is a repository for all the zones in
                 false,
                 ZoneType.CAVE,
                 null,
-                Config.ZONE_CLEARTHRESHOLD);
+                Config.ZONE_CLEAR_THRESHOLD);
     }
 
     public static Zone tavernZone() { // Is tavern and basement needed? How to with special zones?
