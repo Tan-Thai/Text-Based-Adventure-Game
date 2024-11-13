@@ -286,9 +286,7 @@ public class Zone {
             }
     }
 
-    
-    ///
-    ///  @param zoneTravel
+
     public void zoneTravel(PlayerCharacter pc) { // Travel between zones method,
 
         Utility.clearConsole();
