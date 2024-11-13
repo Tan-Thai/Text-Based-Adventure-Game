@@ -3,6 +3,7 @@ import Core.GameStateManager;
 import GameObjects.Data.Info;
 import GameObjects.Data.PlayerClassRepository;
 import GameObjects.Entities.HostileCharacter;
+import GameObjects.Entities.HostileEntityType;
 import GameObjects.Entities.PlayerCharacter;
 import GameObjects.Items.DamageEffect;
 import GameObjects.Items.Equipment;
@@ -11,8 +12,6 @@ import GameObjects.Items.Potion;
 import GameObjects.Worlds.ZoneManager;
 import Global.Utility;
 import Interactions.Combat;
-import Interactions.EncounterHandler;
-import java.lang.classfile.instruction.ThrowInstruction;
 import java.util.Scanner;
 
 public class Game {
