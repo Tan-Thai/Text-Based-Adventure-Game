@@ -6,6 +6,7 @@ import Global.Utility;
 import Interactions.Combat;
 import Interactions.Encounter;
 import Interactions.EncounterHandler;
+import Resources.Config;
 
 import java.util.*;
 
@@ -28,7 +29,8 @@ public class Zone {
      * @param zoneType
      * @param encounters
      */
-    public Zone(String name, String desc, boolean zoneCleared, ZoneType zoneType, List<Encounter> encounters, int zoneClearThreshold) {
+    public Zone(String name, String desc, boolean zoneCleared, ZoneType zoneType, List<Encounter> encounters,
+            int zoneClearThreshold) {
         this.name = name;
         this.description = desc;
         this.zoneCleared = zoneCleared;
@@ -102,7 +104,7 @@ public class Zone {
     }
 
     private int getUnclearedEncountersAmount() {
-        
+
         int i = 0;
 
         for (Encounter encounter : encounters) {
@@ -120,7 +122,9 @@ public class Zone {
         Utility.slowPrint("Choose an action:");
         System.out.println(
                 "1. Rest (restore health)\n2. Open shop (buy items)\n3. Set out (Back to travel menu)");
-        if (pc.getLevel() >= 3) { System.out.println("4. Retire (End game)"); } // retire character, end game.
+        if (pc.getLevel() >= Config.PCRETIRMENTLEVEL) {
+            System.out.println("4. Retire (End game)");
+        } // retire character, end game.
         // talk to npcs? Listen to rumours? etc.
 
         int choice = Utility.checkIfNumber(sc);
@@ -140,8 +144,9 @@ public class Zone {
                 travelMenu(pc);
                 break;
             case 4:
-                if (pc.getLevel() < 3) {
-                    Utility.slowPrint("You are not experienced enough to retire yet. You must reach even higher heights!");
+                if (pc.getLevel() < Config.PCRETIRMENTLEVEL) {
+                    Utility.slowPrint(
+                            "You are not experienced enough to retire yet. You must reach even higher heights!");
                     Utility.promptEnterKey(sc);
                     tavernMenu(pc, tavern);
                     break;
@@ -161,7 +166,7 @@ public class Zone {
 
     }
 
-    public void travelMenu(PlayerCharacter pc) { // opens up travel menu for player.     
+    public void travelMenu(PlayerCharacter pc) { // opens up travel menu for player.
         System.out.println("Debug check PC currentzone:  " + pc.getCurrentZone().getZoneType());
         Utility.promptEnterKey(sc);
 
@@ -211,7 +216,7 @@ public class Zone {
     }
 
     public Zone displayTraveableZones(PlayerCharacter pc) { // displays traveable zones and lets
-                                                                                  // player choose where to travel
+                                                            // player choose where to travel
         Utility.clearConsole();
 
         int index = 1;
@@ -237,7 +242,7 @@ public class Zone {
             }
             Utility.clearConsole();
             Utility.slowPrint("You travel to the " + selectedZone.getName());
- //           Utility.promptEnterKey(sc);
+            // Utility.promptEnterKey(sc);
             return selectedZone;
         } else { // error handling for invalid choice
             System.out.println("Invalid choice. Please try again. Or: ");
@@ -255,7 +260,7 @@ public class Zone {
     }
 
     private void exploreZone(PlayerCharacter pc) { // Wander/explore inside zone function.
-        
+
         if (pc.getCurrentZone().getZoneType() == ZoneType.TAVERN) { // maybe not needed
             Utility.clearConsole();
             Utility.slowPrint("You cannot travel inside the " + pc.getCurrentZone().getName());
@@ -266,34 +271,34 @@ public class Zone {
 
         Utility.slowPrint("You wander around the " + pc.getCurrentZone().getName());
 
-    if (getUnclearedEncounter() == null) {
-        Utility.slowPrint(
-                "You wander the area, but the roads are known to you, and the lands are peaceful, there are no more adventures to be had for you here.");
-    } else if (getUnclearedEncounter().isCombatEncounter()) {
-        Combat.getInstance().initiateCombat(pc, getUnclearedEncounter().getEnemy(), sc);
-        getUnclearedEncounter().checkClearedState();
-    } else {
-        EncounterHandler.getInstance().runEncounter(pc, getUnclearedEncounter(), sc);
-    }
-        
-        if(zoneClearThreshold >= getUnclearedEncountersAmount()) {
+        if (getUnclearedEncounter() == null) {
+            Utility.slowPrint(
+                    "You wander the area, but the roads are known to you, and the lands are peaceful, there are no more adventures to be had for you here.");
+        } else if (getUnclearedEncounter().isCombatEncounter()) {
+            Combat.getInstance().initiateCombat(pc, getUnclearedEncounter().getEnemy(), sc);
+            getUnclearedEncounter().checkClearedState();
+        } else {
+            EncounterHandler.getInstance().runEncounter(pc, getUnclearedEncounter(), sc);
+        }
+
+        if (zoneClearThreshold >= getUnclearedEncountersAmount()) {
             setZoneCleared(true);
             checkTraveableZones(pc);
-            }
+        }
     }
 
-    
     ///
-    ///  @param zoneTravel
+    /// @param zoneTravel
     public void zoneTravel(PlayerCharacter pc) { // Travel between zones method,
 
         Utility.clearConsole();
-       
+
         if (pc.getCurrentZone().getZoneCleared() == true) { // checks if currentzone is cleared
-                pc.setCurrentZone(displayTraveableZones(pc));
-                if (pc.getCurrentZone().getZoneType() == ZoneType.BASEMENT) { // dirty bossfight check
-                    ((Basement) ZoneManager.getZone(ZoneType.BASEMENT)).bossIntro(); //type cast Basement to call on bossIntro
-             }
+            pc.setCurrentZone(displayTraveableZones(pc));
+            if (pc.getCurrentZone().getZoneType() == ZoneType.BASEMENT) { // dirty bossfight check
+                ((Basement) ZoneManager.getZone(ZoneType.BASEMENT)).bossIntro(); // type cast Basement to call on
+                                                                                 // bossIntro
+            }
 
         } else if (pc.getCurrentZone().getZoneCleared() == false
                 && pc.getCurrentZone().getZoneType() != ZoneType.TAVERN) { // allows player to backtrack to tavern
@@ -319,10 +324,12 @@ public class Zone {
 
     public static void checkTraveableZones(PlayerCharacter pc) { // adds traveable zones based on cleared zones.
 
-        if (ZoneManager.getZone(ZoneType.FOREST).getZoneCleared() == true || ZoneManager.getZone(ZoneType.SWAMP).getZoneCleared() == true) {
-            if (pc.getCurrentZone().getZoneType() == ZoneType.FOREST || pc.getCurrentZone().getZoneType() == ZoneType.SWAMP) {
+        if (ZoneManager.getZone(ZoneType.FOREST).getZoneCleared() == true
+                || ZoneManager.getZone(ZoneType.SWAMP).getZoneCleared() == true) {
+            if (pc.getCurrentZone().getZoneType() == ZoneType.FOREST
+                    || pc.getCurrentZone().getZoneType() == ZoneType.SWAMP) {
                 addTraveableZone(pc.getCurrentZone(), ZoneType.CAVE);
-            }  
+            }
             addTraveableZone(ZoneManager.getZone(ZoneType.TAVERN), ZoneType.CAVE);
         }
         if (pc.getCurrentZone().getZoneType() == ZoneType.CAVE && pc.getCurrentZone().getZoneCleared() == true) {
@@ -331,7 +338,7 @@ public class Zone {
             addTraveableZone(ZoneManager.getZone(ZoneType.FOREST), ZoneType.BASEMENT);
             addTraveableZone(ZoneManager.getZone(ZoneType.SWAMP), ZoneType.BASEMENT);
         }
-        
+
     }
 
 }

@@ -1,10 +1,10 @@
 package Resources;
 
-public class config {
-    public static final int PCSTARTINGLEVEL=1;
-    public static final int PCMAXLEVEL=5;
-    public static final int PCRETIRMENTLEVEL=3;
-    public static final int PCEXPERIANCEPERLEVEL=30;
-    public static final int EXPERIANCEPERENCOUNTER=20;
-    public static final int ZONECLEARTHRESHOLD=3;    
+public class Config {
+    public static final int PC_STARTING_LEVEL = 1;
+    public static final int PC_MAX_LEVEL = 5;
+    public static final int PC_RETIREMENT_LEVEL = 3;
+    public static final int PC_EXPERIENCE_PER_LEVEL = 30;
+    public static final int EXPERIENCE_PER_ENCOUNTER = 20;
+    public static final int ZONE_CLEARTHRESHOLD = 3;    
 }
