@@ -63,7 +63,6 @@ public class Combat {
             if (Utility.checkIfNumber(sc) == 1) {
                 Utility.clearConsole();
                 // can make it so we send in a defender as well if we add a defence formula.
-
                 playerHitCount = calcAttack(player, Utility.GREEN);
                 enemyHitCount = calcAttack(enemy, Utility.RED);
 

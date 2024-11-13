@@ -9,6 +9,7 @@ import GameObjects.Items.*;
 import GameObjects.Worlds.ZoneManager;
 import Global.Utility;
 import Interactions.Combat;
+
 import java.util.Scanner;
 
 public class Game {
@@ -19,7 +20,6 @@ public class Game {
     // stuff we can start generating as soon as the program starts running.
     public Game(Scanner sc) {
         // All instances and such can be made here such as zones etc.
-
         gameManager = GameStateManager.getInstance();
         ZoneManager.getInstance();
         this.sc = sc;
@@ -42,7 +42,7 @@ public class Game {
         while (gameManager.getCurrentState() != GameState.EXIT) {
             switch (gameManager.getCurrentState()) {
                 case RUNNING:
-                    gameMenu(pc, sc);
+                    runGame(pc, sc);
                     break;
                 case VICTORY:
                     handleVictory();
@@ -59,27 +59,6 @@ public class Game {
     // There are a few mega temporary methods atm, combat related ones being a few.
     // Wherever we invoke the combat method, we need to make sure it calls "Combat
     // combat = Combat.getInstance();"
-    private void gameMenu(PlayerCharacter pc, Scanner sc) {
-        Utility.clearConsole();
-        System.out.println("Welcome to the game!\n1. Start Game\n2. How to Play\n3. Exit");
-
-        int choice = Utility.checkIfNumber(sc);
-
-        switch (choice) {
-
-            case 1 -> {
-                // TODO: adding player should be here inside game menu when we select start game
-                System.out.println("Starting game...");
-                runGame(pc, sc);
-            }
-            case 2 -> Info.howToPlay(sc);
-            case 3 -> {
-                System.out.println("Exiting game...");
-                gameManager.setCurrentState(GameState.EXIT);
-            }
-        }
-    }
-
     private static PlayerCharacter setupUser(Scanner sc) {
         System.out.print("What is your name?: ");
         String nameInput = Utility.checkIfValidString(sc);
@@ -90,14 +69,12 @@ public class Game {
         return playerCharacterClassSelect(nameInput, sc);
     }
 
-    // methods down here are most likely tests methods.
     private static void runGame(PlayerCharacter pc, Scanner sc) {
-        while (true) {
-            pc.getCurrentZone().travelMenu(pc);
-            Utility.promptEnterKey(sc);
-        }
+        pc.getCurrentZone().travelMenu(pc);
+        Utility.promptEnterKey(sc);
     }
 
+    // methods down here are most likely tests methods.
     private static HostileCharacter addEnemyTemp() {
         return new HostileCharacter("Troll", 5, 3, 2, 1, 1, HostileEntityType.TROLLKIN);
     }

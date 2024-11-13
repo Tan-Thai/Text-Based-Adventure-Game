@@ -37,6 +37,4 @@ public class Equipment extends Item {
         }
         // add some equip functionality; awaiting equipment function.
     }
-
-
 }
