@@ -92,8 +92,8 @@ public class Combat {
         int hitCount = Utility.rollDicePool(actor.getStrength(), colour, OptionalInt.empty(), OptionalInt.empty(),
                 OptionalInt.empty());
 
-        if (actor.getEquipment(EquipmentSlot.WEAPON) != null) {
-            int weaponDamage = actor.getEquipment(EquipmentSlot.WEAPON).getDamageValue();
+        if (actor.getEquipmentList().getEquipment(EquipmentSlot.WEAPON) != null) {
+            int weaponDamage = actor.getEquipmentList().getEquipment(EquipmentSlot.WEAPON).getDamageValue();
             System.out.println("Weapon added " + weaponDamage + " damage.");
             return hitCount + weaponDamage;
         }
