@@ -30,7 +30,7 @@ public class Game {
         // adding player char and basic items(temp items for now.)
         PlayerCharacter pc = setupUser(sc);
         // --- TESTS -----------------------
-        addItems(pc);
+        // addItems(pc);
         // Combat Test
         // combatTest(pc, addEnemyTemp(), sc);
 
