@@ -92,14 +92,23 @@ public class Combat {
         int hitCount = Utility.rollDicePool(actor.getStrength(), colour, OptionalInt.empty(), OptionalInt.empty(),
                 OptionalInt.empty());
 
-        if (actor.getEquipmentList().getEquipment(EquipmentType.WEAPON) != null) {
-            int weaponDamage = actor.getEquipmentList().getEquipment(EquipmentType.WEAPON).getDamageValue();
+        int weaponDamage = addedWeaponDamage(actor);
+        // if statement could be skipped on final product, but this is structured as a test for now.
+        if (weaponDamage > 0) {
             System.out.println("Weapon added " + weaponDamage + " damage.");
             return hitCount + weaponDamage;
         }
         //Used to add break inbetween lines in the console
         System.out.println();
         return hitCount;
+    }
+
+    // checks and returns the added weapon damage if actor has one equipped.
+    private int addedWeaponDamage(Entity actor) {
+        if (actor.getEquipmentList().getEquipment(EquipmentType.WEAPON) != null)
+            return actor.getEquipmentList().getEquipment(EquipmentType.WEAPON).getDamageValue();
+        else
+            return 0;
     }
 
     private void printHits() {

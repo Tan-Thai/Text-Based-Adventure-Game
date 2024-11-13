@@ -51,6 +51,10 @@ public class Entity {
         return name;
     }
 
+    public EquipmentManager getEquipmentList() {
+        return equipmentManager;
+    }
+
     public int getHealth() {
         return health;
     }
@@ -77,10 +81,6 @@ public class Entity {
 
     public int getLevel() {
         return level;
-    }
-
-    public EquipmentManager getEquipmentList() {
-        return equipmentManager;
     }
 
     public boolean isDead() {

@@ -3,7 +3,6 @@ package GameObjects.Items;
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -34,6 +33,7 @@ public class EquipmentManager {
         return previousEQ;
     }
 
+    // removes item from equipment, and puts it back into players inventory.
     public Equipment unequipItem(EquipmentType slot) {
         if (equipment.containsKey(slot)) {
             Equipment removedItem = equipment.get(slot);
@@ -50,9 +50,7 @@ public class EquipmentManager {
         while (true) {
             Utility.clearConsole();
             printEquipment();
-            System.out.print("\n" +
-                    "Press 0 to exit." +
-                    "\nEnter the number of the item to inspect: ");
+            System.out.print("\nPress 0 to exit. \nEnter the number of the item to inspect: ");
 
             int input = Utility.checkIfNumber(sc);
 
@@ -64,8 +62,7 @@ public class EquipmentManager {
             }
 
             if (input > 0 && input <= equipment.size()) {
-                // generate a new arraylist to print an index with associated numbers.
-                // input -1 is due to index starting at 0
+                // selects the list based on the order of printed equipments.
                 EquipmentType selectedType = EquipmentType.values()[input - 1];
                 Equipment selectedEquipment = equipment.get(selectedType);
 
@@ -86,6 +83,7 @@ public class EquipmentManager {
         }
     }
 
+    // the equivalent of prompting to use an item. but in this case un-equipping it.
     private void promptUnequip(Scanner sc, EquipmentType selectedType, PlayerCharacter pc) {
         System.out.print("Do you want to put this item into your inventory? (Y/N): ");
         boolean response = Utility.checkYesOrNo(sc);

@@ -73,6 +73,41 @@ public class Game {
         Utility.promptEnterKey(sc);
     }
 
+    private void handleVictory() {
+        System.out.println("Victory!");
+        gameManager.setCurrentState(GameState.EXIT);
+    }
+
+    private void handleGameOver() {
+        System.out.println("Game Over!");
+        gameManager.setCurrentState(GameState.EXIT);
+    }
+
+    private static PlayerCharacter playerCharacterClassSelect(String nameInput, Scanner sc) {
+        Utility.clearConsole();
+        Utility.slowPrint("Choose a class:");
+        System.out.println(
+                "1. Barbarian (Strong with lots of health)\n2. Rogue (dexterous and swift)\n3. Wizard (Clever and astmatic)");
+
+        int choice = Utility.checkIfNumber(sc);
+
+        switch (choice) {
+            case 1 -> {
+                return PlayerClassRepository.getBarbarian(nameInput);
+            }
+            case 2 -> {
+                return PlayerClassRepository.getRogue(nameInput);
+            }
+            case 3 -> {
+                return PlayerClassRepository.getWizard(nameInput);
+            }
+            default -> {
+                System.out.println("Invalid choice. Please try again.");
+                return playerCharacterClassSelect(nameInput, sc);
+            }
+        }
+    }
+
     // methods down here are most likely tests methods.
     private static HostileCharacter addEnemyTemp() {
         return new HostileCharacter("Troll", 5, 3, 2, 1, 1, HostileEntityType.TROLLKIN);
@@ -106,39 +141,4 @@ public class Game {
         pc.getInventory().addItem(poison);
     }
 
-    private void handleVictory() {
-        System.out.println("Victory!");
-        gameManager.setCurrentState(GameState.EXIT);
-    }
-
-    private void handleGameOver() {
-        System.out.println("Game Over!");
-        gameManager.setCurrentState(GameState.EXIT);
-    }
-
-
-    private static PlayerCharacter playerCharacterClassSelect(String nameInput, Scanner sc) {
-        Utility.clearConsole();
-        Utility.slowPrint("Choose a class:");
-        System.out.println(
-                "1. Barbarian (Strong with lots of health)\n2. Rogue (dexterous and swift)\n3. Wizard (Clever and astmatic)");
-
-        int choice = Utility.checkIfNumber(sc);
-
-        switch (choice) {
-            case 1 -> {
-                return PlayerClassRepository.getBarbarian(nameInput);
-            }
-            case 2 -> {
-                return PlayerClassRepository.getRogue(nameInput);
-            }
-            case 3 -> {
-                return PlayerClassRepository.getWizard(nameInput);
-            }
-            default -> {
-                System.out.println("Invalid choice. Please try again.");
-                return playerCharacterClassSelect(nameInput, sc);
-            }
-        }
-    }
 }
