@@ -5,6 +5,7 @@ import Core.GameStateManager;
 import GameObjects.Entities.Entity;
 import GameObjects.Entities.HostileCharacter;
 import GameObjects.Entities.PlayerCharacter;
+import GameObjects.Items.EquipmentSlot;
 import Global.Utility;
 
 import java.util.OptionalInt;
@@ -92,6 +93,11 @@ public class Combat {
         int hitCount = Utility.rollDicePool(actor.getStrength(), colour, OptionalInt.empty(), OptionalInt.empty(),
                 OptionalInt.empty());
 
+        if (actor.getEquipment(EquipmentSlot.WEAPON) != null) {
+            int weaponDamage = actor.getEquipment(EquipmentSlot.WEAPON).getDamageValue();
+            System.out.println("Weapon added " + weaponDamage + " damage.");
+            return hitCount + weaponDamage;
+        }
         //Used to add break inbetween lines in the console
         System.out.println();
         return hitCount;

@@ -11,6 +11,7 @@ import java.util.Scanner;
 public class Entity {
     private static final int DEFAULT_STAT = 3;
 
+    private final HashMap<EquipmentSlot, Equipment> equipment;
     private final Inventory inventory;
     private final String name;
     protected int health;
@@ -19,7 +20,6 @@ public class Entity {
     protected int strength;
     protected int dexterity;
     protected int intelligence;
-    private final HashMap<EquipmentSlot, Equipment> equipment;
 
     // constructor for all entities that requires specific stats setups (enemies, or
     // the player char)
@@ -83,6 +83,8 @@ public class Entity {
     public int getLevel() {
         return level;
     }
+
+    public Equipment getEquipment(EquipmentSlot slot) {return equipment.get(slot);}
 
     public boolean isDead() {
         return health <= 0;
@@ -168,10 +170,13 @@ public class Entity {
 
     // method to call to add and swap equipments from X slot.
     public Equipment equipItem(Equipment eq) {
-        EquipmentSlot slot = eq.getEQSlot();
-        Equipment previousEQ = equipment.get(slot);
+        EquipmentSlot eqSlot = eq.getEQSlot();
+        Equipment previousEQ = equipment.get(eqSlot);
+        equipment.put(eqSlot, eq);
 
-        equipment.put(slot, eq);
+        if (previousEQ != null) {
+            System.out.println("You put " + previousEQ.getName() + " in your inventory.");
+        }
         return previousEQ;
     }
 

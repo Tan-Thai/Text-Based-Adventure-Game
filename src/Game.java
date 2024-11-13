@@ -105,19 +105,26 @@ public class Game {
     private static void combatTest(PlayerCharacter pc, HostileCharacter enemy, Scanner sc) {
         // new up A COMBAT object, and it will be the only one since it's a singleton.
         Combat combat = Combat.getInstance();
+        pc.inspectEntity(sc);
         // this is what we call and send in when a combat between 2 entities happens.
         combat.initiateCombat(pc, enemy, sc);
     }
 
     private static void addItems(PlayerCharacter pc) {
         Equipment sword = new Equipment(
-                "A Simple Sword",
+                "'A Simple Sword'",
+                "Your standard blade as a new adventurer.",
+                EquipmentSlot.WEAPON,
+                new DamageEffect(2));
+        Equipment bow = new Equipment(
+                "'bow temp'",
                 "Your standard blade as a new adventurer.",
                 EquipmentSlot.WEAPON,
                 new DamageEffect(2));
         Potion potion = new Potion("Health Potion", "Chug when ouch", new HealingEffect(5));
         Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", new DamageEffect(7));
 
+        pc.getInventory().addItem(bow);
         pc.getInventory().addItem(sword);
         pc.getInventory().addItem(potion);
         pc.getInventory().addItem(poison);

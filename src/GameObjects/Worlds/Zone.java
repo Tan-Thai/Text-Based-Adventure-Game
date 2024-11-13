@@ -158,11 +158,10 @@ public class Zone {
                 System.out.println("Invalid choice. Please try again.");
                 break;
         }
-
     }
 
     public void travelMenu(PlayerCharacter pc) { // opens up travel menu for player.     
-        System.out.println("Debug check PC currentzone:  " + pc.getCurrentZone().getZoneType());
+        System.out.println("Debug check PC current zone:  " + pc.getCurrentZone().getZoneType());
         Utility.promptEnterKey(sc);
         if (pc.getCurrentZone().getZoneType() == ZoneType.BASEMENT) { // dirty bossfight check
             ((Basement) ZoneManager.getZone(ZoneType.BASEMENT)).bossIntro(); //type cast Basement to call on bossfight method

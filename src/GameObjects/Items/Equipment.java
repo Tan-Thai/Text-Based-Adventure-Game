@@ -15,22 +15,28 @@ public class Equipment extends Item {
         this.eqSlot = slot;
     }
 
+    public EquipmentSlot getEQSlot() {
+        return eqSlot;
+    }
+
+    public int getDamageValue() {
+        return weaponEffect.getValue();
+    }
+
     @Override
     public void promptUse(Scanner sc, PlayerCharacter player, Item selectedItem) {
         //temp implementation to check if it works.
 
         System.out.print("Do you want to equip this item? (Y/N): ");
-        boolean response = Utility.checkYesOrNo(sc);
-        if (response) {
+        if (Utility.checkYesOrNo(sc)) {
             System.out.println("You equipped " + getName());
-            System.out.println("You gained " + weaponEffect.getValue() + " more damage");
+            player.getInventory().addItem(player.equipItem(this));
+            player.getInventory().removeItem(this);
         } else {
-            System.out.println("You decided not to use the item.");
+            System.out.println("You decided not to equip the item.");
         }
         // add some equip functionality; awaiting equipment function.
     }
 
-    public EquipmentSlot getEQSlot() {
-        return eqSlot;
-    }
+
 }
