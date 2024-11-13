@@ -4,6 +4,7 @@ import GameObjects.Worlds.Basement;
 import GameObjects.Worlds.Tavern;
 import GameObjects.Worlds.Zone;
 import GameObjects.Worlds.ZoneType;
+import Resources.Config;
 
 public class ZoneRepository { // This class is a repository for all the zones in the game.
 
@@ -20,7 +21,7 @@ public class ZoneRepository { // This class is a repository for all the zones in
                 false,
                 ZoneType.FOREST,
                 null,
-                3);
+                Config.ZONE_CLEARTHRESHOLD);
     }
 
     public static Zone swampZone() {
@@ -35,7 +36,7 @@ public class ZoneRepository { // This class is a repository for all the zones in
                 false,
                 ZoneType.SWAMP,
                 null,
-                3);
+                Config.ZONE_CLEARTHRESHOLD);
     }
 
     public static Zone caveZone() {
@@ -49,7 +50,7 @@ public class ZoneRepository { // This class is a repository for all the zones in
                 false,
                 ZoneType.CAVE,
                 null,
-                3);
+                Config.ZONE_CLEARTHRESHOLD);
     }
 
     public static Zone tavernZone() { // Is tavern and basement needed? How to with special zones?
