@@ -7,10 +7,12 @@ import java.util.Scanner;
 
 public class Equipment extends Item {
     private final Effect weaponEffect;
+    private final EquipmentSlot eqSlot;
 
-    public Equipment(String name, String desc, Effect effect) {
+    public Equipment(String name, String desc, EquipmentSlot slot, Effect effect) {
         super(name, desc);
         this.weaponEffect = effect;
+        this.eqSlot = slot;
     }
 
     @Override
@@ -26,5 +28,9 @@ public class Equipment extends Item {
             System.out.println("You decided not to use the item.");
         }
         // add some equip functionality; awaiting equipment function.
+    }
+
+    public EquipmentSlot getEQSlot() {
+        return eqSlot;
     }
 }

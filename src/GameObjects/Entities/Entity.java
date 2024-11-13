@@ -1,7 +1,11 @@
 package GameObjects.Entities;
 
+import GameObjects.Items.Equipment;
+import GameObjects.Items.EquipmentSlot;
 import GameObjects.Items.Inventory;
 import Global.Utility;
+
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Entity {
@@ -15,6 +19,7 @@ public class Entity {
     protected int strength;
     protected int dexterity;
     protected int intelligence;
+    private final HashMap<EquipmentSlot, Equipment> equipment;
 
     // constructor for all entities that requires specific stats setups (enemies, or
     // the player char)
@@ -27,6 +32,14 @@ public class Entity {
         this.dexterity = dex;
         this.intelligence = intelligence;
         this.inventory = new Inventory();
+
+        // Creates an eq "space" for each type and assigns null to them.
+        // so if one entity is created they will have "nothing" on them so to speak.
+        this.equipment = new HashMap<>();
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            equipment.put(slot, null);
+        }
+
     }
 
     // Constructor with base stats (Standard NPC)
@@ -122,7 +135,7 @@ public class Entity {
         // Temporarily set strength to be the stat for hp.
         changeMaxHealth(strength / 2);
         changeHealth(strength / 2);
-        
+
         System.out.println("\n" + name + " just reached level: " + level);
         System.out.println(name + "'s max hp is now: " + maxHealth);
     }
@@ -152,4 +165,24 @@ public class Entity {
             System.out.println(name + " took " + damageValue + " damage. Current health: " + health);
         }
     }
+
+    // method to call to add and swap equipments from X slot.
+    public Equipment equipItem(Equipment eq) {
+        EquipmentSlot slot = eq.getEQSlot();
+        Equipment previousEQ = equipment.get(slot);
+
+        equipment.put(slot, eq);
+        return previousEQ;
+    }
+
+    // method to call to remove eq from X slot
+    public Equipment unequipItem(EquipmentSlot slot) {
+        if (equipment.containsKey(slot)) {
+            Equipment removedItem = equipment.get(slot);
+            equipment.put(slot, null);
+            return removedItem;
+        }
+        return null;
+    }
+
 }

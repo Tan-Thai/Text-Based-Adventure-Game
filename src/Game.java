@@ -3,16 +3,13 @@ import Core.GameStateManager;
 import GameObjects.Data.Info;
 import GameObjects.Data.PlayerClassRepository;
 import GameObjects.Entities.HostileCharacter;
+import GameObjects.Entities.HostileEntityType;
 import GameObjects.Entities.PlayerCharacter;
-import GameObjects.Items.DamageEffect;
-import GameObjects.Items.Equipment;
-import GameObjects.Items.HealingEffect;
-import GameObjects.Items.Potion;
+import GameObjects.Items.*;
 import GameObjects.Worlds.ZoneManager;
 import Global.Utility;
 import Interactions.Combat;
-import Interactions.EncounterHandler;
-import java.lang.classfile.instruction.ThrowInstruction;
+
 import java.util.Scanner;
 
 public class Game {
@@ -91,7 +88,7 @@ public class Game {
 
         System.out.println("Your name is " + nameInput + "!");
         Utility.promptEnterKey(sc);
-        return playerCharacterClassSelect(nameInput,sc);
+        return playerCharacterClassSelect(nameInput, sc);
     }
 
     // methods down here are most likely tests methods.
@@ -102,11 +99,10 @@ public class Game {
         }
     }
 
-
     private static HostileCharacter addEnemyTemp() {
         return new HostileCharacter("Troll", 5, 3, 2, 1, 1, HostileEntityType.TROLLKIN);
     }
-  
+
     private static void combatTest(PlayerCharacter pc, HostileCharacter enemy, Scanner sc) {
         // new up A COMBAT object, and it will be the only one since it's a singleton.
         Combat combat = Combat.getInstance();
@@ -115,7 +111,10 @@ public class Game {
     }
 
     private static void addItems(PlayerCharacter pc) {
-        Equipment sword = new Equipment("A Simple Sword", "Your standard blade as a new adventurer.",
+        Equipment sword = new Equipment(
+                "A Simple Sword",
+                "Your standard blade as a new adventurer.",
+                EquipmentSlot.WEAPON,
                 new DamageEffect(2));
         Potion potion = new Potion("Health Potion", "Chug when ouch", new HealingEffect(5));
         Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", new DamageEffect(7));
@@ -135,8 +134,8 @@ public class Game {
         gameManager.setCurrentState(GameState.EXIT);
     }
 
-    
-    private static PlayerCharacter playerCharacterClassSelect(String nameInput,Scanner sc) {
+
+    private static PlayerCharacter playerCharacterClassSelect(String nameInput, Scanner sc) {
         Utility.clearConsole();
         Utility.slowPrint("Choose a class:");
         System.out.println(
