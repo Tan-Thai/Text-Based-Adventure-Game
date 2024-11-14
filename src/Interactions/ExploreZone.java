@@ -32,7 +32,7 @@ public class ExploreZone {
 
         if (zone.zoneClearThreshold >= zone.getUnclearedEncountersAmount()) {
             zone.setZoneCleared(true);
-            zone.checkTraveableZones(pc);
+            InterZoneTravel.checkTraveableZones(pc, zone);
         }
     }
 

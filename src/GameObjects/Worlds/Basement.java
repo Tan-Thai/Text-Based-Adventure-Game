@@ -28,9 +28,10 @@ public class Basement extends Zone {
         Utility.slowPrint("You see a large figure in the shadows.\nIt roars and charges at you!");
 
         Utility.promptEnterKey(sc);
-        HostileCharacter boss = new HostileCharacter("Tavern Keeper", 100, 20, 20, 20, 20, HostileEntityType.DRACONIC);
+        HostileCharacter boss = new HostileCharacter("Tavern Keeper", 15, 2, 2, 20, 20, HostileEntityType.DRACONIC);
         
         Combat.getInstance().initiateCombat(pc, boss, sc);
+        
 
         
     }
