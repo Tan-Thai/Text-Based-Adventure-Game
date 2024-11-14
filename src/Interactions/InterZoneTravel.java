@@ -22,7 +22,7 @@ public class InterZoneTravel {
             pc.setCurrentZone(displayTraveableZones(pc, zone.getTraveableZones(), sc));
             // dirty bossfight check
             if (zone.getZoneType() == ZoneType.BASEMENT) {
-                ((Basement) zone).adventureMenu(pc, sc);
+                Adventure.adventureMenu(pc, sc, ((Basement) zone));
             }
             // allows player to backtrack to tavern
         } else if (zone.getZoneCleared() == false

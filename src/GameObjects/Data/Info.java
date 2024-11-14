@@ -11,7 +11,12 @@ public class Info {
             Utility.clearConsole();
             
             System.out.println("Here are some basic instructions on how to play:\nPlease choose the number corresponding to the option you need help with:");
-            System.out.println("1. My character, it's stats and abilities\n2. How does combat work?\n3. How to navigate between or inside zones.\n4. How to interact with items\n5. How to rest and shop for items in the tavern\n6. Exit menu.\nEnter your choice: ");
+            System.out.println("1. My character, it's stats and abilities\n" +
+            "2. How does combat work?\n" +
+            "3. How to navigate between or inside zones.\n" +
+            "4. How to interact with items\n" +
+            "5. How to rest and shop for items in the tavern\n" +
+            "0. Exit menu.\nEnter your choice: ");
             int choice = Utility.checkIfNumber(sc);
             Utility.clearConsole();
 
@@ -42,9 +47,8 @@ public class Info {
                     Utility.promptEnterKey(sc);
                     howToPlay(sc);
                     break;
-                case 6:
+                case 0:
                     System.out.println("Exiting menu...");
-                    Utility.promptEnterKey(sc);
                     break;
                 default:
                     Utility.slowPrint("Invalid choice. Please try again.");

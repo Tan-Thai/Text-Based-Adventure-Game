@@ -4,6 +4,7 @@ import Core.GameState;
 import Core.GameStateManager;
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
+import Interactions.Adventure;
 
 public class Tavern extends Zone {
     public Tavern() {
@@ -51,7 +52,10 @@ public class Tavern extends Zone {
         Utility.clearConsole();
         Utility.slowPrint("Choose an action:");
         System.out.println(
-                "1. Rest (restore health)\n2. Open shop (buy items)\n3. Set out (Back to travel menu)");
+                "1. Rest (restore health)\n" + 
+                "2. Open shop (buy items)\n" + 
+                "3. Set out (Back to travel menu)\n" + 
+                "0. Exit menu");
         if (GameStateManager.getInstance().getCurrentState() == GameState.VICTORY) {
             System.out.println("4. Retire (End game)");
         } // retire character, end game.
@@ -71,7 +75,7 @@ public class Tavern extends Zone {
                 tavernMenu(pc);
                 break;
             case 3:
-                adventureMenu(pc, sc);
+                Adventure.adventureMenu(pc, sc, pc.getCurrentZone());
                 break;
             case 4:
                 if (GameStateManager.getInstance().getCurrentState() != GameState.VICTORY) {

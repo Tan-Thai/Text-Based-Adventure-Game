@@ -12,6 +12,7 @@ import GameObjects.Items.Potion;
 import GameObjects.Worlds.ZoneManager;
 import GameObjects.Worlds.ZoneType;
 import Global.Utility;
+import Interactions.Adventure;
 import Interactions.Combat;
 import Interactions.EncounterHandler;
 import java.lang.classfile.instruction.ThrowInstruction;
@@ -99,7 +100,7 @@ public class Game {
     // methods down here are most likely tests methods.
     private static void runGame(PlayerCharacter pc, Scanner sc) {
         while (true) {
-            pc.getCurrentZone().adventureMenu(pc, sc);
+            Adventure.adventureMenu(pc, sc, pc.getCurrentZone());
             Utility.promptEnterKey(sc);
         }
     }
@@ -115,7 +116,7 @@ public class Game {
         // this is what we call and send in when a combat between 2 entities happens.
         combat.initiateCombat(pc, enemy, sc);
     }
-
+/* 
     private static void encounterTest(PlayerCharacter pc, Scanner myScanner) {
 
         // This one is my bad, currently the ZoneManager needs to get instantiated for
@@ -130,7 +131,7 @@ public class Game {
             encounterHandler.runEncounter(pc, ZoneManager.getZone(ZoneType.FOREST).getUnclearedEncounter(), myScanner);
         }
     }
-
+    */
     private static void addItems(PlayerCharacter pc) {
         Equipment sword = new Equipment("A Simple Sword", "Your standard blade as a new adventurer.",
                 new DamageEffect(2));

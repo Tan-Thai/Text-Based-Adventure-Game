@@ -1,11 +1,7 @@
 package GameObjects.Worlds;
-
-import GameObjects.Data.Info;
-import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
 import Interactions.Encounter;
 import Interactions.ExploreZone;
-import Interactions.InterZoneTravel;
 
 import java.util.*;
 
@@ -18,7 +14,7 @@ public class Zone {
     private boolean zoneCleared;
     public int zoneClearThreshold;
     private Set<Zone> traveableZones = new HashSet<>();
-    private List<Encounter> encounters = new ArrayList<>();
+    public List<Encounter> encounters = new ArrayList<>();
 
     /**
      * Constructor for Zones, does not populate the set of travelable zones.
@@ -71,106 +67,18 @@ public class Zone {
         return traveableZones;
     }
 
-    /**
-     * Function returning true if any encounter isCleared returns false.
-     *
-     * @return
-     */
-    public boolean hasUnclearedEncounters() {
-        for (Encounter encounter : encounters) {
-            if (!encounter.isCleared()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Returns the first encounter where getIsCleared returns false. Otherwise
-     * returns null.
-     *
-     * @return
-     */
-    public Encounter getUnclearedEncounter() {
-        for (Encounter encounter : encounters) {
-            if (!encounter.isCleared()) {
-                return encounter;
-            }
-        }
-        System.out.println("Couldn't find any uncleared encounters within zone: " + this.name + "." +
-                "Returned null for now.");
-        return null;
-    }
-
-    public int getUnclearedEncountersAmount() {
-
-        int i = 0;
-
-        for (Encounter encounter : encounters) {
-            if (!encounter.isCleared()) {
-                i++;
-            }
-        }
-
-        return i;
-    }
-
-    public void adventureMenu(PlayerCharacter pc, Scanner sc) {
-        System.out.println("Debug check PC currentzone:  " + pc.getCurrentZone().getZoneType());
-        Utility.promptEnterKey(sc);
-
-        Utility.clearConsole();
-        Utility.slowPrint("You are in the " + pc.getCurrentZone().getName());
-        Utility.slowPrint("Choose an action:");
-        System.out.println(
-                "1. Wander (travel inside zone)" +
-                        "\n2. Look around (display current zone)" +
-                        "\n3. Inspect yourself" + 
-                        "\n4. Travel (travel between zones)" +
-                        "\n5. Remind me how to play again.");
-        if (pc.getCurrentZone().getZoneType() == ZoneType.TAVERN) {
-            System.out.println("6. Tavern menu (to rest and shop for items)");
-        }
-        int choice = Utility.checkIfNumber(sc);
-
-        switch (choice) {
-            case 1:
-                ExploreZone.exploreZone(pc, this, sc);
-                break;
-            case 2:
-                displayCurrentZone(pc);
-                break;
-            case 3:
-                pc.inspectEntity(sc);
-                break;
-            case 4:
-                InterZoneTravel.zoneTravel(pc, this, sc);
-                break;
-            case 5:
-                Info.howToPlay(sc);
-                break;
-            case 6:
-                if (pc.getCurrentZone().getZoneType() == ZoneType.TAVERN) {
-                    ((Tavern) ZoneManager.getZone(ZoneType.TAVERN)).tavernMenu(pc); 
-                } else {
-                    System.out.println("Invalid choice. Please try again.");
-                }
-                break;
-
-            default:
-                System.out.println("Invalid choice. Please try again.");
-                break;
-        }
-
-    }
 
     // Just displays the current zone and its description + clear status
-    public void displayCurrentZone(PlayerCharacter pc) { 
+    public static void displayCurrentZone(Zone zone) { 
 
         Utility.clearConsole();
-        Utility.slowPrint("You are in " + pc.getCurrentZone().getName() + ". " + pc.getCurrentZone().getDescription()
-                + " Zone cleared: " + pc.getCurrentZone().getZoneCleared());
+        System.out.println("You are in " + zone.getName() + ". " + zone.getDescription()
+                + " Zone cleared: " + zone.getZoneCleared());
+        if (ExploreZone.getUnclearedEncounter(zone) != null) {
+            System.out.println("Uncleared encounters: " + ExploreZone.getUnclearedEncountersAmount(zone));
+        } else {
+            System.out.println("No uncleared encounters.");
+        }
         Utility.promptEnterKey(sc);
     }
      

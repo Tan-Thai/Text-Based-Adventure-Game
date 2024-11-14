@@ -5,6 +5,7 @@ import GameObjects.Entities.HostileEntityType;
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
 import Interactions.Combat;
+import Interactions.Adventure;
 
 import java.util.Scanner;
 
@@ -15,12 +16,13 @@ public class Basement extends Zone {
                 ZoneType.BASEMENT, null, 1);
     }
 
-   // odd line conflict that didnt look like it had any issues
-   // In case something break, check here.
+    public void bossIntro() {
+        Utility.clearConsole();
+        System.out.println("YOU FIGHTO THE BOSSO");}
 
-    
+   /* 
     @Override 
-    public void adventureMenu(PlayerCharacter pc, Scanner sc) {
+    public void Adventure.adventureMenu(PlayerCharacter pc, Scanner sc) {
         Utility.clearConsole();
         System.out.println("You continue even deeper and notice a few loose rocks that could crumble at any moment");
         Utility.slowPrint(
@@ -31,8 +33,7 @@ public class Basement extends Zone {
         HostileCharacter boss = new HostileCharacter("Tavern Keeper", 15, 2, 2, 20, 20, HostileEntityType.DRACONIC);
         
         Combat.getInstance().initiateCombat(pc, boss, sc);
-        
-
-        
+         
     }
+    */ 
 }
