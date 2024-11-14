@@ -52,7 +52,11 @@ public class PlayerCharacter extends Entity {
         while (inspecting) {
             Utility.clearConsole();
             displayStats();
-            System.out.println("\n1. Open inventory.\n0. Exit inspection.");
+            System.out.println(
+                    "\n1. Open inventory." +
+                            "\n2. Inspect your equipped gear." +
+                            "\n0. Exit inspection.");
+
             switch (Utility.checkIfNumber(sc)) {
                 case 0:
                     inspecting = false;
@@ -60,6 +64,8 @@ public class PlayerCharacter extends Entity {
                 case 1:
                     getInventory().inspectInventory(sc, this);
                     break;
+                case 2:
+                    System.out.println("Printing of equipped gear.");
                 default:
                     System.out.println("Please input one of the shown options.");
                     break;
@@ -69,10 +75,9 @@ public class PlayerCharacter extends Entity {
 
     // TODO: Streamline location for level. and implement "retire" from tavern.
     public void checkGameClearCondition() {
-        if (getLevel() == 2) {
+        if (getLevel() == Config.PC_RETIREMENT_LEVEL) {
             System.out.println("You have reached high enough level and can now retire in the Tavern!");
             // easy to create an if check of printing the option if player is x(max) level inside the tavern.
-            GameStateManager.getInstance().setCurrentState(GameState.VICTORY);
         }
         // "else if" x boss is dead, but we can prolly add a specific method for when it dies.
     }

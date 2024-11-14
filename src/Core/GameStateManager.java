@@ -26,4 +26,12 @@ public class GameStateManager {
         this.currentState = newState;
     }
 
+    public boolean isGameWon() {
+        return currentState == GameState.VICTORY;
+    }
+
+    public boolean isGameLost() {
+        return currentState == GameState.GAME_OVER;
+    }
+
 }
