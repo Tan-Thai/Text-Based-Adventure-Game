@@ -132,6 +132,7 @@ public class Game {
         return new HostileCharacter("Troll", 5, 3, 2, 1, 1, HostileEntityType.TROLLKIN);
     }
 
+    //region TT - Testing area
     private static void combatTest(PlayerCharacter pc, HostileCharacter enemy, Scanner sc) {
         // new up A COMBAT object, and it will be the only one since it's a singleton.
         Combat combat = Combat.getInstance();
@@ -159,5 +160,6 @@ public class Game {
         pc.getInventory().addItem(potion);
         pc.getInventory().addItem(poison);
     }
+    //endregion
 
 }

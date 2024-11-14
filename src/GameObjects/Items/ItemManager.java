@@ -5,31 +5,40 @@ import Global.*;
 
 import java.util.*;
 
-public class Inventory {
-    private final Map<Item, Integer> items;
+public class ItemManager {
+    private final Map<Item, Integer> itemCollection;
 
-    public Inventory() {
-        this.items = new HashMap<>();
+    public ItemManager() {
+        this.itemCollection = new HashMap<>();
     }
 
     public Map<Item, Integer> getItems() {
-        return Collections.unmodifiableMap(items);
+        return Collections.unmodifiableMap(itemCollection);
     }
 
+    private boolean checkIfEmpty() {
+        if (itemCollection.isEmpty()) {
+            System.out.println("Your inventory is empty.");
+            return true;
+        }
+        return false;
+    }
+
+    //region Add/Remove from ItemContainer
     public void addItem(Item item) {
         if (item != null) {
-            items.merge(item, 1, Integer::sum);
+            itemCollection.merge(item, 1, Integer::sum);
             System.out.println(item.getName() + " was put into your inventory.");
         }
     }
 
     public void removeItem(Item item) {
-        if (item != null && items.containsKey(item)) {
-            int count = items.get(item);
+        if (item != null && itemCollection.containsKey(item)) {
+            int count = itemCollection.get(item);
             if (count > 1) {
-                items.put(item, count - 1);
+                itemCollection.put(item, count - 1);
             } else {
-                items.remove(item);
+                itemCollection.remove(item);
             }
             System.out.println("\n" + item.getName() + " was removed from your inventory");
         } else {
@@ -37,13 +46,15 @@ public class Inventory {
             System.out.println("You do not posses a " + item.getName());
         }
     }
+    //endregion
 
+    //region Printing and visual interaction of inventory
     public void printInventory() {
         if (checkIfEmpty()) return;
 
         System.out.println("Inventory:");
         int i = 1; // Kind of a cursed enhanced loop
-        for (Map.Entry<Item, Integer> entry : items.entrySet()) {
+        for (Map.Entry<Item, Integer> entry : itemCollection.entrySet()) {
             System.out.println(i + ". " + entry.getKey().getName() + " x" + entry.getValue());
             i++;
         }
@@ -65,10 +76,10 @@ public class Inventory {
                 return;
             }
 
-            if (input > 0 && input <= items.size()) {
+            if (input > 0 && input <= itemCollection.size()) {
                 // generate a new arraylist to print an index with associated numbers.
                 // input -1 is due to index starting at 0
-                Item selectedItem = (new ArrayList<>(items.keySet())).get(input - 1);
+                Item selectedItem = (new ArrayList<>(itemCollection.keySet())).get(input - 1);
                 selectedItem.displayItem();
                 selectedItem.promptUse(sc, player, selectedItem);
             } else {
@@ -77,12 +88,5 @@ public class Inventory {
             }
         }
     }
-
-    private boolean checkIfEmpty() {
-        if (items.isEmpty()) {
-            System.out.println("Your inventory is empty.");
-            return true;
-        }
-        return false;
-    }
+    //endregion
 }

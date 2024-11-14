@@ -1,7 +1,5 @@
 package GameObjects.Entities;
 
-import GameObjects.Items.Inventory;
-
 public class HostileCharacter extends Entity {
 
     private final HostileEntityType hostileEntityType;
@@ -12,7 +10,7 @@ public class HostileCharacter extends Entity {
     }
 
     public HostileCharacter(String name, int health, int level, int strength, int dexterity, int intelligence,
-            HostileEntityType hostileEntityType) {
+                            HostileEntityType hostileEntityType) {
         super(name, health, level, strength, dexterity, intelligence);
         this.hostileEntityType = hostileEntityType;
     }
