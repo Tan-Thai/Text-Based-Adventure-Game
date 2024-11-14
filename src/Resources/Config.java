@@ -1,6 +1,6 @@
 package Resources;
 
-public class ConfigTrue {
+public class Config {
     public static final int PC_STARTING_LEVEL = 1;
     public static final int PC_MAX_LEVEL = 5;
     public static final int PC_RETIREMENT_LEVEL = 3;
