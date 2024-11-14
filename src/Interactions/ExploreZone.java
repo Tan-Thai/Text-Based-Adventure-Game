@@ -8,14 +8,14 @@ import Global.Utility;
 import GameObjects.Worlds.Zone;
 
 public class ExploreZone {
-
-     public static void exploreZone(PlayerCharacter pc, Zone zone, Scanner sc) { // Wander/explore inside zone function.
+            // Wander/explore inside zone function.
+    public static void exploreZone(PlayerCharacter pc, Zone zone, Scanner sc) { 
 
         if (zone.getZoneType() == ZoneType.TAVERN) {
             Utility.slowPrint("You can't explore the tavern, you're already here.");
             return;
         }
-        
+
         Utility.clearConsole();
 
         Utility.slowPrint("You wander around the " + zone.getName());
@@ -35,6 +35,5 @@ public class ExploreZone {
             zone.checkTraveableZones(pc);
         }
     }
-
 
 }
