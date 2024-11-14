@@ -1,18 +1,16 @@
 package GameObjects.Entities;
 
-import GameObjects.Items.Equipment;
-import GameObjects.Items.EquipmentSlot;
+import GameObjects.Items.EquipmentManager;
 import GameObjects.Items.Inventory;
 import Global.Utility;
 
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class Entity {
     private static final int DEFAULT_STAT = 3;
 
     // TODO break out the equipment slot/hashmap of equipment into its own class. TT
-    private final HashMap<EquipmentSlot, Equipment> equipment;
+    private final EquipmentManager equipmentManager;
     private final Inventory inventory;
     private final String name;
     protected int health;
@@ -36,10 +34,7 @@ public class Entity {
 
         // Creates an eq "space" for each type and assigns null to them.
         // so if one entity is created they will have "nothing" on them so to speak.
-        this.equipment = new HashMap<>();
-        for (EquipmentSlot slot : EquipmentSlot.values()) {
-            equipment.put(slot, null);
-        }
+        this.equipmentManager = new EquipmentManager();
     }
 
     // Constructor with base stats (Standard NPC)
@@ -54,6 +49,10 @@ public class Entity {
 
     public String getName() {
         return name;
+    }
+
+    public EquipmentManager getEquipmentList() {
+        return equipmentManager;
     }
 
     public int getHealth() {
@@ -82,12 +81,6 @@ public class Entity {
 
     public int getLevel() {
         return level;
-    }
-
-    public Equipment getEquipment(EquipmentSlot slot) {return equipment.get(slot);}
-
-    public HashMap<EquipmentSlot, Equipment> getEquipmentList() {
-        return equipment;
     }
 
     public boolean isDead() {
@@ -170,28 +163,6 @@ public class Entity {
         } else {
             System.out.println(name + " took " + damageValue + " damage. Current health: " + health);
         }
-    }
-
-    // method to call to add and swap equipments from X slot.
-    public Equipment equipItem(Equipment eq) {
-        EquipmentSlot eqSlot = eq.getEQSlot();
-        Equipment previousEQ = equipment.get(eqSlot);
-        equipment.put(eqSlot, eq);
-
-        if (previousEQ != null) {
-            System.out.println("You put " + previousEQ.getName() + " in your inventory.");
-        }
-        return previousEQ;
-    }
-
-    // method to call to remove eq from X slot
-    public Equipment unequipItem(EquipmentSlot slot) {
-        if (equipment.containsKey(slot)) {
-            Equipment removedItem = equipment.get(slot);
-            equipment.put(slot, null);
-            return removedItem;
-        }
-        return null;
     }
 
 }

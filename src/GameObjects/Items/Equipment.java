@@ -7,20 +7,24 @@ import java.util.Scanner;
 
 public class Equipment extends Item {
     private final Effect weaponEffect;
-    private final EquipmentSlot eqSlot;
+    private final EquipmentType eqSlot;
 
-    public Equipment(String name, String desc, EquipmentSlot slot, Effect effect) {
+    public Equipment(String name, String desc, EquipmentType slot, Effect effect) {
         super(name, desc);
         this.weaponEffect = effect;
         this.eqSlot = slot;
     }
 
-    public EquipmentSlot getEQSlot() {
+    public EquipmentType getEQSlot() {
         return eqSlot;
     }
 
     public int getDamageValue() {
         return weaponEffect.getValue();
+    }
+
+    public void displayItem() {
+        System.out.println("\n--" + getName() + "--\nDescription: " + getDescription() + "\n");
     }
 
     @Override
@@ -30,7 +34,7 @@ public class Equipment extends Item {
         System.out.print("Do you want to equip this item? (Y/N): ");
         if (Utility.checkYesOrNo(sc)) {
             System.out.println("You equipped " + getName());
-            player.getInventory().addItem(player.equipItem(this));
+            player.getInventory().addItem(player.getEquipmentList().equipItem(this));
             player.getInventory().removeItem(this);
         } else {
             System.out.println("You decided not to equip the item.");
