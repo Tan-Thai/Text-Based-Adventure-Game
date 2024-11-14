@@ -58,6 +58,10 @@ public class ExploreZone {
      * @return
      */
     public static Encounter getUnclearedEncounter(Zone zone) {
+        if (zone.encounters == null) {
+            System.out.println("No encounters in zone: " + zone.getName() + ". Returned null for now.");
+            return null;
+        }
         for (Encounter encounter : zone.encounters) {
             if (!encounter.isCleared()) {
                 return encounter;

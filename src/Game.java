@@ -72,7 +72,7 @@ public class Game {
     }
 
     private static void runGame(PlayerCharacter pc, Scanner sc) {
-        pc.getCurrentZone().travelMenu(pc);
+        Adventure.adventureMenu(pc, sc, pc.getCurrentZone());
         Utility.promptEnterKey(sc);
     }
 

@@ -9,6 +9,9 @@ import Interactions.Adventure;
 
 import java.util.Scanner;
 
+import Core.GameState;
+import Core.GameStateManager;
+
 public class Basement extends Zone {
 
     public Basement() {
@@ -18,10 +21,24 @@ public class Basement extends Zone {
 
     public void bossIntro() {
         Utility.clearConsole();
-        System.out.println("YOU FIGHTO THE BOSSO");}
+        System.out.println("YOU FIGHTO THE BOSSO");
+        
+
+    
+    }
+
+    public GameState bossDED() {
+        Utility.clearConsole();
+        System.out.println("YOU WIN");
+        return GameState.VICTORY;
+    }
+
+
+
+    
 
    /* 
-    @Override 
+    
     public void Adventure.adventureMenu(PlayerCharacter pc, Scanner sc) {
         Utility.clearConsole();
         System.out.println("You continue even deeper and notice a few loose rocks that could crumble at any moment");
