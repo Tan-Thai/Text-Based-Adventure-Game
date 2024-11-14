@@ -1,7 +1,11 @@
 package GameObjects.Worlds;
 
+import Core.GameState;
+import Core.GameStateManager;
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
+import Interactions.Adventure;
+import Resources.Config;
 
 public class Tavern extends Zone {
     public Tavern() {
@@ -41,6 +45,58 @@ public class Tavern extends Zone {
         //the player already are in a state of VICTORY. --- TT
 
         
+    }
+
+    
+    public void tavernMenu(PlayerCharacter pc) { // opnens up tavern menu for resting and shopping for
+        // items
+        Utility.clearConsole();
+        Utility.slowPrint("Choose an action:");
+        System.out.println(
+                "0. Exit menu\n" +
+                "1. Rest (restore health)\n" + 
+                "2. Open shop (buy items)\n");
+        if (pc.getLevel() >= Config.PC_RETIREMENT_LEVEL) {
+            System.out.println("3. Retire (End game)");
+        } // retire character, end game.
+        // talk to npcs? Listen to rumours? etc.
+
+        int choice = Utility.checkIfNumber(sc);
+
+        switch (choice) {
+            case 0:
+                break;
+            case 1:
+                takeRest(pc);
+                Utility.promptEnterKey(sc);
+                tavernMenu(pc);
+                break;
+            case 2:
+                openShop(pc);
+                Utility.promptEnterKey(sc);
+                tavernMenu(pc);
+                break;
+
+            case 3:
+                if (pc.getLevel() < Config.PC_RETIREMENT_LEVEL) {
+                    Utility.slowPrint(
+                            "You are not experienced enough to retire yet. You must reach even higher heights!");
+                    Utility.promptEnterKey(sc);
+                    tavernMenu(pc);
+                    break;
+                } else {
+                    Utility.slowPrint("Are you sure you want to retire? (Y/N)");
+                    if (Utility.checkYesOrNo(sc)) {
+                        retireCharacter(pc);
+                    } else {
+                        tavernMenu(pc);
+                    }
+                }
+                break;
+            default:
+                System.out.println("Invalid choice. Please try again.");
+                break;
+        }
     }
 
 }

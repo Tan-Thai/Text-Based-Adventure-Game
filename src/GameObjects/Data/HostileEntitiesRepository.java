@@ -42,7 +42,7 @@ public class HostileEntitiesRepository {
 	}
 
 	public static HostileCharacter getTyrannicLizardKing() {
-		return new HostileCharacter("Tyrannic Lizard King", 15, 3, 9, 5, 3, HostileEntityType.DRACONIC);
+		return new HostileCharacter("Tyrannic Lizard King", 15, 3, 9, 5, 3, HostileEntityType.BOSS);
 	}
 
 	public static HostileCharacter getUndefinedCharacter() {

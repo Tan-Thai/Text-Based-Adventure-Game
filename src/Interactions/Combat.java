@@ -4,6 +4,7 @@ import Core.GameState;
 import Core.GameStateManager;
 import GameObjects.Entities.Entity;
 import GameObjects.Entities.HostileCharacter;
+import GameObjects.Entities.HostileEntityType;
 import GameObjects.Entities.PlayerCharacter;
 import GameObjects.Items.EquipmentType;
 import Global.Utility;
@@ -71,11 +72,17 @@ public class Combat {
                 resolveHP();
 
                 checkVictoryConditionMet();
-            } else {
+            } else { //temporary 
+                if (((HostileCharacter) enemy).getHostileEntityType().equals(HostileEntityType.BOSS)) {
+                    System.out.println("You can't run from a boss!");
+                    Utility.clearConsole();
+                } else {
+                    System.out.println("You have fled from combat!");
                 isCombatInProgress = false;
             }
         }
     }
+}
 
     // Prints out the bars.
     private void printEntityHP(Entity actor, String colour) {
