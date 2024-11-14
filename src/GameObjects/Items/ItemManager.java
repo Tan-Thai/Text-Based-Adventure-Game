@@ -7,13 +7,11 @@ import java.util.*;
 
 public class ItemManager {
     private final Map<Item, Integer> itemCollection;
+    // TODO make a flexible capacity for the entities.
+    private final int capacity = 10;
 
     public ItemManager() {
         this.itemCollection = new HashMap<>();
-    }
-
-    public Map<Item, Integer> getItems() {
-        return Collections.unmodifiableMap(itemCollection);
     }
 
     private boolean checkIfEmpty() {
@@ -24,11 +22,63 @@ public class ItemManager {
         return false;
     }
 
-    //region Add/Remove from ItemContainer
-    public void addItem(Item item) {
+    //region Getters
+    public Map<Item, Integer> getItems() {
+        return Collections.unmodifiableMap(itemCollection);
+    }
+
+    private int getTotalItemCount() {
+        return itemCollection.values().stream().mapToInt(Integer::intValue).sum();
+    }
+
+    private int getCapacity() {
+        return capacity;
+    }
+    //endregion
+
+    //region Adding and removal of items in ItemCollections
+    // Currently have no good term for spawning items into inventory without text
+    public void spawnItem(Item item) {
         if (item != null) {
-            itemCollection.merge(item, 1, Integer::sum);
-            System.out.println(item.getName() + " was put into your inventory.");
+            if (getTotalItemCount() < capacity) {
+                itemCollection.merge(item, 1, Integer::sum);
+            } else {
+                System.err.println("Entity's inventory is full.");
+            }
+        }
+    }
+
+    public void addItem(Item item, Scanner sc) {
+        if (item != null) {
+
+            if (getTotalItemCount() < capacity) {
+                itemCollection.merge(item, 1, Integer::sum);
+                System.out.println(item.getName() + " was put into your inventory.");
+            } else {
+                System.out.println("Your inventory is full, do you wish to swap " + item.getName()
+                                   + " with another item in your inventory?");
+                if (Utility.checkYesOrNo(sc)) {
+                    discardItem(sc);
+                }
+            }
+        }
+    }
+
+    private void discardItem(Scanner sc) {
+        while (true) {
+            printInventory();
+            System.out.print("Enter an item to discard: ");
+            int choice = Utility.checkIfNumber(sc);
+
+            if (choice > 0 && choice < itemCollection.size()) {
+                Item removedItem = new ArrayList<>(itemCollection.keySet()).get(choice - 1);
+                removeItem(removedItem);
+                System.out.println(removedItem.getName() + " was discarded.");
+                return;
+            } else {
+                // prolly a try catch here tbh.
+                System.out.println("Invalid input. Try again.");
+            }
         }
     }
 

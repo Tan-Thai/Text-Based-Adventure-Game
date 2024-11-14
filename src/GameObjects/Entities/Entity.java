@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Entity {
 
-    //<editor-fold desc="Constructors and Variables">
+    //region Constructors and Variables
     private static final int DEFAULT_STAT = 3;
 
     private final EquipmentManager equipmentManager;
@@ -42,9 +42,9 @@ public class Entity {
         this(name, health, level,
                 DEFAULT_STAT, DEFAULT_STAT, DEFAULT_STAT);
     }
-    //</editor-fold>
+    //endregion
 
-    //<editor-fold desc="Getters and Setters">
+    //region Getters and Setters
     public ItemManager getInventory() {
         return itemManager;
     }
@@ -92,10 +92,9 @@ public class Entity {
     public boolean isFullHP() {
         return health >= maxHealth;
     }
-    //</editor-fold>
+    //endregion
 
-    //<editor-fold desc="Methods used across many entities.">
-
+    //region Methods used across many entities.
     // method is planned to be able to inspect any entity and behave differently if it's a PC
     // Idea is to bake in the access to inventory through this as well.
     public void inspectEntity(Scanner sc) {
@@ -169,5 +168,5 @@ public class Entity {
             System.out.println(name + " took " + damageValue + " damage. Current health: " + health);
         }
     }
-    //</editor-fold>
+    //endregion
 }

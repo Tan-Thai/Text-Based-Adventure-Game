@@ -35,7 +35,7 @@ public class EquipmentManager {
     }
 
     // removes item from equipment, and puts it back into players inventory.
-    public Equipment unequipItem(EquipmentType slot) {
+    public Equipment unequipEquipment(EquipmentType slot) {
         if (equpmentCollection.containsKey(slot)) {
             Equipment removedItem = equpmentCollection.get(slot);
             equpmentCollection.put(slot, null);
@@ -52,7 +52,7 @@ public class EquipmentManager {
         boolean response = Utility.checkYesOrNo(sc);
 
         if (response) {
-            pc.getInventory().addItem(unequipItem(selectedType));
+            pc.getInventory().addItem(unequipEquipment(selectedType), sc);
         } else {
             System.out.println("You decided not to.");
         }

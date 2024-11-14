@@ -155,10 +155,10 @@ public class Game {
         Potion potion = new Potion("Health Potion", "Chug when ouch", new HealingEffect(5));
         Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", new DamageEffect(7));
 
-        pc.getInventory().addItem(bow);
-        pc.getInventory().addItem(sword);
-        pc.getInventory().addItem(potion);
-        pc.getInventory().addItem(poison);
+        pc.getInventory().spawnItem(bow);
+        pc.getInventory().spawnItem(sword);
+        pc.getInventory().spawnItem(potion);
+        pc.getInventory().spawnItem(poison);
     }
     //endregion
 
