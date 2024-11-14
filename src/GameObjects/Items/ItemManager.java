@@ -38,6 +38,7 @@ public class ItemManager {
 
     //region Adding and removal of items in ItemCollections
     // Currently have no good term for spawning items into inventory without text
+    // quite the temporary method due to us not shoving a lot into the constructors as off yet.
     public void spawnItem(Item item) {
         if (item != null) {
             if (getTotalItemCount() < capacity) {
@@ -55,8 +56,9 @@ public class ItemManager {
                 itemCollection.merge(item, 1, Integer::sum);
                 System.out.println(item.getName() + " was put into your inventory.");
             } else {
-                System.out.println("Your inventory is full, do you wish to swap " + item.getName()
-                                   + " with another item in your inventory?");
+                System.out.print("Your inventory is full, do you wish to swap " + item.getName()
+                                 + " with another item in your inventory?\n" +
+                                 "(Y/N): ");
                 if (Utility.checkYesOrNo(sc)) {
                     discardItem(sc);
                 }
@@ -67,10 +69,10 @@ public class ItemManager {
     private void discardItem(Scanner sc) {
         while (true) {
             printInventory();
-            System.out.print("Enter an item to discard: ");
+            System.out.print("Choose an item to discard: ");
             int choice = Utility.checkIfNumber(sc);
 
-            if (choice > 0 && choice < itemCollection.size()) {
+            if (choice > 0 && choice <= itemCollection.size()) {
                 Item removedItem = new ArrayList<>(itemCollection.keySet()).get(choice - 1);
                 removeItem(removedItem);
                 System.out.println(removedItem.getName() + " was discarded.");
@@ -90,7 +92,6 @@ public class ItemManager {
             } else {
                 itemCollection.remove(item);
             }
-            System.out.println("\n" + item.getName() + " was removed from your inventory");
         } else {
             assert item != null;
             System.out.println("You do not posses a " + item.getName());
@@ -113,10 +114,14 @@ public class ItemManager {
     public void inspectInventory(Scanner sc, PlayerCharacter player) {
         if (checkIfEmpty()) return;
         // Forced loop until user have exited their inventory or chosen to display a specific item.
-        while (true) {
+        while (!player.isDead()) {
             Utility.clearConsole();
             printInventory();
-            System.out.print("\nPress 0 to exit.\nEnter the number of the item to inspect: ");
+            System.out.print("""
+                    
+                    Press 0 to exit.\
+                    
+                    Pick an item to inspect:\s""");
             int input = Utility.checkIfNumber(sc);
 
             if (input == 0) {

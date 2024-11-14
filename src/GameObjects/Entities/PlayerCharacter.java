@@ -49,7 +49,7 @@ public class PlayerCharacter extends Entity {
     public void inspectEntity(Scanner sc) {
         boolean inspecting = true;
 
-        while (inspecting) {
+        while (inspecting && !isDead()) {
             Utility.clearConsole();
             displayStats();
             //not sure what a text-block is.
