@@ -50,28 +50,26 @@ public class InterZoneTravel {
             index++;
         }
 
-        System.out.println("Enter the number of the zone you want to travel to: ");
+        System.out.println("Enter the number of the zone you want to travel to, Or 0 to go back: ");
         int choice = Utility.checkIfNumber(sc);
         // check if choice is valid, make array of traveable zones to be able to index it for selection
         if (choice > 0 && choice <= traveableZones.size()) {
             Zone[] zonesArray = traveableZones.toArray(Zone[]::new); 
             Zone selectedZone = zonesArray[choice - 1]; 
-             // check if player is already in the selected zone 
-            if (pc.getCurrentZone().equals(selectedZone)) {
-                Utility.clearConsole();
-                Utility.slowPrint("You return to the " + selectedZone.getName());
-                return pc.getCurrentZone(); 
-            }
             Utility.clearConsole();
             Utility.slowPrint("You travel to the " + selectedZone.getName());
             return selectedZone;
+        } else if (choice == 0) {
+            return pc.getCurrentZone();
         // error handling for invalid choice
         } else { 
-            System.out.println("Invalid choice. Please try again. Or: ");
+            System.out.println("Invalid choice. Please try again.");
             Utility.promptEnterKey(sc);
             // Recursively call the method again for a valid choice
             return displayTraveableZones(pc, traveableZones, sc); 
         }
+        
+        
     }
 
      // Adds traveable zones to a zone.
