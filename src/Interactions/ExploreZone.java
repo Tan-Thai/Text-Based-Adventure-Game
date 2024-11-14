@@ -5,10 +5,11 @@ import java.util.Scanner;
 import GameObjects.Entities.PlayerCharacter;
 import GameObjects.Worlds.ZoneType;
 import Global.Utility;
+import GameObjects.Worlds.Basement;
 import GameObjects.Worlds.Zone;
 
 public class ExploreZone {
-            // Wander/explore inside zone function.
+            // explore inside zone function.
     public static void exploreZone(PlayerCharacter pc, Zone zone, Scanner sc) { 
 
         if (zone.getZoneType() == ZoneType.TAVERN) {
@@ -18,13 +19,18 @@ public class ExploreZone {
 
         Utility.clearConsole();
 
-        Utility.slowPrint("You wander around the " + zone.getName());
+        Utility.slowPrint("You explore the " + zone.getName());
 
         if (getUnclearedEncounter(zone) == null) {
             Utility.slowPrint(
                     "You wander the area, but the roads are known to you, and the lands are peaceful, there are no more adventures to be had for you here.");
         } else if (getUnclearedEncounter(zone).isCombatEncounter()) {
             Combat.getInstance().initiateCombat(pc, getUnclearedEncounter(zone).getEnemy(), sc);
+            if (zone.getZoneType() == ZoneType.BASEMENT) {
+       //         Temp boss call fight
+                ((Basement) zone).checkIfBossDead(zone, pc, sc);
+                ((Basement) zone).endGame();
+            }
             getUnclearedEncounter(zone).checkClearedState();
         } else {
             EncounterHandler.getInstance().runEncounter(pc, getUnclearedEncounter(zone), sc);

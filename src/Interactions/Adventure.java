@@ -2,6 +2,8 @@ package Interactions;
 
 import java.util.Scanner;
 
+import Core.GameState;
+import Core.GameStateManager;
 import GameObjects.Data.Info;
 import GameObjects.Entities.PlayerCharacter;
 import GameObjects.Worlds.Tavern;
@@ -20,11 +22,12 @@ public class Adventure {
         Utility.slowPrint("You are in the " + zone.getName());
         Utility.slowPrint("Choose an action:");
         System.out.println(
-                "1. Wander (travel inside zone)" +
-                        "\n2. Look around (display current zone)" +
-                        "\n3. Inspect yourself" + 
-                        "\n4. Travel (travel between zones)" +
-                        "\n5. Remind me how to play again.");
+                "0. Exit to main menu" +
+                "\n1. Wander (travel inside zone)" +
+                "\n2. Look around (display current zone)" +
+                "\n3. Inspect yourself" + 
+                "\n4. Travel (travel between zones)" +
+                "\n5. Remind me how to play again.");
         if (zone.getZoneType() == ZoneType.TAVERN) {
             System.out.println("6. Tavern menu (to rest and shop for items)");
         }
@@ -51,6 +54,15 @@ public class Adventure {
                     ((Tavern) ZoneManager.getZone(ZoneType.TAVERN)).tavernMenu(pc); 
                 } else {
                     System.out.println("Invalid choice. Please try again.");
+                }
+                break;
+            case 0:
+                System.out.println("Are you sure you want to exit to main menu? ALL YOUR PROGRESS WILL BE LOST (Y/N)");
+                if (Utility.checkYesOrNo(sc)) {
+                    System.out.println("Exiting to main menu...");
+                    GameStateManager.getInstance().setCurrentState(GameState.EXIT);
+                } else {
+                    System.out.println("Returning to adventure...");
                 }
                 break;
 

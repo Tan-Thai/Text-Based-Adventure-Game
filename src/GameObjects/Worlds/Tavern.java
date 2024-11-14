@@ -5,6 +5,7 @@ import Core.GameStateManager;
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
 import Interactions.Adventure;
+import Resources.Config;
 
 public class Tavern extends Zone {
     public Tavern() {
@@ -52,18 +53,19 @@ public class Tavern extends Zone {
         Utility.clearConsole();
         Utility.slowPrint("Choose an action:");
         System.out.println(
+                "0. Exit menu\n" +
                 "1. Rest (restore health)\n" + 
-                "2. Open shop (buy items)\n" + 
-                "3. Set out (Back to travel menu)\n" + 
-                "0. Exit menu");
-        if (GameStateManager.getInstance().getCurrentState() == GameState.VICTORY) {
-            System.out.println("4. Retire (End game)");
+                "2. Open shop (buy items)\n");
+        if (pc.getLevel() >= Config.PC_RETIREMENT_LEVEL) {
+            System.out.println("3. Retire (End game)");
         } // retire character, end game.
         // talk to npcs? Listen to rumours? etc.
 
         int choice = Utility.checkIfNumber(sc);
 
         switch (choice) {
+            case 0:
+                break;
             case 1:
                 takeRest(pc);
                 Utility.promptEnterKey(sc);
@@ -74,11 +76,9 @@ public class Tavern extends Zone {
                 Utility.promptEnterKey(sc);
                 tavernMenu(pc);
                 break;
+
             case 3:
-                Adventure.adventureMenu(pc, sc, pc.getCurrentZone());
-                break;
-            case 4:
-                if (GameStateManager.getInstance().getCurrentState() != GameState.VICTORY) {
+                if (pc.getLevel() < Config.PC_RETIREMENT_LEVEL) {
                     Utility.slowPrint(
                             "You are not experienced enough to retire yet. You must reach even higher heights!");
                     Utility.promptEnterKey(sc);

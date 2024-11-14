@@ -5,6 +5,7 @@ import GameObjects.Entities.HostileEntityType;
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
 import Interactions.Combat;
+import Interactions.ExploreZone;
 import Interactions.Adventure;
 
 import java.util.Scanner;
@@ -23,14 +24,27 @@ public class Basement extends Zone {
         Utility.clearConsole();
         System.out.println("YOU FIGHTO THE BOSSO");
         
-
-    
     }
 
-    public GameState bossDED() {
-        Utility.clearConsole();
-        System.out.println("YOU WIN");
-        return GameState.VICTORY;
+    // two temporary methods 
+    public void checkIfBossDead(Zone zone, PlayerCharacter pc, Scanner sc) {
+        if (ExploreZone.getUnclearedEncountersAmount(zone) == 0) {
+            GameStateManager.getInstance().setCurrentState(GameState.VICTORY);
+        } else if (ExploreZone.getUnclearedEncountersAmount(zone) > 0 && pc.getHealth() <= 0) {
+            GameStateManager.getInstance().setCurrentState(GameState.GAME_OVER);
+        } else {
+            Adventure.adventureMenu(pc, sc, zone);
+        }
+    }
+    public void endGame() {
+        if (GameStateManager.getInstance().getCurrentState() == GameState.VICTORY) {
+            System.out.println("You have defeated the boss and have saved the town from certain doom!\n" + 
+            "You have saved the town from the evil that lurked in the basement of the tavern.\n" + 
+            "You are a hero and will be remembered for generations to come.\n" + 
+            "Thank you for playing!");
+        } else {
+            System.out.println("You have been defeated by the boss and the town is doomed. You have failed to save the town from the evil that lurked in the basement of the tavern. You are a failure and will be remembered as such. Thank you for playing!");
+        }
     }
 
 
