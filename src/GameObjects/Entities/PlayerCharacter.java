@@ -17,7 +17,7 @@ public class PlayerCharacter extends Entity {
     // wondering if the player or even entity needs a room to "spawn" in let alone know where it's at in the world map.
 
     public PlayerCharacter(String name, int health, int str, int dex, int intel) {
-        super(name, health, Config.PC_STARTING_LEVEL, str, dex, intel);
+        super(name, health, 1, str, dex, intel, 150);
         currentZone = ZoneManager.getZone(ZoneType.TAVERN);
     }
 
@@ -53,8 +53,8 @@ public class PlayerCharacter extends Entity {
             displayStats();
             System.out.println(
                     "\n1. Open inventory." +
-                            "\n2. Inspect your equipped gear." +
-                            "\n0. Exit inspection.");
+                    "\n2. Inspect your equipped gear." +
+                    "\n0. Exit inspection.");
 
             switch (Utility.checkIfNumber(sc)) {
                 case 0:

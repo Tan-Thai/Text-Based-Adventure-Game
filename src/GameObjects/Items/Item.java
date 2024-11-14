@@ -7,10 +7,12 @@ import java.util.Scanner;
 public abstract class Item {
     private final String name;
     private final String description;
+    private final int itemCost;
 
-    public Item(String name, String desc) {
+    public Item(String name, String desc, int cost) {
         this.name = name;
         this.description = desc;
+        this.itemCost = cost;
     }
 
     public String getName() {
@@ -19,6 +21,10 @@ public abstract class Item {
 
     public String getDescription() {
         return description;
+    }
+
+    public int getItemCost() {
+        return itemCost;
     }
 
     // temp to check if item behaves right.

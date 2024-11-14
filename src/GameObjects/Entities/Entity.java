@@ -19,10 +19,11 @@ public class Entity {
     protected int strength;
     protected int dexterity;
     protected int intelligence;
+    protected int currency;
 
     // constructor for all entities that requires specific stats setups (enemies, or
     // the player char)
-    public Entity(String name, int health, int level, int str, int dex, int intelligence) {
+    public Entity(String name, int health, int level, int str, int dex, int intelligence, int currency) {
         this.name = name;
         this.health = health;
         this.maxHealth = health;
@@ -30,8 +31,9 @@ public class Entity {
         this.strength = str;
         this.dexterity = dex;
         this.intelligence = intelligence;
-        this.inventory = new Inventory();
+        this.currency = currency;
 
+        this.inventory = new Inventory();
         // Creates an eq "space" for each type and assigns null to them.
         // so if one entity is created they will have "nothing" on them so to speak.
         this.equipmentManager = new EquipmentManager();
@@ -40,7 +42,7 @@ public class Entity {
     // Constructor with base stats (Standard NPC)
     public Entity(String name, int health, int level) {
         this(name, health, level,
-                DEFAULT_STAT, DEFAULT_STAT, DEFAULT_STAT);
+                DEFAULT_STAT, DEFAULT_STAT, DEFAULT_STAT, 0);
     }
 
     public Inventory getInventory() {
@@ -81,6 +83,14 @@ public class Entity {
 
     public int getLevel() {
         return level;
+    }
+
+    public int getCurrency() {
+        return currency;
+    }
+
+    public int setCurrency(int currency) {
+        return this.currency = currency;
     }
 
     public boolean isDead() {
