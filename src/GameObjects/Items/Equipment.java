@@ -24,7 +24,10 @@ public class Equipment extends Item {
     }
 
     public void displayItem() {
-        System.out.println("\n--" + getName() + "--\nDescription: " + getDescription() + "\n");
+        System.out.println(
+                "\n--" + getName() + "--" +
+                "\nCost: " + getItemCost() +
+                "\nDescription: " + getDescription());
     }
 
     @Override

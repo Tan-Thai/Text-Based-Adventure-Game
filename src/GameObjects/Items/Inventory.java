@@ -44,7 +44,7 @@ public class Inventory {
         System.out.println("Inventory:");
         int i = 1; // Kind of a cursed enhanced loop
         for (Map.Entry<Item, Integer> entry : items.entrySet()) {
-            System.out.println(i + ". " + entry.getKey().getName() + " x" + entry.getValue());
+            System.out.println(i + ". x" + entry.getValue() + " " + entry.getKey().getName());
             i++;
         }
     }

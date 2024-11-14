@@ -29,7 +29,10 @@ public abstract class Item {
 
     // temp to check if item behaves right.
     public void displayItem() {
-        System.out.println("\n--" + name + "--\nDescription: " + description + "\n");
+        System.out.println(
+                "\n--" + name + "--" +
+                "\nCost: " + itemCost +
+                "\nDescription: " + description);
     }
 
     public abstract void promptUse(Scanner sc, PlayerCharacter player, Item selectedItem);
