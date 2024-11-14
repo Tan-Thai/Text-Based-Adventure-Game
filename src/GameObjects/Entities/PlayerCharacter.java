@@ -18,7 +18,6 @@ public class PlayerCharacter extends Entity {
 
     public PlayerCharacter(String name, int health, int str, int dex, int intel) {
         super(name, health, Config.PC_STARTING_LEVEL, str, dex, intel);
-
         currentZone = ZoneManager.getZone(ZoneType.TAVERN);
     }
 
@@ -65,7 +64,7 @@ public class PlayerCharacter extends Entity {
                     getInventory().inspectInventory(sc, this);
                     break;
                 case 2:
-                    System.out.println("Printing of equipped gear.");
+                    getEquipmentList().inspectWornEquipment(sc, this);
                 default:
                     System.out.println("Please input one of the shown options.");
                     break;

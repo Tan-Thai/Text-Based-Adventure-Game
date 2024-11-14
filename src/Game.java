@@ -1,6 +1,5 @@
 import Core.GameState;
 import Core.GameStateManager;
-import GameObjects.Data.Info;
 import GameObjects.Data.PlayerClassRepository;
 import GameObjects.Entities.HostileCharacter;
 import GameObjects.Entities.HostileEntityType;
@@ -32,8 +31,8 @@ public class Game {
         Utility.clearConsole();
         // adding player char and basic items(temp items for now.)
         PlayerCharacter pc = setupUser(sc);
-        // addItems(pc);
         // --- TESTS -----------------------
+        // addItems(pc);
         // Combat Test
         // combatTest(pc, addEnemyTemp(), sc);
 
@@ -76,18 +75,6 @@ public class Game {
         Utility.promptEnterKey(sc);
     }
 
-    // methods down here are most likely tests methods.
-    private static HostileCharacter addEnemyTemp() {
-        return new HostileCharacter("Troll", 5, 3, 2, 1, 1, HostileEntityType.TROLLKIN);
-    }
-
-    private static void combatTest(PlayerCharacter pc, HostileCharacter enemy, Scanner sc) {
-        // new up A COMBAT object, and it will be the only one since it's a singleton.
-        Combat combat = Combat.getInstance();
-        pc.inspectEntity(sc);
-        // this is what we call and send in when a combat between 2 entities happens.
-        combat.initiateCombat(pc, enemy, sc);
-    }
 /* 
     private static void encounterTest(PlayerCharacter pc, Scanner myScanner) {
 
@@ -104,25 +91,6 @@ public class Game {
         }
     }
     */
-    private static void addItems(PlayerCharacter pc) {
-        Equipment sword = new Equipment(
-                "'A Simple Sword'",
-                "Your standard blade as a new adventurer.",
-                EquipmentSlot.WEAPON,
-                new DamageEffect(2));
-        Equipment bow = new Equipment(
-                "'bow temp'",
-                "Your standard blade as a new adventurer.",
-                EquipmentSlot.WEAPON,
-                new DamageEffect(2));
-        Potion potion = new Potion("Health Potion", "Chug when ouch", new HealingEffect(5));
-        Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", new DamageEffect(7));
-
-        pc.getInventory().addItem(bow);
-        pc.getInventory().addItem(sword);
-        pc.getInventory().addItem(potion);
-        pc.getInventory().addItem(poison);
-    }
 
     private void handleVictory() {
         System.out.println("Victory!");
@@ -133,7 +101,6 @@ public class Game {
         System.out.println("Game Over!");
         gameManager.setCurrentState(GameState.EXIT);
     }
-
 
     private static PlayerCharacter playerCharacterClassSelect(String nameInput, Scanner sc) {
         Utility.clearConsole();
@@ -159,4 +126,38 @@ public class Game {
             }
         }
     }
+
+    // methods down here are most likely tests methods.
+    private static HostileCharacter addEnemyTemp() {
+        return new HostileCharacter("Troll", 5, 3, 2, 1, 1, HostileEntityType.TROLLKIN);
+    }
+
+    private static void combatTest(PlayerCharacter pc, HostileCharacter enemy, Scanner sc) {
+        // new up A COMBAT object, and it will be the only one since it's a singleton.
+        Combat combat = Combat.getInstance();
+        pc.inspectEntity(sc);
+        // this is what we call and send in when a combat between 2 entities happens.
+        combat.initiateCombat(pc, enemy, sc);
+    }
+
+    private static void addItems(PlayerCharacter pc) {
+        Equipment sword = new Equipment(
+                "'A Simple Sword'",
+                "Your standard blade as a new adventurer.",
+                EquipmentType.WEAPON,
+                new DamageEffect(2));
+        Equipment bow = new Equipment(
+                "'bow temp'",
+                "Your standard blade as a new adventurer.",
+                EquipmentType.WEAPON,
+                new DamageEffect(2));
+        Potion potion = new Potion("Health Potion", "Chug when ouch", new HealingEffect(5));
+        Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", new DamageEffect(7));
+
+        pc.getInventory().addItem(bow);
+        pc.getInventory().addItem(sword);
+        pc.getInventory().addItem(potion);
+        pc.getInventory().addItem(poison);
+    }
+
 }
