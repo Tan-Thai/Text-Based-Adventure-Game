@@ -33,9 +33,8 @@ public class Main {
     }
 
     public static void startMenu(Game game, Scanner sc) {
+        while (GameStateManager.getInstance().getCurrentState() == GameState.RUNNING) {
         Utility.clearConsole();
-
-        while (true) {
         System.out.println("Welcome to the game!" +
                 "\n1. Start Game" +
                 "\n2. How to Play" +
@@ -57,3 +56,4 @@ public class Main {
         }
     }
 }
+
