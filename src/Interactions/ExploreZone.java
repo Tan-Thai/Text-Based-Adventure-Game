@@ -27,7 +27,7 @@ public class ExploreZone {
         } else if (getUnclearedEncounter(zone).isCombatEncounter()) {
             Combat.getInstance().initiateCombat(pc, getUnclearedEncounter(zone).getEnemy(), sc);
             if (zone.getZoneType() == ZoneType.BASEMENT) {
-       //         Temp boss call fight
+                //Temp boss call fight
                 ((Basement) zone).checkIfBossDead(zone, pc, sc);
                 ((Basement) zone).endGame();
             }

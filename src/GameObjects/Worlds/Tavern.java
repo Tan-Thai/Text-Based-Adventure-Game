@@ -39,7 +39,9 @@ public class Tavern extends Zone {
     public void retireCharacter(PlayerCharacter pc) { // retire method
         Utility.clearConsole();
         Utility.slowPrint("You retire from adventuring and live out the rest of your days in peace.");
+        GameStateManager.getInstance().setCurrentState(GameState.VICTORY);
         Utility.promptEnterKey(sc);
+        
         //Removed call to EndofGameScreen due to it being phased out.
         //check of state should not exist here because the only time this will be visible is if
         //the player already are in a state of VICTORY. --- TT
@@ -47,34 +49,37 @@ public class Tavern extends Zone {
         
     }
 
-    
-    public void tavernMenu(PlayerCharacter pc) { // opnens up tavern menu for resting and shopping for
+     // opnens up tavern menu for resting and shopping for
+    public void tavernMenu(PlayerCharacter pc) {
+
+        boolean exitMenu = false;
         // items
+
+        while (!exitMenu) {
         Utility.clearConsole();
-        Utility.slowPrint("Choose an action:");
         System.out.println(
                 "0. Exit menu\n" +
                 "1. Rest (restore health)\n" + 
-                "2. Open shop (buy items)\n");
+                "2. Open shop (buy items)");
         if (pc.getLevel() >= Config.PC_RETIREMENT_LEVEL) {
             System.out.println("3. Retire (End game)");
-        } // retire character, end game.
+        } 
+        Utility.slowPrint("Choose an action:");
         // talk to npcs? Listen to rumours? etc.
 
         int choice = Utility.checkIfNumber(sc);
 
         switch (choice) {
             case 0:
+                exitMenu = true;
                 break;
             case 1:
                 takeRest(pc);
                 Utility.promptEnterKey(sc);
-                tavernMenu(pc);
                 break;
             case 2:
                 openShop(pc);
                 Utility.promptEnterKey(sc);
-                tavernMenu(pc);
                 break;
 
             case 3:
@@ -82,20 +87,23 @@ public class Tavern extends Zone {
                     Utility.slowPrint(
                             "You are not experienced enough to retire yet. You must reach even higher heights!");
                     Utility.promptEnterKey(sc);
-                    tavernMenu(pc);
                     break;
                 } else {
                     Utility.slowPrint("Are you sure you want to retire? (Y/N)");
                     if (Utility.checkYesOrNo(sc)) {
                         retireCharacter(pc);
+                        exitMenu = true;
                     } else {
-                        tavernMenu(pc);
+                        Utility.slowPrint("Returning to tavern menu...");
+                        Utility.promptEnterKey(sc);
                     }
                 }
+                
                 break;
             default:
                 System.out.println("Invalid choice. Please try again.");
                 break;
+            }
         }
     }
 
