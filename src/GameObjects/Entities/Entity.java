@@ -1,17 +1,18 @@
 package GameObjects.Entities;
 
 import GameObjects.Items.EquipmentManager;
-import GameObjects.Items.Inventory;
+import GameObjects.Items.ItemManager;
 import Global.Utility;
 
 import java.util.Scanner;
 
 public class Entity {
+
+    //region Constructors and Variables
     private static final int DEFAULT_STAT = 3;
 
-    // TODO break out the equipment slot/hashmap of equipment into its own class. TT
     private final EquipmentManager equipmentManager;
-    private final Inventory inventory;
+    private final ItemManager itemManager;
     private final String name;
     protected int health;
     protected int maxHealth;
@@ -33,9 +34,8 @@ public class Entity {
         this.intelligence = intelligence;
         this.currency = currency;
 
-        this.inventory = new Inventory();
-        // Creates an eq "space" for each type and assigns null to them.
-        // so if one entity is created they will have "nothing" on them so to speak.
+        // Managers handles items equipments that this entity holds/wears.
+        this.itemManager = new ItemManager();
         this.equipmentManager = new EquipmentManager();
     }
 
@@ -44,9 +44,11 @@ public class Entity {
         this(name, health, level,
                 DEFAULT_STAT, DEFAULT_STAT, DEFAULT_STAT, 0);
     }
+    //endregion
 
-    public Inventory getInventory() {
-        return inventory;
+    //region Getters and Setters
+    public ItemManager getInventory() {
+        return itemManager;
     }
 
     public String getName() {
@@ -100,7 +102,9 @@ public class Entity {
     public boolean isFullHP() {
         return health >= maxHealth;
     }
+    //endregion
 
+    //region Methods used across many entities.
     // method is planned to be able to inspect any entity and behave differently if it's a PC
     // Idea is to bake in the access to inventory through this as well.
     public void inspectEntity(Scanner sc) {
@@ -174,5 +178,5 @@ public class Entity {
             System.out.println(name + " took " + damageValue + " damage. Current health: " + health);
         }
     }
-
+    //endregion
 }

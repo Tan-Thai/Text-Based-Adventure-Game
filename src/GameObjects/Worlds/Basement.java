@@ -26,7 +26,7 @@ public class Basement extends Zone {
         
     }
 
-    // two temporary methods 
+    // two temporary methods boss methods for mvp
     public void checkIfBossDead(Zone zone, PlayerCharacter pc, Scanner sc) {
         if (ExploreZone.getUnclearedEncountersAmount(zone) == 0) {
             GameStateManager.getInstance().setCurrentState(GameState.VICTORY);
