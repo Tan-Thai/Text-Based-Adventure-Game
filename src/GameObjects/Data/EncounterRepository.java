@@ -9,6 +9,9 @@ import java.util.List;
 public class EncounterRepository {
 
 	private static List<Encounter> forestEncounters = new ArrayList<>();
+	private static List<Encounter> swampEncounters = new ArrayList<>();
+	private static List<Encounter> caveEncounters = new ArrayList<>();
+	private static List<Encounter> basementEncounters = new ArrayList<>();
 
 	public static List<Encounter> getForestEncounters() {
 
@@ -24,8 +27,6 @@ public class EncounterRepository {
 		return forestEncounters;
 	}
 
-	private static List<Encounter> swampEncounters = new ArrayList<>();
-
 	public static List<Encounter> getSwampEncounters() {
 
 		swampEncounters = new ArrayList<>();
@@ -40,8 +41,6 @@ public class EncounterRepository {
 		return swampEncounters;
 	}
 
-	private static List<Encounter> caveEncounters = new ArrayList<>();
-
 	public static List<Encounter> getCaveEncounters() {
 		caveEncounters = new ArrayList<>();
 
@@ -54,8 +53,6 @@ public class EncounterRepository {
 
 		return caveEncounters;
 	}
-
-	private static List<Encounter> basementEncounters = new ArrayList<>();
 
 	public static List<Encounter> getBasementEncounters() {
 		basementEncounters = new ArrayList<>();

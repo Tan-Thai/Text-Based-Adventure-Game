@@ -19,6 +19,11 @@ public class Utility {
     // #endregion
 
     public static String checkIfValidString(Scanner sc) {
+
+        if (!checkScanner(sc)) {
+            return "";
+        }
+
         String userInput;
         do {
             userInput = sc.nextLine();
@@ -30,6 +35,11 @@ public class Utility {
     }
 
     public static int checkIfNumber(Scanner sc) {
+
+        if (!checkScanner(sc)) {
+            return 0;
+        }
+
         int userInput;
 
         while (true) { // forced loop in while
@@ -47,6 +57,11 @@ public class Utility {
     }
 
     public static int checkIfNumberTest(Scanner sc, int maxInput) {
+
+        if (!checkScanner(sc)) {
+            return 0;
+        }
+
         int userInput;
 
         while (true) { // forced loop in while
@@ -64,6 +79,11 @@ public class Utility {
     }
 
     public static boolean checkYesOrNo(Scanner sc) {
+
+        if (!checkScanner(sc)) {
+            return false;
+        }
+
         do {
             String inputString = sc.nextLine().trim();
             if (inputString.length() == 1) {
@@ -82,6 +102,10 @@ public class Utility {
     }
 
     public static void clearScanner(Scanner sc) {
+        if (!checkScanner(sc)) {
+            return;
+        }
+
         if (sc.hasNextLine()) {
             sc.nextLine();
         }
@@ -120,13 +144,17 @@ public class Utility {
      *
      * @param diceAmount
      * @param colour
-     * @param optionalSuccessValue   Optional argument for what value the dies needs to be equal or above to count as successess
-     * @param optionalCritValue      Optional argument for what value the dies needs to be equal or above to count as a critical success
-     * @param optionalDiceSideAmount Optional argument for how many sides you want the dies to have.
+     * @param optionalSuccessValue   Optional argument for what value the dies needs
+     *                               to be equal or above to count as successess
+     * @param optionalCritValue      Optional argument for what value the dies needs
+     *                               to be equal or above to count as a critical
+     *                               success
+     * @param optionalDiceSideAmount Optional argument for how many sides you want
+     *                               the dies to have.
      * @return
      */
     public static int rollDicePool(int diceAmount, String colour, OptionalInt optionalSuccessValue,
-                                   OptionalInt optionalCritValue, OptionalInt optionalDiceSideAmount) {
+            OptionalInt optionalCritValue, OptionalInt optionalDiceSideAmount) {
 
         int successValue = optionalSuccessValue.orElse(SUCCESS_VALUE);
         int critValue = optionalCritValue.orElse(CRIT_VALUE);
@@ -137,8 +165,6 @@ public class Utility {
 
         for (int i = 0; i < diceAmount; i++) {
             currentValue = random.nextInt(diceSidesAmount) + 1;
-            // TODO Check if it is possible to get the reset value here, at start of print
-            // out, to avoid needing to save it, and then just save it after again?
             System.out.print(colour + "[" + currentValue + "]" + RESET);
 
             if (currentValue >= successValue) {
@@ -155,10 +181,17 @@ public class Utility {
         return successAmount;
     }
 
-    public static void slowPrint(String text, int... optDelay) { // Add int in parameter to change delay
+    /**
+     * slowprint texts to highten player experience, if optional param isn't given
+     * speed is set to 40
+     * 
+     * @param text
+     * @param optDelay int parameter to change delay,
+     */
+    public static void slowPrint(String text, int... optDelay) {
+        int standardDelay = 40;
 
-        int delay = optDelay.length > 0 ? optDelay[0] : 40;
-        //     int delay = 40;
+        int delay = optDelay.length > 0 ? optDelay[0] : standardDelay;
         for (int i = 0; i < text.length(); i++) {
             char currentChar = text.charAt(i);
             System.out.print(currentChar);
@@ -167,10 +200,28 @@ public class Utility {
                     Thread.sleep(delay);
                 } catch (InterruptedException e) {
                     System.err.println("Interrupted: " + e.getMessage());
+                } catch (IllegalArgumentException e) {
+                    System.err.println("Time delay was a negative number. " + e.getMessage());
                 }
             }
         }
         System.out.println();
     }
 
+    private static boolean checkScanner(Scanner sc) {
+
+        try {
+            if (sc == null || !sc.hasNext()) {
+                sc = new Scanner(System.in);
+            }
+            return true;
+
+        } catch (NullPointerException e) {
+            System.err.println("Scanner is null" + e.getMessage());
+            return false;
+        } catch (IllegalStateException e) {
+            System.err.println("Scanner was closed and couldn't be used to get input." + e.getMessage());
+            return false;
+        }
+    }
 }

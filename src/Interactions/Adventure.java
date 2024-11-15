@@ -23,11 +23,11 @@ public class Adventure {
         Utility.slowPrint("Choose an action:");
         System.out.println(
                 "0. Exit to main menu" +
-                "\n1. Wander (travel inside zone)" +
-                "\n2. Look around (display current zone)" +
-                "\n3. Inspect yourself" + 
-                "\n4. Travel (travel between zones)" +
-                "\n5. Remind me how to play again.");
+                        "\n1. Wander (travel inside zone)" +
+                        "\n2. Look around (display current zone)" +
+                        "\n3. Inspect yourself" +
+                        "\n4. Travel (travel between zones)" +
+                        "\n5. Remind me how to play again.");
         if (zone.getZoneType() == ZoneType.TAVERN) {
             System.out.println("6. Tavern menu (to rest and shop for items)");
         }
@@ -51,7 +51,7 @@ public class Adventure {
                 break;
             case 6:
                 if (zone.getZoneType() == ZoneType.TAVERN) {
-                    ((Tavern) ZoneManager.getZone(ZoneType.TAVERN)).tavernMenu(pc); 
+                    ((Tavern) ZoneManager.getZone(ZoneType.TAVERN)).tavernMenu(pc);
                 } else {
                     System.out.println("Invalid choice. Please try again.");
                 }
@@ -72,5 +72,5 @@ public class Adventure {
         }
 
     }
-    
+
 }
