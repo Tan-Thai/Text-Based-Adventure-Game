@@ -143,6 +143,7 @@ public class Combat {
             printEntityHP(player, Utility.GREEN);
             System.out.println("You have vanquished your foe!");
             ((PlayerCharacter) player).gainExperience(((HostileCharacter) enemy).calcExperienceGiven());
+            // Transactions.lootCurrency(player, enemy);
             exitingCombat();
 
         } else if (player.isDead()) {

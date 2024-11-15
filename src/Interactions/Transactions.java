@@ -11,7 +11,7 @@ public class Transactions {
      * Other actions would also include giving currency from a defeated enemy to the player.
      * */
 
-    public static void buyItem(Entity buyer, Entity seller, Item item, Scanner sc) {
+    public static void buyItem(Entity buyer, Entity seller, Item item) {
         // checks, can potentially be their own method.
         if (buyer.getCurrency() < item.getItemCost()) {
             System.out.println("You do not have enough money to buy this item.");
@@ -39,9 +39,12 @@ public class Transactions {
 
     public static void lootCurrency(Entity pc, Entity enemyNpc) {
         pc.setCurrency(pc.getCurrency() + enemyNpc.getCurrency());
+
+        System.out.println("You just acquired " + enemyNpc.getCurrency() + " money");
+        enemyNpc.setCurrency(0);
     }
 
     public static void acquireCurrency(Entity pc, int amount) {
-
+        pc.setCurrency(pc.getCurrency() + amount);
     }
 }

@@ -33,7 +33,7 @@ public class Equipment extends Item {
     @Override
     public void promptUse(Scanner sc, PlayerCharacter player, Item selectedItem) {
 
-        System.out.print("Do you want to equip this item? (Y/N): ");
+        System.out.print("\nDo you want to equip this item? (Y/N): ");
         if (Utility.checkYesOrNo(sc)) {
             System.out.println("You equipped " + getName());
             player.getInventory().addItem(player.getEquipmentList().equipItem(this), sc);
