@@ -27,14 +27,18 @@ public class ItemManager {
         return Collections.unmodifiableMap(itemCollection);
     }
 
-    private int getTotalItemCount() {
+    public int getTotalItemCount() {
         return itemCollection.values().stream().mapToInt(Integer::intValue).sum();
     }
 
-    private int getCapacity() {
+    public int getCapacity() {
         return capacity;
     }
     //endregion
+
+    public boolean checkForInventorySpace() {
+        return getTotalItemCount() < capacity;
+    }
 
     //region Adding and removal of items in ItemCollections
     // Currently have no good term for spawning items into inventory without text
@@ -52,7 +56,7 @@ public class ItemManager {
     public void addItem(Item item, Scanner sc) {
         if (item != null) {
 
-            if (getTotalItemCount() < capacity) {
+            if (checkForInventorySpace()) {
                 itemCollection.merge(item, 1, Integer::sum);
                 System.out.println(item.getName() + " was put into your inventory.");
             } else {
@@ -61,6 +65,8 @@ public class ItemManager {
                                  "(Y/N): ");
                 if (Utility.checkYesOrNo(sc)) {
                     discardItem(sc);
+                    itemCollection.merge(item, 1, Integer::sum);
+                    System.out.println(item.getName() + " was put into your inventory.");
                 }
             }
         }

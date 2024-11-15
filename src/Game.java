@@ -35,12 +35,12 @@ public class Game {
         // Combat Test
         // combatTest(pc, addEnemyTemp(), sc);
         /*Equipment bow = new Equipment(
-                "'bow temp'",
+                "'bow boi'",
                 "Your standard blade as a new adventurer.",
                 EquipmentType.WEAPON,
-                new DamageEffect(2));
+                new DamageEffect(2),
+                10);
         pc.getInventory().addItem(bow, sc);*/
-
         // Encounter test
         // encounterTest(pc, sc);
 
