@@ -9,8 +9,8 @@ public class Equipment extends Item {
     private final Effect weaponEffect;
     private final EquipmentType eqSlot;
 
-    public Equipment(String name, String desc, EquipmentType slot, Effect effect) {
-        super(name, desc);
+    public Equipment(String name, String desc, EquipmentType slot, Effect effect, int cost) {
+        super(name, desc, cost);
         this.weaponEffect = effect;
         this.eqSlot = slot;
     }
@@ -24,7 +24,10 @@ public class Equipment extends Item {
     }
 
     public void displayItem() {
-        System.out.println("\n--" + getName() + "--\nDescription: " + getDescription() + "\n");
+        System.out.println(
+                "\n--" + getName() + "--" +
+                "\nCost: " + getItemCost() +
+                "\nDescription: " + getDescription());
     }
 
     @Override

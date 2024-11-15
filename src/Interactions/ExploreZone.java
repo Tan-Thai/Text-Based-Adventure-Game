@@ -9,8 +9,8 @@ import GameObjects.Worlds.Basement;
 import GameObjects.Worlds.Zone;
 
 public class ExploreZone {
-            // explore inside zone function.
-    public static void exploreZone(PlayerCharacter pc, Zone zone, Scanner sc) { 
+    // explore inside zone function.
+    public static void exploreZone(PlayerCharacter pc, Zone zone, Scanner sc) {
 
         if (zone.getZoneType() == ZoneType.TAVERN) {
             Utility.slowPrint("You can't explore the tavern, you're already here.");
@@ -74,7 +74,7 @@ public class ExploreZone {
             }
         }
         System.out.println("Couldn't find any uncleared encounters within zone: " + zone.getName() + "." +
-                "Returned null for now.");
+                           "Returned null for now.");
         return null;
     }
 

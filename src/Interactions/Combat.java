@@ -78,11 +78,11 @@ public class Combat {
                     Utility.clearConsole();
                 } else {
                     System.out.println("You have fled from combat!");
-                isCombatInProgress = false;
+                    isCombatInProgress = false;
+                }
             }
         }
     }
-}
 
     // Prints out the bars.
     private void printEntityHP(Entity actor, String colour) {

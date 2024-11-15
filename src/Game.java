@@ -153,14 +153,24 @@ public class Game {
                 "'A Simple Sword'",
                 "Your standard blade as a new adventurer.",
                 EquipmentType.WEAPON,
-                new DamageEffect(2));
+                new DamageEffect(2),
+                100);
         Equipment bow = new Equipment(
                 "'bow temp'",
                 "Your standard blade as a new adventurer.",
                 EquipmentType.WEAPON,
-                new DamageEffect(2));
-        Potion potion = new Potion("Health Potion", "Chug when ouch", new HealingEffect(5));
-        Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", new DamageEffect(7));
+                new DamageEffect(2),
+                80);
+        Potion potion = new Potion(
+                "Health Potion",
+                "Chug when ouch",
+                new HealingEffect(5),
+                20);
+        Potion poison = new Potion(
+                "Totally a Health Potion",
+                "Chug for ouch",
+                new DamageEffect(7),
+                30);
 
         pc.getInventory().spawnItem(bow);
         pc.getInventory().spawnItem(sword);

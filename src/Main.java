@@ -34,24 +34,24 @@ public class Main {
 
     public static void startMenu(Game game, Scanner sc) {
         while (GameStateManager.getInstance().getCurrentState() == GameState.RUNNING) {
-        Utility.clearConsole();
-        System.out.println("Welcome to the game!" +
-                "\n1. Start Game" +
-                "\n2. How to Play" +
-                "\n3. Exit");
+            Utility.clearConsole();
+            System.out.println("Welcome to the game!" +
+                               "\n1. Start Game" +
+                               "\n2. How to Play" +
+                               "\n3. Exit");
 
-        switch (Utility.checkIfNumber(sc)) {
-            case 1 -> {
-                // TODO: adding player should be here inside game menu when we select start game
-                System.out.println("Starting game...");
-                game.run();
-            }
-            case 2 -> Info.howToPlay(sc);
-            case 3 -> {
-                System.out.println("Exiting game...");
-                sc.close();
-                System.exit(0);
-            }
+            switch (Utility.checkIfNumber(sc)) {
+                case 1 -> {
+                    // TODO: adding player should be here inside game menu when we select start game
+                    System.out.println("Starting game...");
+                    game.run();
+                }
+                case 2 -> Info.howToPlay(sc);
+                case 3 -> {
+                    System.out.println("Exiting game...");
+                    sc.close();
+                    System.exit(0);
+                }
             }
         }
     }

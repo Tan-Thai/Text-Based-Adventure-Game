@@ -15,7 +15,7 @@ public class PlayerCharacter extends Entity {
     private Zone currentZone; // stores the current zone you are in.
 
     public PlayerCharacter(String name, int health, int str, int dex, int intel) {
-        super(name, health, Config.PC_STARTING_LEVEL, str, dex, intel);
+        super(name, health, 1, str, dex, intel, 150);
         currentZone = ZoneManager.getZone(ZoneType.TAVERN);
     }
 

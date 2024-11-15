@@ -9,7 +9,8 @@ public class ItemRepository {
         return new Equipment("Rusty Longsword",
                 "An old and rusty longsword barely sharp enough to cut butter",
                 EquipmentType.WEAPON,
-                new DamageEffect(1));
+                new DamageEffect(1),
+                30);
     }
 
     public static Equipment getMetioricIronLongsword() {
@@ -17,7 +18,8 @@ public class ItemRepository {
                 "Metioric Iron longsword",
                 "A longsword made of metioric iron, fallen from the stars, sharp as a razor",
                 EquipmentType.WEAPON,
-                new DamageEffect(2));
+                new DamageEffect(2),
+                50);
     }
 
     public static Equipment getGreataxe() {
@@ -25,7 +27,8 @@ public class ItemRepository {
                 "Greataxe",
                 "A Greataxe, its simply a great axe",
                 EquipmentType.WEAPON,
-                new DamageEffect(3));
+                new DamageEffect(3),
+                120);
     }
 
 }

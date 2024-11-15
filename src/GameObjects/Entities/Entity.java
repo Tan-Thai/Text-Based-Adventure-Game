@@ -20,10 +20,11 @@ public class Entity {
     protected int strength;
     protected int dexterity;
     protected int intelligence;
+    protected int currency;
 
     // constructor for all entities that requires specific stats setups (enemies, or
     // the player char)
-    public Entity(String name, int health, int level, int str, int dex, int intelligence) {
+    public Entity(String name, int health, int level, int str, int dex, int intelligence, int currency) {
         this.name = name;
         this.health = health;
         this.maxHealth = health;
@@ -31,6 +32,7 @@ public class Entity {
         this.strength = str;
         this.dexterity = dex;
         this.intelligence = intelligence;
+        this.currency = currency;
 
         // Managers handles items equipments that this entity holds/wears.
         this.itemManager = new ItemManager();
@@ -40,7 +42,7 @@ public class Entity {
     // Constructor with base stats (Standard NPC)
     public Entity(String name, int health, int level) {
         this(name, health, level,
-                DEFAULT_STAT, DEFAULT_STAT, DEFAULT_STAT);
+                DEFAULT_STAT, DEFAULT_STAT, DEFAULT_STAT, 0);
     }
     //endregion
 
@@ -83,6 +85,14 @@ public class Entity {
 
     public int getLevel() {
         return level;
+    }
+
+    public int getCurrency() {
+        return currency;
+    }
+
+    public int setCurrency(int currency) {
+        return this.currency = currency;
     }
 
     public boolean isDead() {

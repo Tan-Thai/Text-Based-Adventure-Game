@@ -8,8 +8,8 @@ import java.util.Scanner;
 public class Potion extends Item implements Consumable {
     private final Effect potionEffect;
 
-    public Potion(String name, String desc, Effect effect) {
-        super(name, desc);
+    public Potion(String name, String desc, Effect effect, int cost) {
+        super(name, desc, cost);
         this.potionEffect = effect;
     }
 

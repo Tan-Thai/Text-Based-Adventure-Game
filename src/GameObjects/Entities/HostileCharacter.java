@@ -11,7 +11,8 @@ public class HostileCharacter extends Entity {
 
     public HostileCharacter(String name, int health, int level, int strength, int dexterity, int intelligence,
                             HostileEntityType hostileEntityType) {
-        super(name, health, level, strength, dexterity, intelligence);
+        // temporarily added a 0 for currency due to compile errors.
+        super(name, health, level, strength, dexterity, intelligence, 0);
         this.hostileEntityType = hostileEntityType;
     }
 
