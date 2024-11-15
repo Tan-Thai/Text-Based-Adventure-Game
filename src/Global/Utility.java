@@ -1,5 +1,6 @@
 package Global;
 
+import java.util.NoSuchElementException;
 import java.util.OptionalInt;
 import java.util.Random;
 import java.util.Scanner;
@@ -26,7 +27,18 @@ public class Utility {
 
         String userInput;
         do {
-            userInput = sc.nextLine();
+            try {
+                userInput = sc.nextLine();
+            } catch (NoSuchElementException e) {
+                /*
+                 * If the scanner is closed, or the line exhausted, I'm assuming that we'd
+                 * rather send a null string back, rather than do another attempt by letting the
+                 * loop continue.
+                 */
+                System.err.println("Scanner couldn't find a next line, and so the method returns an empty string. "
+                        + e.getMessage());
+                return "";
+            }
             if (!userInput.isEmpty()) {
                 return userInput;
             }
@@ -102,18 +114,22 @@ public class Utility {
     }
 
     public static void clearScanner(Scanner sc) {
-        if (!checkScanner(sc)) {
-            return;
-        }
-
-        if (sc.hasNextLine()) {
-            sc.nextLine();
+        try {
+            if (sc != null && sc.hasNextLine()) {
+                sc.nextLine();
+            }
+        } catch (NullPointerException e) {
+            System.err.println("Scanner was null, probably it wasn't initiated.");
+        } catch (IllegalStateException e) {
+            System.err.println("The scanner was closed, and so couldn't return a next line.");
         }
     }
 
     public static void promptEnterKey(Scanner sc) {
         System.out.print("\nPress \"ENTER\" to continue.");
-        sc.nextLine();
+
+        clearScanner(sc);
+        // sc.nextLine();
     }
 
     public static void clearConsole() {
@@ -160,11 +176,34 @@ public class Utility {
         int critValue = optionalCritValue.orElse(CRIT_VALUE);
         int diceSidesAmount = optionalDiceSideAmount.orElse(AMOUNT_OF_SIDES);
 
+        if (successValue > diceSidesAmount) {
+            System.err.println(
+                    "The successvalue is higher than the amount of sides on the die, so the roll will never return a success.");
+        }
+
+        if (critValue > diceSidesAmount) {
+            System.err.println(
+                    "The critical success value is higher than the amount of sides on the die, so a crit will never happen.");
+        }
+
+        if (diceSidesAmount <= 0) {
+            System.err.println(
+                    "The number of sides on the die has been set to zero or less. The dice pool will not be rolled and zero returned.");
+            return 0;
+        }
+
         int currentValue;
         int successAmount = 0;
 
         for (int i = 0; i < diceAmount; i++) {
-            currentValue = random.nextInt(diceSidesAmount) + 1;
+            try {
+                currentValue = random.nextInt(diceSidesAmount) + 1;
+            } catch (IllegalArgumentException e) {
+                System.err.println(
+                        "The random function returned a negative value. meaning that the die was asigned a negative amount of sides. The result of the die will be zero"
+                                + e.getMessage());
+                currentValue = 0;
+            }
             System.out.print(colour + "[" + currentValue + "]" + RESET);
 
             if (currentValue >= successValue) {
@@ -175,7 +214,7 @@ public class Utility {
             }
         }
 
-        // To give space between the result and the following text.
+        // Give space between the result and the following text.
         System.out.println();
 
         return successAmount;
@@ -183,7 +222,7 @@ public class Utility {
 
     /**
      * slowprint texts to highten player experience, if optional param isn't given
-     * speed is set to 40
+     * the delay is set to 40
      * 
      * @param text
      * @param optDelay int parameter to change delay,
@@ -201,23 +240,36 @@ public class Utility {
                 } catch (InterruptedException e) {
                     System.err.println("Interrupted: " + e.getMessage());
                 } catch (IllegalArgumentException e) {
-                    System.err.println("Time delay was a negative number. " + e.getMessage());
+                    System.err.println("The variable for time delay was a negative number. " + e.getMessage());
                 }
             }
         }
         System.out.println();
     }
 
+    /**
+     * Protection function that uses try-catch to intercept IllegalStateException
+     * and NullPointerException. Returns false and prints message to
+     * System.err.println in those cases.
+     * 
+     * @param sc
+     * @return
+     */
     private static boolean checkScanner(Scanner sc) {
 
         try {
-            if (sc == null || !sc.hasNext()) {
-                sc = new Scanner(System.in);
+            if (sc == null) {
+                return false;
             }
-            return true;
-
         } catch (NullPointerException e) {
             System.err.println("Scanner is null" + e.getMessage());
+            return false;
+        }
+
+        try {
+            if (sc.hasNext()) {
+                return true;
+            }
             return false;
         } catch (IllegalStateException e) {
             System.err.println("Scanner was closed and couldn't be used to get input." + e.getMessage());
