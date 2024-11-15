@@ -12,15 +12,14 @@ import java.util.Scanner;
 
 public class PlayerCharacter extends Entity {
     private int experience;
-    private Zone currentZone; // stores the current zone you are in
-    // private Room location = blabla
-    // wondering if the player or even entity needs a room to "spawn" in let alone know where it's at in the world map.
+    private Zone currentZone; // stores the current zone you are in.
 
     public PlayerCharacter(String name, int health, int str, int dex, int intel) {
         super(name, health, Config.PC_STARTING_LEVEL, str, dex, intel);
         currentZone = ZoneManager.getZone(ZoneType.TAVERN);
     }
 
+    //region Getters and Setters
     public int getExperience() {
         return experience;
     }
@@ -32,7 +31,9 @@ public class PlayerCharacter extends Entity {
     public void setCurrentZone(Zone zone) {
         this.currentZone = zone;
     }
+    //endregion
 
+    //region Temporary region for all methods player related
     public void gainExperience(int exp) {
         experience += exp;
         System.out.println("You gained " + exp + " EXP!");
@@ -48,13 +49,18 @@ public class PlayerCharacter extends Entity {
     public void inspectEntity(Scanner sc) {
         boolean inspecting = true;
 
-        while (inspecting) {
+        while (inspecting && !isDead()) {
             Utility.clearConsole();
             displayStats();
+            //not sure what a text-block is.
             System.out.println(
-                    "\n1. Open inventory." +
-                            "\n2. Inspect your equipped gear." +
-                            "\n0. Exit inspection.");
+                    """
+                            
+                            1. Open inventory.\
+                            
+                            2. Inspect your equipped gear.\
+                            
+                            0. Exit inspection.""");
 
             switch (Utility.checkIfNumber(sc)) {
                 case 0:
@@ -65,6 +71,7 @@ public class PlayerCharacter extends Entity {
                     break;
                 case 2:
                     getEquipmentList().inspectWornEquipment(sc, this);
+                    break;
                 default:
                     System.out.println("Please input one of the shown options.");
                     break;
@@ -72,7 +79,6 @@ public class PlayerCharacter extends Entity {
         }
     }
 
-    // TODO: Streamline location for level. and implement "retire" from tavern.
     public void checkGameClearCondition() {
         if (getLevel() == Config.PC_RETIREMENT_LEVEL) {
             System.out.println("You have reached high enough level and can now retire in the Tavern!");
@@ -97,5 +103,5 @@ public class PlayerCharacter extends Entity {
             System.out.println(getName() + " took " + damageValue + " damage. Current health: " + health);
         }
     }
-
+    //endregion
 }

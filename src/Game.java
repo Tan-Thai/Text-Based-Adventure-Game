@@ -6,7 +6,6 @@ import GameObjects.Entities.HostileEntityType;
 import GameObjects.Entities.PlayerCharacter;
 import GameObjects.Items.*;
 import GameObjects.Worlds.ZoneManager;
-import GameObjects.Worlds.ZoneType;
 import Global.Utility;
 import Interactions.Adventure;
 import Interactions.Combat;
@@ -32,9 +31,15 @@ public class Game {
         // adding player char and basic items(temp items for now.)
         PlayerCharacter pc = setupUser(sc);
         // --- TESTS -----------------------
-        // addItems(pc);
+        addItems(pc);
         // Combat Test
         // combatTest(pc, addEnemyTemp(), sc);
+        /*Equipment bow = new Equipment(
+                "'bow temp'",
+                "Your standard blade as a new adventurer.",
+                EquipmentType.WEAPON,
+                new DamageEffect(2));
+        pc.getInventory().addItem(bow, sc);*/
 
         // Encounter test
         // encounterTest(pc, sc);
@@ -71,6 +76,8 @@ public class Game {
     }
 
     private static void runGame(PlayerCharacter pc, Scanner sc) {
+        // considering a potential while (Running) here to then break out if we die,
+        // ive noticed that a couple of the death's that can occur leads to double enter prompts.
         Adventure.adventureMenu(pc, sc, pc.getCurrentZone());
         Utility.promptEnterKey(sc);
     }
@@ -132,6 +139,7 @@ public class Game {
         return new HostileCharacter("Troll", 5, 3, 2, 1, 1, HostileEntityType.TROLLKIN);
     }
 
+    //region TT - Testing area
     private static void combatTest(PlayerCharacter pc, HostileCharacter enemy, Scanner sc) {
         // new up A COMBAT object, and it will be the only one since it's a singleton.
         Combat combat = Combat.getInstance();
@@ -154,10 +162,18 @@ public class Game {
         Potion potion = new Potion("Health Potion", "Chug when ouch", new HealingEffect(5));
         Potion poison = new Potion("Totally a Health Potion", "Chug for ouch", new DamageEffect(7));
 
-        pc.getInventory().addItem(bow);
-        pc.getInventory().addItem(sword);
-        pc.getInventory().addItem(potion);
-        pc.getInventory().addItem(poison);
+        pc.getInventory().spawnItem(bow);
+        pc.getInventory().spawnItem(sword);
+        pc.getInventory().spawnItem(potion);
+        pc.getInventory().spawnItem(poison);
+        pc.getInventory().spawnItem(poison);
+        pc.getInventory().spawnItem(poison);
+        pc.getInventory().spawnItem(poison);
+        pc.getInventory().spawnItem(poison);
+        pc.getInventory().spawnItem(poison);
+        pc.getInventory().spawnItem(poison);
+
     }
+    //endregion
 
 }
