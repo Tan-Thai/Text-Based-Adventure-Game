@@ -11,9 +11,9 @@ public class Tavern extends Zone {
     public Tavern() {
         super("Rothollow tavern",
         """
-                A giant hollowed out log, covered in deep green moss and large red mushrooms. 
-                With a small door and tiny windows from which warm light emit. 
-                Ruckus song can be heard from within. 
+        A giant hollowed out log, covered in deep green moss and large red mushrooms. 
+        With a small door and tiny windows from which warm light emit. 
+        Ruckus song can be heard from within. 
         """,    true, ZoneType.TAVERN, null, 0);
     }
 
@@ -58,12 +58,12 @@ public class Tavern extends Zone {
         while (!exitMenu) {
         Utility.clearConsole();
         System.out.println(
-                "0. Exit menu\n" +
                 "1. Rest (restore health)\n" + 
                 "2. Open shop (buy items)");
         if (pc.getLevel() >= Config.PC_RETIREMENT_LEVEL) {
             System.out.println("3. Retire (End game)");
-        } 
+        }
+        System.out.println("0. Exit to main menu");
         Utility.slowPrint("Choose an action:");
         // talk to npcs? Listen to rumours? etc.
 
