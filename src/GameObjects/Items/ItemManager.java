@@ -8,7 +8,7 @@ import java.util.*;
 public class ItemManager {
     private final Map<Item, Integer> itemCollection;
     // TODO make a flexible capacity for the entities.
-    private final int capacity = 10;
+    private int capacity = 10;
 
     public ItemManager() {
         this.itemCollection = new HashMap<>();
@@ -34,6 +34,10 @@ public class ItemManager {
     public int getCapacity() {
         return capacity;
     }
+
+    public int setCapacity(int newCapacity) {
+        return capacity = newCapacity;
+    }
     //endregion
 
     public boolean checkIfInventoryFull() {
@@ -56,7 +60,7 @@ public class ItemManager {
     public void addItem(Item item, Scanner sc) {
         if (item != null) {
 
-            if (checkIfInventoryFull()) {
+            if (!checkIfInventoryFull()) {
                 itemCollection.merge(item, 1, Integer::sum);
                 System.out.println(item.getName() + " was put into your inventory.");
             } else {

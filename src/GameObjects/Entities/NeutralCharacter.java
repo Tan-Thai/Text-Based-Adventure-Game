@@ -22,6 +22,7 @@ public class NeutralCharacter extends Entity {
     public void setupShopkeeper() {
         setCurrency(999);
         setHealth(1000);
+        getInventory().setCapacity(100);
 
         Potion poison = new Potion(
                 "Totally a Health Potion",
@@ -98,25 +99,13 @@ public class NeutralCharacter extends Entity {
                 Item selectedItem = new ArrayList<>(pc.getInventory().getItems().keySet()).get(choice - 1);
                 selectedItem.displayItem();
 
-                // Prompt to sell the item
-                int sellPrice = selectedItem.getItemCost() / 2; // Example: Sell for 50% of buy price
-                System.out.println("\nThis item can be sold for " + sellPrice + " money.");
                 System.out.print("Do you want to sell this item? (Y/N): ");
-
                 if (Utility.checkYesOrNo(sc)) {
-                    // Perform the transaction
-                    if (pc.getInventory().getItems().containsKey(selectedItem)) {
-                        pc.getInventory().removeItem(selectedItem);
-                        pc.setCurrency(pc.getCurrency() + sellPrice);
-                        setCurrency(getCurrency() - sellPrice);
-                        System.out.println("You sold " + selectedItem.getName() + " for " + sellPrice + " money.");
-                    } else {
-                        System.out.println("Error: Item not found in your inventory.");
-                    }
+                    Transactions.sellItem(this, pc, selectedItem, sc);
+                } else {
+                    System.out.println("Invalid choice. Please try again.");
+                    Utility.promptEnterKey(sc);
                 }
-            } else {
-                System.out.println("Invalid choice. Please try again.");
-                Utility.promptEnterKey(sc);
             }
         }
     }
