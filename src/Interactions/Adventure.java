@@ -11,6 +11,7 @@ import GameObjects.Worlds.Zone;
 import GameObjects.Worlds.ZoneManager;
 import GameObjects.Worlds.ZoneType;
 import Global.Utility;
+import Resources.Config;
 
 public class Adventure {
 
@@ -27,7 +28,7 @@ public class Adventure {
             System.out.println("5. Tavern menu (to rest and shop for items)");
         }   // ADD 0 option
         System.out.println("0. Exit to main menu");
-        Utility.slowPrint("Choose an action: ");
+        System.out.print(Config.MENU_CHOICE_STRING);
         int choice = Utility.checkIfNumber(sc);
 
         switch (choice) {

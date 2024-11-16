@@ -64,7 +64,7 @@ public class Tavern extends Zone {
             System.out.println("3. Retire (End game)");
         }
         System.out.println("0. Exit to main menu");
-        Utility.slowPrint("Choose an action:");
+        Utility.slowPrint(Config.MENU_CHOICE_STRING);
         // talk to npcs? Listen to rumours? etc.
 
         int choice = Utility.checkIfNumber(sc);

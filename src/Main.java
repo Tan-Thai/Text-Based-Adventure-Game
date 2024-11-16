@@ -39,7 +39,7 @@ public class Main {
                                "\n1. Start Game" +
                                "\n2. How to Play" +
                                "\n0. Exit");
-
+            System.out.print("\nEnter your choice: ");
             switch (Utility.checkIfNumber(sc)) {
                 case 1 -> {
                     // TODO: adding player should be here inside game menu when we select start game
