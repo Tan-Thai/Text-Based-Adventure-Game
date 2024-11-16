@@ -36,8 +36,8 @@ public class ItemManager {
     }
     //endregion
 
-    public boolean checkForInventorySpace() {
-        return getTotalItemCount() < capacity;
+    public boolean checkIfInventoryFull() {
+        return getTotalItemCount() >= capacity;
     }
 
     //region Adding and removal of items in ItemCollections
@@ -56,7 +56,7 @@ public class ItemManager {
     public void addItem(Item item, Scanner sc) {
         if (item != null) {
 
-            if (checkForInventorySpace()) {
+            if (checkIfInventoryFull()) {
                 itemCollection.merge(item, 1, Integer::sum);
                 System.out.println(item.getName() + " was put into your inventory.");
             } else {

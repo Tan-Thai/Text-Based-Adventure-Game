@@ -2,6 +2,7 @@ package Interactions;
 
 import GameObjects.Entities.Entity;
 import GameObjects.Items.Item;
+import Global.Utility;
 
 import java.util.Scanner;
 
@@ -11,30 +12,32 @@ public class Transactions {
      * Other actions would also include giving currency from a defeated enemy to the player.
      * */
 
-    public static void buyItem(Entity buyer, Entity seller, Item item) {
+    public static void buyItem(Entity buyer, Entity seller, Item item, Scanner sc) {
         // checks, can potentially be their own method.
         if (buyer.getCurrency() < item.getItemCost()) {
             System.out.println("You do not have enough money to buy this item.");
+            Utility.promptEnterKey(sc);
             return;
         }
 
         // checks for inventory space
-        if (buyer.getInventory().checkForInventorySpace()) {
+        if (buyer.getInventory().checkIfInventoryFull()) {
             System.out.println("You don't have enough inventory space to buy this item.");
+            Utility.promptEnterKey(sc);
             return;
         }
 
-        // double-check if seller has the item.
-        if (!seller.getInventory().getItems().containsKey(item)) {
+        // double-check if seller has the item and updates both entities currency.
+        if (seller.getInventory().getItems().containsKey(item)) {
+            buyer.setCurrency(buyer.getCurrency() - item.getItemCost());
+            seller.setCurrency(seller.getCurrency() + item.getItemCost());
+
+            System.out.println("You just bought " + item.getName() + " for " + item.getItemCost() + " money.");
+        } else {
             System.out.println("The shopkeeper does not have the item you are looking for.");
         }
 
-        // Remove money from buyer
-        buyer.setCurrency(buyer.getCurrency() - item.getItemCost());
-        seller.setCurrency(seller.getCurrency() + item.getItemCost());
-
-        // change name of currency.
-        System.out.println("You just bought " + item.getName() + " for " + item.getItemCost() + " money.");
+        Utility.promptEnterKey(sc);
     }
 
     public static void lootCurrency(Entity pc, Entity enemyNpc) {

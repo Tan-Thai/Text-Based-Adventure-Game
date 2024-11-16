@@ -1,6 +1,9 @@
 package GameObjects.Entities;
 
+import GameObjects.Items.DamageEffect;
+import GameObjects.Items.HealingEffect;
 import GameObjects.Items.Item;
+import GameObjects.Items.Potion;
 import Global.Utility;
 import Interactions.Transactions;
 
@@ -16,11 +19,25 @@ public class NeutralCharacter extends Entity {
 
     // neutral npc's such as shopkeeper, quest giver, non-combative people.
     // Functions such as interaction, shop, and the like will be in this file
-    private void setupShopkeeper() {
+    public void setupShopkeeper() {
         setCurrency(999);
         setHealth(1000);
 
-        // populate inventory.
+        Potion poison = new Potion(
+                "Totally a Health Potion",
+                "Chug for ouch",
+                new DamageEffect(7),
+                30);
+        Potion potion = new Potion(
+                "Health Potion",
+                "Chug when ouch",
+                new HealingEffect(5),
+                20);
+
+        for (int i = 0; i <= 3; i++) {
+            getInventory().spawnItem(poison);
+            getInventory().spawnItem(potion);
+        }
     }
 
     // Currently naming the 2 methods buy/sell from shop.
@@ -50,7 +67,7 @@ public class NeutralCharacter extends Entity {
 
                 System.out.print("\nDo you want to purchase this item? (Y/N): ");
                 if (Utility.checkYesOrNo(sc)) {
-                    Transactions.buyItem(pc, this, selectedItem);
+                    Transactions.buyItem(pc, this, selectedItem, sc);
                 } else {
                     System.out.println("Invalid choice, please try again.");
                     Utility.promptEnterKey(sc);
