@@ -52,7 +52,7 @@ public class EquipmentManager {
         boolean response = Utility.checkYesOrNo(sc);
 
         if (response) {
-            pc.getInventory().addItem(unequipEquipment(selectedType), sc);
+            pc.getInventory().acquireItem(unequipEquipment(selectedType), sc);
         } else {
             System.out.println("You decided not to.");
         }

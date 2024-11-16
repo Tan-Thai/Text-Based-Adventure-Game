@@ -36,7 +36,7 @@ public class Equipment extends Item {
         System.out.print("\nDo you want to equip this item? (Y/N): ");
         if (Utility.checkYesOrNo(sc)) {
             System.out.println("You equipped " + getName());
-            player.getInventory().addItem(player.getEquipmentList().equipItem(this), sc);
+            player.getInventory().acquireItem(player.getEquipmentList().equipItem(this), sc);
             player.getInventory().removeItem(this);
         } else {
             System.out.println("You decided not to equip the item.");

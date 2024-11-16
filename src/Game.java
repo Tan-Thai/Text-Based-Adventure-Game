@@ -173,17 +173,11 @@ public class Game {
                 new DamageEffect(7),
                 30);
 
-        pc.getInventory().spawnItem(bow);
-        pc.getInventory().spawnItem(sword);
-        pc.getInventory().spawnItem(potion);
-        pc.getInventory().spawnItem(poison);
-        pc.getInventory().spawnItem(poison);
-        pc.getInventory().spawnItem(poison);
-        pc.getInventory().spawnItem(poison);
-        pc.getInventory().spawnItem(poison);
-        pc.getInventory().spawnItem(poison);
-        pc.getInventory().spawnItem(poison);
-
+        pc.getInventory().addItem(bow);
+        pc.getInventory().addItem(sword);
+        pc.getInventory().addItem(potion);
+        for (int i = 1; i <= 7; i++)
+            pc.getInventory().addItem(poison);
     }
     //endregion
 

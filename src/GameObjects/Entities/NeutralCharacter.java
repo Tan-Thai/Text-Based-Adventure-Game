@@ -7,7 +7,6 @@ import GameObjects.Items.Potion;
 import Global.Utility;
 import Interactions.Transactions;
 
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -36,8 +35,8 @@ public class NeutralCharacter extends Entity {
                 20);
 
         for (int i = 0; i <= 3; i++) {
-            getInventory().spawnItem(poison);
-            getInventory().spawnItem(potion);
+            getInventory().addItem(poison);
+            getInventory().addItem(potion);
         }
     }
 
@@ -68,9 +67,9 @@ public class NeutralCharacter extends Entity {
 
                 System.out.print("\nDo you want to purchase this item? (Y/N): ");
                 if (Utility.checkYesOrNo(sc)) {
-                    Transactions.buyItem(pc, this, selectedItem, sc);
+                    Transactions.playerBuyItem(pc, this, selectedItem, sc);
                 } else {
-                    System.out.println("Invalid choice, please try again.");
+                    System.out.println("You decided to not purchase this item.");
                     Utility.promptEnterKey(sc);
                 }
             }
@@ -101,9 +100,9 @@ public class NeutralCharacter extends Entity {
 
                 System.out.print("Do you want to sell this item? (Y/N): ");
                 if (Utility.checkYesOrNo(sc)) {
-                    Transactions.sellItem(this, pc, selectedItem, sc);
+                    Transactions.playerSellItem(pc, this, selectedItem, sc);
                 } else {
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println("You decided to not sell this item.");
                     Utility.promptEnterKey(sc);
                 }
             }
