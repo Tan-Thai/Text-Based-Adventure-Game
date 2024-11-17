@@ -9,6 +9,7 @@ import GameObjects.Worlds.ZoneManager;
 import Global.Utility;
 import Interactions.Adventure;
 import Interactions.Combat;
+import Resources.Config;
 
 import java.util.Scanner;
 
@@ -111,10 +112,10 @@ public class Game {
 
     private static PlayerCharacter playerCharacterClassSelect(String nameInput, Scanner sc) {
         Utility.clearConsole();
-        Utility.slowPrint("Choose a class:");
+        Utility.slowPrint("Choose a class");
         System.out.println(
                 "1. Barbarian (Strong with lots of health)\n2. Rogue (dexterous and swift)\n3. Wizard (Clever and astmatic)");
-
+        System.out.print(Config.MENU_CHOICE_STRING);
         int choice = Utility.checkIfNumber(sc);
 
         switch (choice) {

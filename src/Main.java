@@ -38,8 +38,8 @@ public class Main {
             System.out.println("Welcome to the game!" +
                                "\n1. Start Game" +
                                "\n2. How to Play" +
-                               "\n3. Exit");
-
+                               "\n0. Exit");
+            System.out.print("\nEnter your choice: ");
             switch (Utility.checkIfNumber(sc)) {
                 case 1 -> {
                     // TODO: adding player should be here inside game menu when we select start game
@@ -47,7 +47,7 @@ public class Main {
                     game.run();
                 }
                 case 2 -> Info.howToPlay(sc);
-                case 3 -> {
+                case 0 -> {
                     System.out.println("Exiting game...");
                     sc.close();
                     System.exit(0);
