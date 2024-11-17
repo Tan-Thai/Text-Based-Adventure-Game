@@ -21,7 +21,7 @@ public class ZoneManager {
 
     /**
      * Returns a list of all of the zone objects. The set of travelable zones isn't
-     * set here. And the encounters aren't set.
+     * set here. And neither are the encounters.
      *
      * @return
      */
@@ -76,7 +76,6 @@ public class ZoneManager {
         return instance;
     }
 
-
     public static Zone getZone(ZoneType zoneType) {
         if (zones.get(zoneType) == null) {
             System.err.println("Zone not found");
@@ -84,7 +83,4 @@ public class ZoneManager {
         }
         return zones.get(zoneType);
     }
-
-	
-
 }

@@ -1,5 +1,6 @@
 package Global;
 
+import java.util.NoSuchElementException;
 import java.util.OptionalInt;
 import java.util.Random;
 import java.util.Scanner;
@@ -19,9 +20,25 @@ public class Utility {
     // #endregion
 
     public static String checkIfValidString(Scanner sc) {
+
+        if (!checkScanner(sc)) {
+            return "";
+        }
+
         String userInput;
         do {
-            userInput = sc.nextLine();
+            try {
+                userInput = sc.nextLine();
+            } catch (NoSuchElementException e) {
+                /*
+                 * If the scanner is closed, or the line exhausted, I'm assuming that we'd
+                 * rather send a null string back, rather than do another attempt by letting the
+                 * loop continue.
+                 */
+                System.err.println("Scanner couldn't find a next line, and so the method returns an empty string. "
+                        + e.getMessage());
+                return "";
+            }
             if (!userInput.isEmpty()) {
                 return userInput;
             }
@@ -30,6 +47,11 @@ public class Utility {
     }
 
     public static int checkIfNumber(Scanner sc) {
+
+        if (!checkScanner(sc)) {
+            return 0;
+        }
+
         int userInput;
 
         while (true) { // forced loop in while
@@ -47,6 +69,11 @@ public class Utility {
     }
 
     public static int checkIfNumberTest(Scanner sc, int maxInput) {
+
+        if (!checkScanner(sc)) {
+            return 0;
+        }
+
         int userInput;
 
         while (true) { // forced loop in while
@@ -64,6 +91,11 @@ public class Utility {
     }
 
     public static boolean checkYesOrNo(Scanner sc) {
+
+        if (!checkScanner(sc)) {
+            return false;
+        }
+
         do {
             String inputString = sc.nextLine().trim();
             if (inputString.length() == 1) {
@@ -82,14 +114,22 @@ public class Utility {
     }
 
     public static void clearScanner(Scanner sc) {
-        if (sc.hasNextLine()) {
-            sc.nextLine();
+        try {
+            if (sc != null && sc.hasNextLine()) {
+                sc.nextLine();
+            }
+        } catch (NullPointerException e) {
+            System.err.println("Scanner was null, probably it wasn't initiated.");
+        } catch (IllegalStateException e) {
+            System.err.println("The scanner was closed, and so couldn't return a next line.");
         }
     }
 
     public static void promptEnterKey(Scanner sc) {
         System.out.print("\nPress \"ENTER\" to continue.");
-        sc.nextLine();
+
+        clearScanner(sc);
+        // sc.nextLine();
     }
 
     public static void clearConsole() {
@@ -120,25 +160,50 @@ public class Utility {
      *
      * @param diceAmount
      * @param colour
-     * @param optionalSuccessValue   Optional argument for what value the dies needs to be equal or above to count as successess
-     * @param optionalCritValue      Optional argument for what value the dies needs to be equal or above to count as a critical success
-     * @param optionalDiceSideAmount Optional argument for how many sides you want the dies to have.
+     * @param optionalSuccessValue   Optional argument for what value the dies needs
+     *                               to be equal or above to count as successess
+     * @param optionalCritValue      Optional argument for what value the dies needs
+     *                               to be equal or above to count as a critical
+     *                               success
+     * @param optionalDiceSideAmount Optional argument for how many sides you want
+     *                               the dies to have.
      * @return
      */
     public static int rollDicePool(int diceAmount, String colour, OptionalInt optionalSuccessValue,
-                                   OptionalInt optionalCritValue, OptionalInt optionalDiceSideAmount) {
+            OptionalInt optionalCritValue, OptionalInt optionalDiceSideAmount) {
 
         int successValue = optionalSuccessValue.orElse(SUCCESS_VALUE);
         int critValue = optionalCritValue.orElse(CRIT_VALUE);
         int diceSidesAmount = optionalDiceSideAmount.orElse(AMOUNT_OF_SIDES);
 
+        if (successValue > diceSidesAmount) {
+            System.err.println(
+                    "The successvalue is higher than the amount of sides on the die, so the roll will never return a success.");
+        }
+
+        if (critValue > diceSidesAmount) {
+            System.err.println(
+                    "The critical success value is higher than the amount of sides on the die, so a crit will never happen.");
+        }
+
+        if (diceSidesAmount <= 0) {
+            System.err.println(
+                    "The number of sides on the die has been set to zero or less. The dice pool will not be rolled and zero returned.");
+            return 0;
+        }
+
         int currentValue;
         int successAmount = 0;
 
         for (int i = 0; i < diceAmount; i++) {
-            currentValue = random.nextInt(diceSidesAmount) + 1;
-            // TODO Check if it is possible to get the reset value here, at start of print
-            // out, to avoid needing to save it, and then just save it after again?
+            try {
+                currentValue = random.nextInt(diceSidesAmount) + 1;
+            } catch (IllegalArgumentException e) {
+                System.err.println(
+                        "The random function returned a negative value. meaning that the die was asigned a negative amount of sides. The result of the die will be zero"
+                                + e.getMessage());
+                currentValue = 0;
+            }
             System.out.print(colour + "[" + currentValue + "]" + RESET);
 
             if (currentValue >= successValue) {
@@ -149,16 +214,23 @@ public class Utility {
             }
         }
 
-        // To give space between the result and the following text.
+        // Give space between the result and the following text.
         System.out.println();
 
         return successAmount;
     }
 
-    public static void slowPrint(String text, int... optDelay) { // Add int in parameter to change delay
+    /**
+     * slowprint texts to highten player experience, if optional param isn't given
+     * the delay is set to 40
+     * 
+     * @param text
+     * @param optDelay int parameter to change delay,
+     */
+    public static void slowPrint(String text, int... optDelay) {
+        int standardDelay = 40;
 
-        int delay = optDelay.length > 0 ? optDelay[0] : 40;
-        //     int delay = 40;
+        int delay = optDelay.length > 0 ? optDelay[0] : standardDelay;
         for (int i = 0; i < text.length(); i++) {
             char currentChar = text.charAt(i);
             System.out.print(currentChar);
@@ -167,10 +239,41 @@ public class Utility {
                     Thread.sleep(delay);
                 } catch (InterruptedException e) {
                     System.err.println("Interrupted: " + e.getMessage());
+                } catch (IllegalArgumentException e) {
+                    System.err.println("The variable for time delay was a negative number. " + e.getMessage());
                 }
             }
         }
         System.out.println();
     }
 
+    /**
+     * Protection function that uses try-catch to intercept IllegalStateException
+     * and NullPointerException. Returns false and prints message to
+     * System.err.println in those cases.
+     * 
+     * @param sc
+     * @return
+     */
+    private static boolean checkScanner(Scanner sc) {
+
+        try {
+            if (sc == null) {
+                return false;
+            }
+        } catch (NullPointerException e) {
+            System.err.println("Scanner is null" + e.getMessage());
+            return false;
+        }
+
+        try {
+            if (sc.hasNext()) {
+                return true;
+            }
+            return false;
+        } catch (IllegalStateException e) {
+            System.err.println("Scanner was closed and couldn't be used to get input." + e.getMessage());
+            return false;
+        }
+    }
 }
