@@ -1,60 +1,42 @@
 package Global;
 
-import java.util.NoSuchElementException;
 import java.util.OptionalInt;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Utility {
 
-    // #region colour for prints
+    // region colour for prints
     public static final String RESET = "\u001B[0m";
     public static final String RED = "\u001B[31m";
     public static final String GREEN = "\u001B[32m";
+    // endregion
+    // region vars for standard dice values
     private static final int AMOUNT_OF_SIDES = 6;
-    // #endregion
     private static final int CRIT_VALUE = 6;
     private static final int SUCCESS_VALUE = 4;
-    // #region vars for standard dice values
     private static final Random random = new Random();
-    // #endregion
+    // endregion
 
     public static String checkIfValidString(Scanner sc) {
 
-        if (!checkScanner(sc)) {
-            return "";
-        }
-
         String userInput;
         do {
-            try {
-                userInput = sc.nextLine();
-            } catch (NoSuchElementException e) {
-                /*
-                 * If the scanner is closed, or the line exhausted, I'm assuming that we'd
-                 * rather send a null string back, rather than do another attempt by letting the
-                 * loop continue.
-                 */
-                System.err.println("Scanner couldn't find a next line, and so the method returns an empty string. "
-                        + e.getMessage());
-                return "";
-            }
+            userInput = sc.nextLine();
+
             if (!userInput.isEmpty()) {
                 return userInput;
             }
             System.err.print("Please enter a name: ");
-        } while (true); // forced loop
+            // forced loop
+        } while (true);
     }
 
     public static int checkIfNumber(Scanner sc) {
 
-        if (!checkScanner(sc)) {
-            return 0;
-        }
-
         int userInput;
-
-        while (true) { // forced loop in while
+        // forced loop in while
+        while (true) {
             if (sc.hasNextInt()) {
                 userInput = sc.nextInt();
                 if (userInput >= 0) {
@@ -70,13 +52,10 @@ public class Utility {
 
     public static int checkIfNumberTest(Scanner sc, int maxInput) {
 
-        if (!checkScanner(sc)) {
-            return 0;
-        }
-
         int userInput;
 
-        while (true) { // forced loop in while
+        // forced loop in while
+        while (true) {
             if (sc.hasNextInt()) {
                 userInput = sc.nextInt();
                 if (userInput >= 0 && userInput <= maxInput) {
@@ -92,10 +71,6 @@ public class Utility {
 
     public static boolean checkYesOrNo(Scanner sc) {
 
-        if (!checkScanner(sc)) {
-            return false;
-        }
-
         do {
             String inputString = sc.nextLine().trim();
             if (inputString.length() == 1) {
@@ -110,18 +85,13 @@ public class Utility {
                 }
             }
             System.err.print("Invalid input, please enter either Y or N: ");
-        } while (true); // forced loop in do while
+            // forced loop in do while
+        } while (true);
     }
 
     public static void clearScanner(Scanner sc) {
-        try {
-            if (sc != null && sc.hasNextLine()) {
-                sc.nextLine();
-            }
-        } catch (NullPointerException e) {
-            System.err.println("Scanner was null, probably it wasn't initiated.");
-        } catch (IllegalStateException e) {
-            System.err.println("The scanner was closed, and so couldn't return a next line.");
+        if (sc != null && sc.hasNextLine()) {
+            sc.nextLine();
         }
     }
 
@@ -245,35 +215,5 @@ public class Utility {
             }
         }
         System.out.println();
-    }
-
-    /**
-     * Protection function that uses try-catch to intercept IllegalStateException
-     * and NullPointerException. Returns false and prints message to
-     * System.err.println in those cases.
-     * 
-     * @param sc
-     * @return
-     */
-    private static boolean checkScanner(Scanner sc) {
-
-        try {
-            if (sc == null) {
-                return false;
-            }
-        } catch (NullPointerException e) {
-            System.err.println("Scanner is null" + e.getMessage());
-            return false;
-        }
-
-        try {
-            if (sc.hasNext()) {
-                return true;
-            }
-            return false;
-        } catch (IllegalStateException e) {
-            System.err.println("Scanner was closed and couldn't be used to get input." + e.getMessage());
-            return false;
-        }
     }
 }
