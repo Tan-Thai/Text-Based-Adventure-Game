@@ -154,18 +154,18 @@ public class Game {
     }
 
     private static void addItems(PlayerCharacter pc) {
-        Equipment sword = new Equipment(
+        Weapon sword = new Weapon(
                 "'A Simple Sword'",
                 "Your standard blade as a new adventurer.",
-                EquipmentType.WEAPON,
                 new DamageEffect(2),
-                100);
-        Equipment bow = new Equipment(
+                100,
+                WeaponType.FIRE);
+        Weapon bow = new Weapon(
                 "'bow temp'",
                 "Your standard blade as a new adventurer.",
-                EquipmentType.WEAPON,
                 new DamageEffect(2),
-                80);
+                80,
+                WeaponType.DEFAULT);
         Potion potion = new Potion(
                 "Health Potion",
                 "Chug when ouch",

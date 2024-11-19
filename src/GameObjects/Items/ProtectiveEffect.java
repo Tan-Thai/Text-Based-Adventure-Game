@@ -16,7 +16,6 @@ public class ProtectiveEffect implements Effect {
 
 	@Override
 	public void apply(Entity actor) {
-		actor.setArmor(protectiveValue);
-		
+		actor.setArmour(protectiveValue);
 	}
 }

@@ -35,6 +35,8 @@ public class Entity {
         this.intelligence = intelligence;
         this.currency = currency;
 
+        this.armour = 0;
+
         // Managers handles items equipments that this entity holds/wears.
         this.itemManager = new ItemManager();
         this.equipmentManager = new EquipmentManager();
@@ -68,8 +70,13 @@ public class Entity {
         this.health = Math.min(health, maxHealth);
     }
 
-    public void setArmour(int armour) {
+    public int getArmour() {
         // TODO: Johan and Wille continues here we promise!
+        return armour;
+    }
+
+    public void setArmour(int armour) {
+        this.armour = armour;
     }
 
     public int getStrength() {
@@ -129,6 +136,7 @@ public class Entity {
         System.out.println("Name: " + this.name);
         System.out.println("level: " + this.level);
         System.out.println("Health: " + this.health + " / " + this.maxHealth);
+        System.out.println("Armour: " + this.armour);
 
         System.out.println("Stats:");
         System.out.println("Strength: " + strength);
@@ -188,9 +196,4 @@ public class Entity {
         }
     }
     // endregion
-
-    public void setArmor(int protectiveValue) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setArmor'");
-    }
 }
