@@ -34,12 +34,14 @@ public class Game {
         addItems(pc);
         // Combat Test
         // combatTest(pc, addEnemyTemp(), sc);
-        /*Equipment bow = new Equipment(
-                "'bow temp'",
-                "Your standard blade as a new adventurer.",
-                EquipmentType.WEAPON,
-                new DamageEffect(2));
-        pc.getInventory().addItem(bow, sc);*/
+        /*
+         * Equipment bow = new Equipment(
+         * "'bow temp'",
+         * "Your standard blade as a new adventurer.",
+         * EquipmentType.WEAPON,
+         * new DamageEffect(2));
+         * pc.getInventory().addItem(bow, sc);
+         */
 
         // Encounter test
         // encounterTest(pc, sc);
@@ -77,27 +79,30 @@ public class Game {
 
     private static void runGame(PlayerCharacter pc, Scanner sc) {
         // considering a potential while (Running) here to then break out if we die,
-        // ive noticed that a couple of the death's that can occur leads to double enter prompts.
+        // ive noticed that a couple of the death's that can occur leads to double enter
+        // prompts.
         Adventure.adventureMenu(pc, sc, pc.getCurrentZone());
         Utility.promptEnterKey(sc);
     }
 
-/* 
-    private static void encounterTest(PlayerCharacter pc, Scanner myScanner) {
-
-        // This one is my bad, currently the ZoneManager needs to get instantiated for
-        // the rest to work.
-        // I will fix this later I promise! Just let it be for now!
-        ZoneManager.getInstance();
-
-        EncounterHandler encounterHandler = EncounterHandler.getInstance();
-
-        while (ZoneManager.getZone(ZoneType.FOREST).hasUnclearedEncounters()) {
-            System.out.println(ZoneManager.getZone(ZoneType.FOREST).getName());
-            encounterHandler.runEncounter(pc, ZoneManager.getZone(ZoneType.FOREST).getUnclearedEncounter(), myScanner);
-        }
-    }
-    */
+    /*
+     * private static void encounterTest(PlayerCharacter pc, Scanner myScanner) {
+     * 
+     * // This one is my bad, currently the ZoneManager needs to get instantiated
+     * for
+     * // the rest to work.
+     * // I will fix this later I promise! Just let it be for now!
+     * ZoneManager.getInstance();
+     * 
+     * EncounterHandler encounterHandler = EncounterHandler.getInstance();
+     * 
+     * while (ZoneManager.getZone(ZoneType.FOREST).hasUnclearedEncounters()) {
+     * System.out.println(ZoneManager.getZone(ZoneType.FOREST).getName());
+     * encounterHandler.runEncounter(pc,
+     * ZoneManager.getZone(ZoneType.FOREST).getUnclearedEncounter(), myScanner);
+     * }
+     * }
+     */
 
     private void handleVictory() {
         System.out.println("Victory!");
@@ -136,10 +141,10 @@ public class Game {
 
     // methods down here are most likely tests methods.
     private static HostileCharacter addEnemyTemp() {
-        return new HostileCharacter("Troll", 5, 3, 2, 1, 1, HostileEntityType.TROLLKIN,"description");
+        return new HostileCharacter("Troll", 5, 3, 2, 1, 1, HostileEntityType.TROLLKIN, "description");
     }
 
-    //region TT - Testing area
+    // region TT - Testing area
     private static void combatTest(PlayerCharacter pc, HostileCharacter enemy, Scanner sc) {
         // new up A COMBAT object, and it will be the only one since it's a singleton.
         Combat combat = Combat.getInstance();
@@ -171,6 +176,12 @@ public class Game {
                 "Chug for ouch",
                 new DamageEffect(7),
                 30);
+        Equipment leatherBreastPlate = new Equipment(
+                "leather breatsplate",
+                "a simple ugly leather breastplate",
+                EquipmentType.ARMOUR,
+                new ProtectiveEffect(1),
+                20);
 
         pc.getInventory().spawnItem(bow);
         pc.getInventory().spawnItem(sword);
@@ -179,11 +190,9 @@ public class Game {
         pc.getInventory().spawnItem(poison);
         pc.getInventory().spawnItem(poison);
         pc.getInventory().spawnItem(poison);
-        pc.getInventory().spawnItem(poison);
-        pc.getInventory().spawnItem(poison);
-        pc.getInventory().spawnItem(poison);
+        pc.getInventory().spawnItem(leatherBreastPlate);
 
     }
-    //endregion
+    // endregion
 
 }

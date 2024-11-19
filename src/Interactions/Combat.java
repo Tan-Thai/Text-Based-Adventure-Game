@@ -7,6 +7,7 @@ import GameObjects.Entities.HostileCharacter;
 import GameObjects.Entities.HostileEntityType;
 import GameObjects.Entities.PlayerCharacter;
 import GameObjects.Items.EquipmentType;
+import GameObjects.Items.WeaponType;
 import Global.Utility;
 import java.util.OptionalInt;
 import java.util.Scanner;
@@ -88,8 +89,7 @@ public class Combat {
 	}
 
 	private void playerattackmethod() {
-		if(player.isDead())
-		{
+		if (player.isDead()) {
 			return;
 		}
 		System.out.println("to attack press 1, to use inventory press 2, to flee press 3");
@@ -145,44 +145,64 @@ public class Combat {
 	// checks and returns the added weapon damage if actor has one equipped.
 	private int addedWeaponDamage(Entity actor) {
 		if (actor.getEquipmentList().getEquipment(EquipmentType.WEAPON) != null)
-			return actor.getEquipmentList().getEquipment(EquipmentType.WEAPON).getDamageValue();
+			return actor.getEquipmentList().getEquipment(EquipmentType.WEAPON).getEffectValue();
 		else
 			return 0;
 	}
 
-	/*private void printEnemyHits() {
-		System.out.println("Your enemy got " + enemyHitCount + " hits!");
+	// checks and returns the protection from the armor.
+	private int addedArmorSave(Entity actor) {
+		if (actor.getEquipmentList().getEquipment(EquipmentType.ARMOUR) != null)
+			return actor.getEquipmentList().getEquipment(EquipmentType.ARMOUR).getEffectValue();
+		else
+			return 0;
 	}
-
-	private void printPlayerHits() {
-		System.out.println("You got " + playerHitCount + " hits!");
-	}*/
 
 	private void printInitative() {
 		System.out.println("Your initative is " + playerInitiative);
 		System.out.println("Your enemies initiative is " + enemyInitiative);
 	}
 
-	private void resolveAttack(Entity defender, Entity attacker, int attackhits) {
-		System.out.println(attacker.getName()+" gets "+attackhits+" hits");
-		System.out.println(defender.getName() +" has " +defender.getDexterity() +" Dextarity which is subtracted from your hits");
-		attackhits -= defender.getDexterity();
-		System.out.println(attackhits);
-		
-		if (attackhits <= 0) {
-			System.out.println(attacker.getName()+" misses");
-		} 
-		else {
+	private void resolveAttack(Entity defender, Entity attacker, int attackHits) {
+		System.out.println(attacker.getName() + " gets " + attackHits + " hits");
+		System.out.println(defender.getName() + " has " + defender.getDexterity()
+				+ " Dextarity which is subtracted from your hits");
+		attackHits -= defender.getDexterity();
+		System.out.println(attackHits);
+
+		if (attackHits <= 0) {
+			System.out.println(attacker.getName() + " misses");
+		} else {
 			int weaponDamage = addedWeaponDamage(attacker);
 			// if statement could be skipped on final product, but this is structured as a
 			// test for now.
 			if (weaponDamage > 0) {
+
+				weaponDamage = getDamageConversionBasedOnType(weaponDamage, attacker, defender);
 				System.out.println("Weapon added " + weaponDamage + " damage.");
-				System.out.println("Making it "+(attackhits + weaponDamage)+" hits");
-				attackhits += weaponDamage;				
+				System.out.println("Making it " + (attackHits + weaponDamage) + " hits");
+				attackHits += weaponDamage;
 			}
-			defender.setHealth(defender.getHealth() - attackhits);
+
+			System.out.println("added armor save is: " + addedArmorSave(defender));
+
+			attackHits -= addedArmorSave(defender);
+			if (attackHits < 0) {
+				attackHits = 0;
+			}
+
+			defender.takeDamage(attackHits);
 		}
+	}
+
+	private int getDamageConversionBasedOnType(int weaponDamage, Entity attacker, Entity defender) {
+		
+		if(attacker.getEquipmentList().getEquipment(EquipmentType.WEAPON)!=null)
+		WeaponType = attacker.getEquipmentList().getEquipment(EquipmentType.WEAPON).get
+		
+		
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'getDamageConversionBasedOnType'");
 	}
 
 	private void checkVictoryConditionMet() {

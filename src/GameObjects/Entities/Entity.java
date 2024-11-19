@@ -167,6 +167,7 @@ public class Entity {
 
     // used to deal damage to an entity with items. EX: Drink poison, throw bomb.
     public void takeDamage(int damageValue) {
+
         if (damageValue < 0) {
             throw new IllegalArgumentException("Damage value must be positive");
         }

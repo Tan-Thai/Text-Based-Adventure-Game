@@ -6,12 +6,12 @@ import Global.Utility;
 import java.util.Scanner;
 
 public class Equipment extends Item {
-    private final Effect weaponEffect;
+    private final Effect effect;
     private final EquipmentType eqSlot;
 
     public Equipment(String name, String desc, EquipmentType slot, Effect effect, int cost) {
         super(name, desc, cost);
-        this.weaponEffect = effect;
+        this.effect = effect;
         this.eqSlot = slot;
     }
 
@@ -19,15 +19,15 @@ public class Equipment extends Item {
         return eqSlot;
     }
 
-    public int getDamageValue() {
-        return weaponEffect.getValue();
+    public int getEffectValue() {
+        return effect.getValue();
     }
 
     public void displayItem() {
         System.out.println(
                 "\n--" + getName() + "--" +
-                "\nCost: " + getItemCost() +
-                "\nDescription: " + getDescription());
+                        "\nCost: " + getItemCost() +
+                        "\nDescription: " + getDescription());
     }
 
     @Override
