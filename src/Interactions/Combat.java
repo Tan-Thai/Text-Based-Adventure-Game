@@ -21,16 +21,11 @@ public class Combat {
 
 	// Actors/ Entities in play - had first and second actor, but ill start with
 	// Player + enemy.
-	private Entity player;
+	private PlayerCharacter player;
 	private HostileCharacter enemy;
 
-	private int playerHitCount = 0;
-	private int enemyHitCount = 0;
 	private int playerInitiative = 0;
 	private int enemyInitiative = 0;
-
-	private Combat() {
-	}
 
 	// new up A COMBAT object, and it will be the only one since it's a singleton.
 	public static synchronized Combat getInstance() {
@@ -43,9 +38,9 @@ public class Combat {
 	// news up the combat situation and then starts the combat logic
 	// Currently takes in playerchar and hostilechar as a simple combat, but also to
 	// reach their respective methods.
-	public void initiateCombat(Entity firstActor, HostileCharacter secondActor, Scanner sc) {
-		this.player = firstActor;
-		this.enemy = secondActor;
+	public void initiateCombat(PlayerCharacter player, HostileCharacter enemy, Scanner sc) {
+		this.player = player;
+		this.enemy = enemy;
 		this.sc = sc;
 
 		System.out.println("You have entered combat with a " + enemy.getName() + "!");
@@ -57,7 +52,7 @@ public class Combat {
 	}
 
 	private void combatLoop() {
-		// creates the intiative for both entitys
+		// creates the intiative for both entities
 		playerInitiative = calcInitiative(player, Utility.GREEN);
 		enemyInitiative = calcInitiative(enemy, Utility.RED);
 
@@ -70,35 +65,62 @@ public class Combat {
 			printEntityHP(enemy, Utility.RED);
 
 			if (enemyInitiative > playerInitiative) {
-				enemyHitCount = calcAttack(enemy, Utility.RED);
-				resolveAttack(player, enemy, enemyHitCount);
-				// printEnemyHits();
+				enemyAttack(calcAttack(enemy, Utility.RED));
 				checkVictoryConditionMet();
-				playerattackmethod();
+				playerAttack();
 				checkVictoryConditionMet();
 			} else {
-
-				playerattackmethod();
+				playerAttack();
 				checkVictoryConditionMet();
-				enemyHitCount = calcAttack(enemy, Utility.RED);
-				resolveAttack(player, enemy, enemyHitCount);
-				// printEnemyHits();
+				enemyAttack(calcAttack(enemy, Utility.RED));
 				checkVictoryConditionMet();
 			}
 			Utility.promptEnterKey(sc);
 		}
 	}
 
-	private void playerattackmethod() {
+	private void enemyAttack(int attackHits) {
+		if (enemy.isDead()) {
+			return;
+		}
+		System.out.println(enemy.getName() + " gets " + attackHits + " hits");
+		System.out.println(player.getName() + " has " + player.getDexterity()
+				+ " Dextarity which is subtracted from your hits");
+		attackHits -= player.getDexterity();
+		System.out.println(attackHits);
+
+		if (attackHits <= 0) {
+			System.out.println(enemy.getName() + " misses");
+		} else {
+			int weaponDamage = addedWeaponDamage(enemy);
+			// if statement could be skipped on final product, but this is structured as a
+			// test for now.
+			if (weaponDamage > 0) {
+
+				System.out.println("Weapon added " + weaponDamage + " damage.");
+				System.out.println("Making it " + (attackHits + weaponDamage) + " hits");
+				attackHits += weaponDamage;
+			}
+
+			System.out.println("added armor save is: " + addedArmorSave(player));
+
+			attackHits -= addedArmorSave(player);
+			if (attackHits < 0) {
+				attackHits = 0;
+			}
+
+			player.takeDamage(attackHits);
+		}
+	}
+
+	private void playerAttack() {
 		if (player.isDead()) {
 			return;
 		}
 		System.out.println("to attack press 1, to use inventory press 2, to flee press 3");
 		switch (Utility.checkIfNumber(sc)) {
 			case 1 -> {
-				playerHitCount = calcAttack(player, Utility.GREEN);
-				// printPlayerHits();
-				resolveAttack(enemy, player, playerHitCount);
+				resolveAttack(enemy, player, calcAttack(player, Utility.GREEN));
 			}
 			case 2 -> player.inspectEntity(sc);
 			case 3 -> {
@@ -164,17 +186,17 @@ public class Combat {
 		System.out.println("Your enemies initiative is " + enemyInitiative);
 	}
 
-	private void resolveAttack(Entity defender, Entity attacker, int attackHits) {
-		System.out.println(attacker.getName() + " gets " + attackHits + " hits");
-		System.out.println(defender.getName() + " has " + defender.getDexterity()
+	private void resolveAttack(HostileCharacter enemy, PlayerCharacter player, int attackHits) {
+		System.out.println(player.getName() + " gets " + attackHits + " hits");
+		System.out.println(enemy.getName() + " has " + enemy.getDexterity()
 				+ " Dextarity which is subtracted from your hits");
-		attackHits -= defender.getDexterity();
+		attackHits -= enemy.getDexterity();
 		System.out.println(attackHits);
 
 		if (attackHits <= 0) {
-			System.out.println(attacker.getName() + " misses");
+			System.out.println(player.getName() + " misses");
 		} else {
-			int weaponDamage = addedWeaponDamage(attacker);
+			int weaponDamage = addedWeaponDamage(player);
 			// if statement could be skipped on final product, but this is structured as a
 			// test for now.
 			if (weaponDamage > 0) {
@@ -182,17 +204,17 @@ public class Combat {
 				System.out.println("Weapon added " + weaponDamage + " damage.");
 				System.out.println("Making it " + (attackHits + weaponDamage) + " hits");
 				attackHits += weaponDamage;
-				attackHits = getDamageConversionBasedOnType(attackHits, attacker, defender);
+				attackHits = getDamageConversionBasedOnType(attackHits, player, enemy);
 			}
 
-			System.out.println("added armor save is: " + addedArmorSave(defender));
+			System.out.println("added armor save is: " + addedArmorSave(enemy));
 
-			attackHits -= addedArmorSave(defender);
+			attackHits -= addedArmorSave(enemy);
 			if (attackHits < 0) {
 				attackHits = 0;
 			}
 
-			defender.takeDamage(attackHits);
+			enemy.takeDamage(attackHits);
 		}
 	}
 
