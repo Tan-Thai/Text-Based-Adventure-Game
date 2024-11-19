@@ -70,7 +70,7 @@ public class Combat {
 			if (enemyInitiative > playerInitiative) {
 				enemyHitCount = calcAttack(enemy, Utility.RED);
 				resolveAttack(player, enemy, enemyHitCount);
-				printEnemyHits();
+				// printEnemyHits();
 				checkVictoryConditionMet();
 				playerattackmethod();
 				checkVictoryConditionMet();
@@ -80,7 +80,7 @@ public class Combat {
 				checkVictoryConditionMet();
 				enemyHitCount = calcAttack(enemy, Utility.RED);
 				resolveAttack(player, enemy, enemyHitCount);
-				printEnemyHits();
+				// printEnemyHits();
 				checkVictoryConditionMet();
 			}
 			Utility.promptEnterKey(sc);
@@ -96,7 +96,7 @@ public class Combat {
 		switch (Utility.checkIfNumber(sc)) {
 			case 1 -> {
 				playerHitCount = calcAttack(player, Utility.GREEN);
-				printPlayerHits();
+				// printPlayerHits();
 				resolveAttack(enemy, player, playerHitCount);
 			}
 			case 2 -> player.inspectEntity(sc);
@@ -150,13 +150,13 @@ public class Combat {
 			return 0;
 	}
 
-	private void printEnemyHits() {
+	/*private void printEnemyHits() {
 		System.out.println("Your enemy got " + enemyHitCount + " hits!");
 	}
 
 	private void printPlayerHits() {
 		System.out.println("You got " + playerHitCount + " hits!");
-	}
+	}*/
 
 	private void printInitative() {
 		System.out.println("Your initative is " + playerInitiative);
@@ -164,10 +164,16 @@ public class Combat {
 	}
 
 	private void resolveAttack(Entity defender, Entity attacker, int attackhits) {
+		System.out.println(attackhits);
+		System.out.println(defender.getDexterity());
 		attackhits -= defender.getDexterity();
-		if (attackhits < 0) {
+		System.out.println("Calc");
+		System.out.println(attackhits);
+		System.out.println(defender.getDexterity());
+		if (attackhits <= 0) {
 			System.out.println(attacker.getName()+" misses");
-		} else {
+		} 
+		else {
 			int weaponDamage = addedWeaponDamage(attacker);
 			// if statement could be skipped on final product, but this is structured as a
 			// test for now.
@@ -190,7 +196,6 @@ public class Combat {
 			exitingCombat();
 
 		} else if (player.isDead()) {
-			Utility.clearConsole();
 			System.out.println("You have been slain");
 			// currently calling the state to game over on death here.
 			GameStateManager.getInstance().setCurrentState(GameState.GAME_OVER);
