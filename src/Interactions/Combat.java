@@ -164,12 +164,11 @@ public class Combat {
 	}
 
 	private void resolveAttack(Entity defender, Entity attacker, int attackhits) {
-		System.out.println(attackhits);
-		System.out.println(defender.getDexterity());
+		System.out.println(attacker.getName()+" gets "+attackhits+" hits");
+		System.out.println(defender.getName() +" has " +defender.getDexterity() +" Dextarity which is subtracted from your hits");
 		attackhits -= defender.getDexterity();
-		System.out.println("Calc");
 		System.out.println(attackhits);
-		System.out.println(defender.getDexterity());
+		
 		if (attackhits <= 0) {
 			System.out.println(attacker.getName()+" misses");
 		} 
