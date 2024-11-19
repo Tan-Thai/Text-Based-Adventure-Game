@@ -8,13 +8,14 @@ import java.util.Scanner;
 
 public class Entity {
 
-    //region Constructors and Variables
+    // region Constructors and Variables
     private static final int DEFAULT_STAT = 3;
 
     private final EquipmentManager equipmentManager;
     private final ItemManager itemManager;
     private final String name;
     protected int health;
+    protected int armour;
     protected int maxHealth;
     protected int level;
     protected int strength;
@@ -44,9 +45,9 @@ public class Entity {
         this(name, health, level,
                 DEFAULT_STAT, DEFAULT_STAT, DEFAULT_STAT, 0);
     }
-    //endregion
+    // endregion
 
-    //region Getters and Setters
+    // region Getters and Setters
     public ItemManager getInventory() {
         return itemManager;
     }
@@ -65,6 +66,10 @@ public class Entity {
 
     public void setHealth(int health) {
         this.health = Math.min(health, maxHealth);
+    }
+
+    public void setArmour(int armour) {
+        // TODO: Johan and Wille continues here we promise!
     }
 
     public int getStrength() {
@@ -102,10 +107,11 @@ public class Entity {
     public boolean isFullHP() {
         return health >= maxHealth;
     }
-    //endregion
+    // endregion
 
-    //region Methods used across many entities.
-    // method is planned to be able to inspect any entity and behave differently if it's a PC
+    // region Methods used across many entities.
+    // method is planned to be able to inspect any entity and behave differently if
+    // it's a PC
     // Idea is to bake in the access to inventory through this as well.
     public void inspectEntity(Scanner sc) {
         Utility.clearConsole();
@@ -113,7 +119,8 @@ public class Entity {
         Utility.promptEnterKey(sc);
     }
 
-    // display health and stats can be merged into 1 if we don't use display health explicitly somewhere.
+    // display health and stats can be merged into 1 if we don't use display health
+    // explicitly somewhere.
     public void displayHealth() {
         System.out.println("Health Points: " + this.health + "/" + this.maxHealth);
     }
@@ -153,7 +160,8 @@ public class Entity {
         System.out.println(name + "'s max hp is now: " + maxHealth);
     }
 
-    // TODO implement heal/take damage into combat since it's not making use of it currently.
+    // TODO implement heal/take damage into combat since it's not making use of it
+    // currently.
     public void heal(int healingValue) {
         if (healingValue < 0) {
             throw new IllegalArgumentException("Healing value must be positive");
@@ -179,5 +187,10 @@ public class Entity {
             System.out.println(name + " took " + damageValue + " damage. Current health: " + health);
         }
     }
-    //endregion
+    // endregion
+
+    public void setArmor(int protectiveValue) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setArmor'");
+    }
 }

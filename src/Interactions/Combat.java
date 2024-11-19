@@ -7,6 +7,7 @@ import GameObjects.Entities.HostileCharacter;
 import GameObjects.Entities.HostileEntityType;
 import GameObjects.Entities.PlayerCharacter;
 import GameObjects.Items.EquipmentType;
+import GameObjects.Items.Weapon;
 import GameObjects.Items.WeaponType;
 import Global.Utility;
 import java.util.OptionalInt;
@@ -178,10 +179,10 @@ public class Combat {
 			// test for now.
 			if (weaponDamage > 0) {
 
-				weaponDamage = getDamageConversionBasedOnType(weaponDamage, attacker, defender);
 				System.out.println("Weapon added " + weaponDamage + " damage.");
 				System.out.println("Making it " + (attackHits + weaponDamage) + " hits");
 				attackHits += weaponDamage;
+				attackHits = getDamageConversionBasedOnType(attackHits, attacker, defender);
 			}
 
 			System.out.println("added armor save is: " + addedArmorSave(defender));
@@ -195,14 +196,41 @@ public class Combat {
 		}
 	}
 
-	private int getDamageConversionBasedOnType(int weaponDamage, Entity attacker, Entity defender) {
-		
-		if(attacker.getEquipmentList().getEquipment(EquipmentType.WEAPON)!=null)
-		WeaponType = attacker.getEquipmentList().getEquipment(EquipmentType.WEAPON).get
-		
-		
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getDamageConversionBasedOnType'");
+	private int getDamageConversionBasedOnType(int damage, Entity attacker, HostileCharacter defender) {
+
+		WeaponType tempWeaponType = WeaponType.DEFAULT;
+
+		if (attacker.getEquipmentList().getEquipment(EquipmentType.WEAPON) != null) {
+			tempWeaponType = ((Weapon) attacker.getEquipmentList().getEquipment(EquipmentType.WEAPON))
+					.getWeaponType();
+		}
+		HostileEntityType tempHostileEntityType = defender.getHostileEntityType();
+		switch (tempHostileEntityType) {
+			case DRACONIC:
+				if (tempWeaponType == WeaponType.FIRE) {
+					// TODO: fix here what happens if this is an un-even number
+					return damage / 2;
+				}
+				return damage;
+			case TOADKIN:
+				if (tempWeaponType == WeaponType.FIRE) {
+					// TODO: fix here what happens if this is an un-even number
+					return damage / 2;
+				}
+				return damage;
+			case TROLLKIN:
+				if (tempWeaponType == WeaponType.FIRE || tempWeaponType == WeaponType.SUNLIGHT) {
+					return damage * 2;
+				}
+			case UNDEAD:
+				if (tempWeaponType == WeaponType.FIRE || tempWeaponType == WeaponType.HOLY
+						|| tempWeaponType == WeaponType.SUNLIGHT) {
+					return damage * 2;
+				}
+				return damage;
+			default:
+				return damage;
+		}
 	}
 
 	private void checkVictoryConditionMet() {

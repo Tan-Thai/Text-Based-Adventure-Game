@@ -16,6 +16,7 @@ public class ProtectiveEffect implements Effect {
 
 	@Override
 	public void apply(Entity actor) {
-		System.out.println("You attempted to apply the effect of a items with armor type, this isn't possible.");
+		actor.setArmor(protectiveValue);
+		
 	}
 }
