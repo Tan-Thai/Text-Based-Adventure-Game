@@ -8,7 +8,6 @@ import GameObjects.Entities.HostileEntityType;
 import GameObjects.Entities.PlayerCharacter;
 import GameObjects.Items.EquipmentType;
 import Global.Utility;
-
 import java.util.OptionalInt;
 import java.util.Scanner;
 
@@ -21,10 +20,12 @@ public class Combat {
 	// Actors/ Entities in play - had first and second actor, but ill start with
 	// Player + enemy.
 	private Entity player;
-	private Entity enemy;
+	private HostileCharacter enemy;
 
 	private int playerHitCount = 0;
 	private int enemyHitCount = 0;
+	private int playerInitiative = 0;
+	private int enemyInitiative = 0;
 
 	private Combat() {
 	}
@@ -40,12 +41,13 @@ public class Combat {
 	// news up the combat situation and then starts the combat logic
 	// Currently takes in playerchar and hostilechar as a simple combat, but also to
 	// reach their respective methods.
-	public void initiateCombat(Entity firstActor, Entity secondActor, Scanner sc) {
+	public void initiateCombat(Entity firstActor, HostileCharacter secondActor, Scanner sc) {
 		this.player = firstActor;
 		this.enemy = secondActor;
 		this.sc = sc;
 
 		System.out.println("You have entered combat with a " + enemy.getName() + "!");
+		System.out.println(enemy.getHostileEntityDescription());
 		Utility.promptEnterKey(sc);
 		Utility.clearConsole();
 		isCombatInProgress = true;
@@ -53,27 +55,52 @@ public class Combat {
 	}
 
 	private void combatLoop() {
+		// creates the intiative for both entitys
+		playerInitiative = calcInitiative(player, Utility.GREEN);
+		enemyInitiative = calcInitiative(enemy, Utility.RED);
 
+		// loop for combat.
 		while (isCombatInProgress) {
+			Utility.clearConsole();
+			printInitative();
 			// Prints all hp's
 			printEntityHP(player, Utility.GREEN);
 			printEntityHP(enemy, Utility.RED);
-			System.out.print("to attack press 1, to end combat press 2: ");
 
-			// loop for combat.
-			// TODO: add switch statements for when we add different actions.
-			if (Utility.checkIfNumber(sc) == 1) {
-				Utility.clearConsole();
-				// can make it so we send in a defender as well if we add a defence formula.
-				playerHitCount = calcAttack(player, Utility.GREEN);
+			if (enemyInitiative > playerInitiative) {
 				enemyHitCount = calcAttack(enemy, Utility.RED);
-
-				printHits();
-
-				resolveHP();
-
+				resolveAttack(player, enemy, enemyHitCount);
+				printEnemyHits();
 				checkVictoryConditionMet();
-			} else { // temporary
+				playerattackmethod();
+				checkVictoryConditionMet();
+			} else {
+
+				playerattackmethod();
+				checkVictoryConditionMet();
+				enemyHitCount = calcAttack(enemy, Utility.RED);
+				resolveAttack(player, enemy, enemyHitCount);
+				printEnemyHits();
+				checkVictoryConditionMet();
+			}
+			Utility.promptEnterKey(sc);
+		}
+	}
+
+	private void playerattackmethod() {
+		if(player.isDead())
+		{
+			return;
+		}
+		System.out.println("to attack press 1, to use inventory press 2, to flee press 3");
+		switch (Utility.checkIfNumber(sc)) {
+			case 1 -> {
+				playerHitCount = calcAttack(player, Utility.GREEN);
+				printPlayerHits();
+				resolveAttack(enemy, player, playerHitCount);
+			}
+			case 2 -> player.inspectEntity(sc);
+			case 3 -> {
 				if (((HostileCharacter) enemy).getHostileEntityType().equals(HostileEntityType.BOSS)) {
 					System.out.println("You can't run from a boss!");
 					Utility.clearConsole();
@@ -82,7 +109,9 @@ public class Combat {
 					isCombatInProgress = false;
 				}
 			}
+			default -> System.out.println("incorrect input, try again");
 		}
+
 	}
 
 	// Prints out the bars.
@@ -100,16 +129,17 @@ public class Combat {
 		int hitCount = Utility.rollDicePool(actor.getStrength(), colour, OptionalInt.empty(), OptionalInt.empty(),
 				OptionalInt.empty());
 
-		int weaponDamage = addedWeaponDamage(actor);
-		// if statement could be skipped on final product, but this is structured as a
-		// test for now.
-		if (weaponDamage > 0) {
-			System.out.println("Weapon added " + weaponDamage + " damage.");
-			return hitCount + weaponDamage;
-		}
 		// Used to add break inbetween lines in the console
 		System.out.println();
 		return hitCount;
+	}
+
+	private int calcInitiative(Entity actor, String colour) {
+
+		int speedCount = Utility.rollDicePool(actor.getIntelligence(), colour, OptionalInt.empty(), OptionalInt.empty(),
+				OptionalInt.empty());
+		System.out.println();
+		return speedCount;
 	}
 
 	// checks and returns the added weapon damage if actor has one equipped.
@@ -120,27 +150,40 @@ public class Combat {
 			return 0;
 	}
 
-	private void printHits() {
-		System.out.println("You got " + playerHitCount + " hits!");
+	private void printEnemyHits() {
 		System.out.println("Your enemy got " + enemyHitCount + " hits!");
 	}
 
-	private void resolveHP() {
-		player.setHealth(player.getHealth() - enemyHitCount);
-		enemy.setHealth(enemy.getHealth() - playerHitCount);
-		playerHitCount = 0;
-		enemyHitCount = 0;
+	private void printPlayerHits() {
+		System.out.println("You got " + playerHitCount + " hits!");
+	}
+
+	private void printInitative() {
+		System.out.println("Your initative is " + playerInitiative);
+		System.out.println("Your enemies initiative is " + enemyInitiative);
+	}
+
+	private void resolveAttack(Entity defender, Entity attacker, int attackhits) {
+		attackhits -= defender.getDexterity();
+		if (attackhits < 0) {
+			System.out.println(attacker.getName()+" misses");
+		} else {
+			int weaponDamage = addedWeaponDamage(attacker);
+			// if statement could be skipped on final product, but this is structured as a
+			// test for now.
+			if (weaponDamage > 0) {
+				System.out.println("Weapon added " + weaponDamage + " damage.");
+				System.out.println("Making it "+(attackhits + weaponDamage)+" hits");
+				attackhits += weaponDamage;				
+			}
+			defender.setHealth(defender.getHealth() - attackhits);
+		}
 	}
 
 	private void checkVictoryConditionMet() {
 		// will prolly have to change this due to us hardcoding a win message and all
 		// other handling here.
-		if (player.isDead() && enemy.isDead()) {
-			Utility.clearConsole();
-			System.out.println("Both of you perish");
-			exitingCombat();
-
-		} else if (enemy.isDead()) {
+		if (enemy.isDead()) {
 			Utility.clearConsole();
 			printEntityHP(player, Utility.GREEN);
 			System.out.println("You have vanquished your foe!");
@@ -156,7 +199,9 @@ public class Combat {
 	}
 
 	private void exitingCombat() {
-		gainExperience();
+		if (isCombatInProgress) {
+			gainExperience();
+		}
 		isCombatInProgress = false;
 		Utility.promptEnterKey(sc);
 		Utility.clearConsole();
@@ -175,4 +220,5 @@ public class Combat {
 					"Either entity was of an unexpected type, and so the player couldn't get Experience at end of combat.");
 		}
 	}
+
 }

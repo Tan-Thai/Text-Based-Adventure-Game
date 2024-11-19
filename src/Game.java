@@ -10,7 +10,6 @@ import Global.Utility;
 import Interactions.Adventure;
 import Interactions.Combat;
 import Resources.Config;
-
 import java.util.Scanner;
 
 public class Game {
@@ -137,7 +136,7 @@ public class Game {
 
     // methods down here are most likely tests methods.
     private static HostileCharacter addEnemyTemp() {
-        return new HostileCharacter("Troll", 5, 3, 2, 1, 1, HostileEntityType.TROLLKIN);
+        return new HostileCharacter("Troll", 5, 3, 2, 1, 1, HostileEntityType.TROLLKIN,"description");
     }
 
     //region TT - Testing area
