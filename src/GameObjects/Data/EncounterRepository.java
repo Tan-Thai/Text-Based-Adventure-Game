@@ -15,10 +15,11 @@ public class EncounterRepository {
 	public static List<Encounter> getForestEncounters() {
 
 		forestEncounters = new ArrayList<>();
+		// TODO Comment these back into the array after combat has been tested enough
 
-		//forestEncounters.add(getLureWillOWispEncounter());
-		//forestEncounters.add(getHuntersForgottenTrapEncounter());
-		//forestEncounters.add(getGristlyMealEncounter());
+		// forestEncounters.add(getLureWillOWispEncounter());
+		// forestEncounters.add(getHuntersForgottenTrapEncounter());
+		// forestEncounters.add(getGristlyMealEncounter());
 		forestEncounters.add(getStuntedMudTrollEncounter());
 		forestEncounters.add(getRottenCrawlerEncounter());
 		forestEncounters.add(getDerangedTrapperEncounter());

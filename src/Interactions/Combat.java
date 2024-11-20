@@ -130,6 +130,7 @@ public class Combat {
 				} else {
 					System.out.println("You have fled from combat!");
 					isCombatInProgress = false;
+					// TODO Remember to add here that enemies heal if the PC flees.
 				}
 			}
 			default -> System.out.println("incorrect input, try again");
