@@ -1,34 +1,56 @@
 package GameObjects.Data;
 
-import GameObjects.Items.DamageEffect;
-import GameObjects.Items.Equipment;
-import GameObjects.Items.EquipmentType;
+import GameObjects.Items.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ItemRepository {
-    public static Equipment getRustyLongsword() {
-        return new Equipment("Rusty Longsword",
+    private static final Map<String, Item> ITEMS = new HashMap<>();
+
+    static {
+        // add the items we want into the HashMap to act as our database of items generated.
+        // The ID will always be lowercase and use '_' as spacer.
+
+        //region Equipments generated
+        ITEMS.put("rusty_longsword", new Equipment(
+                "Rusty Longsword",
                 "An old and rusty longsword barely sharp enough to cut butter",
                 EquipmentType.WEAPON,
                 new DamageEffect(1),
-                30);
-    }
+                30));
 
-    public static Equipment getMetioricIronLongsword() {
-        return new Equipment(
+        ITEMS.put("metioric_iron_longsword", new Equipment(
                 "Metioric Iron longsword",
                 "A longsword made of metioric iron, fallen from the stars, sharp as a razor",
                 EquipmentType.WEAPON,
                 new DamageEffect(2),
-                50);
-    }
+                50));
 
-    public static Equipment getGreataxe() {
-        return new Equipment(
-                "Greataxe",
-                "A Greataxe, its simply a great axe",
+        ITEMS.put("great_axe", new Equipment(
+                "Great-axe",
+                "A Great-axe, its simply a great axe",
                 EquipmentType.WEAPON,
                 new DamageEffect(3),
-                120);
+                120));
+        //endregion
+
+        //region Potions generated
+        ITEMS.put("poison_potion", new Potion(
+                "Totally a Health Potion",
+                "Chug for ouch",
+                new DamageEffect(7),
+                30));
+
+        ITEMS.put("health_potion", new Potion(
+                "Health Potion",
+                "Chug when ouch",
+                new HealingEffect(5),
+                20));
+        //endregion
     }
 
+    public static Item getItemById(String id) {
+        return ITEMS.get(id);
+    }
 }

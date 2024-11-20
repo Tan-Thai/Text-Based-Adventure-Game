@@ -1,5 +1,6 @@
 import Core.GameState;
 import Core.GameStateManager;
+import GameObjects.Data.ItemRepository;
 import GameObjects.Data.PlayerClassRepository;
 import GameObjects.Entities.HostileCharacter;
 import GameObjects.Entities.HostileEntityType;
@@ -150,39 +151,12 @@ public class Game {
     }
 
     private static void addItems(PlayerCharacter pc) {
-        Equipment sword = new Equipment(
-                "'A Simple Sword'",
-                "Your standard blade as a new adventurer.",
-                EquipmentType.WEAPON,
-                new DamageEffect(2),
-                100);
-        Equipment bow = new Equipment(
-                "'bow temp'",
-                "Your standard blade as a new adventurer.",
-                EquipmentType.WEAPON,
-                new DamageEffect(2),
-                80);
-        Potion potion = new Potion(
-                "Health Potion",
-                "Chug when ouch",
-                new HealingEffect(5),
-                20);
-        Potion poison = new Potion(
-                "Totally a Health Potion",
-                "Chug for ouch",
-                new DamageEffect(7),
-                30);
 
-        pc.getInventory().spawnItem(bow);
-        pc.getInventory().spawnItem(sword);
-        pc.getInventory().spawnItem(potion);
-        pc.getInventory().spawnItem(poison);
-        pc.getInventory().spawnItem(poison);
-        pc.getInventory().spawnItem(poison);
-        pc.getInventory().spawnItem(poison);
-        pc.getInventory().spawnItem(poison);
-        pc.getInventory().spawnItem(poison);
-        pc.getInventory().spawnItem(poison);
+        pc.getInventory().spawnItem(ItemRepository.getItemById("great_axe"));
+        pc.getInventory().spawnItem(ItemRepository.getItemById("rusty_longsword"));
+        pc.getInventory().spawnItem(ItemRepository.getItemById("health_potion"));
+        pc.getInventory().spawnItem(ItemRepository.getItemById("poison_potion"));
+        pc.getInventory().spawnItem(ItemRepository.getItemById("poison_potion"));
 
     }
     //endregion
