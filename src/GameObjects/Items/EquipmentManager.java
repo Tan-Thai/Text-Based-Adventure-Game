@@ -9,24 +9,24 @@ import java.util.Scanner;
 
 // Really temporary classname due to me not being sure how to work with this.
 public class EquipmentManager {
-    private final Map<EquipmentType, Equipment> equpmentCollection;
+    private final Map<EquipmentType, Equipment> equipmentCollection;
 
     public EquipmentManager() {
-        this.equpmentCollection = new HashMap<>();
+        this.equipmentCollection = new HashMap<>();
         for (EquipmentType slot : EquipmentType.values()) {
-            equpmentCollection.put(slot, null);
+            equipmentCollection.put(slot, null);
         }
     }
 
     public Equipment getEquipment(EquipmentType slot) {
-        return equpmentCollection.get(slot);
+        return equipmentCollection.get(slot);
     }
 
     //region Equip/Un-Equip handling
     public Equipment equipItem(Equipment eq) {
         EquipmentType eqSlot = eq.getEQSlot();
-        Equipment previousEQ = equpmentCollection.get(eqSlot);
-        equpmentCollection.put(eqSlot, eq);
+        Equipment previousEQ = equipmentCollection.get(eqSlot);
+        equipmentCollection.put(eqSlot, eq);
 
         if (previousEQ != null) {
             System.out.println("You put " + previousEQ.getName() + " in your inventory.");
@@ -36,9 +36,9 @@ public class EquipmentManager {
 
     // removes item from equipment, and puts it back into players inventory.
     public Equipment unequipEquipment(EquipmentType slot) {
-        if (equpmentCollection.containsKey(slot)) {
-            Equipment removedItem = equpmentCollection.get(slot);
-            equpmentCollection.put(slot, null);
+        if (equipmentCollection.containsKey(slot)) {
+            Equipment removedItem = equipmentCollection.get(slot);
+            equipmentCollection.put(slot, null);
 
             System.out.println("You unequipped " + removedItem.getName() + ".");
             return removedItem;
@@ -67,7 +67,7 @@ public class EquipmentManager {
         /* Starts on one and loops through each type, printing each type we have
          * Prints out none if its empty, otherwise the name of said item. */
         for (EquipmentType type : EquipmentType.values()) {
-            Equipment eq = equpmentCollection.get(type);
+            Equipment eq = equipmentCollection.get(type);
             String eqPrint = (eq == null) ? "None" : eq.getName();
 
             System.out.println(i + ". " + type.name() + ": " + eqPrint);
@@ -91,10 +91,10 @@ public class EquipmentManager {
                 return;
             }
 
-            if (input > 0 && input <= equpmentCollection.size()) {
+            if (input > 0 && input <= equipmentCollection.size()) {
                 // selects the list based on the order of printed equipments.
                 EquipmentType selectedType = EquipmentType.values()[input - 1];
-                Equipment selectedEquipment = equpmentCollection.get(selectedType);
+                Equipment selectedEquipment = equipmentCollection.get(selectedType);
 
                 if (selectedEquipment == null) {
                     System.out.println("No item equipped in " + selectedType.name() + ".");

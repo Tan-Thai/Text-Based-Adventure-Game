@@ -6,7 +6,6 @@ import GameObjects.Data.PlayerClassRepository;
 import GameObjects.Entities.HostileCharacter;
 import GameObjects.Entities.HostileEntityType;
 import GameObjects.Entities.PlayerCharacter;
-import GameObjects.Items.*;
 import GameObjects.Worlds.ZoneManager;
 import Global.Utility;
 import Interactions.Adventure;
@@ -37,13 +36,6 @@ public class Game {
         addItems(pc);
         // Combat Test
         // combatTest(pc, addEnemyTemp(), sc);
-        /*Equipment bow = new Equipment(
-                "'bow boi'",
-                "Your standard blade as a new adventurer.",
-                EquipmentType.WEAPON,
-                new DamageEffect(2),
-                10);
-        pc.getInventory().addItem(bow, sc);*/
         // Encounter test
         // encounterTest(pc, sc);
 
