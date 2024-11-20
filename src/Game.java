@@ -1,5 +1,6 @@
 import Core.GameState;
 import Core.GameStateManager;
+import GameObjects.Data.ItemId;
 import GameObjects.Data.ItemRepository;
 import GameObjects.Data.PlayerClassRepository;
 import GameObjects.Entities.HostileCharacter;
@@ -151,11 +152,11 @@ public class Game {
     }
 
     private static void addItems(PlayerCharacter pc) {
-        pc.getInventory().addItem(ItemRepository.getItemById("rusty_longsword"));
-        pc.getInventory().addItem(ItemRepository.getItemById("great_axe"));
-        pc.getInventory().addItem(ItemRepository.getItemById("health_potion"));
+        pc.getInventory().addItem(ItemRepository.getItemById(ItemId.RUSTY_LONGSWORD));
+        pc.getInventory().addItem(ItemRepository.getItemById(ItemId.GREAT_AXE));
+        pc.getInventory().addItem(ItemRepository.getItemById(ItemId.HEALTH_POTION));
         for (int i = 1; i <= 7; i++)
-            pc.getInventory().addItem(ItemRepository.getItemById(ItemRepository.POISON_POTION));
+            pc.getInventory().addItem(ItemRepository.getItemById(ItemId.POISON_POTION));
     }
     //endregion
 

@@ -6,35 +6,35 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ItemRepository {
-    private static final Map<String, Item> ITEMS = new HashMap<>();
-
-    // example static final
-    public static final String POISON_POTION = "poison_potion";
+    private static final Map<ItemId, Item> ITEMS = new HashMap<>();
 
     static {
         /*
-        add the items we want into the HashMap to act as our database of items generated.
-        The ID will always be lowercase and use '_' as spacer.
-        This can be sorted by either creating an itemID enum that we make use of to avoid typo.
-        or we create a private static final variable = "string" to call on that variable instead of writing the string.
+        Items instanced within hashmap to be the main reference for the cloning of object.
+        Reason being that the reference ID need to match for items to be able to stack due to Key values.
+
+        Adding an item is done through, as an example;
+        getInventory().addItem(ItemRepository.getItemById(ItemId.HEALTH_POTION));
+
+        We call inventory, addItem gets the item object from this HashMap, with the enum as the KEY.
         */
 
         //region Equipments generated
-        ITEMS.put("rusty_longsword", new Equipment(
+        ITEMS.put(ItemId.RUSTY_LONGSWORD, new Equipment(
                 "Rusty Longsword",
                 "An old and rusty longsword barely sharp enough to cut butter",
                 EquipmentType.WEAPON,
                 new DamageEffect(1),
                 30));
 
-        ITEMS.put("metioric_iron_longsword", new Equipment(
+        ITEMS.put(ItemId.METIORIC_IRON_LONGSWORD, new Equipment(
                 "Metioric Iron longsword",
                 "A longsword made of metioric iron, fallen from the stars, sharp as a razor",
                 EquipmentType.WEAPON,
                 new DamageEffect(2),
                 50));
 
-        ITEMS.put("great_axe", new Equipment(
+        ITEMS.put(ItemId.GREAT_AXE, new Equipment(
                 "Great-axe",
                 "A Great-axe, its simply a great axe",
                 EquipmentType.WEAPON,
@@ -43,13 +43,13 @@ public class ItemRepository {
         //endregion
 
         //region Potions generated
-        ITEMS.put(POISON_POTION, new Potion(
+        ITEMS.put(ItemId.POISON_POTION, new Potion(
                 "Totally a Health Potion",
                 "Chug for ouch",
                 new DamageEffect(7),
                 30));
 
-        ITEMS.put("health_potion", new Potion(
+        ITEMS.put(ItemId.HEALTH_POTION, new Potion(
                 "Health Potion",
                 "Chug when ouch",
                 new HealingEffect(5),
@@ -57,7 +57,7 @@ public class ItemRepository {
         //endregion
     }
 
-    public static Item getItemById(String id) {
-        return ITEMS.get(id);
+    public static Item getItemById(ItemId itemId) {
+        return ITEMS.get(itemId);
     }
 }
