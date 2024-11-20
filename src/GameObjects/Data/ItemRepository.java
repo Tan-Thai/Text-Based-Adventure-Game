@@ -1,34 +1,63 @@
 package GameObjects.Data;
 
-import GameObjects.Items.DamageEffect;
-import GameObjects.Items.Equipment;
-import GameObjects.Items.EquipmentType;
+import GameObjects.Items.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ItemRepository {
-    public static Equipment getRustyLongsword() {
-        return new Equipment("Rusty Longsword",
+    private static final Map<ItemId, Item> ITEMS = new HashMap<>();
+
+    static {
+        /*
+        Items instanced within hashmap to be the main reference for the cloning of object.
+        Reason being that the reference ID need to match for items to be able to stack due to Key values.
+
+        Adding an item is done through, as an example;
+        getInventory().addItem(ItemRepository.getItemById(ItemId.HEALTH_POTION));
+
+        We call inventory, addItem gets the item object from this HashMap, with the enum as the KEY.
+        */
+
+        //region Equipments generated
+        ITEMS.put(ItemId.RUSTY_LONGSWORD, new Equipment(
+                "Rusty Longsword",
                 "An old and rusty longsword barely sharp enough to cut butter",
                 EquipmentType.WEAPON,
                 new DamageEffect(1),
-                30);
-    }
+                30));
 
-    public static Equipment getMetioricIronLongsword() {
-        return new Equipment(
+        ITEMS.put(ItemId.METIORIC_IRON_LONGSWORD, new Equipment(
                 "Metioric Iron longsword",
                 "A longsword made of metioric iron, fallen from the stars, sharp as a razor",
                 EquipmentType.WEAPON,
                 new DamageEffect(2),
-                50);
-    }
+                50));
 
-    public static Equipment getGreataxe() {
-        return new Equipment(
-                "Greataxe",
-                "A Greataxe, its simply a great axe",
+        ITEMS.put(ItemId.GREAT_AXE, new Equipment(
+                "Great-axe",
+                "A Great-axe, its simply a great axe",
                 EquipmentType.WEAPON,
                 new DamageEffect(3),
-                120);
+                120));
+        //endregion
+
+        //region Potions generated
+        ITEMS.put(ItemId.POISON_POTION, new Potion(
+                "Totally a Health Potion",
+                "Chug for ouch",
+                new DamageEffect(7),
+                30));
+
+        ITEMS.put(ItemId.HEALTH_POTION, new Potion(
+                "Health Potion",
+                "Chug when ouch",
+                new HealingEffect(5),
+                20));
+        //endregion
     }
 
+    public static Item getItemById(ItemId itemId) {
+        return ITEMS.get(itemId);
+    }
 }

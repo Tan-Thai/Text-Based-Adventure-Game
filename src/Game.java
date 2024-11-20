@@ -1,10 +1,11 @@
 import Core.GameState;
 import Core.GameStateManager;
+import GameObjects.Data.ItemId;
+import GameObjects.Data.ItemRepository;
 import GameObjects.Data.PlayerClassRepository;
 import GameObjects.Entities.HostileCharacter;
 import GameObjects.Entities.HostileEntityType;
 import GameObjects.Entities.PlayerCharacter;
-import GameObjects.Items.*;
 import GameObjects.Worlds.ZoneManager;
 import Global.Utility;
 import Interactions.Adventure;
@@ -35,13 +36,6 @@ public class Game {
         addItems(pc);
         // Combat Test
         // combatTest(pc, addEnemyTemp(), sc);
-        /*Equipment bow = new Equipment(
-                "'bow boi'",
-                "Your standard blade as a new adventurer.",
-                EquipmentType.WEAPON,
-                new DamageEffect(2),
-                10);
-        pc.getInventory().addItem(bow, sc);*/
         // Encounter test
         // encounterTest(pc, sc);
 
@@ -150,34 +144,11 @@ public class Game {
     }
 
     private static void addItems(PlayerCharacter pc) {
-        Equipment sword = new Equipment(
-                "'A Simple Sword'",
-                "Your standard blade as a new adventurer.",
-                EquipmentType.WEAPON,
-                new DamageEffect(2),
-                100);
-        Equipment bow = new Equipment(
-                "'bow temp'",
-                "Your standard blade as a new adventurer.",
-                EquipmentType.WEAPON,
-                new DamageEffect(2),
-                80);
-        Potion potion = new Potion(
-                "Health Potion",
-                "Chug when ouch",
-                new HealingEffect(5),
-                20);
-        Potion poison = new Potion(
-                "Totally a Health Potion",
-                "Chug for ouch",
-                new DamageEffect(7),
-                30);
-
-        pc.getInventory().addItem(bow);
-        pc.getInventory().addItem(sword);
-        pc.getInventory().addItem(potion);
+        pc.getInventory().addItem(ItemRepository.getItemById(ItemId.RUSTY_LONGSWORD));
+        pc.getInventory().addItem(ItemRepository.getItemById(ItemId.GREAT_AXE));
+        pc.getInventory().addItem(ItemRepository.getItemById(ItemId.HEALTH_POTION));
         for (int i = 1; i <= 7; i++)
-            pc.getInventory().addItem(poison);
+            pc.getInventory().addItem(ItemRepository.getItemById(ItemId.POISON_POTION));
     }
     //endregion
 
