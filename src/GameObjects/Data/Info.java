@@ -11,13 +11,12 @@ public class Info {
         boolean exitMenu = false;
 
         while (!exitMenu) {
-            System.out.print("How to Play Menu:\n" +
+            System.out.print("How to Play Menu\n" +
                     "1. How do stats work?\n" +
                     "2. How does combat work?\n" +
                     "3. How to navigate between or inside zones.\n" +
                     "4. How to interact with items\n" +
-                    "5. How to rest and shop for items in the tavern\n" +
-                    "0. Exit menu.\n" + Config.MENU_CHOICE_STRING);
+                    "5. How to rest and shop for items in the tavern\n" + Config.MENU_CHOICE_STRING);
             int choice = Utility.checkIfNumber(sc);
             Utility.clearConsole();
 

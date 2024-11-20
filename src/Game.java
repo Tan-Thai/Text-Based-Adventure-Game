@@ -79,6 +79,7 @@ public class Game {
     private static void runGame(PlayerCharacter pc, Scanner sc) {
         // considering a potential while (Running) here to then break out if we die,
         // ive noticed that a couple of the death's that can occur leads to double enter prompts.
+        Utility.clearConsole();
         Adventure.adventureMenu(pc, sc, pc.getCurrentZone());
         Utility.promptEnterKey(sc);
     }
@@ -115,7 +116,7 @@ public class Game {
         Utility.slowPrint("Choose a class");
         System.out.println(
                 "1. Barbarian (Strong with lots of health)\n2. Rogue (dexterous and swift)\n3. Wizard (Clever and astmatic)");
-        System.out.print(Config.MENU_CHOICE_STRING);
+        System.out.print("\nEnter your choice: ");
         int choice = Utility.checkIfNumber(sc);
 
         switch (choice) {

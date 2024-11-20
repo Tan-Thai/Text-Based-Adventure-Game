@@ -12,10 +12,10 @@ import java.util.Scanner;
 
 public class Tavern extends Zone {
     protected NeutralCharacter shopkeeper;
-
+    //TODO rewrite tavern description to better fit that the player is inside.
     public Tavern() {
         super("Rothollow tavern",
-                """
+                """ 
                         A giant hollowed out log, covered in deep green moss and large red mushrooms. 
                         With a small door and tiny windows from which warm light emit. 
                         Ruckus song can be heard from within. 
@@ -42,9 +42,8 @@ public class Tavern extends Zone {
             Utility.clearConsole();
             System.out.println(
                     "1. Buy items\n" +
-                    "2. Sell items\n" +
-                    "0. Exit to main menu" +
-                    Config.MENU_CHOICE_STRING); // FIX
+                    "2. Sell items"); // FIX
+            System.out.print(Config.MENU_CHOICE_STRING);
             // talk to npcs? Listen to rumours? etc.
             int choice = Utility.checkIfNumber(sc);
 
@@ -93,8 +92,7 @@ public class Tavern extends Zone {
             if (pc.getLevel() >= Config.PC_RETIREMENT_LEVEL) {
                 System.out.println("3. Retire (End game)");
             }
-            System.out.println("0. Exit to main menu");
-            Utility.slowPrint(Config.MENU_CHOICE_STRING);
+            System.out.print(Config.MENU_CHOICE_STRING);
             // talk to npcs? Listen to rumours? etc.
 
             int choice = Utility.checkIfNumber(sc);

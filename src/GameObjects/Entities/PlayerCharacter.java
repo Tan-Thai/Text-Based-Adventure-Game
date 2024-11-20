@@ -60,7 +60,7 @@ public class PlayerCharacter extends Entity {
                             
                             2. Inspect your equipped gear.\
                             
-                            0. Exit inspection.""");
+                            """);
             
             System.out.print(Config.MENU_CHOICE_STRING);
 

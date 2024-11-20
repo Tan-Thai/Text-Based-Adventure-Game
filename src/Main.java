@@ -37,9 +37,8 @@ public class Main {
             Utility.clearConsole();
             System.out.println("Welcome to the game!" +
                                "\n1. Start Game" +
-                               "\n2. How to Play" +
-                               "\n0. Exit");
-            System.out.print("\nEnter your choice: ");
+                               "\n2. How to Play");
+            System.out.print("\nEnter your choice or press 0 to close program: ");
             switch (Utility.checkIfNumber(sc)) {
                 case 1 -> {
                     // TODO: adding player should be here inside game menu when we select start game

@@ -38,9 +38,9 @@ public class InterZoneTravel {
     }
 
     public static Zone displayTraveableZones(PlayerCharacter pc, Set<Zone> traveableZones, Scanner sc) {
-
+        
         Utility.clearConsole();
-
+        
         int index = 1;
 
         System.out.println("Travelable Zones:");
@@ -50,7 +50,7 @@ public class InterZoneTravel {
             index++;
         }
 
-        System.out.println("Enter the number of the zone you want to travel to, Or 0 to go back: ");
+        System.out.print("\nEnter the number of the zone you want to travel to, Or 0 to go back: ");
         int choice = Utility.checkIfNumber(sc);
         // check if choice is valid, make array of traveable zones to be able to index it for selection
         if (choice > 0 && choice <= traveableZones.size()) {

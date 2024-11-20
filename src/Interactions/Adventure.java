@@ -20,15 +20,13 @@ public class Adventure {
         Utility.clearConsole();
         Zone.displayCurrentZone(zone);
         System.out.println(
-                "0. Exit to main menu" +
-                "\n1. Wander (travel inside zone)" +
+                "1. Wander (travel inside zone)" +
                 "\n2. Inspect yourself" + 
                 "\n3. Travel (travel between zones)" +
                 "\n4. Remind me how to play again.");
         if (zone.getZoneType() == ZoneType.TAVERN) {
             System.out.println("5. Tavern menu (to rest and shop for items)");
-        }   // ADD 0 option
-        System.out.println("0. Exit to main menu");
+        } 
         System.out.print(Config.MENU_CHOICE_STRING);
         int choice = Utility.checkIfNumber(sc);
 
@@ -57,6 +55,7 @@ public class Adventure {
                 if (Utility.checkYesOrNo(sc)) {
                     System.out.println("Exiting to main menu...");
                     GameStateManager.getInstance().setCurrentState(GameState.EXIT);
+                    Utility.clearConsole();
                 } else {
                     System.out.println("Returning to adventure...");
                 }
