@@ -8,9 +8,16 @@ import java.util.Map;
 public class ItemRepository {
     private static final Map<String, Item> ITEMS = new HashMap<>();
 
+    // example static final
+    public static final String POISON_POTION = "poison_potion";
+
     static {
-        // add the items we want into the HashMap to act as our database of items generated.
-        // The ID will always be lowercase and use '_' as spacer.
+        /*
+        add the items we want into the HashMap to act as our database of items generated.
+        The ID will always be lowercase and use '_' as spacer.
+        This can be sorted by either creating an itemID enum that we make use of to avoid typo.
+        or we create a private static final variable = "string" to call on that variable instead of writing the string.
+        */
 
         //region Equipments generated
         ITEMS.put("rusty_longsword", new Equipment(
@@ -36,7 +43,7 @@ public class ItemRepository {
         //endregion
 
         //region Potions generated
-        ITEMS.put("poison_potion", new Potion(
+        ITEMS.put(POISON_POTION, new Potion(
                 "Totally a Health Potion",
                 "Chug for ouch",
                 new DamageEffect(7),

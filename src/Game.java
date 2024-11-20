@@ -155,7 +155,7 @@ public class Game {
         pc.getInventory().spawnItem(ItemRepository.getItemById("great_axe"));
         pc.getInventory().spawnItem(ItemRepository.getItemById("rusty_longsword"));
         pc.getInventory().spawnItem(ItemRepository.getItemById("health_potion"));
-        pc.getInventory().spawnItem(ItemRepository.getItemById("poison_potion"));
+        pc.getInventory().spawnItem(ItemRepository.getItemById(ItemRepository.POISON_POTION));
         pc.getInventory().spawnItem(ItemRepository.getItemById("poison_potion"));
 
     }
