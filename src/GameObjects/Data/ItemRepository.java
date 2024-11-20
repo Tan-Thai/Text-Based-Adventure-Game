@@ -1,10 +1,39 @@
 package GameObjects.Data;
 
-import GameObjects.Items.DamageEffect;
-import GameObjects.Items.Equipment;
-import GameObjects.Items.EquipmentType;
+import GameObjects.Items.*;
+import Interactions.Combat;
 
 public class ItemRepository {
+    private static ItemRepository instance;
+    protected Potion healthPotion;
+    protected Potion poisonPotion;
+
+    private ItemRepository () {
+        healthPotion = new Potion(
+                "Health Potion",
+                "Chug for yum",
+                new HealingEffect(7),
+                30);
+
+        poisonPotion = new Potion(
+                "Totally a Health Potion",
+                "Chug for ouch",
+                new DamageEffect(7),
+                30);
+    }
+
+    public static synchronized ItemRepository getInstance() {
+        if (instance == null) {
+            instance = new ItemRepository();
+        }
+        return instance;
+    }
+
+
+    public Potion getHealthPotion() {
+        return healthPotion;
+    }
+
     public static Equipment getRustyLongsword() {
         return new Equipment("Rusty Longsword",
                 "An old and rusty longsword barely sharp enough to cut butter",
@@ -31,4 +60,8 @@ public class ItemRepository {
                 120);
     }
 
+
+    public Potion getPoisonPotion() {
+        return poisonPotion;
+    }
 }

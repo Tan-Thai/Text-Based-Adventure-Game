@@ -1,5 +1,6 @@
 package GameObjects.Entities;
 
+import GameObjects.Data.ItemRepository;
 import GameObjects.Items.DamageEffect;
 import GameObjects.Items.HealingEffect;
 import GameObjects.Items.Item;
@@ -19,24 +20,15 @@ public class NeutralCharacter extends Entity {
     // neutral npc's such as shopkeeper, quest giver, non-combative people.
     // Functions such as interaction, shop, and the like will be in this file
     public void setupShopkeeper() {
+
+        ItemRepository itemRep = ItemRepository.getInstance();
         setCurrency(999);
         setHealth(1000);
         getInventory().setCapacity(100);
 
-        Potion poison = new Potion(
-                "Totally a Health Potion",
-                "Chug for ouch",
-                new DamageEffect(7),
-                30);
-        Potion potion = new Potion(
-                "Health Potion",
-                "Chug when ouch",
-                new HealingEffect(5),
-                20);
-
         for (int i = 0; i <= 3; i++) {
-            getInventory().addItem(poison);
-            getInventory().addItem(potion);
+            getInventory().addItem(itemRep.getPoisonPotion());
+            getInventory().addItem(itemRep.getHealthPotion());
         }
     }
 

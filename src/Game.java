@@ -1,5 +1,6 @@
 import Core.GameState;
 import Core.GameStateManager;
+import GameObjects.Data.ItemRepository;
 import GameObjects.Data.PlayerClassRepository;
 import GameObjects.Entities.HostileCharacter;
 import GameObjects.Entities.HostileEntityType;
@@ -150,34 +151,12 @@ public class Game {
     }
 
     private static void addItems(PlayerCharacter pc) {
-        Equipment sword = new Equipment(
-                "'A Simple Sword'",
-                "Your standard blade as a new adventurer.",
-                EquipmentType.WEAPON,
-                new DamageEffect(2),
-                100);
-        Equipment bow = new Equipment(
-                "'bow temp'",
-                "Your standard blade as a new adventurer.",
-                EquipmentType.WEAPON,
-                new DamageEffect(2),
-                80);
-        Potion potion = new Potion(
-                "Health Potion",
-                "Chug when ouch",
-                new HealingEffect(5),
-                20);
-        Potion poison = new Potion(
-                "Totally a Health Potion",
-                "Chug for ouch",
-                new DamageEffect(7),
-                30);
-
-        pc.getInventory().addItem(bow);
-        pc.getInventory().addItem(sword);
-        pc.getInventory().addItem(potion);
+        ItemRepository itemRep = ItemRepository.getInstance();
+        pc.getInventory().addItem(ItemRepository.getRustyLongsword());
+        pc.getInventory().addItem(ItemRepository.getGreataxe());
+        pc.getInventory().addItem(itemRep.getHealthPotion());
         for (int i = 1; i <= 7; i++)
-            pc.getInventory().addItem(poison);
+            pc.getInventory().addItem(itemRep.getPoisonPotion());
     }
     //endregion
 
