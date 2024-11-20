@@ -37,12 +37,12 @@ public class Game {
         // Combat Test
         // combatTest(pc, addEnemyTemp(), sc);
         /*Equipment bow = new Equipment(
-                "'bow temp'",
+                "'bow boi'",
                 "Your standard blade as a new adventurer.",
                 EquipmentType.WEAPON,
-                new DamageEffect(2));
+                new DamageEffect(2),
+                10);
         pc.getInventory().addItem(bow, sc);*/
-
         // Encounter test
         // encounterTest(pc, sc);
 
@@ -151,13 +151,34 @@ public class Game {
     }
 
     private static void addItems(PlayerCharacter pc) {
+        Equipment sword = new Equipment(
+                "'A Simple Sword'",
+                "Your standard blade as a new adventurer.",
+                EquipmentType.WEAPON,
+                new DamageEffect(2),
+                100);
+        Equipment bow = new Equipment(
+                "'bow temp'",
+                "Your standard blade as a new adventurer.",
+                EquipmentType.WEAPON,
+                new DamageEffect(2),
+                80);
+        Potion potion = new Potion(
+                "Health Potion",
+                "Chug when ouch",
+                new HealingEffect(5),
+                20);
+        Potion poison = new Potion(
+                "Totally a Health Potion",
+                "Chug for ouch",
+                new DamageEffect(7),
+                30);
 
-        pc.getInventory().spawnItem(ItemRepository.getItemById("great_axe"));
-        pc.getInventory().spawnItem(ItemRepository.getItemById("rusty_longsword"));
-        pc.getInventory().spawnItem(ItemRepository.getItemById("health_potion"));
-        pc.getInventory().spawnItem(ItemRepository.getItemById(ItemRepository.POISON_POTION));
-        pc.getInventory().spawnItem(ItemRepository.getItemById("poison_potion"));
-
+        pc.getInventory().addItem(bow);
+        pc.getInventory().addItem(sword);
+        pc.getInventory().addItem(potion);
+        for (int i = 1; i <= 7; i++)
+            pc.getInventory().addItem(poison);
     }
     //endregion
 

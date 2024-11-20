@@ -23,7 +23,7 @@ public class Potion extends Item implements Consumable {
 
     @Override
     public void promptUse(Scanner sc, PlayerCharacter player, Item selectedItem) {
-        System.out.print("Do you want to use this item? (Y/N): ");
+        System.out.print("\nDo you want to use this item? (Y/N): ");
         boolean response = Utility.checkYesOrNo(sc);
 
         if (potionEffect instanceof HealingEffect && player.isFullHP()) {

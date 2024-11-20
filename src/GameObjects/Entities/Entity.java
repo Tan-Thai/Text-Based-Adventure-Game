@@ -122,8 +122,9 @@ public class Entity {
         System.out.println("Name: " + this.name);
         System.out.println("level: " + this.level);
         System.out.println("Health: " + this.health + " / " + this.maxHealth);
+        System.out.println("Currency: " + this.currency);
 
-        System.out.println("Stats:");
+        System.out.println("\nStats:");
         System.out.println("Strength: " + strength);
         System.out.println("Dexterity: " + dexterity);
         System.out.println("Intelligence: " + intelligence);
