@@ -8,7 +8,7 @@ import java.util.*;
 public class ItemManager {
     private final Map<Item, Integer> itemCollection;
     // TODO make a flexible capacity for the entities.
-    private final int capacity = 10;
+    private int capacity = 10;
 
     public ItemManager() {
         this.itemCollection = new HashMap<>();
@@ -27,32 +27,29 @@ public class ItemManager {
         return Collections.unmodifiableMap(itemCollection);
     }
 
-    private int getTotalItemCount() {
+    public int getTotalItemCount() {
         return itemCollection.values().stream().mapToInt(Integer::intValue).sum();
     }
 
-    private int getCapacity() {
+    public int getCapacity() {
         return capacity;
+    }
+
+    public int setCapacity(int newCapacity) {
+        return capacity = newCapacity;
     }
     //endregion
 
-    //region Adding and removal of items in ItemCollections
-    // Currently have no good term for spawning items into inventory without text
-    // quite the temporary method due to us not shoving a lot into the constructors as off yet.
-    public void spawnItem(Item item) {
-        if (item != null) {
-            if (getTotalItemCount() < capacity) {
-                itemCollection.merge(item, 1, Integer::sum);
-            } else {
-                System.err.println("Entity's inventory is full.");
-            }
-        }
+    public boolean checkIfInventoryFull() {
+        return getTotalItemCount() >= capacity;
     }
 
-    public void addItem(Item item, Scanner sc) {
+    //region Adding and removal of items in ItemCollections
+    // difference between acquire is when an item is presented to the player without warning such as drops.
+    public void acquireItem(Item item, Scanner sc) {
         if (item != null) {
 
-            if (getTotalItemCount() < capacity) {
+            if (!checkIfInventoryFull()) {
                 itemCollection.merge(item, 1, Integer::sum);
                 System.out.println(item.getName() + " was put into your inventory.");
             } else {
@@ -61,8 +58,21 @@ public class ItemManager {
                                  "(Y/N): ");
                 if (Utility.checkYesOrNo(sc)) {
                     discardItem(sc);
+                    itemCollection.merge(item, 1, Integer::sum);
+                    System.out.println(item.getName() + " was put into your inventory.");
                 }
             }
+        }
+    }
+
+    // is used when we make transactions and already have confirmed that the user have space.
+    // im keeping the checks for now though to make sure it works with no issues.
+    public void addItem(Item item) {
+        if (item != null) {
+            if (!checkIfInventoryFull())
+                itemCollection.merge(item, 1, Integer::sum);
+            else
+                System.err.println("Entity's inventory is full. - 'Add' mishap.");
         }
     }
 

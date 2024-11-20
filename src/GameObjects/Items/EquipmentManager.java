@@ -48,11 +48,11 @@ public class EquipmentManager {
 
     // the equivalent of prompting to use an item. but in this case un-equipping it.
     private void promptUnequip(Scanner sc, EquipmentType selectedType, PlayerCharacter pc) {
-        System.out.print("Do you want to put this item into your inventory? (Y/N): ");
+        System.out.print("\nDo you want to put this item into your inventory? (Y/N): ");
         boolean response = Utility.checkYesOrNo(sc);
 
         if (response) {
-            pc.getInventory().addItem(unequipEquipment(selectedType), sc);
+            pc.getInventory().acquireItem(unequipEquipment(selectedType), sc);
         } else {
             System.out.println("You decided not to.");
         }
