@@ -1,10 +1,7 @@
 package GameObjects.Worlds;
 
-import GameObjects.Entities.HostileCharacter;
-import GameObjects.Entities.HostileEntityType;
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
-import Interactions.Combat;
 import Interactions.ExploreZone;
 import Interactions.Adventure;
 
@@ -23,7 +20,6 @@ public class Basement extends Zone {
     public void bossIntro() {
         Utility.clearConsole();
         System.out.println("YOU FIGHTO THE BOSSO");
-        
     }
 
     // two temporary methods boss methods for mvp

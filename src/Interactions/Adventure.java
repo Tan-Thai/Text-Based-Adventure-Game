@@ -20,6 +20,7 @@ public class Adventure {
         Utility.clearConsole();
         Zone.displayCurrentZone(zone);
         System.out.println(
+                "0. Exit to main menu" +
                 "\n1. Wander (travel inside zone)" +
                 "\n2. Inspect yourself" + 
                 "\n3. Travel (travel between zones)" +
@@ -46,7 +47,7 @@ public class Adventure {
                 break;
             case 5:
                 if (zone.getZoneType() == ZoneType.TAVERN) {
-                    ((Tavern) ZoneManager.getZone(ZoneType.TAVERN)).tavernMenu(pc); 
+                    ((Tavern) ZoneManager.getZone(ZoneType.TAVERN)).tavernMenu(pc);
                 } else {
                     System.out.println("Invalid choice. Please try again.");
                 }
@@ -67,5 +68,5 @@ public class Adventure {
         }
 
     }
-    
+
 }

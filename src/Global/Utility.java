@@ -6,33 +6,37 @@ import java.util.Scanner;
 
 public class Utility {
 
-    // #region colour for prints
+    // region colour for prints
     public static final String RESET = "\u001B[0m";
     public static final String RED = "\u001B[31m";
     public static final String GREEN = "\u001B[32m";
+    // endregion
+    // region vars for standard dice values
     private static final int AMOUNT_OF_SIDES = 6;
-    // #endregion
     private static final int CRIT_VALUE = 6;
     private static final int SUCCESS_VALUE = 4;
-    // #region vars for standard dice values
     private static final Random random = new Random();
-    // #endregion
+    // endregion
 
     public static String checkIfValidString(Scanner sc) {
+
         String userInput;
         do {
             userInput = sc.nextLine();
+
             if (!userInput.isEmpty()) {
                 return userInput;
             }
             System.err.print("Please enter a name: ");
-        } while (true); // forced loop
+            // forced loop
+        } while (true);
     }
 
     public static int checkIfNumber(Scanner sc) {
-        int userInput;
 
-        while (true) { // forced loop in while
+        int userInput;
+        // forced loop in while
+        while (true) {
             if (sc.hasNextInt()) {
                 userInput = sc.nextInt();
                 if (userInput >= 0) {
@@ -47,9 +51,11 @@ public class Utility {
     }
 
     public static int checkIfNumberTest(Scanner sc, int maxInput) {
+
         int userInput;
 
-        while (true) { // forced loop in while
+        // forced loop in while
+        while (true) {
             if (sc.hasNextInt()) {
                 userInput = sc.nextInt();
                 if (userInput >= 0 && userInput <= maxInput) {
@@ -64,6 +70,7 @@ public class Utility {
     }
 
     public static boolean checkYesOrNo(Scanner sc) {
+
         do {
             String inputString = sc.nextLine().trim();
             if (inputString.length() == 1) {
@@ -78,18 +85,21 @@ public class Utility {
                 }
             }
             System.err.print("Invalid input, please enter either Y or N: ");
-        } while (true); // forced loop in do while
+            // forced loop in do while
+        } while (true);
     }
 
     public static void clearScanner(Scanner sc) {
-        if (sc.hasNextLine()) {
+        if (sc != null && sc.hasNextLine()) {
             sc.nextLine();
         }
     }
 
     public static void promptEnterKey(Scanner sc) {
         System.out.print("\nPress \"ENTER\" to continue.");
-        sc.nextLine();
+
+        clearScanner(sc);
+        // sc.nextLine();
     }
 
     public static void clearConsole() {
@@ -120,25 +130,50 @@ public class Utility {
      *
      * @param diceAmount
      * @param colour
-     * @param optionalSuccessValue   Optional argument for what value the dies needs to be equal or above to count as successess
-     * @param optionalCritValue      Optional argument for what value the dies needs to be equal or above to count as a critical success
-     * @param optionalDiceSideAmount Optional argument for how many sides you want the dies to have.
+     * @param optionalSuccessValue   Optional argument for what value the dies needs
+     *                               to be equal or above to count as successess
+     * @param optionalCritValue      Optional argument for what value the dies needs
+     *                               to be equal or above to count as a critical
+     *                               success
+     * @param optionalDiceSideAmount Optional argument for how many sides you want
+     *                               the dies to have.
      * @return
      */
     public static int rollDicePool(int diceAmount, String colour, OptionalInt optionalSuccessValue,
-                                   OptionalInt optionalCritValue, OptionalInt optionalDiceSideAmount) {
+            OptionalInt optionalCritValue, OptionalInt optionalDiceSideAmount) {
 
         int successValue = optionalSuccessValue.orElse(SUCCESS_VALUE);
         int critValue = optionalCritValue.orElse(CRIT_VALUE);
         int diceSidesAmount = optionalDiceSideAmount.orElse(AMOUNT_OF_SIDES);
 
+        if (successValue > diceSidesAmount) {
+            System.err.println(
+                    "The successvalue is higher than the amount of sides on the die, so the roll will never return a success.");
+        }
+
+        if (critValue > diceSidesAmount) {
+            System.err.println(
+                    "The critical success value is higher than the amount of sides on the die, so a crit will never happen.");
+        }
+
+        if (diceSidesAmount <= 0) {
+            System.err.println(
+                    "The number of sides on the die has been set to zero or less. The dice pool will not be rolled and zero returned.");
+            return 0;
+        }
+
         int currentValue;
         int successAmount = 0;
 
         for (int i = 0; i < diceAmount; i++) {
-            currentValue = random.nextInt(diceSidesAmount) + 1;
-            // TODO Check if it is possible to get the reset value here, at start of print
-            // out, to avoid needing to save it, and then just save it after again?
+            try {
+                currentValue = random.nextInt(diceSidesAmount) + 1;
+            } catch (IllegalArgumentException e) {
+                System.err.println(
+                        "The random function returned a negative value. meaning that the die was asigned a negative amount of sides. The result of the die will be zero"
+                                + e.getMessage());
+                currentValue = 0;
+            }
             System.out.print(colour + "[" + currentValue + "]" + RESET);
 
             if (currentValue >= successValue) {
@@ -149,16 +184,23 @@ public class Utility {
             }
         }
 
-        // To give space between the result and the following text.
+        // Give space between the result and the following text.
         System.out.println();
 
         return successAmount;
     }
 
-    public static void slowPrint(String text, int... optDelay) { // Add int in parameter to change delay
+    /**
+     * slowprint texts to highten player experience, if optional param isn't given
+     * the delay is set to 40
+     * 
+     * @param text
+     * @param optDelay int parameter to change delay,
+     */
+    public static void slowPrint(String text, int... optDelay) {
+        int standardDelay = 40;
 
-        int delay = optDelay.length > 0 ? optDelay[0] : 40;
-        //     int delay = 40;
+        int delay = optDelay.length > 0 ? optDelay[0] : standardDelay;
         for (int i = 0; i < text.length(); i++) {
             char currentChar = text.charAt(i);
             System.out.print(currentChar);
@@ -167,10 +209,11 @@ public class Utility {
                     Thread.sleep(delay);
                 } catch (InterruptedException e) {
                     System.err.println("Interrupted: " + e.getMessage());
+                } catch (IllegalArgumentException e) {
+                    System.err.println("The variable for time delay was a negative number. " + e.getMessage());
                 }
             }
         }
         System.out.println();
     }
-
 }
