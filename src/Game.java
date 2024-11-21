@@ -1,14 +1,12 @@
 import Core.GameState;
 import Core.GameStateManager;
+import GameObjects.Data.ItemId;
+import GameObjects.Data.ItemRepository;
 import GameObjects.Data.PlayerClassRepository;
-import GameObjects.Entities.HostileCharacter;
-import GameObjects.Entities.HostileEntityType;
 import GameObjects.Entities.PlayerCharacter;
-import GameObjects.Items.*;
 import GameObjects.Worlds.ZoneManager;
 import Global.Utility;
 import Interactions.Adventure;
-import Interactions.Combat;
 import Resources.Config;
 import java.util.Scanner;
 
@@ -34,15 +32,6 @@ public class Game {
         addItems(pc);
         // Combat Test
         // combatTest(pc, addEnemyTemp(), sc);
-        /*
-         * Equipment bow = new Equipment(
-         * "'bow temp'",
-         * "Your standard blade as a new adventurer.",
-         * EquipmentType.WEAPON,
-         * new DamageEffect(2));
-         * pc.getInventory().addItem(bow, sc);
-         */
-
         // Encounter test
         // encounterTest(pc, sc);
 
@@ -139,59 +128,14 @@ public class Game {
         }
     }
 
-    // methods down here are most likely tests methods.
-    private static HostileCharacter addEnemyTemp() {
-        return new HostileCharacter("Troll", 5, 3, 2, 1, 1, HostileEntityType.TROLLKIN, "description");
-    }
-
     // region TT - Testing area
-    private static void combatTest(PlayerCharacter pc, HostileCharacter enemy, Scanner sc) {
-        // new up A COMBAT object, and it will be the only one since it's a singleton.
-        Combat combat = Combat.getInstance();
-        pc.inspectEntity(sc);
-        // this is what we call and send in when a combat between 2 entities happens.
-        combat.initiateCombat(pc, enemy, sc);
-    }
 
     private static void addItems(PlayerCharacter pc) {
-        Weapon sword = new Weapon(
-                "'A Simple Sword'",
-                "Your standard blade as a new adventurer.",
-                new DamageEffect(2),
-                100,
-                WeaponType.FIRE);
-        Weapon bow = new Weapon(
-                "'bow temp'",
-                "Your standard blade as a new adventurer.",
-                new DamageEffect(2),
-                80,
-                WeaponType.DEFAULT);
-        Potion potion = new Potion(
-                "Health Potion",
-                "Chug when ouch",
-                new HealingEffect(5),
-                20);
-        Potion poison = new Potion(
-                "Totally a Health Potion",
-                "Chug for ouch",
-                new DamageEffect(7),
-                30);
-        Equipment leatherBreastPlate = new Equipment(
-                "leather breatsplate",
-                "a simple ugly leather breastplate",
-                EquipmentType.ARMOUR,
-                new ProtectiveEffect(1),
-                20);
-
-        pc.getInventory().spawnItem(bow);
-        pc.getInventory().spawnItem(sword);
-        pc.getInventory().spawnItem(potion);
-        pc.getInventory().spawnItem(poison);
-        pc.getInventory().spawnItem(poison);
-        pc.getInventory().spawnItem(poison);
-        pc.getInventory().spawnItem(poison);
-        pc.getInventory().spawnItem(leatherBreastPlate);
-
+        pc.getInventory().addItem(ItemRepository.getItemById(ItemId.RUSTY_LONGSWORD));
+        pc.getInventory().addItem(ItemRepository.getItemById(ItemId.GREAT_AXE));
+        pc.getInventory().addItem(ItemRepository.getItemById(ItemId.HEALTH_POTION));
+        for (int i = 1; i <= 7; i++)
+            pc.getInventory().addItem(ItemRepository.getItemById(ItemId.POISON_POTION));
     }
     // endregion
 

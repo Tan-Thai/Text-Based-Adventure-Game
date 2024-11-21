@@ -1,5 +1,6 @@
 package GameObjects.Items;
 
+import GameObjects.Entities.Entity;
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
 
@@ -41,7 +42,7 @@ public class EquipmentManager {
     }
 
     // removes item from equipment, and puts it back into players inventory.
-    public Equipment unequipEquipment(EquipmentType slot, PlayerCharacter pc) {
+    public Equipment unequipEquipment(EquipmentType slot, Entity pc) {
         if (equipmentCollection.containsKey(slot)) {
             Equipment removedItem = equipmentCollection.get(slot);
             equipmentCollection.put(slot, null);
@@ -59,12 +60,11 @@ public class EquipmentManager {
 
     // the equivalent of prompting to use an item. but in this case un-equipping it.
     private void promptUnequip(Scanner sc, EquipmentType selectedType, PlayerCharacter pc) {
-        System.out.print("Do you want to put this item into your inventory? (Y/N): ");
+        System.out.print("\nDo you want to put this item into your inventory? (Y/N): ");
         boolean response = Utility.checkYesOrNo(sc);
 
         if (response) {
-            pc.getInventory().addItem(unequipEquipment(selectedType, pc), sc);
-
+            pc.getInventory().acquireItem(unequipEquipment(selectedType, pc), sc);
         } else {
             System.out.println("You decided not to.");
         }

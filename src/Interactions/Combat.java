@@ -316,6 +316,8 @@ public class Combat {
 		return damage * 2;
 	}
 
+	// TODO: Look at making this a checking method, and using it to decide if combat
+	// should continue, and move messages to other method.
 	private void checkVictoryConditionMet() {
 		// will prolly have to change this due to us hardcoding a win message and all
 		// other handling here.
@@ -335,6 +337,7 @@ public class Combat {
 
 	private void exitingCombat() {
 		if (isCombatInProgress) {
+			Transactions.lootCurrency(player, enemy);
 			gainExperience();
 		}
 		isCombatInProgress = false;
@@ -355,5 +358,4 @@ public class Combat {
 					"Either entity was of an unexpected type, and so the player couldn't get Experience at end of combat.");
 		}
 	}
-
 }
