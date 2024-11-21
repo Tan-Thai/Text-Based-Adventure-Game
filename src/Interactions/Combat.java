@@ -223,34 +223,47 @@ public class Combat {
 
 		WeaponType tempWeaponType = WeaponType.DEFAULT;
 
-		if (attacker.getEquipmentList().getEquipment(EquipmentType.WEAPON) != null) {
+		// If attacker does not have weapon equipped this returns damage without
+		// modifying it.
+		if (attacker.getEquipmentList().getEquipment(EquipmentType.WEAPON) == null) {
+			return damage;
+		} else {
 			tempWeaponType = ((Weapon) attacker.getEquipmentList().getEquipment(EquipmentType.WEAPON))
 					.getWeaponType();
 		}
+
 		HostileEntityType tempHostileEntityType = defender.getHostileEntityType();
+
 		switch (tempHostileEntityType) {
 			case DRACONIC:
 				if (tempWeaponType == WeaponType.FIRE) {
-					// TODO: fix here what happens if this is an un-even number
+					// Returns damage divided by two, rounded down
 					return damage / 2;
+				} else {
+					return damage;
 				}
-				return damage;
 			case TOADKIN:
 				if (tempWeaponType == WeaponType.FIRE) {
-					// TODO: fix here what happens if this is an un-even number
+					// Returns damage divided by two, rounded down
 					return damage / 2;
+				} else {
+					return damage;
 				}
-				return damage;
 			case TROLLKIN:
 				if (tempWeaponType == WeaponType.FIRE || tempWeaponType == WeaponType.SUNLIGHT) {
+					// Returns damage multiplied by two
 					return damage * 2;
+				} else {
+					return damage;
 				}
 			case UNDEAD:
 				if (tempWeaponType == WeaponType.FIRE || tempWeaponType == WeaponType.HOLY
 						|| tempWeaponType == WeaponType.SUNLIGHT) {
+					// Returns damage multiplied by two
 					return damage * 2;
+				} else {
+					return damage;
 				}
-				return damage;
 			default:
 				return damage;
 		}
