@@ -3,15 +3,11 @@ import Core.GameStateManager;
 import GameObjects.Data.ItemId;
 import GameObjects.Data.ItemRepository;
 import GameObjects.Data.PlayerClassRepository;
-import GameObjects.Entities.HostileCharacter;
-import GameObjects.Entities.HostileEntityType;
 import GameObjects.Entities.PlayerCharacter;
 import GameObjects.Worlds.ZoneManager;
 import Global.Utility;
 import Interactions.Adventure;
-import Interactions.Combat;
 import Resources.Config;
-
 import java.util.Scanner;
 
 public class Game {
@@ -34,6 +30,8 @@ public class Game {
         PlayerCharacter pc = setupUser(sc);
         // --- TESTS -----------------------
         addItems(pc);
+        // Combat Test
+        // combatTest(pc, addEnemyTemp(), sc);
         // Encounter test
         // encounterTest(pc, sc);
 
@@ -70,27 +68,30 @@ public class Game {
 
     private static void runGame(PlayerCharacter pc, Scanner sc) {
         // considering a potential while (Running) here to then break out if we die,
-        // ive noticed that a couple of the death's that can occur leads to double enter prompts.
+        // ive noticed that a couple of the death's that can occur leads to double enter
+        // prompts.
         Adventure.adventureMenu(pc, sc, pc.getCurrentZone());
         Utility.promptEnterKey(sc);
     }
 
-/* 
-    private static void encounterTest(PlayerCharacter pc, Scanner myScanner) {
-
-        // This one is my bad, currently the ZoneManager needs to get instantiated for
-        // the rest to work.
-        // I will fix this later I promise! Just let it be for now!
-        ZoneManager.getInstance();
-
-        EncounterHandler encounterHandler = EncounterHandler.getInstance();
-
-        while (ZoneManager.getZone(ZoneType.FOREST).hasUnclearedEncounters()) {
-            System.out.println(ZoneManager.getZone(ZoneType.FOREST).getName());
-            encounterHandler.runEncounter(pc, ZoneManager.getZone(ZoneType.FOREST).getUnclearedEncounter(), myScanner);
-        }
-    }
-    */
+    /*
+     * private static void encounterTest(PlayerCharacter pc, Scanner myScanner) {
+     *
+     * // This one is my bad, currently the ZoneManager needs to get instantiated
+     * for
+     * // the rest to work.
+     * // I will fix this later I promise! Just let it be for now!
+     * ZoneManager.getInstance();
+     *
+     * EncounterHandler encounterHandler = EncounterHandler.getInstance();
+     *
+     * while (ZoneManager.getZone(ZoneType.FOREST).hasUnclearedEncounters()) {
+     * System.out.println(ZoneManager.getZone(ZoneType.FOREST).getName());
+     * encounterHandler.runEncounter(pc,
+     * ZoneManager.getZone(ZoneType.FOREST).getUnclearedEncounter(), myScanner);
+     * }
+     * }
+     */
 
     private void handleVictory() {
         System.out.println("Victory!");
@@ -127,12 +128,8 @@ public class Game {
         }
     }
 
-    // methods down here are most likely tests methods.
-    private static HostileCharacter addEnemyTemp() {
-        return new HostileCharacter("Troll", 5, 3, 2, 1, 1, HostileEntityType.TROLLKIN);
-    }
+    // region TT - Testing area
 
-    //region TT - Testing area
     private static void addItems(PlayerCharacter pc) {
         pc.getInventory().addItem(ItemRepository.getItemById(ItemId.RUSTY_LONGSWORD));
         pc.getInventory().addItem(ItemRepository.getItemById(ItemId.GREAT_AXE));
@@ -140,6 +137,6 @@ public class Game {
         for (int i = 1; i <= 7; i++)
             pc.getInventory().addItem(ItemRepository.getItemById(ItemId.POISON_POTION));
     }
-    //endregion
+    // endregion
 
 }

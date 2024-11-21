@@ -90,6 +90,7 @@ public class PlayerCharacter extends Entity {
     }
 
     // CURRENTLY not in use in combat at all and only connected to item usage.
+    // Now also in use in combat
     // override method do include a game over check for when the player specifically took damage.
     @Override
     public void takeDamage(int damageValue) {
