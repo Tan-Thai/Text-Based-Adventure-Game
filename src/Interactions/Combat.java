@@ -10,352 +10,352 @@ import GameObjects.Items.EquipmentType;
 import GameObjects.Items.Weapon;
 import GameObjects.Items.WeaponType;
 import Global.Utility;
-import java.util.OptionalInt;
-import java.util.Scanner;
+
+import java.util.*;
 
 public class Combat {
-	// Needed for combat loop
-	private static Combat instance;
-	private boolean isCombatInProgress = true;
-	private Scanner sc;
+    // Needed for combat loop
+    private static Combat instance;
+    private boolean isCombatInProgress = true;
+    private Scanner sc;
 
-	// Actors/ Entities in play - had first and second actor, but ill start with
-	// Player + enemy.
-	private PlayerCharacter player;
-	private HostileCharacter enemy;
+    // Actors/ Entities in play - had first and second actor, but ill start with
+    // Player + enemy.
+    private PlayerCharacter player;
+    private HostileCharacter enemy;
 
-	private int playerInitiative = 0;
-	private int enemyInitiative = 0;
+    private int playerInitiative = 0;
+    private int enemyInitiative = 0;
 
-	// new up A COMBAT object, and it will be the only one since it's a singleton.
-	public static synchronized Combat getInstance() {
-		if (instance == null) {
-			instance = new Combat();
-		}
-		return instance;
-	}
+    // new up A COMBAT object, and it will be the only one since it's a singleton.
+    public static synchronized Combat getInstance() {
+        if (instance == null) {
+            instance = new Combat();
+        }
+        return instance;
+    }
 
-	// news up the combat situation and then starts the combat logic
-	// Currently takes in playerchar and hostilechar as a simple combat, but also to
-	// reach their respective methods.
-	public void initiateCombat(PlayerCharacter player, HostileCharacter enemy, Scanner sc) {
-		this.player = player;
-		this.enemy = enemy;
-		this.sc = sc;
+    // news up the combat situation and then starts the combat logic
+    // Currently takes in playerchar and hostilechar as a simple combat, but also to
+    // reach their respective methods.
+    public void initiateCombat(PlayerCharacter player, HostileCharacter enemy, Scanner sc) {
+        this.player = player;
+        this.enemy = enemy;
+        this.sc = sc;
 
-		System.out.println("You have entered combat with a " + enemy.getName() + "!");
-		System.out.println(enemy.getHostileEntityDescription());
-		Utility.promptEnterKey(sc);
-		Utility.clearConsole();
-		isCombatInProgress = true;
-		combatLoop();
-	}
+        System.out.println("You have entered combat with a " + enemy.getName() + "!");
+        System.out.println(enemy.getHostileEntityDescription());
+        Utility.promptEnterKey(sc);
+        Utility.clearConsole();
+        isCombatInProgress = true;
+        combatLoop();
+    }
 
-	private void combatLoop() {
-		// creates the intiative for both entities
-		playerInitiative = calcInitiative(player, Utility.GREEN);
-		enemyInitiative = calcInitiative(enemy, Utility.RED);
+    private void combatLoop() {
+        // creates the intiative for both entities
+        playerInitiative = calcInitiative(player, Utility.GREEN);
+        enemyInitiative = calcInitiative(enemy, Utility.RED);
 
-		// loop for combat.
-		while (isCombatInProgress) {
-			Utility.clearConsole();
-			printInitative();
-			// Prints all hp's
-			printEntityHP(player, Utility.GREEN);
-			printEntityHP(enemy, Utility.RED);
+        // loop for combat.
+        while (isCombatInProgress) {
+            Utility.clearConsole();
+            printInitative();
+            // Prints all hp's
+            printEntityHP(player, Utility.GREEN);
+            printEntityHP(enemy, Utility.RED);
 
-			if (enemyInitiative > playerInitiative) {
-				enemyAttack(calcAttack(enemy, Utility.RED));
-				checkVictoryConditionMet();
-				playerCombatAction();
-				checkVictoryConditionMet();
-			} else {
-				playerCombatAction();
-				checkVictoryConditionMet();
-				enemyAttack(calcAttack(enemy, Utility.RED));
-				checkVictoryConditionMet();
-			}
-			Utility.promptEnterKey(sc);
-		}
-	}
+            if (enemyInitiative > playerInitiative) {
+                enemyAttack(calcAttack(enemy, Utility.RED));
+                playerCombatAction();
+            } else {
+                playerCombatAction();
+                enemyAttack(calcAttack(enemy, Utility.RED));
+            }
+            checkVictoryConditionMet();
+            // We can most likely have a single checkVictoryCon here due to the automatic return when x is dead.
+            // then it will just assert that by calling isDead (it already does). to then proceed to delivering loot.
+            Utility.promptEnterKey(sc);
+        }
+    }
 
-	private void enemyAttack(int attackHits) {
-		if (enemy.isDead()) {
-			return;
-		}
-		System.out.println(enemy.getName() + " gets " + attackHits + " hits");
-		System.out.println(player.getName() + " has " + player.getDexterity()
-				+ " Dexterity which is subtracted from your enemy's hits");
-		attackHits -= player.getDexterity();
-		System.out.println(attackHits);
+    private void enemyAttack(int attackHits) {
+        if (enemy.isDead()) {
+            return;
+        }
+        System.out.println(enemy.getName() + " gets " + attackHits + " hits");
+        System.out.println(player.getName() + " has " + player.getDexterity()
+                           + " Dexterity which is subtracted from your enemy's hits");
+        attackHits -= player.getDexterity();
+        System.out.println(attackHits);
 
-		if (attackHits <= 0) {
-			System.out.println(enemy.getName() + " misses");
-		} else {
-			int weaponDamage = addedWeaponDamage(enemy);
-			// if statement could be skipped on final product, but this is structured as a
-			// test for now.
-			if (weaponDamage > 0) {
+        if (attackHits <= 0) {
+            System.out.println(enemy.getName() + " misses");
+        } else {
+            int weaponDamage = addedWeaponDamage(enemy);
+            // if statement could be skipped on final product, but this is structured as a
+            // test for now.
+            if (weaponDamage > 0) {
 
-				System.out.println("Weapon added " + weaponDamage + " damage.");
-				System.out.println("Making it " + (attackHits + weaponDamage) + " hits");
-				attackHits += weaponDamage;
-			}
+                System.out.println("Weapon added " + weaponDamage + " damage.");
+                System.out.println("Making it " + (attackHits + weaponDamage) + " hits");
+                attackHits += weaponDamage;
+            }
 
-			if (addedArmorSave(player) <= 0) {
-				System.out.println("Added armor save is: " + addedArmorSave(player));
-			}
+            if (addedArmorSave(player) <= 0) {
+                System.out.println("Added armor save is: " + addedArmorSave(player));
+            }
 
-			attackHits -= addedArmorSave(player);
-			if (attackHits < 0) {
-				attackHits = 0;
-			}
+            attackHits -= addedArmorSave(player);
+            if (attackHits < 0) {
+                attackHits = 0;
+            }
 
-			player.takeDamage(attackHits);
-		}
-	}
+            player.takeDamage(attackHits);
+        }
+    }
 
-	private void playerCombatAction() {
-		if (player.isDead()) {
-			return;
-		}
+    private void playerCombatAction() {
+        if (player.isDead()) {
+            return;
+        }
 
-		// Used to secure loop if input is incorrect, usable until Tan adds the max
-		// option number to the Utility.checkIfNumber() method.
-		boolean isInputCorrect = true;
+        // Used to secure loop if input is incorrect, usable until Tan adds the max
+        // option number to the Utility.checkIfNumber() method.
+        boolean isInputCorrect = true;
 
-		do {
-			System.out.println("to attack press 1, to use inventory press 2, to flee press 3");
+        do {
+            System.out.println("to attack press 1, to use inventory press 2, to flee press 3");
 
-			// Sets to true, so program breaks out of script unless it is set to false in
-			// the default case of the switch.
-			isInputCorrect = true;
+            // Sets to true, so program breaks out of script unless it is set to false in
+            // the default case of the switch.
+            isInputCorrect = true;
 
-			switch (Utility.checkIfNumber(sc)) {
-				case 1 -> {
-					playerAttack(enemy, player, calcAttack(player, Utility.GREEN));
-				}
-				case 2 -> player.inspectEntity(sc);
-				case 3 -> {
-					if (((HostileCharacter) enemy).getHostileEntityType().equals(HostileEntityType.BOSS)) {
-						System.out.println("You can't run from a boss!");
-						Utility.clearConsole();
-					} else {
-						System.out.println("You have fled from combat!");
-						isCombatInProgress = false;
+            switch (Utility.checkIfNumber(sc)) {
+                case 1 -> {
+                    playerAttack(enemy, player, calcAttack(player, Utility.GREEN));
+                }
+                case 2 -> player.inspectEntity(sc);
+                case 3 -> {
+                    if (enemy.getHostileEntityType().equals(HostileEntityType.BOSS)) {
+                        System.out.println("You can't run from a boss!");
+                        Utility.clearConsole();
+                    } else {
+                        System.out.println("You have fled from combat!");
+                        isCombatInProgress = false;
 
-						enemy.heal(enemy.getMaxHealth());
-					}
-				}
-				default -> {
-					System.out.println("incorrect input, try again");
-					isInputCorrect = false;
-				}
-			}
-		} while (!isInputCorrect);
-	}
+                        enemy.heal(enemy.getMaxHealth());
+                    }
+                }
+                default -> {
+                    System.out.println("incorrect input, try again");
+                    isInputCorrect = false;
+                }
+            }
+        } while (!isInputCorrect);
+    }
 
-	// Prints out the health bars.
-	private void printEntityHP(Entity actor, String colour) {
-		System.out.println(colour + actor.getName() + " health: " + actor.getHealth() + Utility.RESET);
-		for (int i = 1; i <= actor.getHealth(); i++) {
-			System.out.print(colour + "|" + Utility.RESET);
-		}
-		System.out.println();
-	}
+    // Prints out the health bars.
+    private void printEntityHP(Entity actor, String colour) {
+        System.out.println(colour + actor.getName() + " health: " + actor.getHealth() + Utility.RESET);
+        for (int i = 1; i <= actor.getHealth(); i++) {
+            System.out.print(colour + "|" + Utility.RESET);
+        }
+        System.out.println();
+    }
 
-	// calc's the attack values etc.
-	private int calcAttack(Entity actor, String colour) {
+    // calc's the attack values etc.
+    private int calcAttack(Entity actor, String colour) {
 
-		int hitCount = Utility.rollDicePool(actor.getStrength(), colour, OptionalInt.empty(), OptionalInt.empty(),
-				OptionalInt.empty());
+        int hitCount = Utility.rollDicePool(actor.getStrength(), colour, OptionalInt.empty(), OptionalInt.empty(),
+                OptionalInt.empty());
 
-		// Used to add break inbetween lines in the console
-		System.out.println();
-		return hitCount;
-	}
+        // Used to add break inbetween lines in the console
+        System.out.println();
+        return hitCount;
+    }
 
-	// Returns the initiative of the entity.
-	private int calcInitiative(Entity actor, String colour) {
+    // Returns the initiative of the entity.
+    private int calcInitiative(Entity actor, String colour) {
 
-		int speedCount = Utility.rollDicePool(actor.getIntelligence(), colour, OptionalInt.empty(), OptionalInt.empty(),
-				OptionalInt.empty());
-		System.out.println();
-		return speedCount;
-	}
+        int speedCount = Utility.rollDicePool(actor.getIntelligence(), colour, OptionalInt.empty(), OptionalInt.empty(),
+                OptionalInt.empty());
+        System.out.println();
+        return speedCount;
+    }
 
-	// checks and returns the added weapon damage if actor has one equipped,
-	// otherwise returns zero.
-	private int addedWeaponDamage(Entity actor) {
-		if (actor.getEquipmentList().getEquipment(EquipmentType.WEAPON) != null)
-			return actor.getEquipmentList().getEquipment(EquipmentType.WEAPON).getEffectValue();
-		else
-			return 0;
-	}
+    // checks and returns the added weapon damage if actor has one equipped,
+    // otherwise returns zero.
+    private int addedWeaponDamage(Entity actor) {
+        if (actor.getEquipmentList().getEquipment(EquipmentType.WEAPON) != null)
+            return actor.getEquipmentList().getEquipment(EquipmentType.WEAPON).getEffectValue();
+        else
+            return 0;
+    }
 
-	// checks and returns the protection from the armor, if entity has one equipped,
-	// otherwise returns zero.
-	private int addedArmorSave(Entity actor) {
-		if (actor.getEquipmentList().getEquipment(EquipmentType.ARMOUR) != null)
-			// TODO if given time, Armor could be reworked so that it used the set and
-			// getArmour on the entity together with the apply() function from the
-			// effect-object. However, that would require some rework.
-			return actor.getEquipmentList().getEquipment(EquipmentType.ARMOUR).getEffectValue();
-		else
-			return 0;
-	}
+    // checks and returns the protection from the armor, if entity has one equipped,
+    // otherwise returns zero.
+    private int addedArmorSave(Entity actor) {
+        if (actor.getEquipmentList().getEquipment(EquipmentType.ARMOUR) != null)
+            // TODO if given time, Armor could be reworked so that it used the set and
+            // getArmour on the entity together with the apply() function from the
+            // effect-object. However, that would require some rework.
+            return actor.getEquipmentList().getEquipment(EquipmentType.ARMOUR).getEffectValue();
+        else
+            return 0;
+    }
 
-	private void printInitative() {
-		System.out.println("Your initative is " + playerInitiative);
-		System.out.println("Your enemies initiative is " + enemyInitiative);
-	}
+    private void printInitative() {
+        System.out.println("Your initative is " + playerInitiative);
+        System.out.println("Your enemies initiative is " + enemyInitiative);
+    }
 
-	private void playerAttack(HostileCharacter enemy, PlayerCharacter player, int attackHits) {
-		System.out.println(player.getName() + " gets " + attackHits + " hits");
-		System.out.println(enemy.getName() + " has " + enemy.getDexterity()
-				+ " Dexterity which is subtracted from your hits");
-		attackHits -= enemy.getDexterity();
-		System.out.println(attackHits);
+    private void playerAttack(HostileCharacter enemy, PlayerCharacter player, int attackHits) {
+        System.out.println(player.getName() + " gets " + attackHits + " hits");
+        System.out.println(enemy.getName() + " has " + enemy.getDexterity()
+                           + " Dexterity which is subtracted from your hits");
+        attackHits -= enemy.getDexterity();
+        System.out.println(attackHits);
 
-		if (attackHits <= 0) {
-			System.out.println(player.getName() + " misses");
-		} else {
-			int weaponDamage = addedWeaponDamage(player);
-			// if statement could be skipped on final product, but this is structured as a
-			// test for now.
-			if (weaponDamage > 0) {
+        if (attackHits <= 0) {
+            System.out.println(player.getName() + " misses");
+        } else {
+            int weaponDamage = addedWeaponDamage(player);
+            // if statement could be skipped on final product, but this is structured as a
+            // test for now.
+            if (weaponDamage > 0) {
 
-				System.out.println("Weapon added " + weaponDamage + " damage.");
-				System.out.println("Making it " + (attackHits + weaponDamage) + " hits");
-				attackHits += weaponDamage;
-				attackHits = getDamageConversionBasedOnType(attackHits, player, enemy);
-			}
+                System.out.println("Weapon added " + weaponDamage + " damage.");
+                System.out.println("Making it " + (attackHits + weaponDamage) + " hits");
+                attackHits += weaponDamage;
+                attackHits = getDamageConversionBasedOnType(attackHits, player, enemy);
+            }
 
-			// Comment this back in if we implement that the enemy equips armor.
-			// if(addedArmorSave(enemy) > 0) {
-			// System.out.println("added armor save is: " + addedArmorSave(enemy));
-			// }
-			// attackHits -= addedArmorSave(enemy);
+            // Comment this back in if we implement that the enemy equips armor.
+            // if(addedArmorSave(enemy) > 0) {
+            // System.out.println("added armor save is: " + addedArmorSave(enemy));
+            // }
+            // attackHits -= addedArmorSave(enemy);
 
-			if (attackHits < 0) {
-				attackHits = 0;
-			}
+            if (attackHits < 0) {
+                attackHits = 0;
+            }
 
-			enemy.takeDamage(attackHits);
-		}
-	}
+            enemy.takeDamage(attackHits);
+        }
+    }
 
-	private int getDamageConversionBasedOnType(int damage, Entity attacker, HostileCharacter defender) {
+    private int getDamageConversionBasedOnType(int damage, Entity attacker, HostileCharacter defender) {
 
-		WeaponType tempWeaponType = WeaponType.DEFAULT;
+        WeaponType tempWeaponType = WeaponType.DEFAULT;
 
-		// If attacker does not have weapon equipped this returns damage without
-		// modifying it.
-		if (attacker.getEquipmentList().getEquipment(EquipmentType.WEAPON) == null) {
-			return damage;
-		} else {
-			tempWeaponType = ((Weapon) attacker.getEquipmentList().getEquipment(EquipmentType.WEAPON))
-					.getWeaponType();
-		}
+        // If attacker does not have weapon equipped this returns damage without
+        // modifying it.
+        if (attacker.getEquipmentList().getEquipment(EquipmentType.WEAPON) == null) {
+            return damage;
+        } else {
+            tempWeaponType = ((Weapon) attacker.getEquipmentList().getEquipment(EquipmentType.WEAPON))
+                    .getWeaponType();
+        }
 
-		HostileEntityType tempHostileEntityType = defender.getHostileEntityType();
+        HostileEntityType tempHostileEntityType = defender.getHostileEntityType();
 
-		switch (tempHostileEntityType) {
-			case DRACONIC:
-				if (tempWeaponType == WeaponType.FIRE) {
-					printIneffectiveStatement(damage);
-				} else {
-					return damage;
-				}
-			case TOADKIN:
-				if (tempWeaponType == WeaponType.FIRE) {
-					return printIneffectiveStatement(damage);
-				} else {
-					return damage;
-				}
-			case TROLLKIN:
-				if (tempWeaponType == WeaponType.FIRE || tempWeaponType == WeaponType.SUNLIGHT) {
-					return printEffectiveStatement(damage);
-				} else {
-					return damage;
-				}
-			case UNDEAD:
-				if (tempWeaponType == WeaponType.FIRE || tempWeaponType == WeaponType.HOLY
-						|| tempWeaponType == WeaponType.SUNLIGHT) {
-					return printEffectiveStatement(damage);
-				} else {
-					return printIneffectiveStatement(damage);
-				}
-			default:
-				return damage;
-		}
-	}
+        switch (tempHostileEntityType) {
+            case DRACONIC:
+                if (tempWeaponType == WeaponType.FIRE) {
+                    printIneffectiveStatement(damage);
+                } else {
+                    return damage;
+                }
+            case TOADKIN:
+                if (tempWeaponType == WeaponType.FIRE) {
+                    return printIneffectiveStatement(damage);
+                } else {
+                    return damage;
+                }
+            case TROLLKIN:
+                if (tempWeaponType == WeaponType.FIRE || tempWeaponType == WeaponType.SUNLIGHT) {
+                    return printEffectiveStatement(damage);
+                } else {
+                    return damage;
+                }
+            case UNDEAD:
+                if (tempWeaponType == WeaponType.FIRE || tempWeaponType == WeaponType.HOLY
+                    || tempWeaponType == WeaponType.SUNLIGHT) {
+                    return printEffectiveStatement(damage);
+                } else {
+                    return printIneffectiveStatement(damage);
+                }
+            default:
+                return damage;
+        }
+    }
 
-	/**
-	 * Prints a statement warning that the attack seemed to have little effect.
-	 * Then returns damage divided by two, rounded down
-	 * 
-	 * @param damage
-	 * @return
-	 */
-	private int printIneffectiveStatement(int damage) {
-		System.out.println("Your attack had almost no effect! You only caused " + (damage / 2) + " points of damage!");
+    /**
+     * Prints a statement warning that the attack seemed to have little effect.
+     * Then returns damage divided by two, rounded down
+     *
+     * @param damage
+     * @return
+     */
+    private int printIneffectiveStatement(int damage) {
+        System.out.println("Your attack had almost no effect! You only caused " + (damage / 2) + " points of damage!");
 
-		return damage / 2;
-	}
+        return damage / 2;
+    }
 
-	/**
-	 * Prints a congratulatory statement about how effective the attack was.
-	 * Then returns the val times two.
-	 * 
-	 * @param damage
-	 * @return
-	 */
-	private int printEffectiveStatement(int damage) {
-		System.out.println("Your attack was super effective! You caused " + (damage * 2) + " points of damage!");
-		return damage * 2;
-	}
+    /**
+     * Prints a congratulatory statement about how effective the attack was.
+     * Then returns the val times two.
+     *
+     * @param damage
+     * @return
+     */
+    private int printEffectiveStatement(int damage) {
+        System.out.println("Your attack was super effective! You caused " + (damage * 2) + " points of damage!");
+        return damage * 2;
+    }
 
-	// TODO: Look at making this a checking method, and using it to decide if combat
-	// should continue, and move messages to other method.
-	private void checkVictoryConditionMet() {
-		// will prolly have to change this due to us hardcoding a win message and all
-		// other handling here.
-		if (enemy.isDead()) {
-			Utility.clearConsole();
-			printEntityHP(player, Utility.GREEN);
-			System.out.println("You have vanquished your foe!");
-			exitingCombat();
+    // TODO: Look at making this a checking method, and using it to decide if combat
+    // should continue, and move messages to other method.
+    private void checkVictoryConditionMet() {
+        // will prolly have to change this due to us hardcoding a win message and all
+        // other handling here.
+        if (enemy.isDead()) {
+            Utility.clearConsole();
+            printEntityHP(player, Utility.GREEN);
+            System.out.println("You have vanquished your foe!");
+            exitingCombat();
 
-		} else if (player.isDead()) {
-			System.out.println("You have been slain");
-			// currently calling the state to game over on death here.
-			GameStateManager.getInstance().setCurrentState(GameState.GAME_OVER);
-			exitingCombat();
-		}
-	}
+        } else if (player.isDead()) {
+            System.out.println("You have been slain");
+            // currently calling the state to game over on death here.
+            GameStateManager.getInstance().setCurrentState(GameState.GAME_OVER);
+            exitingCombat();
+        }
+    }
 
-	private void exitingCombat() {
-		if (isCombatInProgress) {
-			Transactions.lootCurrency(player, enemy);
-			gainExperience();
-		}
-		isCombatInProgress = false;
-		Utility.promptEnterKey(sc);
-		Utility.clearConsole();
-	}
+    private void exitingCombat() {
+        if (enemy.isDead()) {
+            Transactions.receiveLootFromCombat(player, enemy, sc);
+            gainExperience();
+        }
+        isCombatInProgress = false;
+        Utility.promptEnterKey(sc);
+        Utility.clearConsole();
+    }
 
-	private void gainExperience() {
+    private void gainExperience() {
 
-		if (player.isDead() || !enemy.isDead()) {
-			return;
-		}
+        if (player.isDead() || !enemy.isDead()) {
+            return;
+        }
 
-		if (player instanceof PlayerCharacter && enemy instanceof HostileCharacter) {
-			((PlayerCharacter) player).gainExperience(((HostileCharacter) enemy).calcExperienceGiven());
-		} else {
-			System.err.println(
-					"Either entity was of an unexpected type, and so the player couldn't get Experience at end of combat.");
-		}
-	}
+        if (player instanceof PlayerCharacter && enemy instanceof HostileCharacter) {
+            player.gainExperience(enemy.calcExperienceGiven());
+        } else {
+            System.err.println(
+                    "Either entity was of an unexpected type, and so the player couldn't get Experience at end of combat.");
+        }
+    }
+
 }
