@@ -2,10 +2,7 @@ package GameObjects.Entities;
 
 import GameObjects.Data.ItemId;
 import GameObjects.Data.ItemRepository;
-import GameObjects.Items.DamageEffect;
-import GameObjects.Items.HealingEffect;
 import GameObjects.Items.Item;
-import GameObjects.Items.Potion;
 import Global.Utility;
 import Interactions.Transactions;
 

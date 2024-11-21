@@ -1,7 +1,6 @@
 import Core.GameState;
 import Core.GameStateManager;
 import GameObjects.Data.Info;
-import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
 
 import java.util.Scanner;
