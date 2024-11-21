@@ -117,25 +117,40 @@ public class Combat {
 		if (player.isDead()) {
 			return;
 		}
+
 		System.out.println("to attack press 1, to use inventory press 2, to flee press 3");
-		switch (Utility.checkIfNumber(sc)) {
-			case 1 -> {
-				resolveAttack(enemy, player, calcAttack(player, Utility.GREEN));
-			}
-			case 2 -> player.inspectEntity(sc);
-			case 3 -> {
-				if (((HostileCharacter) enemy).getHostileEntityType().equals(HostileEntityType.BOSS)) {
-					System.out.println("You can't run from a boss!");
-					Utility.clearConsole();
-				} else {
-					System.out.println("You have fled from combat!");
-					isCombatInProgress = false;
-					// TODO Remember to add here that enemies heal if the PC flees.
+
+		// Used to secure loop if input is incorrect, usable until Tan adds the max
+		// option number to the Utility.checkIfNumber() method.
+		boolean isInputCorrect = true;
+
+		do {
+			// Sets to true, so program breaks out of script unless it is set to false in
+			// the default case of the switch.
+			isInputCorrect = true;
+
+			switch (Utility.checkIfNumber(sc)) {
+				case 1 -> {
+					resolveAttack(enemy, player, calcAttack(player, Utility.GREEN));
+				}
+				case 2 -> player.inspectEntity(sc);
+				case 3 -> {
+					if (((HostileCharacter) enemy).getHostileEntityType().equals(HostileEntityType.BOSS)) {
+						System.out.println("You can't run from a boss!");
+						Utility.clearConsole();
+					} else {
+						System.out.println("You have fled from combat!");
+						isCombatInProgress = false;
+
+						enemy.heal(enemy.getMaxHealth());
+					}
+				}
+				default -> {
+					System.out.println("incorrect input, try again");
+					isInputCorrect = false;
 				}
 			}
-			default -> System.out.println("incorrect input, try again");
-		}
-
+		} while (!isInputCorrect);
 	}
 
 	// Prints out the bars.
@@ -174,9 +189,13 @@ public class Combat {
 			return 0;
 	}
 
-	// checks and returns the protection from the armor.
+	// checks and returns the protection from the armor, if entity has one equiped,
+	// otherwise returns zero.
 	private int addedArmorSave(Entity actor) {
 		if (actor.getEquipmentList().getEquipment(EquipmentType.ARMOUR) != null)
+			// TODO if given time, Armor could be reworked so that it used the set and
+			// getArmour on the entity together with the apply() function from the
+			// effect-object. However, that would require some rework.
 			return actor.getEquipmentList().getEquipment(EquipmentType.ARMOUR).getEffectValue();
 		else
 			return 0;
@@ -237,6 +256,7 @@ public class Combat {
 		switch (tempHostileEntityType) {
 			case DRACONIC:
 				if (tempWeaponType == WeaponType.FIRE) {
+					System.out.println("Your puny fire weapon barely affects the draconic beast!");
 					// Returns damage divided by two, rounded down
 					return damage / 2;
 				} else {
@@ -251,6 +271,7 @@ public class Combat {
 				}
 			case TROLLKIN:
 				if (tempWeaponType == WeaponType.FIRE || tempWeaponType == WeaponType.SUNLIGHT) {
+					System.out.println("Your flaming weapon scorched the fell beast deep!");
 					// Returns damage multiplied by two
 					return damage * 2;
 				} else {

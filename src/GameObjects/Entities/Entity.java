@@ -71,7 +71,6 @@ public class Entity {
     }
 
     public int getArmour() {
-        // TODO: Johan and Wille continues here we promise!
         return armour;
     }
 
