@@ -67,10 +67,10 @@ public class Combat {
 			if (enemyInitiative > playerInitiative) {
 				enemyAttack(calcAttack(enemy, Utility.RED));
 				checkVictoryConditionMet();
-				playerAttack();
+				playerCombatAction();
 				checkVictoryConditionMet();
 			} else {
-				playerAttack();
+				playerCombatAction();
 				checkVictoryConditionMet();
 				enemyAttack(calcAttack(enemy, Utility.RED));
 				checkVictoryConditionMet();
@@ -85,7 +85,7 @@ public class Combat {
 		}
 		System.out.println(enemy.getName() + " gets " + attackHits + " hits");
 		System.out.println(player.getName() + " has " + player.getDexterity()
-				+ " Dextarity which is subtracted from your hits");
+				+ " Dexterity which is subtracted from your enemy's hits");
 		attackHits -= player.getDexterity();
 		System.out.println(attackHits);
 
@@ -102,7 +102,9 @@ public class Combat {
 				attackHits += weaponDamage;
 			}
 
-			System.out.println("added armor save is: " + addedArmorSave(player));
+			if (addedArmorSave(player) <= 0) {
+				System.out.println("Added armor save is: " + addedArmorSave(player));
+			}
 
 			attackHits -= addedArmorSave(player);
 			if (attackHits < 0) {
@@ -113,25 +115,25 @@ public class Combat {
 		}
 	}
 
-	private void playerAttack() {
+	private void playerCombatAction() {
 		if (player.isDead()) {
 			return;
 		}
-
-		System.out.println("to attack press 1, to use inventory press 2, to flee press 3");
 
 		// Used to secure loop if input is incorrect, usable until Tan adds the max
 		// option number to the Utility.checkIfNumber() method.
 		boolean isInputCorrect = true;
 
 		do {
+			System.out.println("to attack press 1, to use inventory press 2, to flee press 3");
+
 			// Sets to true, so program breaks out of script unless it is set to false in
 			// the default case of the switch.
 			isInputCorrect = true;
 
 			switch (Utility.checkIfNumber(sc)) {
 				case 1 -> {
-					resolveAttack(enemy, player, calcAttack(player, Utility.GREEN));
+					playerAttack(enemy, player, calcAttack(player, Utility.GREEN));
 				}
 				case 2 -> player.inspectEntity(sc);
 				case 3 -> {
@@ -153,7 +155,7 @@ public class Combat {
 		} while (!isInputCorrect);
 	}
 
-	// Prints out the bars.
+	// Prints out the health bars.
 	private void printEntityHP(Entity actor, String colour) {
 		System.out.println(colour + actor.getName() + " health: " + actor.getHealth() + Utility.RESET);
 		for (int i = 1; i <= actor.getHealth(); i++) {
@@ -173,6 +175,7 @@ public class Combat {
 		return hitCount;
 	}
 
+	// Returns the initiative of the entity.
 	private int calcInitiative(Entity actor, String colour) {
 
 		int speedCount = Utility.rollDicePool(actor.getIntelligence(), colour, OptionalInt.empty(), OptionalInt.empty(),
@@ -181,7 +184,8 @@ public class Combat {
 		return speedCount;
 	}
 
-	// checks and returns the added weapon damage if actor has one equipped.
+	// checks and returns the added weapon damage if actor has one equipped,
+	// otherwise returns zero.
 	private int addedWeaponDamage(Entity actor) {
 		if (actor.getEquipmentList().getEquipment(EquipmentType.WEAPON) != null)
 			return actor.getEquipmentList().getEquipment(EquipmentType.WEAPON).getEffectValue();
@@ -189,7 +193,7 @@ public class Combat {
 			return 0;
 	}
 
-	// checks and returns the protection from the armor, if entity has one equiped,
+	// checks and returns the protection from the armor, if entity has one equipped,
 	// otherwise returns zero.
 	private int addedArmorSave(Entity actor) {
 		if (actor.getEquipmentList().getEquipment(EquipmentType.ARMOUR) != null)
@@ -206,10 +210,10 @@ public class Combat {
 		System.out.println("Your enemies initiative is " + enemyInitiative);
 	}
 
-	private void resolveAttack(HostileCharacter enemy, PlayerCharacter player, int attackHits) {
+	private void playerAttack(HostileCharacter enemy, PlayerCharacter player, int attackHits) {
 		System.out.println(player.getName() + " gets " + attackHits + " hits");
 		System.out.println(enemy.getName() + " has " + enemy.getDexterity()
-				+ " Dextarity which is subtracted from your hits");
+				+ " Dexterity which is subtracted from your hits");
 		attackHits -= enemy.getDexterity();
 		System.out.println(attackHits);
 
@@ -227,9 +231,12 @@ public class Combat {
 				attackHits = getDamageConversionBasedOnType(attackHits, player, enemy);
 			}
 
-			System.out.println("added armor save is: " + addedArmorSave(enemy));
+			// Comment this back in if we implement that the enemy equips armor.
+			// if(addedArmorSave(enemy) > 0) {
+			// System.out.println("added armor save is: " + addedArmorSave(enemy));
+			// }
+			// attackHits -= addedArmorSave(enemy);
 
-			attackHits -= addedArmorSave(enemy);
 			if (attackHits < 0) {
 				attackHits = 0;
 			}
@@ -256,38 +263,57 @@ public class Combat {
 		switch (tempHostileEntityType) {
 			case DRACONIC:
 				if (tempWeaponType == WeaponType.FIRE) {
-					System.out.println("Your puny fire weapon barely affects the draconic beast!");
-					// Returns damage divided by two, rounded down
-					return damage / 2;
+					printIneffectiveStatement(damage);
 				} else {
 					return damage;
 				}
 			case TOADKIN:
 				if (tempWeaponType == WeaponType.FIRE) {
-					// Returns damage divided by two, rounded down
-					return damage / 2;
+					return printIneffectiveStatement(damage);
 				} else {
 					return damage;
 				}
 			case TROLLKIN:
 				if (tempWeaponType == WeaponType.FIRE || tempWeaponType == WeaponType.SUNLIGHT) {
-					System.out.println("Your flaming weapon scorched the fell beast deep!");
-					// Returns damage multiplied by two
-					return damage * 2;
+					return printEffectiveStatement(damage);
 				} else {
 					return damage;
 				}
 			case UNDEAD:
 				if (tempWeaponType == WeaponType.FIRE || tempWeaponType == WeaponType.HOLY
 						|| tempWeaponType == WeaponType.SUNLIGHT) {
-					// Returns damage multiplied by two
-					return damage * 2;
+					return printEffectiveStatement(damage);
 				} else {
-					return damage;
+					return printIneffectiveStatement(damage);
 				}
 			default:
 				return damage;
 		}
+	}
+
+	/**
+	 * Prints a statement warning that the attack seemed to have little effect.
+	 * Then returns damage divided by two, rounded down
+	 * 
+	 * @param damage
+	 * @return
+	 */
+	private int printIneffectiveStatement(int damage) {
+		System.out.println("Your attack had almost no effect! You only caused " + (damage / 2) + " points of damage!");
+
+		return damage / 2;
+	}
+
+	/**
+	 * Prints a congratulatory statement about how effective the attack was.
+	 * Then returns the val times two.
+	 * 
+	 * @param damage
+	 * @return
+	 */
+	private int printEffectiveStatement(int damage) {
+		System.out.println("Your attack was super effective! You caused " + (damage * 2) + " points of damage!");
+		return damage * 2;
 	}
 
 	private void checkVictoryConditionMet() {
