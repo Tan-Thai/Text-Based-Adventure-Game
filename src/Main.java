@@ -2,6 +2,7 @@ import Core.GameState;
 import Core.GameStateManager;
 import GameObjects.Data.Info;
 import GameObjects.Entities.PlayerCharacter;
+import GameObjects.Worlds.ZoneManager;
 import Global.Utility;
 
 import java.util.Scanner;
@@ -19,7 +20,9 @@ public class Main {
             replay = Utility.checkYesOrNo(sc);
 
             if (replay) {
+                System.out.println("Restarting game...");
                 Utility.promptEnterKey(sc);
+                ZoneManager.getInstance().resetZones();
                 GameStateManager.getInstance().setCurrentState(GameState.RUNNING);
             }
 

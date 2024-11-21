@@ -34,8 +34,6 @@ public class Game {
         PlayerCharacter pc = setupUser(sc);
         // --- TESTS -----------------------
         addItems(pc);
-        // Combat Test
-        // combatTest(pc, addEnemyTemp(), sc);
         // Encounter test
         // encounterTest(pc, sc);
 
@@ -135,14 +133,6 @@ public class Game {
     }
 
     //region TT - Testing area
-    private static void combatTest(PlayerCharacter pc, HostileCharacter enemy, Scanner sc) {
-        // new up A COMBAT object, and it will be the only one since it's a singleton.
-        Combat combat = Combat.getInstance();
-        pc.inspectEntity(sc);
-        // this is what we call and send in when a combat between 2 entities happens.
-        combat.initiateCombat(pc, enemy, sc);
-    }
-
     private static void addItems(PlayerCharacter pc) {
         pc.getInventory().addItem(ItemRepository.getItemById(ItemId.RUSTY_LONGSWORD));
         pc.getInventory().addItem(ItemRepository.getItemById(ItemId.GREAT_AXE));
