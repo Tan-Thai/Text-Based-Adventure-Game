@@ -121,6 +121,10 @@ public class Utility {
         }
     }
 
+    public static void printBigLine() {
+        System.out.println("-----------------------------------------------------------");
+    }
+
     /**
      * Function that rolls a given set of dice and returns the number of dice who's
      * results where equal or above the success value.
@@ -140,7 +144,7 @@ public class Utility {
      * @return
      */
     public static int rollDicePool(int diceAmount, String colour, OptionalInt optionalSuccessValue,
-            OptionalInt optionalCritValue, OptionalInt optionalDiceSideAmount) {
+                                   OptionalInt optionalCritValue, OptionalInt optionalDiceSideAmount) {
 
         int successValue = optionalSuccessValue.orElse(SUCCESS_VALUE);
         int critValue = optionalCritValue.orElse(CRIT_VALUE);
@@ -171,7 +175,7 @@ public class Utility {
             } catch (IllegalArgumentException e) {
                 System.err.println(
                         "The random function returned a negative value. meaning that the die was asigned a negative amount of sides. The result of the die will be zero"
-                                + e.getMessage());
+                        + e.getMessage());
                 currentValue = 0;
             }
             System.out.print(colour + "[" + currentValue + "]" + RESET);
@@ -193,7 +197,7 @@ public class Utility {
     /**
      * slowprint texts to highten player experience, if optional param isn't given
      * the delay is set to 40
-     * 
+     *
      * @param text
      * @param optDelay int parameter to change delay,
      */

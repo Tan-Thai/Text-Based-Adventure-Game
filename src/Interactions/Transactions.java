@@ -107,6 +107,7 @@ public class Transactions {
             List<Item> enemyItems = new ArrayList<>(enemy.getInventory().getItems().keySet());
             Item droppedLoot = enemyItems.get(random.nextInt(enemyItems.size()));
 
+            Utility.printBigLine();
             System.out.println("The enemy dropped a(n) " + droppedLoot.getName() + "!");
 
             player.getInventory().acquireItem(droppedLoot, sc);
