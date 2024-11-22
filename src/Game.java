@@ -107,7 +107,7 @@ public class Game {
         Utility.clearConsole();
         Utility.slowPrint("Choose a class");
         System.out.println(
-                "1. Barbarian (Strong with lots of health)\n2. Rogue (dexterous and swift)\n3. Wizard (Clever and astmatic)");
+                "1. Barbarian (Good at dealing damage and taking damage)\n2. Rogue (Hard to hit and fast)\n3. Wizard (Clever and astmatic)");
         System.out.print(Config.MENU_CHOICE_STRING);
         int choice = Utility.checkIfNumber(sc);
 
