@@ -36,7 +36,7 @@ public class Main {
 
         while (GameStateManager.getInstance().getCurrentState() == GameState.RUNNING) {
             Utility.clearConsole();
-            System.out.println("Welcome to the game!" +
+            System.out.println("Main menu" +
                                "\n1. Start Game" +
                                "\n2. How to Play");
             System.out.print("\nEnter your choice or press 0 to close program: ");
