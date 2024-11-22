@@ -1,16 +1,13 @@
 import Core.GameState;
 import Core.GameStateManager;
+import GameObjects.Data.ItemId;
+import GameObjects.Data.ItemRepository;
 import GameObjects.Data.PlayerClassRepository;
-import GameObjects.Entities.HostileCharacter;
-import GameObjects.Entities.HostileEntityType;
 import GameObjects.Entities.PlayerCharacter;
-import GameObjects.Items.*;
 import GameObjects.Worlds.ZoneManager;
 import Global.Utility;
 import Interactions.Adventure;
-import Interactions.Combat;
 import Resources.Config;
-
 import java.util.Scanner;
 
 public class Game {
@@ -35,13 +32,6 @@ public class Game {
         addItems(pc);
         // Combat Test
         // combatTest(pc, addEnemyTemp(), sc);
-        /*Equipment bow = new Equipment(
-                "'bow boi'",
-                "Your standard blade as a new adventurer.",
-                EquipmentType.WEAPON,
-                new DamageEffect(2),
-                10);
-        pc.getInventory().addItem(bow, sc);*/
         // Encounter test
         // encounterTest(pc, sc);
 
@@ -84,22 +74,24 @@ public class Game {
         Utility.promptEnterKey(sc);
     }
 
-/* 
-    private static void encounterTest(PlayerCharacter pc, Scanner myScanner) {
-
-        // This one is my bad, currently the ZoneManager needs to get instantiated for
-        // the rest to work.
-        // I will fix this later I promise! Just let it be for now!
-        ZoneManager.getInstance();
-
-        EncounterHandler encounterHandler = EncounterHandler.getInstance();
-
-        while (ZoneManager.getZone(ZoneType.FOREST).hasUnclearedEncounters()) {
-            System.out.println(ZoneManager.getZone(ZoneType.FOREST).getName());
-            encounterHandler.runEncounter(pc, ZoneManager.getZone(ZoneType.FOREST).getUnclearedEncounter(), myScanner);
-        }
-    }
-    */
+    /*
+     * private static void encounterTest(PlayerCharacter pc, Scanner myScanner) {
+     * 
+     * // This one is my bad, currently the ZoneManager needs to get instantiated
+     * for
+     * // the rest to work.
+     * // I will fix this later I promise! Just let it be for now!
+     * ZoneManager.getInstance();
+     * 
+     * EncounterHandler encounterHandler = EncounterHandler.getInstance();
+     * 
+     * while (ZoneManager.getZone(ZoneType.FOREST).hasUnclearedEncounters()) {
+     * System.out.println(ZoneManager.getZone(ZoneType.FOREST).getName());
+     * encounterHandler.runEncounter(pc,
+     * ZoneManager.getZone(ZoneType.FOREST).getUnclearedEncounter(), myScanner);
+     * }
+     * }
+     */
 
     private void handleVictory() {
         System.out.println("Victory!");
@@ -136,50 +128,15 @@ public class Game {
         }
     }
 
-    // methods down here are most likely tests methods.
-    private static HostileCharacter addEnemyTemp() {
-        return new HostileCharacter("Troll", 5, 3, 2, 1, 1, HostileEntityType.TROLLKIN);
-    }
-
-    //region TT - Testing area
-    private static void combatTest(PlayerCharacter pc, HostileCharacter enemy, Scanner sc) {
-        // new up A COMBAT object, and it will be the only one since it's a singleton.
-        Combat combat = Combat.getInstance();
-        pc.inspectEntity(sc);
-        // this is what we call and send in when a combat between 2 entities happens.
-        combat.initiateCombat(pc, enemy, sc);
-    }
+    // region TT - Testing area
 
     private static void addItems(PlayerCharacter pc) {
-        Equipment sword = new Equipment(
-                "'A Simple Sword'",
-                "Your standard blade as a new adventurer.",
-                EquipmentType.WEAPON,
-                new DamageEffect(2),
-                100);
-        Equipment bow = new Equipment(
-                "'bow temp'",
-                "Your standard blade as a new adventurer.",
-                EquipmentType.WEAPON,
-                new DamageEffect(2),
-                80);
-        Potion potion = new Potion(
-                "Health Potion",
-                "Chug when ouch",
-                new HealingEffect(5),
-                20);
-        Potion poison = new Potion(
-                "Totally a Health Potion",
-                "Chug for ouch",
-                new DamageEffect(7),
-                30);
-
-        pc.getInventory().addItem(bow);
-        pc.getInventory().addItem(sword);
-        pc.getInventory().addItem(potion);
+        pc.getInventory().addItem(ItemRepository.getItemById(ItemId.RUSTY_LONGSWORD));
+        pc.getInventory().addItem(ItemRepository.getItemById(ItemId.GREAT_AXE));
+        pc.getInventory().addItem(ItemRepository.getItemById(ItemId.HEALTH_POTION));
         for (int i = 1; i <= 7; i++)
-            pc.getInventory().addItem(poison);
+            pc.getInventory().addItem(ItemRepository.getItemById(ItemId.POISON_POTION));
     }
-    //endregion
+    // endregion
 
 }

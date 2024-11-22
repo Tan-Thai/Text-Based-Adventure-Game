@@ -2,7 +2,6 @@ package GameObjects.Data;
 
 import Interactions.ChallengeType;
 import Interactions.Encounter;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,8 @@ public class EncounterRepository {
 
 	public static List<Encounter> getForestEncounters() {
 
-		forestEncounters = new ArrayList<Encounter>();
+		forestEncounters = new ArrayList<>();
+		
 
 		forestEncounters.add(getLureWillOWispEncounter());
 		forestEncounters.add(getHuntersForgottenTrapEncounter());

@@ -1,9 +1,8 @@
 package GameObjects.Entities;
 
-import GameObjects.Items.DamageEffect;
-import GameObjects.Items.HealingEffect;
+import GameObjects.Data.ItemId;
+import GameObjects.Data.ItemRepository;
 import GameObjects.Items.Item;
-import GameObjects.Items.Potion;
 import Global.Utility;
 import Interactions.Transactions;
 
@@ -23,20 +22,9 @@ public class NeutralCharacter extends Entity {
         setHealth(1000);
         getInventory().setCapacity(100);
 
-        Potion poison = new Potion(
-                "Totally a Health Potion",
-                "Chug for ouch",
-                new DamageEffect(7),
-                30);
-        Potion potion = new Potion(
-                "Health Potion",
-                "Chug when ouch",
-                new HealingEffect(5),
-                20);
-
         for (int i = 0; i <= 3; i++) {
-            getInventory().addItem(poison);
-            getInventory().addItem(potion);
+            getInventory().addItem(ItemRepository.getItemById(ItemId.POISON_POTION));
+            getInventory().addItem(ItemRepository.getItemById(ItemId.HEALTH_POTION));
         }
     }
 
