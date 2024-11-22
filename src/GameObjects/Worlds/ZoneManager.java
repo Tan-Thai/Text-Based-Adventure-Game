@@ -90,7 +90,12 @@ public class ZoneManager {
     public synchronized void resetZones() {
         for (Zone zone : zones.values()) {
             zone.clearEncounters();
+            zone.clearTraveableZones();
+            zone.setZoneCleared(false);
+            if (zone instanceof Tavern)
+                zone.setZoneCleared(true);
         }
+        setUpTravelableConnections(zones);
         setUpEncounters(zones);
     }
 }

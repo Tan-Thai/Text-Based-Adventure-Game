@@ -89,4 +89,10 @@ public class Zone {
             this.encounters.clear();
         }
     }
+
+    public void clearTraveableZones() {
+        if (this.traveableZones != null) {
+            this.traveableZones.clear();
+        }
+    }
 }
