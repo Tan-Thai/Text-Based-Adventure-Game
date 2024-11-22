@@ -65,7 +65,6 @@ public class Tavern extends Zone {
         }
     }
 
-
     public void retireCharacter(PlayerCharacter pc) { // retire method
         Utility.clearConsole();
         Utility.slowPrint("You retire from adventuring and live out the rest of your days in peace.");

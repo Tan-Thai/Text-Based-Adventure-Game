@@ -76,15 +76,15 @@ public class Game {
 
     /*
      * private static void encounterTest(PlayerCharacter pc, Scanner myScanner) {
-     * 
+     *
      * // This one is my bad, currently the ZoneManager needs to get instantiated
      * for
      * // the rest to work.
      * // I will fix this later I promise! Just let it be for now!
      * ZoneManager.getInstance();
-     * 
+     *
      * EncounterHandler encounterHandler = EncounterHandler.getInstance();
-     * 
+     *
      * while (ZoneManager.getZone(ZoneType.FOREST).hasUnclearedEncounters()) {
      * System.out.println(ZoneManager.getZone(ZoneType.FOREST).getName());
      * encounterHandler.runEncounter(pc,

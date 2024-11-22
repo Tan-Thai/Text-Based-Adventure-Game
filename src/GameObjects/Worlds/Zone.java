@@ -1,4 +1,5 @@
 package GameObjects.Worlds;
+
 import Global.Utility;
 import Interactions.Encounter;
 import Interactions.ExploreZone;
@@ -26,7 +27,7 @@ public class Zone {
      * @param encounters
      */
     public Zone(String name, String desc, boolean zoneCleared, ZoneType zoneType, List<Encounter> encounters,
-            int zoneClearThreshold) {
+                int zoneClearThreshold) {
         this.name = name;
         this.description = desc;
         this.zoneCleared = zoneCleared;
@@ -67,13 +68,12 @@ public class Zone {
         return traveableZones;
     }
 
-
     // Just displays the current zone and its description + clear status
-    public static void displayCurrentZone(Zone zone) { 
+    public static void displayCurrentZone(Zone zone) {
 
         Utility.clearConsole();
         System.out.println("You are in " + zone.getName() + ". " + zone.getDescription()
-                + " Zone cleared: " + zone.getZoneCleared());
+                           + " Zone cleared: " + zone.getZoneCleared());
         if (ExploreZone.getUnclearedEncounter(zone) != null) {
             System.out.println("Uncleared encounters: " + ExploreZone.getUnclearedEncountersAmount(zone));
         } else {
@@ -81,6 +81,18 @@ public class Zone {
         }
         Utility.promptEnterKey(sc);
     }
-     
 
+    // Test zone - Reset zone.
+    // for usage refer to zoneManager > resetZones
+    public void clearEncounters() {
+        if (this.encounters != null) {
+            this.encounters.clear();
+        }
+    }
+
+    public void clearTraveableZones() {
+        if (this.traveableZones != null) {
+            this.traveableZones.clear();
+        }
+    }
 }
