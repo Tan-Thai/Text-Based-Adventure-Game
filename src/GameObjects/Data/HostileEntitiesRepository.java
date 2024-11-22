@@ -4,9 +4,9 @@ import GameObjects.Entities.HostileCharacter;
 import GameObjects.Entities.HostileEntityType;
 
 public class HostileEntitiesRepository {
-
+	//the mud troll is a tanky creature, danger value high!
 	public static HostileCharacter getStuntedMudTroll() {
-		return new HostileCharacter("Stunted Mud Troll", 30, 1, 8, 1, 1, HostileEntityType.TROLLKIN, "Description");
+		return new HostileCharacter("Stunted Mud Troll", 15, 1, 8, 1, 1, HostileEntityType.TROLLKIN, "Description");
 	}
 
 	public static HostileCharacter getRottenCrawler() {

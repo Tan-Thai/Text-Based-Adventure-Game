@@ -43,6 +43,45 @@ public class ItemRepository {
                                 new DamageEffect(3),
                                 120,
                                 WeaponType.DEFAULT));
+              
+                ITEMS.put(ItemId.FLAMING_BASTARDSWORD, new Weapon(
+                                "Flaming bastardsword",
+                                "When drawn blue flames lick the blade of this sword",
+                                new DamageEffect(3),
+                                200,
+                                WeaponType.FIRE));
+
+                ITEMS.put(ItemId.BLESSED_WHISPERBLADE, new Weapon(
+                                "The blessed whisperblade",
+                                "A blade blessed by the singing saints, that whispers with their voices as it cuts",
+                                new DamageEffect(3),
+                                200,
+                                WeaponType.HOLY));
+                ITEMS.put(ItemId.RAIDIANT_WARHAMMER, new Weapon(
+                                "The radiant warhammer",
+                                "In the head of this warhammer a emberprism raidiates the light of the true sun",
+                                new DamageEffect(3),
+                                300,
+                                WeaponType.SUNLIGHT));
+                ITEMS.put(ItemId.PATCHY_LEATHER_ARMOUR, new Equipment(
+                                "Patchy leather armour",
+                                "A broken and worn leather armor",
+                                EquipmentType.ARMOUR,
+                                new ProtectiveEffect(1),
+                                50));
+                ITEMS.put(ItemId.TWISTED_CHAINMAIL, new Equipment(
+                                "Twisted chainmail",
+                                "a strange chainmail,were the links twist and turn in strange patterns",
+                                EquipmentType.ARMOUR,
+                                new ProtectiveEffect(2),
+                                100));
+                ITEMS.put(ItemId.HEIRLOOM_BATTLEPLATE, new Equipment(
+                                "Heirloom battleplate",
+                                "A worn but beautful battleplate that has served many warriors before you",
+                                EquipmentType.ARMOUR,
+                                new ProtectiveEffect(3),
+                                200));
+
                 // endregion
 
                 // region Potions generated
@@ -57,6 +96,11 @@ public class ItemRepository {
                                 "Chug when ouch",
                                 new HealingEffect(5),
                                 20));
+                 ITEMS.put(ItemId.GREATER_HEALTH_POTION, new Potion(
+                                "Greater health Potion",
+                                "Chug when ouch",
+                                new HealingEffect(10),
+                                30));
                 // endregion
         }
 
