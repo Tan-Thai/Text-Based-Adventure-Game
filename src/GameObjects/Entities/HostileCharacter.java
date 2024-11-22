@@ -37,7 +37,7 @@ public class HostileCharacter extends Entity {
 
     // calculates the experience based on the level. numbers TBD
     public int calcExperienceGiven() {
-        return 100;
+        return level * 5;
         // return (int) (Math.round((level * 20 * 1.25)));
     }
 }
