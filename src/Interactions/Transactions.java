@@ -1,10 +1,14 @@
 package Interactions;
 
 import GameObjects.Entities.Entity;
+import GameObjects.Entities.HostileCharacter;
 import GameObjects.Entities.PlayerCharacter;
 import GameObjects.Items.Item;
 import Global.Utility;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Transactions {
@@ -91,8 +95,25 @@ public class Transactions {
     public static void lootCurrency(Entity pc, Entity enemyNpc) {
         pc.setCurrency(pc.getCurrency() + enemyNpc.getCurrency());
 
-        System.out.println("You just acquired " + enemyNpc.getCurrency() + " money");
+        System.out.println("You just acquired " + enemyNpc.getCurrency() + " currency");
         enemyNpc.setCurrency(0);
+    }
+
+    public static void receiveLootFromCombat(PlayerCharacter player, HostileCharacter enemy, Scanner sc) {
+
+        if (enemy.getInventory().getTotalItemCount() > 0) {
+            Random random = new Random();
+
+            List<Item> enemyItems = new ArrayList<>(enemy.getInventory().getItems().keySet());
+            Item droppedLoot = enemyItems.get(random.nextInt(enemyItems.size()));
+
+            Utility.printBigLine();
+            System.out.println("The enemy dropped a(n) " + droppedLoot.getName() + "!");
+
+            player.getInventory().acquireItem(droppedLoot, sc);
+            // call below comment is not really necessary if the enemy is dead.
+            enemy.getInventory().removeItem(droppedLoot);
+        }
     }
 
     public static void acquireCurrency(Entity pc, int amount) {
