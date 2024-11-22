@@ -39,9 +39,10 @@ public class EncounterHandler {
         } else {
             System.out.println(this.encounter.getFailureMessage());
         }
-
-        Utility.promptEnterKey(myScanner);
-        Utility.clearConsole();
+        // The prompt and clear are resolved in the runGame method in game.
+        // Therefore these have been temporarily removed for gameflow purposes. //Henrik
+  //      Utility.promptEnterKey(myScanner);
+  //      Utility.clearConsole();
     }
 
     private boolean attemptChallenge() {

@@ -11,13 +11,12 @@ public class Info {
         boolean exitMenu = false;
 
         while (!exitMenu) {
-            System.out.print("How to Play Menu:\n" +
+            System.out.print("How to Play Menu\n" +
                     "1. How do stats work?\n" +
                     "2. How does combat work?\n" +
                     "3. How to navigate between or inside zones.\n" +
                     "4. How to interact with items\n" +
-                    "5. How to rest and shop for items in the tavern\n" +
-                    "0. Exit menu.\n" + Config.MENU_CHOICE_STRING);
+                    "5. How to rest and shop for items in the tavern\n" + Config.MENU_CHOICE_STRING);
             int choice = Utility.checkIfNumber(sc);
             Utility.clearConsole();
 
@@ -58,5 +57,12 @@ public class Info {
                     break;
             }
         }
+    }
+    //Temporary game intro, insert actual Wille stuff here
+    public static void gameIntro() {
+        System.out.println("Welcome to the game!\n" +
+                "You are a hero who has been tasked with saving the town from an evil that lurks in the basement of the tavern.\n" +
+                "You must explore different zones, fight monsters, and collect items to prepare for the final battle.\n" +
+                "Good luck!");
     }
 }

@@ -27,7 +27,7 @@ public class Zone {
      * @param encounters
      */
     public Zone(String name, String desc, boolean zoneCleared, ZoneType zoneType, List<Encounter> encounters,
-                int zoneClearThreshold) {
+            int zoneClearThreshold) {
         this.name = name;
         this.description = desc;
         this.zoneCleared = zoneCleared;
@@ -68,18 +68,29 @@ public class Zone {
         return traveableZones;
     }
 
+
     // Just displays the current zone and its description + clear status
+
     public static void displayCurrentZone(Zone zone) {
 
         Utility.clearConsole();
-        System.out.println("You are in " + zone.getName() + ". " + zone.getDescription()
-                           + " Zone cleared: " + zone.getZoneCleared());
+        System.out.println("You are in " + zone.getName() + ". " + zone.getDescription());
+        //Changed these to check amount of uncleared encounters and display message related to that.
+
         if (ExploreZone.getUnclearedEncounter(zone) != null) {
-            System.out.println("Uncleared encounters: " + ExploreZone.getUnclearedEncountersAmount(zone));
+            System.out.println("DEBUG CHECK: Uncleared encounters: " + ExploreZone.getUnclearedEncountersAmount(zone));
+            if (ExploreZone.getUnclearedEncountersAmount(zone) >= 4) {
+                System.out.println("You feel an extreme sense of danger in this area.");
+            } else if (ExploreZone.getUnclearedEncountersAmount(zone) > 0 && ExploreZone.getUnclearedEncountersAmount(zone) <= 3) {
+                System.out.println("You feel quite unsafe in this area.");
+            } else {
+                System.out.println("You feel very safe in this area.");
+            }
         } else {
-            System.out.println("No uncleared encounters.");
+            System.out.println("You don't find any monsters or other dangers lurking in this area.");
         }
-        Utility.promptEnterKey(sc);
+        System.out.print("\n");
+
     }
 
     // Test zone - Reset zone.
