@@ -17,12 +17,6 @@ public class Basement extends Zone {
                 ZoneType.BASEMENT, null, 1);
     }
 
-    public void bossIntro() {
-        Utility.clearConsole();
-        System.out.println("YOU FIGHTO THE BOSSO");
-    }
-
-    // two temporary methods boss methods for mvp
     public void checkIfBossDead(Zone zone, PlayerCharacter pc, Scanner sc) {
         if (ExploreZone.getUnclearedEncountersAmount(zone) != 1) {
             GameStateManager.getInstance().setCurrentState(GameState.VICTORY);
