@@ -9,7 +9,8 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Boolean replay;
-
+        Info.gameIntro();
+        Utility.promptEnterKey(sc);
         do {
             Game game = new Game(sc);
             startMenu(game, sc);
@@ -32,6 +33,7 @@ public class Main {
     }
 
     public static void startMenu(Game game, Scanner sc) {
+
         while (GameStateManager.getInstance().getCurrentState() == GameState.RUNNING) {
             Utility.clearConsole();
             System.out.println("Welcome to the game!" +

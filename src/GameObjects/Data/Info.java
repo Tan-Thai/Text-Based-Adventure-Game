@@ -58,4 +58,11 @@ public class Info {
             }
         }
     }
+    //Temporary game intro, insert actual Wille stuff here
+    public static void gameIntro() {
+        System.out.println("Welcome to the game!\n" +
+                "You are a hero who has been tasked with saving the town from an evil that lurks in the basement of the tavern.\n" +
+                "You must explore different zones, fight monsters, and collect items to prepare for the final battle.\n" +
+                "Good luck!");
+    }
 }
