@@ -1,5 +1,6 @@
 package GameObjects.Items;
 
+import GameObjects.Entities.HostileCharacter;
 import GameObjects.Entities.PlayerCharacter;
 import Global.*;
 
@@ -147,6 +148,41 @@ public class ItemManager {
                 Item selectedItem = (new ArrayList<>(itemCollection.keySet())).get(input - 1);
                 selectedItem.displayItem();
                 selectedItem.promptUse(sc, player, selectedItem);
+            } else {
+                System.out.println("Invalid choice. Please try again.");
+                Utility.promptEnterKey(sc);
+            }
+        }
+    }
+
+    public void inspectInventory(Scanner sc, PlayerCharacter player, HostileCharacter enemy) {
+        if (checkIfEmpty()) return;
+        // Forced loop until user have exited their inventory or chosen to display a specific item.
+        while (!player.isDead()) {
+            Utility.clearConsole();
+            printInventory();
+            System.out.print("""
+                    
+                    Press 0 to exit.\
+                    
+                    Pick an item to inspect:\s""");
+            int input = Utility.checkIfNumber(sc);
+
+            if (input == 0) {
+                //temp since I don't know how to phrase this.
+                System.out.println("You close your inventory.");
+                Utility.promptEnterKey(sc);
+                return;
+            }
+
+            if (input > 0 && input <= itemCollection.size()) {
+                // generate a new arraylist to print an index with associated numbers.
+                // input -1 is due to index starting at 0
+                Item selectedItem = (new ArrayList<>(itemCollection.keySet())).get(input - 1);
+                selectedItem.displayItem();
+                // TODO attack with item.
+                selectedItem.promptUse(sc, player, selectedItem, enemy);
+                return;
             } else {
                 System.out.println("Invalid choice. Please try again.");
                 Utility.promptEnterKey(sc);

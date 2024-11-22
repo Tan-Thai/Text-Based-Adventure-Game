@@ -134,7 +134,8 @@ public class Combat {
                 case 1 -> {
                     playerAttack(enemy, player, calcAttack(player, Utility.GREEN));
                 }
-                case 2 -> player.inspectEntity(sc);
+                // access the inventory right away over inspect first.
+                case 2 -> player.getInventory().inspectInventory(sc, player, enemy);
                 case 3 -> {
                     if (enemy.getHostileEntityType().equals(HostileEntityType.BOSS)) {
                         System.out.println("You can't run from a boss!");

@@ -1,5 +1,6 @@
 package GameObjects.Items;
 
+import GameObjects.Entities.HostileCharacter;
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
 
@@ -26,13 +27,16 @@ public class Equipment extends Item {
     public void displayItem() {
         System.out.println(
                 "\n--" + getName() + "--" +
-                        "\nCost: " + getItemCost() +
-                        "\nDescription: " + getDescription());
+                "\nCost: " + getItemCost() +
+                "\nDescription: " + getDescription());
     }
 
     @Override
-    public void promptUse(Scanner sc, PlayerCharacter player, Item selectedItem) {
+    public void promptUse(Scanner sc, PlayerCharacter player, Item selectedItem, HostileCharacter enemy) {
+        throw new UnsupportedOperationException("This item does not support enemy-targeted use");
+    }
 
+    public void promptUse(Scanner sc, PlayerCharacter player, Item selectedItem) {
         System.out.print("\nDo you want to equip this item? (Y/N): ");
         if (Utility.checkYesOrNo(sc)) {
             System.out.println("You equipped " + getName());

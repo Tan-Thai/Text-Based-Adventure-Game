@@ -1,5 +1,6 @@
 package GameObjects.Items;
 
+import GameObjects.Entities.HostileCharacter;
 import GameObjects.Entities.PlayerCharacter;
 
 import java.util.Scanner;
@@ -35,6 +36,9 @@ public abstract class Item {
                 "\nDescription: " + description);
     }
 
-    public abstract void promptUse(Scanner sc, PlayerCharacter player, Item selectedItem);
+    public abstract void promptUse(Scanner sc, PlayerCharacter player, Item selectedItem, HostileCharacter enemy);
 
+    public void promptUse(Scanner sc, PlayerCharacter player, Item selectedItem) {
+        promptUse(sc, player, selectedItem, null);
+    }
 }
