@@ -26,12 +26,11 @@ public class ExploreZone {
                     "You wander the area, but the roads are known to you, and the lands are peaceful, there are no more adventures to be had for you here.");
         } else if (getUnclearedEncounter(zone).isCombatEncounter()) {
             Combat.getInstance().initiateCombat(pc, getUnclearedEncounter(zone).getEnemy(), sc);
+            getUnclearedEncounter(zone).checkClearedState();
             if (zone.getZoneType() == ZoneType.BASEMENT) {
-                //Temp boss call fight
                 ((Basement) zone).checkIfBossDead(zone, pc, sc);
                 ((Basement) zone).endGame();
             }
-            getUnclearedEncounter(zone).checkClearedState();
         } else {
             EncounterHandler.getInstance().runEncounter(pc, getUnclearedEncounter(zone), sc);
         }
