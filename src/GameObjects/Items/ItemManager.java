@@ -60,9 +60,10 @@ public class ItemManager {
                 if (Utility.checkYesOrNo(sc)) {
                     discardItem(sc);
                     itemCollection.merge(item, 1, Integer::sum);
-                    System.out.println(item.getName() + " was put into your inventory.");
+                    System.out.println(item.getName() + " was put into your inventory.\n");
                 }
             }
+
         }
     }
 
@@ -79,18 +80,19 @@ public class ItemManager {
 
     private void discardItem(Scanner sc) {
         while (true) {
+            System.out.println();
             printInventory();
-            System.out.print("Choose an item to discard: ");
+            System.out.print("\nChoose an item to discard: ");
             int choice = Utility.checkIfNumber(sc);
 
             if (choice > 0 && choice <= itemCollection.size()) {
                 Item removedItem = new ArrayList<>(itemCollection.keySet()).get(choice - 1);
                 removeItem(removedItem);
-                System.out.println(removedItem.getName() + " was discarded.");
+                System.out.println("\n" + removedItem.getName() + " was discarded.");
                 return;
             } else {
                 // prolly a try catch here tbh.
-                System.out.println("Invalid input. Try again.");
+                System.out.println("\nInvalid input. Try again.");
             }
         }
     }
@@ -181,7 +183,10 @@ public class ItemManager {
                 Item selectedItem = (new ArrayList<>(itemCollection.keySet())).get(input - 1);
                 selectedItem.displayItem();
                 // TODO attack with item.
-                selectedItem.promptUse(sc, player, selectedItem, enemy);
+                if (selectedItem instanceof Equipment)
+                    selectedItem.promptUse(sc, player, selectedItem);
+                else
+                    selectedItem.promptUse(sc, player, selectedItem, enemy);
                 return;
             } else {
                 System.out.println("Invalid choice. Please try again.");

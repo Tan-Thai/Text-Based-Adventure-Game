@@ -108,7 +108,7 @@ public class Transactions {
             Item droppedLoot = enemyItems.get(random.nextInt(enemyItems.size()));
 
             Utility.printBigLine();
-            System.out.println("The enemy dropped a(n) " + droppedLoot.getName() + "!");
+            System.out.println("You received: " + droppedLoot.getName() + "!");
 
             player.getInventory().acquireItem(droppedLoot, sc);
             // call below comment is not really necessary if the enemy is dead.

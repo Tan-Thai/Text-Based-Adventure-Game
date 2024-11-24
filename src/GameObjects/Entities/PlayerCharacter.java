@@ -42,9 +42,9 @@ public class PlayerCharacter extends Entity {
             while (experience >= Config.PC_EXPERIENCE_NEEDED_PER_LEVEL) {
                 experience -= Config.PC_EXPERIENCE_NEEDED_PER_LEVEL;
                 levelUp();
-                System.out.println(
-                        "Your current experience is: " + experience + " / " + Config.PC_EXPERIENCE_NEEDED_PER_LEVEL);
             }
+            System.out.println(
+                    "Your current experience is: " + experience + " / " + Config.PC_EXPERIENCE_NEEDED_PER_LEVEL);
         } else {
             if (experience >= Config.PC_EXPERIENCE_NEEDED_PER_LEVEL)
                 experience = Config.PC_EXPERIENCE_NEEDED_PER_LEVEL;
@@ -69,7 +69,7 @@ public class PlayerCharacter extends Entity {
                             2. Inspect your equipped gear.\
                             
                             """);
-            
+
             System.out.print(Config.MENU_CHOICE_STRING);
 
             switch (Utility.checkIfNumber(sc)) {
