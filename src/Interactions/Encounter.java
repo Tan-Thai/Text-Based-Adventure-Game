@@ -52,7 +52,7 @@ public class Encounter {
      * If the encounter is a combat encounter, and the enemy has zero health, or
      * less, this sets isCleared to true.
      */
-    public void checkClearedState() {
+    public void updateClearedState() {
 
         if (isCombatEncounter() && getEnemy().getHealth() <= 0) {
             isCleared(true);
