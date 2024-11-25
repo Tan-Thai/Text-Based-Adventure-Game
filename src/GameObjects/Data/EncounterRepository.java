@@ -15,7 +15,6 @@ public class EncounterRepository {
 	public static List<Encounter> getForestEncounters() {
 
 		forestEncounters = new ArrayList<>();
-		
 
 		forestEncounters.add(getLureWillOWispEncounter());
 		forestEncounters.add(getHuntersForgottenTrapEncounter());

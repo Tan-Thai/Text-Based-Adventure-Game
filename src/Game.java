@@ -68,30 +68,13 @@ public class Game {
 
     private static void runGame(PlayerCharacter pc, Scanner sc) {
         // considering a potential while (Running) here to then break out if we die,
-        // ive noticed that a couple of the death's that can occur leads to double enter prompts.
+        // ive noticed that a couple of the death's that can occur leads to double enter
+        // prompts.
         Utility.clearConsole();
+
         Adventure.adventureMenu(pc, sc, pc.getCurrentZone());
         Utility.promptEnterKey(sc);
     }
-
-    /*
-     * private static void encounterTest(PlayerCharacter pc, Scanner myScanner) {
-     *
-     * // This one is my bad, currently the ZoneManager needs to get instantiated
-     * for
-     * // the rest to work.
-     * // I will fix this later I promise! Just let it be for now!
-     * ZoneManager.getInstance();
-     *
-     * EncounterHandler encounterHandler = EncounterHandler.getInstance();
-     *
-     * while (ZoneManager.getZone(ZoneType.FOREST).hasUnclearedEncounters()) {
-     * System.out.println(ZoneManager.getZone(ZoneType.FOREST).getName());
-     * encounterHandler.runEncounter(pc,
-     * ZoneManager.getZone(ZoneType.FOREST).getUnclearedEncounter(), myScanner);
-     * }
-     * }
-     */
 
     private void handleVictory() {
         System.out.println("Victory!");
@@ -107,8 +90,8 @@ public class Game {
         Utility.clearConsole();
         Utility.slowPrint("Choose a class");
         System.out.println(
-                "1. Barbarian (Strong with lots of health)\n2. Rogue (dexterous and swift)\n3. Wizard (Clever and astmatic)");
-        System.out.print("\nEnter your choice: ");
+                "1. Barbarian (Good at dealing damage and taking damage)\n2. Rogue (Hard to hit and fast)\n3. Wizard (Clever and astmatic)");
+        System.out.print(Config.MENU_CHOICE_STRING);
         int choice = Utility.checkIfNumber(sc);
 
         switch (choice) {
