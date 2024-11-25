@@ -1,7 +1,6 @@
 import Core.GameState;
 import Core.GameStateManager;
 import GameObjects.Data.Info;
-import GameObjects.Entities.PlayerCharacter;
 import GameObjects.Worlds.ZoneManager;
 import Global.Utility;
 
