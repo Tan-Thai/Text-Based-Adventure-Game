@@ -8,5 +8,5 @@ public class Config {
     public static final int EXPERIENCE_PER_ENCOUNTER = 20;
     public static final int ZONE_CLEAR_THRESHOLD = 10;
 
-    public static final String MENU_CHOICE_STRING = "\nEnter your choice: ";
+    public static final String MENU_CHOICE_STRING = "\nEnter your choice or press 0 to exit: ";
 }

@@ -6,6 +6,7 @@ import GameObjects.Entities.HostileEntityType;
 public class HostileEntitiesRepository {
 	//the mud troll is a tanky creature, intended to be dangorus
 	public static HostileCharacter getStuntedMudTroll() {
+
 		return new HostileCharacter("Stunted Mud Troll", 15, 1, 8, 1, 1, HostileEntityType.TROLLKIN, "Out from under the moss a monstrous mud-covered troll appears, roots hang from its huge back, and it snorts foul smelling air from between its rotting yellow teeth as it charges you. ");
 	}
 	//very weak, intended to be easily beaten.

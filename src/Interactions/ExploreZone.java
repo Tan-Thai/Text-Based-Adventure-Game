@@ -1,5 +1,8 @@
 package Interactions;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import GameObjects.Entities.PlayerCharacter;
@@ -21,19 +24,21 @@ public class ExploreZone {
 
         Utility.slowPrint("You explore the " + zone.getName());
 
-        if (getUnclearedEncounter(zone) == null) {
+        Encounter encounter = getUnclearedEncounter(zone);
+
+        if (encounter == null) {
             Utility.slowPrint(
                     "You wander the area, but the roads are known to you, and the lands are peaceful, there are no more adventures to be had for you here.");
-        } else if (getUnclearedEncounter(zone).isCombatEncounter()) {
-            Combat.getInstance().initiateCombat(pc, getUnclearedEncounter(zone).getEnemy(), sc);
+        } else if (encounter.isCombatEncounter()) {
+            Combat.getInstance().initiateCombat(pc, encounter.getEnemy(), sc);
+
+            encounter.updateClearedState();
             if (zone.getZoneType() == ZoneType.BASEMENT) {
-                //Temp boss call fight
                 ((Basement) zone).checkIfBossDead(zone, pc, sc);
                 ((Basement) zone).endGame();
             }
-            getUnclearedEncounter(zone).checkClearedState();
         } else {
-            EncounterHandler.getInstance().runEncounter(pc, getUnclearedEncounter(zone), sc);
+            EncounterHandler.getInstance().runEncounter(pc, encounter, sc);
         }
 
         if (zone.zoneClearThreshold >= getUnclearedEncountersAmount(zone)) {
@@ -68,14 +73,27 @@ public class ExploreZone {
             System.out.println("No encounters in zone: " + zone.getName() + ". Returned null for now.");
             return null;
         }
+
+        ArrayList<Encounter> unclearedEncounters = new ArrayList<>();
+
         for (Encounter encounter : zone.encounters) {
             if (!encounter.isCleared()) {
-                return encounter;
+                unclearedEncounters.add(encounter);
             }
         }
-        System.out.println("Couldn't find any uncleared encounters within zone: " + zone.getName() + "." +
-                           "Returned null for now.");
-        return null;
+
+        // If for-loop above couldn't find any uncleared encounters, the if-case returns
+        // null.
+        if (unclearedEncounters.size() < 1) {
+            System.out.println("Couldn't find any uncleared encounters within zone: " + zone.getName() + "." +
+                    "Returned null for now.");
+            return null;
+        } else {
+            Random random = new Random();
+
+            return unclearedEncounters.get(random.nextInt(unclearedEncounters.size()));
+        }
+
     }
 
     public static int getUnclearedEncountersAmount(Zone zone) {
