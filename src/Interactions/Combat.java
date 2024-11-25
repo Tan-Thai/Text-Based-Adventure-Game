@@ -56,30 +56,37 @@ public class Combat {
         playerInitiative = calcInitiative(player, Utility.GREEN);
         enemyInitiative = calcInitiative(enemy, Utility.RED);
 
+        int turnCount = 1;
         Utility.clearConsole();
         // loop for combat.
         while (isCombatInProgress) {
-            printInitative();
+            System.out.println("------------ Turn: " + turnCount + " ------------");
+            printInitiative();
             // Prints all hp's
             printEntityHP(player, Utility.GREEN);
             printEntityHP(enemy, Utility.RED);
 
             if (enemyInitiative > playerInitiative) {
                 enemyAttack(calcAttack(enemy, Utility.RED));
+                Utility.promptEnterKey(sc);
                 playerCombatAction();
             } else {
                 playerCombatAction();
+                Utility.promptEnterKey(sc);
                 enemyAttack(calcAttack(enemy, Utility.RED));
             }
+            Utility.printBigLine();
+            System.out.println("------------ End of Turn ------------");
             checkVictoryConditionMet();
             // We can most likely have a single checkVictoryCon here due to the automatic return when x is dead.
             // then it will just assert that by calling isDead (it already does). to then proceed to delivering loot.
             Utility.promptEnterKey(sc);
             Utility.clearConsole();
+            turnCount++;
         }
         // TODO: Fixed the triple prompt enter but the second one clashes with the prompt from the game loop
         // adding it to a to do as it's a cosmetic issue and note a game breaking one - TT
-        System.out.println("The combat has ended.");
+        System.out.println("------------ The combat has ended ------------");
     }
 
     private void enemyAttack(int attackHits) {
@@ -127,7 +134,7 @@ public class Combat {
         boolean isInputCorrect = true;
 
         do {
-            System.out.println("to attack press 1, to use inventory press 2, to flee press 3");
+            System.out.print("1. Attack\n2. Inventory\n0. Flee\nChoose your action: ");
 
             // Sets to true, so program breaks out of script unless it is set to false in
             // the default case of the switch.
@@ -139,7 +146,7 @@ public class Combat {
                 }
                 // access the inventory right away over inspect first.
                 case 2 -> player.getInventory().inspectInventory(sc, player, enemy);
-                case 3 -> {
+                case 0 -> {
                     if (enemy.getHostileEntityType().equals(HostileEntityType.BOSS)) {
                         System.out.println("You can't run from a boss!");
                         Utility.clearConsole();
@@ -160,16 +167,23 @@ public class Combat {
 
     // Prints out the health bars.
     private void printEntityHP(Entity actor, String colour) {
-        System.out.println(colour + actor.getName() + " health: " + actor.getHealth() + Utility.RESET);
+        System.out.println(colour + actor.getName() + " health: " + actor.getHealth() + " / " + actor.getMaxHealth() +
+                           Utility.RESET);
         for (int i = 1; i <= actor.getHealth(); i++) {
             System.out.print(colour + "|" + Utility.RESET);
         }
+
+        for (int i = 0; i < actor.getMaxHealth() - actor.getHealth(); i++) {
+            System.out.print(Utility.LOW_INTENSITY + "|" + Utility.RESET);
+        }
+
         System.out.println();
     }
 
     // calc's the attack values etc.
     private int calcAttack(Entity actor, String colour) {
 
+        Utility.printBigLine();
         int hitCount = Utility.rollDicePool(actor.getStrength(), colour, OptionalInt.empty(), OptionalInt.empty(),
                 OptionalInt.empty());
 
@@ -206,8 +220,8 @@ public class Combat {
             return 0;
     }
 
-    private void printInitative() {
-        System.out.println("Your initative is " + playerInitiative);
+    private void printInitiative() {
+        System.out.println("Your initiative is " + playerInitiative);
         System.out.println("Your enemies initiative is " + enemyInitiative);
     }
 
@@ -350,5 +364,4 @@ public class Combat {
                     "Either entity was of an unexpected type, and so the player couldn't get Experience at end of combat.");
         }
     }
-
 }
