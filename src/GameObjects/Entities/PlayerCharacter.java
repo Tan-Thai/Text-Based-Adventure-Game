@@ -15,7 +15,7 @@ public class PlayerCharacter extends Entity {
     private Zone currentZone; // stores the current zone you are in.
 
     public PlayerCharacter(String name, int health, int str, int dex, int intel) {
-        super(name, health, 1, str, dex, intel, 150);
+        super(name, health, Config.PC_STARTING_LEVEL, str, dex, intel, 150);
         currentZone = ZoneManager.getZone(ZoneType.TAVERN);
     }
 
@@ -35,14 +35,22 @@ public class PlayerCharacter extends Entity {
 
     //region Temporary region for all methods player related
     public void gainExperience(int exp) {
+
         experience += exp;
-        System.out.println("You gained " + exp + " EXP!");
-        while (experience >= 100) {
-            experience -= 100;
-            levelUp();
-            checkGameClearCondition();
+        if (getLevel() < Config.PC_MAX_LEVEL) {
+            System.out.println("You gained " + exp + " EXP!");
+            while (experience >= Config.PC_EXPERIENCE_NEEDED_PER_LEVEL) {
+                experience -= Config.PC_EXPERIENCE_NEEDED_PER_LEVEL;
+                levelUp();
+            }
+            System.out.println(
+                    "Your current experience is: " + experience + " / " + Config.PC_EXPERIENCE_NEEDED_PER_LEVEL);
+        } else {
+            if (experience >= Config.PC_EXPERIENCE_NEEDED_PER_LEVEL)
+                experience = Config.PC_EXPERIENCE_NEEDED_PER_LEVEL;
+            System.out.println("You're already as strong as you can be and cannot gain any more levels!");
         }
-        System.out.println("\nYour current experience is: " + experience + "/100");
+        checkGameClearCondition();
     }
 
     @Override
@@ -54,14 +62,10 @@ public class PlayerCharacter extends Entity {
             displayStats();
             //not sure what a text-block is.
             System.out.println(
-                    """
-                            
-                            1. Open inventory.\
-                            
-                            2. Inspect your equipped gear.\
-                            
-                            """);
-            
+                    "\n" +
+                    "1. Open inventory.\n" +
+                    "2. Inspect your equipped gear.");
+
             System.out.print(Config.MENU_CHOICE_STRING);
 
             switch (Utility.checkIfNumber(sc)) {
@@ -81,10 +85,24 @@ public class PlayerCharacter extends Entity {
         }
     }
 
+    @Override
+    public void displayStats() {
+        System.out.println("Name: " + getName());
+        System.out.println("level: " + getLevel());
+        System.out.println("Experience: " + getExperience() + " / " + Config.PC_EXPERIENCE_NEEDED_PER_LEVEL);
+        System.out.println("Health: " + getHealth() + " / " + getMaxHealth());
+        System.out.println("Armour: " + getArmour());
+        System.out.println("Gold: " + getCurrency());
+
+        System.out.println("\nStats:");
+        System.out.println("Strength: " + strength);
+        System.out.println("Dexterity: " + dexterity);
+        System.out.println("Intelligence: " + intelligence);
+    }
+
     public void checkGameClearCondition() {
         if (getLevel() == Config.PC_RETIREMENT_LEVEL) {
-            System.out.println("You have reached high enough level and can now retire in the Tavern!");
-            // easy to create an if check of printing the option if player is x(max) level inside the tavern.
+            System.out.println("\nYou have reached high enough level and can now retire in the Tavern!");
         }
         // "else if" x boss is dead, but we can prolly add a specific method for when it dies.
     }

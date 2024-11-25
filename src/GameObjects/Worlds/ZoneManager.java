@@ -55,18 +55,18 @@ public class ZoneManager {
                 new HashSet<Zone>(Arrays.asList(
                         zones.get(ZoneType.TAVERN),
                         zones.get(ZoneType.FOREST))));
-		zones.get(ZoneType.CAVE).setTravelableZones(
-				new HashSet<Zone>(Arrays.asList(
-					zones.get(ZoneType.TAVERN),
-					zones.get(ZoneType.FOREST),
-					zones.get(ZoneType.SWAMP))));
+        zones.get(ZoneType.CAVE).setTravelableZones(
+                new HashSet<Zone>(Arrays.asList(
+                        zones.get(ZoneType.TAVERN),
+                        zones.get(ZoneType.FOREST),
+                        zones.get(ZoneType.SWAMP))));
     }
 
     private void setUpEncounters(HashMap<ZoneType, Zone> zones) {
         zones.get(ZoneType.FOREST).setEncounters(EncounterRepository.getForestEncounters());
-		zones.get(ZoneType.SWAMP).setEncounters(EncounterRepository.getSwampEncounters());
-		zones.get(ZoneType.CAVE).setEncounters(EncounterRepository.getCaveEncounters());
-		zones.get(ZoneType.BASEMENT).setEncounters(EncounterRepository.getBasementEncounters());
+        zones.get(ZoneType.SWAMP).setEncounters(EncounterRepository.getSwampEncounters());
+        zones.get(ZoneType.CAVE).setEncounters(EncounterRepository.getCaveEncounters());
+        zones.get(ZoneType.BASEMENT).setEncounters(EncounterRepository.getBasementEncounters());
     }
 
     public static synchronized ZoneManager getInstance() {
@@ -82,5 +82,20 @@ public class ZoneManager {
             return null;
         }
         return zones.get(zoneType);
+    }
+
+    // Test zone - Reset encounters.
+    // should in practice remove all encounters through clearEncounters()
+    // then set the new base values back in with setUpEncounters.
+    public synchronized void resetZones() {
+        for (Zone zone : zones.values()) {
+            zone.clearEncounters();
+            zone.clearTraveableZones();
+            zone.setZoneCleared(false);
+            if (zone instanceof Tavern)
+                zone.setZoneCleared(true);
+        }
+        setUpTravelableConnections(zones);
+        setUpEncounters(zones);
     }
 }

@@ -18,4 +18,9 @@ public class DamageEffect implements Effect {
     public int getValue() {
         return damageValue;
     }
+
+    @Override
+    public String getEffectType() {
+        return "Damage";
+    }
 }

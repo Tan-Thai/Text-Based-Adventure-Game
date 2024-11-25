@@ -7,6 +7,8 @@ import Global.Utility;
 import Interactions.Transactions;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class NeutralCharacter extends Entity {
@@ -33,7 +35,8 @@ public class NeutralCharacter extends Entity {
 
         while (!pc.isDead()) {
             Utility.clearConsole();
-            getInventory().printInventory();
+            List<Map.Entry<Item, Integer>> sortedItems = getInventory().getSortedInventory();
+            getInventory().printInventory(sortedItems);
 
             System.out.print(
                     "\nPress 0 to exit the shop" +
@@ -41,7 +44,7 @@ public class NeutralCharacter extends Entity {
 
             int choice = Utility.checkIfNumber(sc);
 
-            // Exit method
+            // exit method
             if (choice == 0) {
                 System.out.println("You leave the shop.");
                 Utility.promptEnterKey(sc);
@@ -50,7 +53,7 @@ public class NeutralCharacter extends Entity {
 
             // Selection of item.
             if (choice > 0 && choice <= getInventory().getItems().size()) {
-                Item selectedItem = new ArrayList<>(getInventory().getItems().keySet()).get(choice - 1);
+                Item selectedItem = sortedItems.get(choice - 1).getKey();
                 selectedItem.displayItem();
 
                 System.out.print("\nDo you want to purchase this item? (Y/N): ");
@@ -68,7 +71,8 @@ public class NeutralCharacter extends Entity {
 
         while (!pc.isDead()) {
             Utility.clearConsole();
-            pc.getInventory().printInventory();
+            List<Map.Entry<Item, Integer>> sortedItems = pc.getInventory().getSortedInventory();
+            pc.getInventory().printInventory(sortedItems);
 
             System.out.print(
                     "\nPress 0 to exit the shop" +
@@ -83,10 +87,10 @@ public class NeutralCharacter extends Entity {
             }
 
             if (choice > 0 && choice <= pc.getInventory().getItems().size()) {
-                Item selectedItem = new ArrayList<>(pc.getInventory().getItems().keySet()).get(choice - 1);
+                Item selectedItem = sortedItems.get(choice - 1).getKey();
                 selectedItem.displayItem();
 
-                System.out.print("Do you want to sell this item? (Y/N): ");
+                System.out.print("\nDo you want to sell this item? (Y/N): ");
                 if (Utility.checkYesOrNo(sc)) {
                     Transactions.playerSellItem(pc, this, selectedItem, sc);
                 } else {

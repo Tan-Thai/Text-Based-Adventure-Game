@@ -18,4 +18,9 @@ public class HealingEffect implements Effect {
     public int getValue() {
         return healingValue;
     }
+
+    @Override
+    public String getEffectType() {
+        return "Healing Effect";
+    }
 }

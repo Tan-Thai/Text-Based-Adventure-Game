@@ -3,6 +3,7 @@ package GameObjects.Entities;
 import GameObjects.Items.EquipmentManager;
 import GameObjects.Items.ItemManager;
 import Global.Utility;
+import Resources.Config;
 
 import java.util.Scanner;
 

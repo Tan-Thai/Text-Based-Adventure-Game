@@ -1,5 +1,7 @@
 package GameObjects.Items;
 
+import GameObjects.Entities.Entity;
+import GameObjects.Entities.HostileCharacter;
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
 
@@ -14,11 +16,10 @@ public class Potion extends Item implements Consumable {
     }
 
     @Override
-    public void consume(PlayerCharacter player) {
+    public void consume(Entity target) {
         System.out.println();
-        System.out.println("You consumed " + getName());
-        potionEffect.apply(player);
-        player.getInventory().removeItem(this);
+        System.out.println("You used " + getName());
+        potionEffect.apply(target);
     }
 
     @Override
@@ -32,12 +33,44 @@ public class Potion extends Item implements Consumable {
             return;
         }
 
-        if (response) {
-            consume(player);
-        } else {
-            System.out.println("You decided not to use the item.");
+        resolveUsage(response, player);
+        player.getInventory().removeItem(selectedItem);
+
+        Utility.promptEnterKey(sc);
+    }
+
+    public void promptUse(Scanner sc, PlayerCharacter player, Item selectedItem, HostileCharacter enemy) {
+        System.out.print("\nDo you want to use this item? (Y/N): ");
+        boolean response = Utility.checkYesOrNo(sc);
+
+        if (potionEffect instanceof HealingEffect) {
+            if (player.isFullHP()) {
+                System.out.println("You are currently at full health and put the potion back in your inventory.");
+            } else {
+                resolveUsage(response, player);
+                player.getInventory().removeItem(selectedItem);
+            }
+        }
+
+        if (potionEffect instanceof DamageEffect) {
+            resolveUsage(response, enemy);
+            player.getInventory().removeItem(selectedItem);
         }
         Utility.promptEnterKey(sc);
     }
 
+    private void resolveUsage(Boolean response, Entity target) {
+        if (response)
+            consume(target);
+        else
+            System.out.println("You decided not to use the item.");
+    }
+
+    public void displayItem() {
+        System.out.println(
+                "\n--" + getName() + "--" +
+                "\nCost: " + getItemCost() +
+                "\n" + potionEffect.getEffectType() + ": " + potionEffect.getValue() +
+                "\nDescription: " + getDescription());
+    }
 }

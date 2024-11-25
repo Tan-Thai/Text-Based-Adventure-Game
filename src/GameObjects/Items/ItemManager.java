@@ -1,5 +1,6 @@
 package GameObjects.Items;
 
+import GameObjects.Entities.HostileCharacter;
 import GameObjects.Entities.PlayerCharacter;
 import Global.*;
 
@@ -8,6 +9,7 @@ import java.util.*;
 public class ItemManager {
     private final Map<Item, Integer> itemCollection;
     // TODO make a flexible capacity for the entities.
+    // TODO MEGA dirty fix for sorted inventory. should make a private auto-updated sorted list up here for printing - TT
     private int capacity = 10;
 
     public ItemManager() {
@@ -22,7 +24,11 @@ public class ItemManager {
         return false;
     }
 
-    //region Getters
+    public boolean checkIfInventoryFull() {
+        return getTotalItemCount() >= capacity;
+    }
+
+    //region Getters and Setters
     public Map<Item, Integer> getItems() {
         return Collections.unmodifiableMap(itemCollection);
     }
@@ -40,10 +46,6 @@ public class ItemManager {
     }
     //endregion
 
-    public boolean checkIfInventoryFull() {
-        return getTotalItemCount() >= capacity;
-    }
-
     //region Adding and removal of items in ItemCollections
     // difference between acquire is when an item is presented to the player without warning such as drops.
     public void acquireItem(Item item, Scanner sc) {
@@ -59,9 +61,10 @@ public class ItemManager {
                 if (Utility.checkYesOrNo(sc)) {
                     discardItem(sc);
                     itemCollection.merge(item, 1, Integer::sum);
-                    System.out.println(item.getName() + " was put into your inventory.");
+                    System.out.println(item.getName() + " was put into your inventory.\n");
                 }
             }
+
         }
     }
 
@@ -78,18 +81,20 @@ public class ItemManager {
 
     private void discardItem(Scanner sc) {
         while (true) {
-            printInventory();
-            System.out.print("Choose an item to discard: ");
-            int choice = Utility.checkIfNumber(sc);
+            System.out.println();
+            List<Map.Entry<Item, Integer>> sortedItems = getSortedInventory();
+            printInventory(sortedItems);
+            System.out.print("\nChoose an item to discard: ");
+            int input = Utility.checkIfNumber(sc);
 
-            if (choice > 0 && choice <= itemCollection.size()) {
-                Item removedItem = new ArrayList<>(itemCollection.keySet()).get(choice - 1);
+            if (input > 0 && input <= itemCollection.size()) {
+                Item removedItem = sortedItems.get(input - 1).getKey();
                 removeItem(removedItem);
-                System.out.println(removedItem.getName() + " was discarded.");
+                System.out.println("\n" + removedItem.getName() + " was discarded.");
                 return;
             } else {
                 // prolly a try catch here tbh.
-                System.out.println("Invalid input. Try again.");
+                System.out.println("\nInvalid input. Try again.");
             }
         }
     }
@@ -110,15 +115,25 @@ public class ItemManager {
     //endregion
 
     //region Printing and visual interaction of inventory
-    public void printInventory() {
+    public void printInventory(List<Map.Entry<Item, Integer>> sortedItems) {
         if (checkIfEmpty()) return;
 
         System.out.println("Inventory:");
+
+        // this comparator here is to print items out in alphabetical order, since hash doesn't inherently store order
+
         int i = 1; // Kind of a cursed enhanced loop
-        for (Map.Entry<Item, Integer> entry : itemCollection.entrySet()) {
+        for (Map.Entry<Item, Integer> entry : sortedItems) {
             System.out.println(i + ". " + entry.getKey().getName() + " x" + entry.getValue());
             i++;
         }
+    }
+
+    // put it into its own method due to the BEEG chain of calls.
+    public List<Map.Entry<Item, Integer>> getSortedInventory() {
+        List<Map.Entry<Item, Integer>> sortedItems = new ArrayList<>(itemCollection.entrySet());
+        sortedItems.sort(Comparator.comparing(entry -> entry.getKey().getName()));
+        return sortedItems;
     }
 
     public void inspectInventory(Scanner sc, PlayerCharacter player) {
@@ -126,7 +141,9 @@ public class ItemManager {
         // Forced loop until user have exited their inventory or chosen to display a specific item.
         while (!player.isDead()) {
             Utility.clearConsole();
-            printInventory();
+            // big chunk of dupe code, but currently is made in such a way to keep track of the overload.
+            List<Map.Entry<Item, Integer>> sortedItems = getSortedInventory();
+            printInventory(sortedItems);
             System.out.print("""
                     
                     Press 0 to exit.\
@@ -144,9 +161,48 @@ public class ItemManager {
             if (input > 0 && input <= itemCollection.size()) {
                 // generate a new arraylist to print an index with associated numbers.
                 // input -1 is due to index starting at 0
-                Item selectedItem = (new ArrayList<>(itemCollection.keySet())).get(input - 1);
+                Item selectedItem = sortedItems.get(input - 1).getKey();
                 selectedItem.displayItem();
                 selectedItem.promptUse(sc, player, selectedItem);
+            } else {
+                System.out.println("Invalid choice. Please try again.");
+                Utility.promptEnterKey(sc);
+            }
+        }
+    }
+
+    public void inspectInventory(Scanner sc, PlayerCharacter player, HostileCharacter enemy) {
+        if (checkIfEmpty()) return;
+        // Forced loop until user have exited their inventory or chosen to display a specific item.
+        while (!player.isDead()) {
+            Utility.clearConsole();
+            List<Map.Entry<Item, Integer>> sortedItems = getSortedInventory();
+            printInventory(sortedItems);
+            System.out.print("""
+                    
+                    Press 0 to exit.\
+                    
+                    Pick an item to inspect:\s""");
+            int input = Utility.checkIfNumber(sc);
+
+            if (input == 0) {
+                //temp since I don't know how to phrase this.
+                System.out.println("You close your inventory.");
+                Utility.promptEnterKey(sc);
+                return;
+            }
+
+            if (input > 0 && input <= itemCollection.size()) {
+                // generate a new arraylist to print an index with associated numbers.
+                // input -1 is due to index starting at 0
+                Item selectedItem = sortedItems.get(input - 1).getKey();
+                selectedItem.displayItem();
+                // TODO attack with item.
+                if (selectedItem instanceof Equipment)
+                    selectedItem.promptUse(sc, player, selectedItem);
+                else
+                    selectedItem.promptUse(sc, player, selectedItem, enemy);
+                return;
             } else {
                 System.out.println("Invalid choice. Please try again.");
                 Utility.promptEnterKey(sc);

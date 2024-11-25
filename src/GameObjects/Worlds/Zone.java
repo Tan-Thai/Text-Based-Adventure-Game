@@ -69,7 +69,7 @@ public class Zone {
 
     /**
      * Displays the current zone and its description + clear status
-     * 
+     *
      * @param zone
      */
     public static void displayCurrentZone(Zone zone) {
@@ -93,5 +93,19 @@ public class Zone {
             System.out.println("You don't find any monsters or other dangers lurking in this area.");
         }
         System.out.print("\n");
+    }
+
+    // Test zone - Reset zone.
+    // for usage refer to zoneManager > resetZones
+    public void clearEncounters() {
+        if (this.encounters != null) {
+            this.encounters.clear();
+        }
+    }
+
+    public void clearTraveableZones() {
+        if (this.traveableZones != null) {
+            this.traveableZones.clear();
+        }
     }
 }
