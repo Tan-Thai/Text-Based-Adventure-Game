@@ -70,7 +70,7 @@ public class ExploreZone {
      */
     public static Encounter getUnclearedEncounter(Zone zone) {
         if (zone.encounters == null) {
-            System.out.println("No encounters in zone: " + zone.getName() + ". Returned null for now.");
+   //         System.out.println("No encounters in zone: " + zone.getName() + ". Returned null for now.");
             return null;
         }
 
