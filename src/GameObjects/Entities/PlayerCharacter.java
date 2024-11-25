@@ -62,13 +62,9 @@ public class PlayerCharacter extends Entity {
             displayStats();
             //not sure what a text-block is.
             System.out.println(
-                    """
-                            
-                            1. Open inventory.\
-                            
-                            2. Inspect your equipped gear.\
-                            
-                            """);
+                    "\n" +
+                    "1. Open inventory.\n" +
+                    "2. Inspect your equipped gear.");
 
             System.out.print(Config.MENU_CHOICE_STRING);
 
