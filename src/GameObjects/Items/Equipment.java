@@ -28,6 +28,7 @@ public class Equipment extends Item {
         System.out.println(
                 "\n--" + getName() + "--" +
                 "\nCost: " + getItemCost() +
+                "\n" + effect.getEffectType() + ": " + effect.getValue() +
                 "\nDescription: " + getDescription());
     }
 

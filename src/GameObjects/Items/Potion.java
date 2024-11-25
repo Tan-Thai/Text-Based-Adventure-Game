@@ -65,4 +65,12 @@ public class Potion extends Item implements Consumable {
         else
             System.out.println("You decided not to use the item.");
     }
+
+    public void displayItem() {
+        System.out.println(
+                "\n--" + getName() + "--" +
+                "\nCost: " + getItemCost() +
+                "\n" + potionEffect.getEffectType() + ": " + potionEffect.getValue() +
+                "\nDescription: " + getDescription());
+    }
 }
