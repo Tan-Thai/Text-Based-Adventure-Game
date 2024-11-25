@@ -96,8 +96,7 @@ public class Combat {
             System.out.println(enemy.getName() + " misses");
         } else {
             int weaponDamage = addedWeaponDamage(enemy);
-            // if statement could be skipped on final product, but this is structured as a
-            // test for now.
+
             if (weaponDamage > 0) {
 
                 System.out.println("Weapon added " + weaponDamage + " damage.");
@@ -201,9 +200,7 @@ public class Combat {
     // otherwise returns zero.
     private int addedArmorSave(Entity actor) {
         if (actor.getEquipmentList().getEquipment(EquipmentType.ARMOUR) != null)
-            // TODO if given time, Armor could be reworked so that it used the set and
-            // getArmour on the entity together with the apply() function from the
-            // effect-object. However, that would require some rework.
+
             return actor.getEquipmentList().getEquipment(EquipmentType.ARMOUR).getEffectValue();
         else
             return 0;
@@ -225,8 +222,7 @@ public class Combat {
             System.out.println(player.getName() + " misses");
         } else {
             int weaponDamage = addedWeaponDamage(player);
-            // if statement could be skipped on final product, but this is structured as a
-            // test for now.
+
             if (weaponDamage > 0) {
 
                 System.out.println("Weapon added " + weaponDamage + " damage.");
@@ -234,12 +230,6 @@ public class Combat {
                 attackHits += weaponDamage;
                 attackHits = getDamageConversionBasedOnType(attackHits, player, enemy);
             }
-
-            // Comment this back in if we implement that the enemy equips armor.
-            // if(addedArmorSave(enemy) > 0) {
-            // System.out.println("added armor save is: " + addedArmorSave(enemy));
-            // }
-            // attackHits -= addedArmorSave(enemy);
 
             if (attackHits < 0) {
                 attackHits = 0;
@@ -267,28 +257,28 @@ public class Combat {
         switch (tempHostileEntityType) {
             case DRACONIC:
                 if (tempWeaponType == WeaponType.FIRE) {
-                    printIneffectiveStatement(damage);
+                    weakenAttack(damage);
                 } else {
                     return damage;
                 }
             case TOADKIN:
                 if (tempWeaponType == WeaponType.FIRE) {
-                    return printIneffectiveStatement(damage);
+                    return weakenAttack(damage);
                 } else {
                     return damage;
                 }
             case TROLLKIN:
                 if (tempWeaponType == WeaponType.FIRE || tempWeaponType == WeaponType.SUNLIGHT) {
-                    return printEffectiveStatement(damage);
+                    return strengthenAttack(damage);
                 } else {
                     return damage;
                 }
             case UNDEAD:
                 if (tempWeaponType == WeaponType.FIRE || tempWeaponType == WeaponType.HOLY
                     || tempWeaponType == WeaponType.SUNLIGHT) {
-                    return printEffectiveStatement(damage);
+                    return strengthenAttack(damage);
                 } else {
-                    return printIneffectiveStatement(damage);
+                    return weakenAttack(damage);
                 }
             default:
                 return damage;
@@ -302,7 +292,7 @@ public class Combat {
      * @param damage
      * @return
      */
-    private int printIneffectiveStatement(int damage) {
+    private int weakenAttack(int damage) {
         System.out.println("Your attack had almost no effect! You only caused " + (damage / 2) + " points of damage!");
 
         return damage / 2;
@@ -315,7 +305,7 @@ public class Combat {
      * @param damage
      * @return
      */
-    private int printEffectiveStatement(int damage) {
+    private int strengthenAttack(int damage) {
         System.out.println("Your attack was super effective! You caused " + (damage * 2) + " points of damage!");
         return damage * 2;
     }

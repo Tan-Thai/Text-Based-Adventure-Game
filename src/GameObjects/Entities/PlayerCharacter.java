@@ -14,12 +14,15 @@ public class PlayerCharacter extends Entity {
     private int experience;
     private Zone currentZone; // stores the current zone you are in.
 
-    public PlayerCharacter(String name, int health, int str, int dex, int intel) {
+    private String jobTitle = "";
+
+    public PlayerCharacter(String name, String jobTitle, int health, int str, int dex, int intel) {
         super(name, health, Config.PC_STARTING_LEVEL, str, dex, intel, 150);
         currentZone = ZoneManager.getZone(ZoneType.TAVERN);
+        this.jobTitle = jobTitle;
     }
 
-    //region Getters and Setters
+    // region Getters and Setters
     public int getExperience() {
         return experience;
     }
@@ -31,9 +34,13 @@ public class PlayerCharacter extends Entity {
     public void setCurrentZone(Zone zone) {
         this.currentZone = zone;
     }
-    //endregion
 
-    //region Temporary region for all methods player related
+    public String getJobTitle() {
+        return jobTitle;
+    }
+    // endregion
+
+    // region Temporary region for all methods player related
     public void gainExperience(int exp) {
 
         experience += exp;
@@ -60,11 +67,11 @@ public class PlayerCharacter extends Entity {
         while (inspecting && !isDead()) {
             Utility.clearConsole();
             displayStats();
-            //not sure what a text-block is.
+            // not sure what a text-block is.
             System.out.println(
                     "\n" +
-                    "1. Open inventory.\n" +
-                    "2. Inspect your equipped gear.");
+                            "1. Open inventory.\n" +
+                            "2. Inspect your equipped gear.");
 
             System.out.print(Config.MENU_CHOICE_STRING);
 
@@ -88,6 +95,7 @@ public class PlayerCharacter extends Entity {
     @Override
     public void displayStats() {
         System.out.println("Name: " + getName());
+        System.out.println("Class:" + getJobTitle());
         System.out.println("level: " + getLevel());
         System.out.println("Experience: " + getExperience() + " / " + Config.PC_EXPERIENCE_NEEDED_PER_LEVEL);
         System.out.println("Health: " + getHealth() + " / " + getMaxHealth());
@@ -104,12 +112,14 @@ public class PlayerCharacter extends Entity {
         if (getLevel() == Config.PC_RETIREMENT_LEVEL) {
             System.out.println("\nYou have reached high enough level and can now retire in the Tavern!");
         }
-        // "else if" x boss is dead, but we can prolly add a specific method for when it dies.
+        // "else if" x boss is dead, but we can prolly add a specific method for when it
+        // dies.
     }
 
     // CURRENTLY not in use in combat at all and only connected to item usage.
     // Now also in use in combat
-    // override method do include a game over check for when the player specifically took damage.
+    // override method do include a game over check for when the player specifically
+    // took damage.
     @Override
     public void takeDamage(int damageValue) {
         if (damageValue < 0) {
@@ -124,5 +134,5 @@ public class PlayerCharacter extends Entity {
             System.out.println(getName() + " took " + damageValue + " damage. Current health: " + health);
         }
     }
-    //endregion
+    // endregion
 }
