@@ -2,6 +2,8 @@ package GameObjects.Data;
 
 import Interactions.ChallengeType;
 import Interactions.Encounter;
+import Resources.Config;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,7 +95,7 @@ public class EncounterRepository {
 						wreath of smoke.
 						It takes several exhausting hours for you to find your way back to familiar grounds.
 						""",
-				5,
+				Config.EXPERIENCE_PER_ENCOUNTER,
 				0,
 				null);
 	}
@@ -118,7 +120,7 @@ public class EncounterRepository {
 						ground. Luckily you still have your knife, and you hurry to cut yourself down before any hunter
 						shows up to claim there prey.
 						""",
-				5,
+				Config.EXPERIENCE_PER_ENCOUNTER,
 				0,
 				null);
 	}
@@ -134,7 +136,7 @@ public class EncounterRepository {
 						about to refuse when you notice that the trolls are betting quite a lot of gold and other plunder.
 						""",
 				2,
-				ChallengeType.HEALTH,
+				ChallengeType.INTELLIGENCE,
 				"""
 						You take your place in the ring as the game starts up again. Within a few rounds it is clear to
 						you that you cannot possibly last against creatures that habitually feast on carrion. Luckily, you
@@ -148,7 +150,7 @@ public class EncounterRepository {
 						away from the game with your innards in turmoil, your pride in tatters and your trousers in an
 						even dire straits.
 						""",
-				5,
+				Config.EXPERIENCE_PER_ENCOUNTER,
 				35,
 				null);
 	}
@@ -183,7 +185,7 @@ public class EncounterRepository {
 						of the pit. By that time your limbs are stiff and near useless. Wet, cold and sore you limp away
 						utterly exhausted.
 						""",
-				5,
+				Config.EXPERIENCE_PER_ENCOUNTER,
 				0,
 				null);
 	}
@@ -213,7 +215,7 @@ public class EncounterRepository {
 						ducks. The scared birds create a ruckus and you are forced to flee before the swamp hag is
 						able to find you.
 						""",
-				5,
+				Config.EXPERIENCE_PER_ENCOUNTER,
 				15,
 				null);
 	}
@@ -243,7 +245,7 @@ public class EncounterRepository {
 						response. Cursing the spirits for refusing to recognize your genius you slink away rather than
 						coming up with another answer.
 						""",
-				5,
+				Config.EXPERIENCE_PER_ENCOUNTER,
 				5,
 				null);
 	}
@@ -280,7 +282,7 @@ public class EncounterRepository {
 						the spirit of the dead from noticing you, you quickly slink away.
 
 						""",
-				15,
+				Config.EXPERIENCE_PER_ENCOUNTER,
 				0,
 				null);
 	}
@@ -308,7 +310,7 @@ public class EncounterRepository {
 						Laboriously you climb to your feet again, you're bruised and bleeding, but at least you managed
 						to avoid being pulled under by the current.
 						""",
-				15,
+				Config.EXPERIENCE_PER_ENCOUNTER,
 				0,
 				null);
 	}
@@ -335,7 +337,7 @@ public class EncounterRepository {
 						You are forced to turn back, and spend many long hours backtracking before you are able to
 						find a new route that lets you circumvent the blockage.
 						""",
-				15,
+				Config.EXPERIENCE_PER_ENCOUNTER,
 				0,
 				null);
 	}

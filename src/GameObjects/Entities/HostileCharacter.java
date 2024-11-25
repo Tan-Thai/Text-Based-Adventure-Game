@@ -2,12 +2,12 @@ package GameObjects.Entities;
 
 import GameObjects.Data.ItemId;
 import GameObjects.Data.ItemRepository;
+import Resources.Config;
 
 public class HostileCharacter extends Entity {
 
     private final HostileEntityType hostileEntityType;
     private final String hostileEntityDescription;
-
 
     public HostileCharacter(String name, int health) {
         super(name, health, 1);
@@ -16,7 +16,7 @@ public class HostileCharacter extends Entity {
     }
 
     public HostileCharacter(String name, int health, int level, int strength, int dexterity, int intelligence,
-                            HostileEntityType hostileEntityType, String hostileEntityDescription) {
+            HostileEntityType hostileEntityType, String hostileEntityDescription) {
         // temporarily added a 0 for currency due to compile errors.
         super(name, health, level, strength, dexterity, intelligence, (level * 100 / 3));
         this.hostileEntityType = hostileEntityType;
@@ -26,7 +26,6 @@ public class HostileCharacter extends Entity {
         getInventory().addItem(ItemRepository.getItemById(ItemId.POISON_POTION));
     }
 
-    // TODO: Expand logic for enemy types and experience.
     public HostileEntityType getHostileEntityType() {
         return hostileEntityType;
     }
@@ -35,9 +34,13 @@ public class HostileCharacter extends Entity {
         return hostileEntityDescription;
     }
 
-    // calculates the experience based on the level. numbers TBD
+    /**
+     * Returns experience based on entities level times experience per encounter
+     * 
+     * @return
+     */
     public int calcExperienceGiven() {
-        return level * 5;
-        // return (int) (Math.round((level * 20 * 1.25)));
+        return level * Config.EXPERIENCE_PER_ENCOUNTER;
+
     }
 }
