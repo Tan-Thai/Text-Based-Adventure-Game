@@ -56,9 +56,9 @@ public class Combat {
         playerInitiative = calcInitiative(player, Utility.GREEN);
         enemyInitiative = calcInitiative(enemy, Utility.RED);
 
+        Utility.clearConsole();
         // loop for combat.
         while (isCombatInProgress) {
-            Utility.clearConsole();
             printInitative();
             // Prints all hp's
             printEntityHP(player, Utility.GREEN);
@@ -75,7 +75,11 @@ public class Combat {
             // We can most likely have a single checkVictoryCon here due to the automatic return when x is dead.
             // then it will just assert that by calling isDead (it already does). to then proceed to delivering loot.
             Utility.promptEnterKey(sc);
+            Utility.clearConsole();
         }
+        // TODO: Fixed the triple prompt enter but the second one clashes with the prompt from the game loop
+        // adding it to a to do as it's a cosmetic issue and note a game breaking one - TT
+        System.out.println("The combat has ended.");
     }
 
     private void enemyAttack(int attackHits) {
@@ -341,8 +345,6 @@ public class Combat {
             gainExperience();
         }
         isCombatInProgress = false;
-        Utility.promptEnterKey(sc);
-        Utility.clearConsole();
     }
 
     private void gainExperience() {
