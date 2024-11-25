@@ -92,7 +92,7 @@ public class PlayerCharacter extends Entity {
         System.out.println("Experience: " + getExperience() + " / " + Config.PC_EXPERIENCE_NEEDED_PER_LEVEL);
         System.out.println("Health: " + getHealth() + " / " + getMaxHealth());
         System.out.println("Armour: " + getArmour());
-        System.out.println("Currency: " + getCurrency());
+        System.out.println("Gold: " + getCurrency());
 
         System.out.println("\nStats:");
         System.out.println("Strength: " + strength);

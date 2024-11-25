@@ -24,7 +24,11 @@ public class ItemManager {
         return false;
     }
 
-    //region Getters
+    public boolean checkIfInventoryFull() {
+        return getTotalItemCount() >= capacity;
+    }
+
+    //region Getters and Setters
     public Map<Item, Integer> getItems() {
         return Collections.unmodifiableMap(itemCollection);
     }
@@ -41,10 +45,6 @@ public class ItemManager {
         return capacity = newCapacity;
     }
     //endregion
-
-    public boolean checkIfInventoryFull() {
-        return getTotalItemCount() >= capacity;
-    }
 
     //region Adding and removal of items in ItemCollections
     // difference between acquire is when an item is presented to the player without warning such as drops.

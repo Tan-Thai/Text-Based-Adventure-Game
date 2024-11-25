@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class Transactions {
     /* methods for handling trading between 2 entities. this will be things such as
      * trading with the shop, both buying and selling items.
-     * Other actions would also include giving currency from a defeated enemy to the player.
+     * Other actions would also include giving gold from a defeated enemy to the player.
      * */
 
 
@@ -53,9 +53,9 @@ public class Transactions {
             buyer.getInventory().addItem(item);
 
             if (isBuyerPC) {
-                System.out.println("You just bought " + item.getName() + " for " + item.getItemCost() + " currency.");
+                System.out.println("You just bought " + item.getName() + " for " + item.getItemCost() + " gold.");
             } else {
-                System.out.println("You just sold " + item.getName() + " for " + item.getItemCost() + " currency.");
+                System.out.println("You just sold " + item.getName() + " for " + item.getItemCost() + " gold.");
             }
 
         } else {
@@ -70,7 +70,7 @@ public class Transactions {
     private static boolean checkIfUnaffordable(Entity actor, Item item) {
         if (actor.getCurrency() < item.getItemCost()) {
             if (actor instanceof PlayerCharacter)
-                System.out.println("You do not have enough currency to buy this item.");
+                System.out.println("You do not have enough gold to buy this item.");
             else
                 System.out.println("The seller cannot afford to buy your item.");
 
@@ -95,11 +95,13 @@ public class Transactions {
     public static void lootCurrency(Entity pc, Entity enemyNpc) {
         pc.setCurrency(pc.getCurrency() + enemyNpc.getCurrency());
 
-        System.out.println("You just acquired " + enemyNpc.getCurrency() + " currency");
+        System.out.println("You received " + enemyNpc.getCurrency() + " gold");
         enemyNpc.setCurrency(0);
     }
 
     public static void receiveLootFromCombat(PlayerCharacter player, HostileCharacter enemy, Scanner sc) {
+
+        lootCurrency(player, enemy);
 
         if (enemy.getInventory().getTotalItemCount() > 0) {
             Random random = new Random();
