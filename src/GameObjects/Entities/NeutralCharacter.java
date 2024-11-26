@@ -5,8 +5,6 @@ import GameObjects.Data.ItemRepository;
 import GameObjects.Items.Item;
 import Global.Utility;
 import Interactions.Transactions;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -24,6 +22,8 @@ public class NeutralCharacter extends Entity {
         setHealth(1000);
         getInventory().setCapacity(100);
 
+            getInventory().addItem(ItemRepository.getItemById(ItemId.RAIDIANT_WARHAMMER));
+            getInventory().addItem(ItemRepository.getItemById(ItemId.PATCHY_LEATHER_ARMOUR));
         for (int i = 0; i <= 3; i++) {
             getInventory().addItem(ItemRepository.getItemById(ItemId.POISON_POTION));
             getInventory().addItem(ItemRepository.getItemById(ItemId.HEALTH_POTION));
