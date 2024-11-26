@@ -6,7 +6,6 @@ import GameObjects.Entities.NeutralCharacter;
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
 import Resources.Config;
-
 import java.util.Scanner;
 
 public class Tavern extends Zone {
