@@ -85,8 +85,6 @@ public class ExploreZone {
         // If for-loop above couldn't find any uncleared encounters, the if-case returns
         // null.
         if (unclearedEncounters.size() < 1) {
-            System.out.println("Couldn't find any uncleared encounters within zone: " + zone.getName() + "." +
-                    "Returned null for now.");
             return null;
         } else {
             Random random = new Random();

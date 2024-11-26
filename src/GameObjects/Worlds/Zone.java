@@ -3,6 +3,7 @@ package GameObjects.Worlds;
 import Global.Utility;
 import Interactions.Encounter;
 import Interactions.ExploreZone;
+import Resources.Config;
 
 import java.util.*;
 
@@ -34,7 +35,8 @@ public class Zone {
         this.encounters = encounters;
         this.zoneClearThreshold = zoneClearThreshold;
     }
-
+    
+    //region Setters & Getters
     public void setTravelableZones(Set<Zone> traveableZones) {
         this.traveableZones = traveableZones;
     }
@@ -66,7 +68,8 @@ public class Zone {
     public Set<Zone> getTraveableZones() {
         return traveableZones;
     }
-
+    //endregion
+    
     /**
      * Displays the current zone and its description + clear status
      *
@@ -78,10 +81,9 @@ public class Zone {
         System.out.println("You are in " + zone.getName() + ". " + zone.getDescription());
 
         if (ExploreZone.getUnclearedEncounter(zone) != null) {
-            if (ExploreZone.getUnclearedEncountersAmount(zone) >= 4) {
+            if (ExploreZone.getUnclearedEncountersAmount(zone) > Config.ZONE_CLEAR_THRESHOLD + 1) {
                 System.out.println("You feel an extreme sense of danger in this area.");
-            } else if (ExploreZone.getUnclearedEncountersAmount(zone) > 0
-                    && ExploreZone.getUnclearedEncountersAmount(zone) <= 3) {
+            } else if (ExploreZone.getUnclearedEncountersAmount(zone) >= Config.ZONE_CLEAR_THRESHOLD - 1) {
                 System.out.println("You feel quite unsafe in this area.");
             } else {
                 System.out.println("You feel very safe in this area.");
