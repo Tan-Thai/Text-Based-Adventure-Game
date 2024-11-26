@@ -60,19 +60,22 @@ public class Combat {
         Utility.clearConsole();
         // loop for combat.
         while (isCombatInProgress) {
-            System.out.println("------------ Turn: " + turnCount + " ------------");
+
             printInitiative();
             // Prints all hp's
-            printEntityHP(player, Utility.GREEN);
-            printEntityHP(enemy, Utility.RED);
+            printStatusUI(turnCount);
 
             if (enemyInitiative > playerInitiative) {
                 enemyAttack(calcAttack(enemy, Utility.RED));
                 Utility.promptEnterKey(sc);
+                Utility.clearConsole();
+                printStatusUI(turnCount);
                 playerCombatAction();
             } else {
                 playerCombatAction();
                 Utility.promptEnterKey(sc);
+                Utility.clearConsole();
+                printStatusUI(turnCount);
                 enemyAttack(calcAttack(enemy, Utility.RED));
             }
             Utility.printBigLine();
@@ -87,6 +90,12 @@ public class Combat {
         // TODO: Fixed the triple prompt enter but the second one clashes with the prompt from the game loop
         // adding it to a to do as it's a cosmetic issue and note a game breaking one - TT
         System.out.println("------------ The combat has ended ------------");
+    }
+
+    private void printStatusUI(int turnCount) {
+        System.out.println("------------ Turn: " + turnCount + " ------------");
+        printEntityHP(player, Utility.GREEN);
+        printEntityHP(enemy, Utility.RED);
     }
 
     private void enemyAttack(int attackHits) {
@@ -186,10 +195,11 @@ public class Combat {
     // calc's the attack values etc.
     private int calcAttack(Entity actor, String colour) {
 
-        Utility.printBigLine();
+        System.out.println(
+                "\n------------ " + colour + actor.getName() + "'s action" + Utility.RESET + " ------------");
         int hitCount = Utility.rollDicePool(actor.getStrength(), colour, OptionalInt.empty(), OptionalInt.empty(),
                 OptionalInt.empty());
-
+        
         // Used to add break inbetween lines in the console
         System.out.println();
         return hitCount;
