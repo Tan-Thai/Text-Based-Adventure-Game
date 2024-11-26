@@ -7,7 +7,7 @@ public class PlayerClassRepository {
 
     public static PlayerCharacter getBarbarian(String name)
     {
-        return new PlayerCharacter(name, "Barbarian", 20, 5, 1, 2);
+        return new PlayerCharacter(name, "Barbarian", 30, 8, 2, 6);
     }
     public static PlayerCharacter getRogue(String name)
     {

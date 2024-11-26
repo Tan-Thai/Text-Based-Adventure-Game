@@ -63,7 +63,7 @@ public class Encounter {
         if (isCombatEncounter())
             return enemy;
         else {
-            System.out.println("This encounter did not contain an enemy, and so one couldn't be returned.");
+            //System.out.println("This encounter did not contain an enemy, and so one couldn't be returned.");
             return null;
         }
     }

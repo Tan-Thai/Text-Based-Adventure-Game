@@ -10,7 +10,6 @@ import GameObjects.Items.EquipmentType;
 import GameObjects.Items.Weapon;
 import GameObjects.Items.WeaponType;
 import Global.Utility;
-
 import java.util.*;
 
 public class Combat {
@@ -233,7 +232,7 @@ public class Combat {
         System.out.println(enemy.getName() + " has " + enemy.getDexterity()
                            + " Dexterity which is subtracted from your hits");
         attackHits -= enemy.getDexterity();
-        System.out.println(attackHits);
+        
 
         if (attackHits <= 0) {
             System.out.println(player.getName() + " misses");

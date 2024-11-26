@@ -60,7 +60,7 @@ public class HostileEntitiesRepository {
 
 	// very dangorus meant to be hard for leveled up characters
 	public static HostileCharacter getMossDrenchedUndead() {
-		return new HostileCharacter("Moss Drenched Undead", 25, 2, 8, 3, 3, HostileEntityType.UNDEAD,
+		return new HostileCharacter("Moss Drenched Undead", 10, 2, 8, 1, 3, HostileEntityType.UNDEAD,
 				"""
 						The flames of your torch illuminate a rotting warrior that has grown into the wall,
 						moss and huge funguses cover its body and binds it to the wall, as you look closer
@@ -85,7 +85,7 @@ public class HostileEntitiesRepository {
 
 	// very dangerous this is the boss people!
 	public static HostileCharacter getTyrannicLizardKing() {
-		return new HostileCharacter("Maximus Rex", 30, 3, 9, 4, 5, HostileEntityType.BOSS,
+		return new HostileCharacter("Maximus Rex", 10, 3, 9, 1, 5, HostileEntityType.BOSS,
 				"""
 						You have reached the end of the caverns and it has lead you to what must be the basement of the tavern
 						as you can faintly hear the music from up above, but in the dark lays the beast of darkness,

@@ -3,7 +3,6 @@ package GameObjects.Worlds;
 import Global.Utility;
 import Interactions.Encounter;
 import Interactions.ExploreZone;
-
 import java.util.*;
 
 public class Zone {
@@ -80,7 +79,7 @@ public class Zone {
         // related to that.
 
         if (ExploreZone.getUnclearedEncounter(zone) != null) {
-            System.out.println("DEBUG CHECK: Uncleared encounters: " + ExploreZone.getUnclearedEncountersAmount(zone));
+            //System.out.println("DEBUG CHECK: Uncleared encounters: " + ExploreZone.getUnclearedEncountersAmount(zone));
             if (ExploreZone.getUnclearedEncountersAmount(zone) >= 4) {
                 System.out.println("You feel an extreme sense of danger in this area.");
             } else if (ExploreZone.getUnclearedEncountersAmount(zone) > 0

@@ -1,9 +1,8 @@
 package GameObjects.Data;
 
-import java.util.Scanner;
-import Resources.Config;
-
 import Global.Utility;
+import Resources.Config;
+import java.util.Scanner;
 
 public class Info {
     public static void howToPlay(Scanner sc) {
@@ -60,9 +59,34 @@ public class Info {
     }
     //Temporary game intro, insert actual Wille stuff here
     public static void gameIntro() {
-        System.out.println("Welcome to the game!\n" +
-                "You are a hero who has been tasked with saving the town from an evil that lurks in the basement of the tavern.\n" +
-                "You must explore different zones, fight monsters, and collect items to prepare for the final battle.\n" +
-                "Good luck!");
+        System.out.println(Utility.GREEN+"  ___ ___                                               ___  ___ ___  "+Utility.RESET);
+        System.out.println(Utility.GREEN+" /   |   \\   ___________  ____D  ______    ___ ______  _| |_/   |   \\  "+Utility.RESET);
+        System.out.println(Utility.GREEN+"/    ~    \\_/ __ \\_  __ \\/  _ \\/  ___/    \\_____\\__  \\|_   _|   ~    \\ "+Utility.RESET);
+        System.out.println(Utility.GREEN+"\\    Y    /\\  ___/|  | \\(  <_> )___ \\      |  |_> > __ \\| |\\    Y    /"+Utility.RESET);
+        System.out.println(Utility.GREEN+" \\___|_  /  \\___> |  |   \\____/____  >     |   __(____  / | \\___|_  / "+Utility.RESET);
+        System.out.println(Utility.GREEN+"       \\/          \\/              \\/      |__|         \\/        \\/ "+Utility.RESET);
+        System.out.println();
+        System.out.println(Utility.RED+"By: Wolf light studios"+Utility.RESET);
+        System.out.println();
+
+        Utility.slowPrint("The land is cursed in darkness. \r\n" + //
+                        "Plauge, war and famine have pushed the tenderfoot folk to flee. \r\n" + //
+                        "But now they find themselves trapped in Bleakstone Vale. \r\n" + //
+                        "Being a gentle and soft-hearted kin, they need a savior.\r\n" + // 
+                        "They need you!", 40);
+        System.out.println();
+        Utility.slowPrint("Restore the Ember Prisms.\r\n"+ // 
+"These crystals were once the pride of the land and used to banish the dark of Evernight.\r\n" + //
+"Held in ancient seats of power, these relic beacons kept the shroud at bay.\r\n" + //
+
+"But they have fallen to the tooth of time, disrepair and decay have claimed them\r\n"+ //
+
+"As the seats crumbled the heirlooms were lost. \r\n"+ //
+ 
+"Seek them in the perilous wilds! \r\n"+ //
+
+"Restor them to the seats!\r\n"+ //
+
+"Banish the darkness!\r\n", 40);
     }
 }

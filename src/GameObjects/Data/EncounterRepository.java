@@ -3,7 +3,6 @@ package GameObjects.Data;
 import Interactions.ChallengeType;
 import Interactions.Encounter;
 import Resources.Config;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,11 +18,11 @@ public class EncounterRepository {
 		forestEncounters = new ArrayList<>();
 
 		forestEncounters.add(getLureWillOWispEncounter());
-		forestEncounters.add(getHuntersForgottenTrapEncounter());
-		forestEncounters.add(getGristlyMealEncounter());
-		forestEncounters.add(getStuntedMudTrollEncounter());
-		forestEncounters.add(getRottenCrawlerEncounter());
-		forestEncounters.add(getDerangedTrapperEncounter());
+		//forestEncounters.add(getHuntersForgottenTrapEncounter());
+		//forestEncounters.add(getGristlyMealEncounter());
+		//forestEncounters.add(getStuntedMudTrollEncounter());
+		//forestEncounters.add(getRottenCrawlerEncounter());
+		//forestEncounters.add(getDerangedTrapperEncounter());
 
 		return forestEncounters;
 	}
@@ -45,12 +44,12 @@ public class EncounterRepository {
 	public static List<Encounter> getCaveEncounters() {
 		caveEncounters = new ArrayList<>();
 
-		caveEncounters.add(getUnluckyAdventurerEncounter());
-		caveEncounters.add(getASlipperySlopEncounter());
-		caveEncounters.add(getBlockedByRubbleEncounter());
+		//caveEncounters.add(getUnluckyAdventurerEncounter());
+		//caveEncounters.add(getASlipperySlopEncounter());
+		//caveEncounters.add(getBlockedByRubbleEncounter());
 		caveEncounters.add(getMossDrenchedUndeadEncounter());
-		caveEncounters.add(getDrownedCrawlerEncounter());
-		caveEncounters.add(getGiantBloodsuckingBatEncounter());
+		//caveEncounters.add(getDrownedCrawlerEncounter());
+		//caveEncounters.add(getGiantBloodsuckingBatEncounter());
 
 		return caveEncounters;
 	}

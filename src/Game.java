@@ -8,7 +8,6 @@ import GameObjects.Worlds.ZoneManager;
 import Global.Utility;
 import Interactions.Adventure;
 import Resources.Config;
-
 import java.util.Scanner;
 
 public class Game {
@@ -116,10 +115,10 @@ public class Game {
 
     private static void addItems(PlayerCharacter pc) {
         pc.getInventory().addItem(ItemRepository.getItemById(ItemId.RUSTY_LONGSWORD));
-        pc.getInventory().addItem(ItemRepository.getItemById(ItemId.GREAT_AXE));
-        pc.getInventory().addItem(ItemRepository.getItemById(ItemId.HEALTH_POTION));
+        pc.getInventory().addItem(ItemRepository.getItemById(ItemId.FLAMING_BASTARDSWORD));
+        pc.getInventory().addItem(ItemRepository.getItemById(ItemId.HEIRLOOM_BATTLEPLATE));
         for (int i = 1; i <= 7; i++)
-            pc.getInventory().addItem(ItemRepository.getItemById(ItemId.POISON_POTION));
+            pc.getInventory().addItem(ItemRepository.getItemById(ItemId.HEALTH_POTION));
     }
     // endregion
 
