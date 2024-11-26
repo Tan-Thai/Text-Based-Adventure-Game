@@ -1,15 +1,13 @@
 package Interactions;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
-
 import GameObjects.Entities.PlayerCharacter;
-import GameObjects.Worlds.ZoneType;
-import Global.Utility;
 import GameObjects.Worlds.Basement;
 import GameObjects.Worlds.Zone;
+import GameObjects.Worlds.ZoneType;
+import Global.Utility;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
 
 public class ExploreZone {
     // explore inside zone function.
@@ -70,7 +68,7 @@ public class ExploreZone {
      */
     public static Encounter getUnclearedEncounter(Zone zone) {
         if (zone.encounters == null) {
-            System.out.println("No encounters in zone: " + zone.getName() + ". Returned null for now.");
+            //System.out.println("No encounters in zone: " + zone.getName() + ". Returned null for now.");
             return null;
         }
 
@@ -85,8 +83,8 @@ public class ExploreZone {
         // If for-loop above couldn't find any uncleared encounters, the if-case returns
         // null.
         if (unclearedEncounters.size() < 1) {
-            System.out.println("Couldn't find any uncleared encounters within zone: " + zone.getName() + "." +
-                    "Returned null for now.");
+           // System.out.println("Couldn't find any uncleared encounters within zone: " + zone.getName() + "." +
+                   // "Returned null for now.");
             return null;
         } else {
             Random random = new Random();

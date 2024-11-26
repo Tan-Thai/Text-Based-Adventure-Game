@@ -89,7 +89,7 @@ public class HostileEntitiesRepository {
 				"""
 						You have reached the end of the caverns and it has lead you to what must be the basement of the tavern
 						as you can faintly hear the music from up above, but in the dark lays the beast of darkness,
-						the embodiment of shadow the giant emberprism eating king of lizards known only as -Maximus-.""");
+						the embodiment of shadow the giant emberprism eating king of lizards known only as -Maximus Rex-.""");
 	}
 
 	public static HostileCharacter getUndefinedCharacter() {

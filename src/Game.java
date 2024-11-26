@@ -117,7 +117,7 @@ public class Game {
         pc.getInventory().addItem(ItemRepository.getItemById(ItemId.RUSTY_LONGSWORD));
         pc.getInventory().addItem(ItemRepository.getItemById(ItemId.FLAMING_BASTARDSWORD));
         pc.getInventory().addItem(ItemRepository.getItemById(ItemId.HEIRLOOM_BATTLEPLATE));
-        for (int i = 1; i <= 7; i++)
+        for (int i = 1; i <= 5; i++)
             pc.getInventory().addItem(ItemRepository.getItemById(ItemId.HEALTH_POTION));
     }
     // endregion

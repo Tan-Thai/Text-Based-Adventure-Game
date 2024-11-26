@@ -3,7 +3,6 @@ import Core.GameStateManager;
 import GameObjects.Data.Info;
 import GameObjects.Worlds.ZoneManager;
 import Global.Utility;
-import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 import javax.sound.sampled.*;
@@ -12,12 +11,13 @@ public class Main {
     public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         Scanner sc = new Scanner(System.in);
         Boolean replay;
-        File file = new File("C:\\Users\\wille\\Documents\\Java github repos\\text\\Text-Based-Adventure-Game\\src\\Resources\\musicSample\\MusicForGame.wav");
+        /*File file = new File("C:\\Users\\wille\\Documents\\Java github repos\\text\\Text-Based-Adventure-Game\\src\\Resources\\musicSample\\MusicForGame.wav");
         AudioInputStream audioStream=AudioSystem.getAudioInputStream(file);
         Clip clip = AudioSystem.getClip();
         clip.open(audioStream);
         clip.loop(3000);
-        clip.start(); 
+        clip.start();*/
+         
         Info.gameIntro();
         Utility.promptEnterKey(sc);
         

@@ -1,14 +1,10 @@
 package GameObjects.Worlds;
 
-import GameObjects.Entities.PlayerCharacter;
-import Global.Utility;
-import Interactions.ExploreZone;
-import Interactions.Adventure;
-
-import java.util.Scanner;
-
 import Core.GameState;
 import Core.GameStateManager;
+import GameObjects.Entities.PlayerCharacter;
+import Interactions.ExploreZone;
+import java.util.Scanner;
 
 public class Basement extends Zone {
 
@@ -28,11 +24,19 @@ public class Basement extends Zone {
     }
     public void endGame() {
         if (GameStateManager.getInstance().getCurrentState() == GameState.VICTORY) {
-            System.out.println("You have defeated the boss and have saved the town from certain doom!\n" + 
-            "You have saved the town from the evil that lurked in the basement of the tavern.\n" + 
+            System.out.println("You have defeated the boss and have saved the vally from disapearing into the evernight\n" + 
+            "You have recovered the Emberprism from the guts of Maximus Rex\n" + 
             "You are a hero and will be remembered for generations to come.");
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            System.out.println("");
         } else if (GameStateManager.getInstance().getCurrentState() == GameState.GAME_OVER) {
-            System.out.println("You have been defeated by the boss and the town is doomed. You have failed to save the town from the evil that lurked in the basement of the tavern. You are a failure and will be remembered as such. Thank you for playing!");
+            System.out.println("You have been defeated by the boss!\n" + 
+                                "You have failed in you quest!\n" +
+                                "Another hero must rise to save the people of the tender foot clan\n" +
+                                "or the land will fall into darkness\n" +
+                                "Thank you for playing!");
         } else {
             return;
         }
