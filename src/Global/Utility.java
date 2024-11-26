@@ -10,6 +10,9 @@ public class Utility {
     public static final String RESET = "\u001B[0m";
     public static final String RED = "\u001B[31m";
     public static final String GREEN = "\u001B[32m";
+    public static final String LOW_INTENSITY = "\u001B[2m";
+    public static final String HIGH_INTENSITY = "\u001B[1m";
+
     // endregion
     // region vars for standard dice values
     private static final int AMOUNT_OF_SIDES = 6;
@@ -178,7 +181,14 @@ public class Utility {
                         + e.getMessage());
                 currentValue = 0;
             }
-            System.out.print(colour + "[" + currentValue + "]" + RESET);
+
+            if (currentValue >= 4 && currentValue < 6)
+                System.out.print(colour + "[" + currentValue + "]" + RESET);
+            else if (currentValue == 6)
+                System.out.print(HIGH_INTENSITY + colour + "[" + currentValue + "]" + RESET);
+            else
+                System.out.print(LOW_INTENSITY + "[" + currentValue + "]" + RESET);
+
 
             if (currentValue >= successValue) {
                 if (currentValue >= critValue) {
