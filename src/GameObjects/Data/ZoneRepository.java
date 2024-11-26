@@ -11,7 +11,7 @@ public class ZoneRepository { // This class is a repository for all the zones in
 
     public static Zone forestZone() {
         return new Zone(
-                "Wraithwood depths",
+                "Wraithwood Depths",
                 """
                         A dark tranquil old forest where every step taken sinks into the deep soft moss muffling all sound,
                         walking here feels timeless and keeping a direction is impossible, becoming lost among the giant timbers

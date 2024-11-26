@@ -5,7 +5,6 @@ import Core.GameStateManager;
 import GameObjects.Entities.NeutralCharacter;
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
-import Interactions.Adventure;
 import Resources.Config;
 
 import java.util.Scanner;
