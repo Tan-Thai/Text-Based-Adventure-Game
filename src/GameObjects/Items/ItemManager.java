@@ -68,6 +68,7 @@ public class ItemManager {
         }
     }
 
+    // TODO got 1 single instance of mishap during weapon swap.
     // is used when we make transactions and already have confirmed that the user have space.
     // im keeping the checks for now though to make sure it works with no issues.
     public void addItem(Item item) {
@@ -188,7 +189,6 @@ public class ItemManager {
             if (input == 0) {
                 //temp since I don't know how to phrase this.
                 System.out.println("You close your inventory.");
-                Utility.promptEnterKey(sc);
                 return;
             }
 
@@ -205,7 +205,6 @@ public class ItemManager {
                 return;
             } else {
                 System.out.println("Invalid choice. Please try again.");
-                Utility.promptEnterKey(sc);
             }
         }
     }

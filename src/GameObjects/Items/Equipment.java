@@ -42,12 +42,13 @@ public class Equipment extends Item {
         Utility.promptEnterKey(sc);
     }
 
+    // TODO Has a bug when changing between 2 weapons in combat.
     private void handleUsage(Scanner sc, PlayerCharacter player, Item selectedItem) {
         System.out.print("\nDo you want to equip this item? (Y/N): ");
         if (Utility.checkYesOrNo(sc)) {
             System.out.println("You equipped " + getName());
+            player.getInventory().removeItem(selectedItem);
             player.getInventory().addItem(player.getEquipmentList().equipItem(this, player));
-            player.getInventory().removeItem(this);
         } else {
             System.out.println("You decided not to equip the item.");
         }
