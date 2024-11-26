@@ -11,6 +11,7 @@ import GameObjects.Items.Weapon;
 import GameObjects.Items.WeaponType;
 import Global.Utility;
 
+import javax.xml.stream.events.EndElement;
 import java.util.*;
 
 public class Combat {
@@ -59,9 +60,9 @@ public class Combat {
         int turnCount = 1;
         Utility.clearConsole();
         // loop for combat.
-        while (isCombatInProgress) {
+        printInitiative();
 
-            printInitiative();
+        while (isCombatInProgress) {
             // Prints all hp's
             printStatusUI(turnCount);
 
@@ -78,7 +79,6 @@ public class Combat {
                 printStatusUI(turnCount);
                 enemyAttack(calcAttack(enemy, Utility.RED));
             }
-            Utility.printBigLine();
             System.out.println("------------ End of Turn ------------");
             checkVictoryConditionMet();
             // We can most likely have a single checkVictoryCon here due to the automatic return when x is dead.
@@ -96,41 +96,6 @@ public class Combat {
         System.out.println("------------ Turn: " + turnCount + " ------------");
         printEntityHP(player, Utility.GREEN);
         printEntityHP(enemy, Utility.RED);
-    }
-
-    private void enemyAttack(int attackHits) {
-        if (enemy.isDead()) {
-            return;
-        }
-        System.out.println(enemy.getName() + " gets " + attackHits + " hits");
-        System.out.println(player.getName() + " has " + player.getDexterity()
-                           + " Dexterity which is subtracted from your enemy's hits");
-        attackHits -= player.getDexterity();
-        System.out.println(attackHits);
-
-        if (attackHits <= 0) {
-            System.out.println(enemy.getName() + " misses");
-        } else {
-            int weaponDamage = addedWeaponDamage(enemy);
-
-            if (weaponDamage > 0) {
-
-                System.out.println("Weapon added " + weaponDamage + " damage.");
-                System.out.println("Making it " + (attackHits + weaponDamage) + " hits");
-                attackHits += weaponDamage;
-            }
-
-            if (addedArmorSave(player) <= 0) {
-                System.out.println("Added armor save is: " + addedArmorSave(player));
-            }
-
-            attackHits -= addedArmorSave(player);
-            if (attackHits < 0) {
-                attackHits = 0;
-            }
-
-            player.takeDamage(attackHits);
-        }
     }
 
     private void playerCombatAction() {
@@ -199,7 +164,7 @@ public class Combat {
                 "\n------------ " + colour + actor.getName() + "'s action" + Utility.RESET + " ------------");
         int hitCount = Utility.rollDicePool(actor.getStrength(), colour, OptionalInt.empty(), OptionalInt.empty(),
                 OptionalInt.empty());
-        
+
         // Used to add break inbetween lines in the console
         System.out.println();
         return hitCount;
@@ -238,28 +203,78 @@ public class Combat {
         System.out.println("Your enemies initiative is " + enemyInitiative);
     }
 
-    private void playerAttack(HostileCharacter enemy, PlayerCharacter player, int attackHits) {
-        System.out.println(player.getName() + " gets " + attackHits + " hits");
-        System.out.println(enemy.getName() + " has " + enemy.getDexterity()
-                           + " Dexterity which is subtracted from your hits");
-        attackHits -= enemy.getDexterity();
-        System.out.println(attackHits);
+    private void printAttemptsAndAvoids(Entity attacker, Entity defender, int attackHits) {
+        // dynamically omits 's' if it's only a singular hit.
+        System.out.println(attacker.getName() + " attempts to swing " + attackHits + " time" +
+                           (attackHits == 1 ? "" : "s") + "!\n--");
+
+        // if case added to prevent that the target "avoids" more than the amount of hits attempted.
+        if (defender.getDexterity() > attackHits) {
+            System.out.println(defender.getName() + " avoids " + attackHits + " hit" +
+                               (attackHits == 1 ? "" : "s") + "!\n--");
+        } else {
+            System.out.println(defender.getName() + " avoids " + defender.getDexterity() + " hit" +
+                               (defender.getDexterity() == 1 ? "" : "s") + "!\n--");
+        }
+    }
+
+    private void enemyAttack(int attackHits) {
+        if (enemy.isDead()) {
+            return;
+        }
+
+        printAttemptsAndAvoids(enemy, player, attackHits);
+
+        attackHits -= player.getDexterity();
 
         if (attackHits <= 0) {
-            System.out.println(player.getName() + " misses");
+            System.out.println(enemy.getName() + " misses...");
+        } else {
+            int weaponDamage = addedWeaponDamage(enemy);
+
+            if (weaponDamage > 0) {
+                attackHits += weaponDamage;
+
+                System.out.println(player.getEquipmentList().getEquipment(EquipmentType.WEAPON).getName()
+                                   + " added " + weaponDamage + " damage.\n--");
+            }
+
+            if (addedArmorSave(player) > 0) {
+                System.out.println(addedArmorSave(player) + " damage was blocked by armour.");
+            }
+
+            attackHits -= addedArmorSave(player);
+
+            if (attackHits < 0) {
+                attackHits = 0;
+            }
+
+            player.takeDamage(attackHits);
+        }
+    }
+
+    private void playerAttack(HostileCharacter enemy, PlayerCharacter player, int attackHits) {
+
+        printAttemptsAndAvoids(player, enemy, attackHits);
+
+        attackHits -= enemy.getDexterity();
+
+        if (attackHits < 0) {
+            attackHits = 0;
+        }
+
+        if (attackHits == 0) {
+            System.out.println(player.getName() + " misses...");
         } else {
             int weaponDamage = addedWeaponDamage(player);
 
             if (weaponDamage > 0) {
-
-                System.out.println("Weapon added " + weaponDamage + " damage.");
-                System.out.println("Making it " + (attackHits + weaponDamage) + " hits");
                 attackHits += weaponDamage;
                 attackHits = getDamageConversionBasedOnType(attackHits, player, enemy);
-            }
-
-            if (attackHits < 0) {
-                attackHits = 0;
+                // TODO Make a print based on effectiveness, or rework how the resolution of damage is printed.
+                // This line is super deceptive, since we don't mention ANYTHING about effectiveness.
+                System.out.println(player.getEquipmentList().getEquipment(EquipmentType.WEAPON).getName()
+                                   + " added " + weaponDamage + " damage.\n--");
             }
 
             enemy.takeDamage(attackHits);

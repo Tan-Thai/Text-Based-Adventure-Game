@@ -191,9 +191,9 @@ public class Entity {
         health -= damageValue;
         if (isDead()) {
             health = 0;
-            System.out.println(name + " took " + damageValue + " damage. " + name + " is dead.");
+            System.out.println(name + " took " + damageValue + " damage. " + name + " is dead!");
         } else {
-            System.out.println(name + " took " + damageValue + " damage. Current health: " + health);
+            System.out.println(name + " took " + damageValue + " damage!");
         }
     }
     // endregion
