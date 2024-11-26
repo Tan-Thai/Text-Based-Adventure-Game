@@ -199,7 +199,7 @@ public class ItemManager {
                 selectedItem.displayItem();
                 // TODO attack with item.
                 if (selectedItem instanceof Equipment)
-                    selectedItem.promptUse(sc, player, selectedItem);
+                    selectedItem.promptUse(sc, player, selectedItem, enemy);
                 else
                     selectedItem.promptUse(sc, player, selectedItem, enemy);
                 return;
