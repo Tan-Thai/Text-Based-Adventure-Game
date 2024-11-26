@@ -56,7 +56,6 @@ public class Potion extends Item implements Consumable {
             resolveUsage(response, enemy);
             player.getInventory().removeItem(selectedItem);
         }
-        Utility.promptEnterKey(sc);
     }
 
     private void resolveUsage(Boolean response, Entity target) {

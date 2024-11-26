@@ -134,7 +134,10 @@ public class Combat {
         boolean isInputCorrect = true;
 
         do {
-            System.out.print("1. Attack\n2. Inventory\n0. Flee\nChoose your action: ");
+            System.out.print("\n1. Attack" +
+                             "\n2. Inventory" +
+                             "\n0. Flee" +
+                             "\nChoose your action: ");
 
             // Sets to true, so program breaks out of script unless it is set to false in
             // the default case of the switch.
