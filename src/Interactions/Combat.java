@@ -11,7 +11,6 @@ import GameObjects.Items.Weapon;
 import GameObjects.Items.WeaponType;
 import Global.Utility;
 
-import javax.xml.stream.events.EndElement;
 import java.util.*;
 
 public class Combat {
@@ -58,27 +57,30 @@ public class Combat {
         enemyInitiative = calcInitiative(enemy, Utility.RED);
 
         int turnCount = 1;
+        boolean playerGoingFirst = playerInitiative >= enemyInitiative;
         Utility.clearConsole();
         // loop for combat.
         printInitiative();
 
         while (isCombatInProgress) {
             // Prints all hp's
-            printStatusUI(turnCount);
+            // made code more DRY by only repeating the needed methods (the attack order being swapped.)
+            printStatusDisplay(turnCount);
+            if (playerGoingFirst)
+                playerCombatAction();
+            else
+                enemyAttack(calcAttack(enemy, Utility.RED));
 
-            if (enemyInitiative > playerInitiative) {
+            Utility.promptEnterKey(sc);
+            Utility.clearConsole();
+
+            printStatusDisplay(turnCount);
+            if (playerGoingFirst)
                 enemyAttack(calcAttack(enemy, Utility.RED));
-                Utility.promptEnterKey(sc);
-                Utility.clearConsole();
-                printStatusUI(turnCount);
+            else
                 playerCombatAction();
-            } else {
-                playerCombatAction();
-                Utility.promptEnterKey(sc);
-                Utility.clearConsole();
-                printStatusUI(turnCount);
-                enemyAttack(calcAttack(enemy, Utility.RED));
-            }
+
+
             System.out.println("------------ End of Turn ------------");
             checkVictoryConditionMet();
             // We can most likely have a single checkVictoryCon here due to the automatic return when x is dead.
@@ -92,7 +94,7 @@ public class Combat {
         System.out.println("------------ The combat has ended ------------");
     }
 
-    private void printStatusUI(int turnCount) {
+    private void printStatusDisplay(int turnCount) {
         System.out.println("------------ Turn: " + turnCount + " ------------");
         printEntityHP(player, Utility.GREEN);
         printEntityHP(enemy, Utility.RED);
