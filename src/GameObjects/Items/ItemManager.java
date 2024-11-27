@@ -68,6 +68,7 @@ public class ItemManager {
         }
     }
 
+    // TODO got 1 single instance of mishap during weapon swap. (Think i've solved it, did not know the core issue.)- TT
     // is used when we make transactions and already have confirmed that the user have space.
     // im keeping the checks for now though to make sure it works with no issues.
     public void addItem(Item item) {
@@ -152,7 +153,6 @@ public class ItemManager {
             int input = Utility.checkIfNumber(sc);
 
             if (input == 0) {
-                //temp since I don't know how to phrase this.
                 System.out.println("You close your inventory.");
                 Utility.promptEnterKey(sc);
                 return;
@@ -173,7 +173,7 @@ public class ItemManager {
 
     public void inspectInventory(Scanner sc, PlayerCharacter player, HostileCharacter enemy) {
         if (checkIfEmpty()) return;
-        // Forced loop until user have exited their inventory or chosen to display a specific item.
+        // Forced loop until user makes the active choice to exit.
         while (!player.isDead()) {
             Utility.clearConsole();
             List<Map.Entry<Item, Integer>> sortedItems = getSortedInventory();
@@ -186,9 +186,7 @@ public class ItemManager {
             int input = Utility.checkIfNumber(sc);
 
             if (input == 0) {
-                //temp since I don't know how to phrase this.
                 System.out.println("You close your inventory.");
-                Utility.promptEnterKey(sc);
                 return;
             }
 
@@ -197,15 +195,10 @@ public class ItemManager {
                 // input -1 is due to index starting at 0
                 Item selectedItem = sortedItems.get(input - 1).getKey();
                 selectedItem.displayItem();
-                // TODO attack with item.
-                if (selectedItem instanceof Equipment)
-                    selectedItem.promptUse(sc, player, selectedItem);
-                else
-                    selectedItem.promptUse(sc, player, selectedItem, enemy);
+                selectedItem.promptUse(sc, player, selectedItem, enemy);
                 return;
             } else {
                 System.out.println("Invalid choice. Please try again.");
-                Utility.promptEnterKey(sc);
             }
         }
     }

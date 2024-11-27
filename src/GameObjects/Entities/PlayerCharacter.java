@@ -67,11 +67,10 @@ public class PlayerCharacter extends Entity {
         while (inspecting && !isDead()) {
             Utility.clearConsole();
             displayStats();
-            // not sure what a text-block is.
             System.out.println(
                     "\n" +
-                            "1. Open inventory.\n" +
-                            "2. Inspect your equipped gear.");
+                    "1. Open inventory.\n" +
+                    "2. Inspect your equipped gear.");
 
             System.out.print(Config.MENU_CHOICE_STRING);
 
@@ -112,8 +111,6 @@ public class PlayerCharacter extends Entity {
         if (getLevel() == Config.PC_RETIREMENT_LEVEL) {
             System.out.println("\nYou have reached high enough level and can now retire in the Tavern!");
         }
-        // "else if" x boss is dead, but we can prolly add a specific method for when it
-        // dies.
     }
 
     // CURRENTLY not in use in combat at all and only connected to item usage.
@@ -131,7 +128,7 @@ public class PlayerCharacter extends Entity {
             System.out.println(getName() + " took " + damageValue + " damage. " + getName() + " is dead.");
             GameStateManager.getInstance().setCurrentState(GameState.GAME_OVER);
         } else {
-            System.out.println(getName() + " took " + damageValue + " damage. Current health: " + health);
+            System.out.println(getName() + " took " + damageValue + " damage!");
         }
     }
     // endregion

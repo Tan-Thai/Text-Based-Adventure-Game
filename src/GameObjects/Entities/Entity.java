@@ -178,7 +178,7 @@ public class Entity {
         if (health > maxHealth) {
             health = maxHealth;
         }
-        System.out.println(name + " healed by " + healingValue + " points. Current health: " + health);
+        System.out.println(name + " healed by " + healingValue + " points!");
     }
 
     // used to deal damage to an entity with items. EX: Drink poison, throw bomb.
@@ -190,9 +190,9 @@ public class Entity {
         health -= damageValue;
         if (isDead()) {
             health = 0;
-            System.out.println(name + " took " + damageValue + " damage. " + name + " is dead.");
+            System.out.println(name + " took " + damageValue + " damage. " + name + " is dead!");
         } else {
-            System.out.println(name + " took " + damageValue + " damage. Current health: " + health);
+            System.out.println(name + " took " + damageValue + " damage!");
         }
     }
     // endregion

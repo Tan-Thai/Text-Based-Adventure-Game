@@ -34,18 +34,22 @@ public class Equipment extends Item {
 
     @Override
     public void promptUse(Scanner sc, PlayerCharacter player, Item selectedItem, HostileCharacter enemy) {
-        throw new UnsupportedOperationException("This item does not support enemy-targeted use");
+        handleUsage(sc, player, selectedItem);
     }
 
     public void promptUse(Scanner sc, PlayerCharacter player, Item selectedItem) {
+        handleUsage(sc, player, selectedItem);
+        Utility.promptEnterKey(sc);
+    }
+
+    private void handleUsage(Scanner sc, PlayerCharacter player, Item selectedItem) {
         System.out.print("\nDo you want to equip this item? (Y/N): ");
         if (Utility.checkYesOrNo(sc)) {
             System.out.println("You equipped " + getName());
+            player.getInventory().removeItem(selectedItem);
             player.getInventory().addItem(player.getEquipmentList().equipItem(this, player));
-            player.getInventory().removeItem(this);
         } else {
             System.out.println("You decided not to equip the item.");
         }
-        Utility.promptEnterKey(sc);
     }
 }

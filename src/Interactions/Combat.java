@@ -57,25 +57,30 @@ public class Combat {
         enemyInitiative = calcInitiative(enemy, Utility.RED);
 
         int turnCount = 1;
+        boolean playerGoingFirst = playerInitiative >= enemyInitiative;
         Utility.clearConsole();
         // loop for combat.
-        while (isCombatInProgress) {
-            System.out.println("------------ Turn: " + turnCount + " ------------");
-            printInitiative();
-            // Prints all hp's
-            printEntityHP(player, Utility.GREEN);
-            printEntityHP(enemy, Utility.RED);
+        printInitiative();
 
-            if (enemyInitiative > playerInitiative) {
-                enemyAttack(calcAttack(enemy, Utility.RED));
-                Utility.promptEnterKey(sc);
+        while (isCombatInProgress) {
+            // Prints all hp's
+            // made code more DRY by only repeating the needed methods (the attack order being swapped.)
+            printStatusDisplay(turnCount);
+            if (playerGoingFirst)
                 playerCombatAction();
-            } else {
-                playerCombatAction();
-                Utility.promptEnterKey(sc);
+            else
                 enemyAttack(calcAttack(enemy, Utility.RED));
-            }
-            Utility.printBigLine();
+
+            Utility.promptEnterKey(sc);
+            Utility.clearConsole();
+
+            printStatusDisplay(turnCount);
+            if (playerGoingFirst)
+                enemyAttack(calcAttack(enemy, Utility.RED));
+            else
+                playerCombatAction();
+
+
             System.out.println("------------ End of Turn ------------");
             checkVictoryConditionMet();
             // We can most likely have a single checkVictoryCon here due to the automatic return when x is dead.
@@ -84,44 +89,15 @@ public class Combat {
             Utility.clearConsole();
             turnCount++;
         }
-        // TODO: Fixed the triple prompt enter but the second one clashes with the prompt from the game loop
-        // adding it to a to do as it's a cosmetic issue and note a game breaking one - TT
+        // Combat ended to mark that it will return to main menu after the 2nd prompt
+        // (avoids the double prompt issue too) - TT
         System.out.println("------------ The combat has ended ------------");
     }
 
-    private void enemyAttack(int attackHits) {
-        if (enemy.isDead()) {
-            return;
-        }
-        System.out.println(enemy.getName() + " gets " + attackHits + " hits");
-        System.out.println(player.getName() + " has " + player.getDexterity()
-                           + " Dexterity which is subtracted from your enemy's hits");
-        attackHits -= player.getDexterity();
-        System.out.println(attackHits);
-
-        if (attackHits <= 0) {
-            System.out.println(enemy.getName() + " misses");
-        } else {
-            int weaponDamage = addedWeaponDamage(enemy);
-
-            if (weaponDamage > 0) {
-
-                System.out.println("Weapon added " + weaponDamage + " damage.");
-                System.out.println("Making it " + (attackHits + weaponDamage) + " hits");
-                attackHits += weaponDamage;
-            }
-
-            if (addedArmorSave(player) <= 0) {
-                System.out.println("Added armor save is: " + addedArmorSave(player));
-            }
-
-            attackHits -= addedArmorSave(player);
-            if (attackHits < 0) {
-                attackHits = 0;
-            }
-
-            player.takeDamage(attackHits);
-        }
+    private void printStatusDisplay(int turnCount) {
+        System.out.println("------------ Turn: " + turnCount + " ------------");
+        printEntityHP(player, Utility.GREEN);
+        printEntityHP(enemy, Utility.RED);
     }
 
     private void playerCombatAction() {
@@ -147,7 +123,8 @@ public class Combat {
                 case 1 -> {
                     playerAttack(enemy, player, calcAttack(player, Utility.GREEN));
                 }
-                // access the inventory right away over inspect first.
+                // TODO bug: no matter what player does, turn will be consumed.
+                //  Example: picking wrong item and not using item.
                 case 2 -> player.getInventory().inspectInventory(sc, player, enemy);
                 case 0 -> {
                     if (enemy.getHostileEntityType().equals(HostileEntityType.BOSS)) {
@@ -186,7 +163,8 @@ public class Combat {
     // calc's the attack values etc.
     private int calcAttack(Entity actor, String colour) {
 
-        Utility.printBigLine();
+        System.out.println(
+                "\n------------ " + colour + actor.getName() + "'s action" + Utility.RESET + " ------------");
         int hitCount = Utility.rollDicePool(actor.getStrength(), colour, OptionalInt.empty(), OptionalInt.empty(),
                 OptionalInt.empty());
 
@@ -228,28 +206,78 @@ public class Combat {
         System.out.println("Your enemies initiative is " + enemyInitiative);
     }
 
-    private void playerAttack(HostileCharacter enemy, PlayerCharacter player, int attackHits) {
-        System.out.println(player.getName() + " gets " + attackHits + " hits");
-        System.out.println(enemy.getName() + " has " + enemy.getDexterity()
-                           + " Dexterity which is subtracted from your hits");
-        attackHits -= enemy.getDexterity();
-        System.out.println(attackHits);
+    private void printAttemptsAndAvoids(Entity attacker, Entity defender, int attackHits) {
+        // dynamically omits 's' if it's only a singular hit.
+        System.out.println(attacker.getName() + " attempts to swing " + attackHits + " time" +
+                           (attackHits == 1 ? "" : "s") + "!\n--");
+
+        // if case added to prevent that the target "avoids" more than the amount of hits attempted.
+        if (defender.getDexterity() > attackHits) {
+            System.out.println(defender.getName() + " avoids " + attackHits + " hit" +
+                               (attackHits == 1 ? "" : "s") + "!\n--");
+        } else {
+            System.out.println(defender.getName() + " avoids " + defender.getDexterity() + " hit" +
+                               (defender.getDexterity() == 1 ? "" : "s") + "!\n--");
+        }
+    }
+
+    private void enemyAttack(int attackHits) {
+        if (enemy.isDead()) {
+            return;
+        }
+
+        printAttemptsAndAvoids(enemy, player, attackHits);
+
+        attackHits -= player.getDexterity();
 
         if (attackHits <= 0) {
-            System.out.println(player.getName() + " misses");
+            System.out.println(enemy.getName() + " misses...");
+        } else {
+            int weaponDamage = addedWeaponDamage(enemy);
+
+            if (weaponDamage > 0) {
+                attackHits += weaponDamage;
+
+                System.out.println(player.getEquipmentList().getEquipment(EquipmentType.WEAPON).getName()
+                                   + " added " + weaponDamage + " damage.\n--");
+            }
+
+            if (addedArmorSave(player) > 0) {
+                System.out.println(addedArmorSave(player) + " damage was blocked by armour.");
+            }
+
+            attackHits -= addedArmorSave(player);
+
+            if (attackHits < 0) {
+                attackHits = 0;
+            }
+
+            player.takeDamage(attackHits);
+        }
+    }
+
+    private void playerAttack(HostileCharacter enemy, PlayerCharacter player, int attackHits) {
+
+        printAttemptsAndAvoids(player, enemy, attackHits);
+
+        attackHits -= enemy.getDexterity();
+
+        if (attackHits < 0) {
+            attackHits = 0;
+        }
+
+        if (attackHits == 0) {
+            System.out.println(player.getName() + " misses...");
         } else {
             int weaponDamage = addedWeaponDamage(player);
 
             if (weaponDamage > 0) {
-
-                System.out.println("Weapon added " + weaponDamage + " damage.");
-                System.out.println("Making it " + (attackHits + weaponDamage) + " hits");
                 attackHits += weaponDamage;
                 attackHits = getDamageConversionBasedOnType(attackHits, player, enemy);
-            }
-
-            if (attackHits < 0) {
-                attackHits = 0;
+                // TODO Make a print based on effectiveness, or rework how the resolution of damage is printed.
+                // This line is super deceptive, since we don't mention ANYTHING about effectiveness.
+                System.out.println(player.getEquipmentList().getEquipment(EquipmentType.WEAPON).getName()
+                                   + " added " + weaponDamage + " damage.\n--");
             }
 
             enemy.takeDamage(attackHits);
@@ -360,11 +388,11 @@ public class Combat {
             return;
         }
 
-        if (player instanceof PlayerCharacter && enemy instanceof HostileCharacter) {
+        if (player != null && enemy != null) {
             player.gainExperience(enemy.calcExperienceGiven());
         } else {
             System.err.println(
-                    "Either entity was of an unexpected type, and so the player couldn't get Experience at end of combat.");
+                    "Either entity was null, and so the player couldn't get Experience at end of combat.");
         }
     }
 }
