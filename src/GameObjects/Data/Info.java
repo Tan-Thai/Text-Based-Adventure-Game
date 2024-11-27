@@ -1,6 +1,8 @@
 package GameObjects.Data;
 
 import java.util.Scanner;
+
+import GameObjects.Entities.PlayerCharacter;
 import Resources.Config;
 
 import Global.Utility;
@@ -81,5 +83,22 @@ public class Info {
                 "\n3. Travel" +
                 "\n4. Remind me how to play again");
     }
+
+    public static void characterIntro(PlayerCharacter pc, Scanner sc) {
+        Utility.clearConsole();
+        Utility.slowPrint("Here is your chosen character and their attributes:\n");
+        pc.displayStats();
+        Utility.promptEnterKey(sc);
+        Utility.clearConsole();
+        Utility.slowPrint("You begin your tale.. just outside Rothollow tavern... \n" +  """ 
+            It is a giant hollowed out log, covered in deep green moss and large red mushrooms. 
+            With a small door and tiny windows from which warm light emit.
+            Ruckus song can be heard from within.
+
+            You decide to enter the tavern...
+            """, 20);
+        Utility.promptEnterKey(sc);
+    }
+
 }
 

@@ -13,11 +13,9 @@ public class Tavern extends Zone {
     protected NeutralCharacter shopkeeper;
     public Tavern() {
         super("Rothollow tavern",
-                """ 
-                        A giant hollowed out log, covered in deep green moss and large red mushrooms. 
-                        With a small door and tiny windows from which warm light emit. 
-                        Ruckus song can be heard from within. 
-                        """, true, ZoneType.TAVERN, null, 0);
+                "The patrons are loud and the smell of ale fills the air. The tavern is bustling with activity.\n" +
+                "You can see the barkeep behind the counter, and a few patrons sitting at tables. A bard is playing a tune in the corner.\n"
+                ,true, ZoneType.TAVERN, null, 0);
 
         this.shopkeeper = new NeutralCharacter("Shopkeeper", 1) {
         };
@@ -66,7 +64,6 @@ public class Tavern extends Zone {
         Utility.clearConsole();
         Utility.slowPrint("You retire from adventuring and live out the rest of your days in peace.");
         GameStateManager.getInstance().setCurrentState(GameState.VICTORY);
-        Utility.promptEnterKey(sc);
 
         //Removed call to EndofGameScreen due to it being phased out.
         //check of state should not exist here because the only time this will be visible is if
