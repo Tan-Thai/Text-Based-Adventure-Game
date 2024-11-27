@@ -123,7 +123,8 @@ public class Combat {
                 case 1 -> {
                     playerAttack(enemy, player, calcAttack(player, Utility.GREEN));
                 }
-                // access the inventory right away over inspect first.
+                // TODO bug: no matter what player does, turn will be consumed.
+                //  Example: picking wrong item and not using item.
                 case 2 -> player.getInventory().inspectInventory(sc, player, enemy);
                 case 0 -> {
                     if (enemy.getHostileEntityType().equals(HostileEntityType.BOSS)) {
@@ -387,11 +388,11 @@ public class Combat {
             return;
         }
 
-        if (player instanceof PlayerCharacter && enemy instanceof HostileCharacter) {
+        if (player != null && enemy != null) {
             player.gainExperience(enemy.calcExperienceGiven());
         } else {
             System.err.println(
-                    "Either entity was of an unexpected type, and so the player couldn't get Experience at end of combat.");
+                    "Either entity was null, and so the player couldn't get Experience at end of combat.");
         }
     }
 }

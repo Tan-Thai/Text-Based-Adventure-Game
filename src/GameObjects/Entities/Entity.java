@@ -3,7 +3,6 @@ package GameObjects.Entities;
 import GameObjects.Items.EquipmentManager;
 import GameObjects.Items.ItemManager;
 import Global.Utility;
-import Resources.Config;
 
 import java.util.Scanner;
 
@@ -179,7 +178,7 @@ public class Entity {
         if (health > maxHealth) {
             health = maxHealth;
         }
-        System.out.println(name + " healed by " + healingValue + " points. Current health: " + health);
+        System.out.println(name + " healed by " + healingValue + " points!");
     }
 
     // used to deal damage to an entity with items. EX: Drink poison, throw bomb.
