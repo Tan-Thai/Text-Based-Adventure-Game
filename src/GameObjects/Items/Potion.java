@@ -33,9 +33,7 @@ public class Potion extends Item implements Consumable {
             return;
         }
 
-        resolveUsage(response, player);
-        player.getInventory().removeItem(selectedItem);
-
+        resolveUsage(response, player, player);
         Utility.promptEnterKey(sc);
     }
 
@@ -47,22 +45,22 @@ public class Potion extends Item implements Consumable {
             if (player.isFullHP()) {
                 System.out.println("You are currently at full health and put the potion back in your inventory.");
             } else {
-                resolveUsage(response, player);
-                player.getInventory().removeItem(selectedItem);
+                resolveUsage(response, player, player);
             }
         }
 
         if (potionEffect instanceof DamageEffect) {
-            resolveUsage(response, enemy);
-            player.getInventory().removeItem(selectedItem);
+            resolveUsage(response, enemy, player);
         }
     }
 
-    private void resolveUsage(Boolean response, Entity target) {
-        if (response)
+    private void resolveUsage(Boolean response, Entity target, PlayerCharacter player) {
+        if (response) {
             consume(target);
-        else
+            player.getInventory().removeItem(this);
+        } else {
             System.out.println("You decided not to use the item.");
+        }
     }
 
     public void displayItem() {
