@@ -89,8 +89,8 @@ public class Combat {
             Utility.clearConsole();
             turnCount++;
         }
-        // TODO: Fixed the triple prompt enter but the second one clashes with the prompt from the game loop
-        // adding it to a to do as it's a cosmetic issue and note a game breaking one - TT
+        // Combat ended to mark that it will return to main menu after the 2nd prompt
+        // (avoids the double prompt issue too) - TT
         System.out.println("------------ The combat has ended ------------");
     }
 
