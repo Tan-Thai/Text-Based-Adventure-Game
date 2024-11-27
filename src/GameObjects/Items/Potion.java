@@ -38,20 +38,19 @@ public class Potion extends Item implements Consumable {
     }
 
     public void promptUse(Scanner sc, PlayerCharacter player, Item selectedItem, HostileCharacter enemy) {
-        System.out.print("\nDo you want to use this item? (Y/N): ");
+        // TODO Make it clear for the player if it's used on THEMSELVES or ENEMY. - TT
+        System.out.print("\nDo you want to use this item"
+                         + (potionEffect instanceof HealingEffect ? "" : " on the enemy") + "? (Y/N): ");
         boolean response = Utility.checkYesOrNo(sc);
 
         if (potionEffect instanceof HealingEffect) {
             if (player.isFullHP()) {
                 System.out.println("You are currently at full health and put the potion back in your inventory.");
-            } else {
-                resolveUsage(response, player, player);
+                return;
             }
         }
 
-        if (potionEffect instanceof DamageEffect) {
-            resolveUsage(response, enemy, player);
-        }
+        resolveUsage(response, enemy, player);
     }
 
     private void resolveUsage(Boolean response, Entity target, PlayerCharacter player) {
