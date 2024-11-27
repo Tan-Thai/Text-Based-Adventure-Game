@@ -15,8 +15,6 @@ import Resources.Config;
 
 public class Adventure {
 
-
-
     public static void adventureMenu(PlayerCharacter pc, Scanner sc, Zone zone) {
 
         Utility.clearConsole();
