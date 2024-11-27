@@ -1,9 +1,7 @@
 package GameObjects.Worlds;
 
 import GameObjects.Entities.PlayerCharacter;
-import Global.Utility;
 import Interactions.ExploreZone;
-import Interactions.Adventure;
 
 import java.util.Scanner;
 
