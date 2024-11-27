@@ -11,7 +11,6 @@ import java.util.Scanner;
 
 public class Tavern extends Zone {
     protected NeutralCharacter shopkeeper;
-    //TODO rewrite tavern description to better fit that the player is inside.
     public Tavern() {
         super("Rothollow tavern",
                 """ 

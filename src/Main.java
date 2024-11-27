@@ -45,7 +45,6 @@ public class Main {
             System.out.print("\nEnter your choice or press 0 to close program: ");
             switch (Utility.checkIfNumber(sc)) {
                 case 1 -> {
-                    // TODO: adding player should be here inside game menu when we select start game
                     System.out.println("Starting game...");
                     game.run();
                 }

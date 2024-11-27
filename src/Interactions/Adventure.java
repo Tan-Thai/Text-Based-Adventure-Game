@@ -19,20 +19,20 @@ public class Adventure {
 
         Utility.clearConsole();
         Zone.displayCurrentZone(zone);
-        System.out.println(
-                "1. Wander (travel inside zone)" +
-                "\n2. Inspect yourself" + 
-                "\n3. Travel (travel between zones)" +
-                "\n4. Remind me how to play again.");
         if (zone.getZoneType() == ZoneType.TAVERN) {
-            System.out.println("5. Tavern menu (to rest and shop for items)");
-        } 
+            Info.adventureMenuTavernPrint();
+        } else {
+            Info.adventureMenuPrint();
+        }
         System.out.print(Config.MENU_CHOICE_STRING);
         int choice = Utility.checkIfNumber(sc);
 
         switch (choice) {
             case 1:
-                ExploreZone.exploreZone(pc, zone, sc);
+                if (zone.getZoneType() == ZoneType.TAVERN) {
+                    ((Tavern) ZoneManager.getZone(ZoneType.TAVERN)).tavernMenu(pc);
+                    break;
+                } else {ExploreZone.exploreZone(pc, zone, sc);}            
                 break;
             case 2:
                 pc.inspectEntity(sc);
@@ -42,13 +42,6 @@ public class Adventure {
                 break;
             case 4:
                 Info.howToPlay(sc);
-                break;
-            case 5:
-                if (zone.getZoneType() == ZoneType.TAVERN) {
-                    ((Tavern) ZoneManager.getZone(ZoneType.TAVERN)).tavernMenu(pc);
-                } else {
-                    System.out.println("Invalid choice. Please try again.");
-                }
                 break;
             case 0:
                 System.out.println("Are you sure you want to exit to main menu? ALL YOUR PROGRESS WILL BE LOST (Y/N)");

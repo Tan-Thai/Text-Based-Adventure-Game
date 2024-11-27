@@ -16,13 +16,13 @@ public class Info {
                     "2. How does combat work?\n" +
                     "3. How to navigate between or inside zones.\n" +
                     "4. How to interact with items\n" +
-                    "5. How to rest and shop for items in the tavern\n" + Config.MENU_CHOICE_STRING);
+                    "5. How to rest and use the shop in the tavern\n" + Config.MENU_CHOICE_STRING);
             int choice = Utility.checkIfNumber(sc);
             Utility.clearConsole();
 
             switch (choice) {
                 case 1:
-                    System.out.println("Your character has different stats that determine how well they perform in different situations.\nHealth: Determines how much damage you can take before you die.\nStrength: Determines how much damage you deal in combat.\nDexterity:\nExperience: Determines how close you are to leveling up.");
+                    System.out.println("Your character has different stats that determine how well they perform in different situations.\nHealth: Determines how much damage you can take before you die.\nStrength: Determines how much damage you deal in combat.\nDexterity: Determines your defensive capabilities\nIntelligence: Determines the order in combat.\nExperience: Determines how close you are to leveling up.");
                     Utility.promptEnterKey(sc);
                     Utility.clearConsole();
                     break;
@@ -32,7 +32,7 @@ public class Info {
                     Utility.clearConsole();
                     break;
                 case 3:
-                    System.out.println("You can navigate between different zones by using the travel menu. You may travel to the Forest or the Swamp freely but advancing more requires you to explore these zones.\nYou can also explore different areas within a zone by choosing to wander in the travel menu.");
+                    System.out.println("You can navigate between different zones by using the travel menu. You may travel to the Forest or the Swamp freely at the start but advancing more requires you to explore these zones.");
                     Utility.promptEnterKey(sc);
                     Utility.clearConsole();
                     break;
@@ -42,7 +42,7 @@ public class Info {
                     Utility.clearConsole();
                     break;
                 case 5:
-                    System.out.println("You can rest and shop for items in the tavern. Resting will restore your health, and you can buy items from the shopkeeper.");
+                    System.out.println("You can rest and shop for items in the tavern. Resting will restore your health, and you can buy or sell items from the shopkeeper.");
                     Utility.promptEnterKey(sc);
                     Utility.clearConsole();
                     break;
@@ -65,4 +65,21 @@ public class Info {
                 "You must explore different zones, fight monsters, and collect items to prepare for the final battle.\n" +
                 "Good luck!");
     }
+
+    public static void adventureMenuPrint() {
+        System.out.println(
+                "1. Explore" +
+                "\n2. Inspect yourself" + 
+                "\n3. Travel" +
+                "\n4. Remind me how to play again");
+    }
+
+    public static void adventureMenuTavernPrint() {
+        System.out.println(
+                "1. Tavern menu" +
+                "\n2. Inspect yourself" + 
+                "\n3. Travel" +
+                "\n4. Remind me how to play again");
+    }
 }
+
