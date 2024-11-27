@@ -1,5 +1,6 @@
 import Core.GameState;
 import Core.GameStateManager;
+import GameObjects.Data.Info;
 import GameObjects.Data.ItemId;
 import GameObjects.Data.ItemRepository;
 import GameObjects.Data.PlayerClassRepository;
@@ -29,6 +30,8 @@ public class Game {
         Utility.clearConsole();
         // adding player char and basic items(temp items for now.)
         PlayerCharacter pc = setupUser(sc);
+        // displays character info and intro to tavern.
+        Info.characterIntro(pc, sc);
         // --- TESTS -----------------------
         addItems(pc);
         // Combat Test
