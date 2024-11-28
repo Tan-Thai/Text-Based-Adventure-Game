@@ -5,11 +5,12 @@ import Core.GameStateManager;
 import GameObjects.Entities.NeutralCharacter;
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
+import Interactions.Restable;
 import Resources.Config;
 
 import java.util.Scanner;
 
-public class Tavern extends Zone {
+public class Tavern extends Zone implements Restable  {
     protected NeutralCharacter shopkeeper;
     public Tavern() {
         super("Rothollow tavern",
@@ -23,6 +24,7 @@ public class Tavern extends Zone {
     }
 
     // Heals character.
+    @Override
     public void takeRest(PlayerCharacter pc) {
         Utility.clearConsole();
         Utility.slowPrint("You take a rest and regain some health.");
