@@ -28,7 +28,6 @@ public abstract class Item {
         return itemCost;
     }
 
-    // temp to check if item behaves right.
     public void displayItem() {
         System.out.println(
                 "\n--" + name + "--" +
@@ -36,6 +35,8 @@ public abstract class Item {
                 "\nDescription: " + description);
     }
 
+    // Currently making use of an overload of promptUse to make it work with an enemy or without.
+    // (Hideous solution according to myself who made it - TT)
     public abstract void promptUse(Scanner sc, PlayerCharacter player, Item selectedItem, HostileCharacter enemy);
 
     public void promptUse(Scanner sc, PlayerCharacter player, Item selectedItem) {

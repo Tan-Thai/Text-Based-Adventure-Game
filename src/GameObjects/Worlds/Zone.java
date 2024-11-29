@@ -3,7 +3,7 @@ package GameObjects.Worlds;
 import Global.Utility;
 import Interactions.Encounter;
 import Interactions.ExploreZone;
-import Resources.Config;
+import Core.Config;
 
 import java.util.*;
 
@@ -27,7 +27,7 @@ public class Zone {
      * @param encounters
      */
     public Zone(String name, String desc, boolean zoneCleared, ZoneType zoneType, List<Encounter> encounters,
-            int zoneClearThreshold) {
+                int zoneClearThreshold) {
         this.name = name;
         this.description = desc;
         this.zoneCleared = zoneCleared;
@@ -35,7 +35,7 @@ public class Zone {
         this.encounters = encounters;
         this.zoneClearThreshold = zoneClearThreshold;
     }
-    
+
     //region Setters & Getters
     public void setTravelableZones(Set<Zone> traveableZones) {
         this.traveableZones = traveableZones;
@@ -69,7 +69,7 @@ public class Zone {
         return traveableZones;
     }
     //endregion
-    
+
     /**
      * Displays the current zone and its description + clear status
      *

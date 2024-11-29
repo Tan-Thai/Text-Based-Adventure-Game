@@ -76,10 +76,11 @@ public class ItemManager {
             if (!checkIfInventoryFull())
                 itemCollection.merge(item, 1, Integer::sum);
             else
-                System.err.println("Entity's inventory is full. - 'Add' mishap.");
+                System.err.println("Entity's inventory is full. 'Add' mishap.");
         }
     }
 
+    // Discard is called whenever the user gets an item whilst their inventory is full
     private void discardItem(Scanner sc) {
         while (true) {
             System.out.println();
@@ -100,6 +101,7 @@ public class ItemManager {
         }
     }
 
+    // Remove is called whenever the player is using a consumable or removes x item from inventory.
     public void removeItem(Item item) {
         if (item != null && itemCollection.containsKey(item)) {
             int count = itemCollection.get(item);
@@ -142,7 +144,7 @@ public class ItemManager {
         // Forced loop until user have exited their inventory or chosen to display a specific item.
         while (!player.isDead()) {
             Utility.clearConsole();
-            // big chunk of dupe code, but currently is made in such a way to keep track of the overload.
+            // TODO big chunk of dupe code, but currently is made in such a way to keep track of the overload.
             List<Map.Entry<Item, Integer>> sortedItems = getSortedInventory();
             printInventory(sortedItems);
             System.out.print("""

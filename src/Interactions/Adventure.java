@@ -11,7 +11,7 @@ import GameObjects.Worlds.Zone;
 import GameObjects.Worlds.ZoneManager;
 import GameObjects.Worlds.ZoneType;
 import Global.Utility;
-import Resources.Config;
+import Core.Config;
 
 public class Adventure {
 
@@ -32,7 +32,9 @@ public class Adventure {
                 if (zone.getZoneType() == ZoneType.TAVERN) {
                     ((Tavern) ZoneManager.getZone(ZoneType.TAVERN)).tavernMenu(pc);
                     break;
-                } else {ExploreZone.exploreZone(pc, zone, sc);}            
+                } else {
+                    ExploreZone.exploreZone(pc, zone, sc);
+                }
                 break;
             case 2:
                 pc.inspectEntity(sc);

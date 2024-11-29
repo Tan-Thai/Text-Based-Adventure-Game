@@ -1,4 +1,4 @@
-package Resources;
+package Core;
 
 public class Config {
     public static final int PC_STARTING_LEVEL = 1;
