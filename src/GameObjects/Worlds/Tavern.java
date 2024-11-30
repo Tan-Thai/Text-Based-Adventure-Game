@@ -6,17 +6,18 @@ import GameObjects.Entities.NeutralCharacter;
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
 import Core.Config;
+import Interactions.Restable;
 
 import java.util.Scanner;
 
-public class Tavern extends Zone {
+public class Tavern extends Zone implements Restable  {
     protected NeutralCharacter shopkeeper;
 
     public Tavern() {
         super("Rothollow tavern",
                 "The patrons are loud and the smell of ale fills the air. The tavern is bustling with activity.\n" +
                 "You can see the barkeep behind the counter, and a few patrons sitting at tables. A bard is playing a tune in the corner.\n"
-                , true, ZoneType.TAVERN, null, 0);
+                ,true, ZoneType.TAVERN, null, 0);
 
         this.shopkeeper = new NeutralCharacter("Shopkeeper", 1) {
         };
@@ -24,6 +25,7 @@ public class Tavern extends Zone {
     }
 
     // Heals character.
+    @Override
     public void takeRest(PlayerCharacter pc) {
         Utility.clearConsole();
         Utility.slowPrint("You take a rest and regain some health.");
@@ -68,6 +70,8 @@ public class Tavern extends Zone {
         //Removed call to EndofGameScreen due to it being phased out.
         //check of state should not exist here because the only time this will be visible is if
         //the player already are in a state of VICTORY. --- TT
+
+
     }
 
     // opnens up tavern menu for resting and shopping for
