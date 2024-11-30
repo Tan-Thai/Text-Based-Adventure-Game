@@ -125,8 +125,7 @@ public class Entity {
         Utility.promptEnterKey(sc);
     }
 
-    // display health and stats can be merged into 1 if we don't use display health
-    // explicitly somewhere.
+    // Would be used if we displayed health as a permanent fixture throughout the game - TT
     public void displayHealth() {
         System.out.println("Health Points: " + this.health + "/" + this.maxHealth);
     }

@@ -12,8 +12,8 @@ public class Utility {
     public static final String GREEN = "\u001B[32m";
     public static final String LOW_INTENSITY = "\u001B[2m";
     public static final String HIGH_INTENSITY = "\u001B[1m";
-
     // endregion
+
     // region vars for standard dice values
     private static final int AMOUNT_OF_SIDES = 6;
     private static final int CRIT_VALUE = 6;
@@ -21,24 +21,61 @@ public class Utility {
     private static final Random random = new Random();
     // endregion
 
+    //region Input-Related Utility
     public static String checkIfValidString(Scanner sc) {
-
         String userInput;
+        // Mocking up a temporary maxLength for now.
+        // Should be replaced with a maxLength parameter for modularity.
+        int maxLength = 13;
         do {
             userInput = sc.nextLine();
 
-            if (!userInput.isEmpty()) {
+            if (!userInput.isEmpty() && userInput.length() <= maxLength) {
                 return userInput;
             }
-            System.err.print("Please enter a name: ");
-            // forced loop
+
+            if (userInput.isEmpty())
+                System.err.print("Please enter a name: ");
+
+            if (userInput.length() > maxLength) {
+                System.err.print(
+                        "The name you entered is too long. Please enter a name with a maximum of " + maxLength +
+                        " characters" +
+                        "\nPlease enter a name: ");
+            }
+
         } while (true);
     }
 
+    // Yoinked this partially and it seems to work as it should, have already tried breaking it, and it seems to hold.
+    // If you're reading this Max, please do try to break it if you can. Looking forward to your findings!
     public static int checkIfNumber(Scanner sc) {
+        int userInput;
+        while (true) {
+            String input = sc.nextLine();
+
+            if (input.isEmpty()) {
+                System.err.print("Invalid input, please enter a number: ");
+                continue;
+            }
+
+            // added try catch, on top of parseInt
+            try {
+                userInput = Integer.parseInt(input);
+                if (userInput >= 0) {
+                    return userInput;
+                } else {
+                    System.err.print("Please enter a positive number: ");
+                }
+            } catch (NumberFormatException e) {
+                System.err.print("Invalid input, please enter a number: ");
+            }
+        }
+    }
+    // V -Previous version of CheckIfNumber. Experimenting with parse.
+    /*  public static int checkIfNumber(Scanner sc) {
 
         int userInput;
-        // forced loop in while
         while (true) {
             if (sc.hasNextInt()) {
                 userInput = sc.nextInt();
@@ -51,7 +88,7 @@ public class Utility {
             }
             System.err.print("Invalid input, please enter a number: ");
         }
-    }
+    }*/
 
     public static int checkIfNumberTest(Scanner sc, int maxInput) {
 
@@ -104,29 +141,9 @@ public class Utility {
         clearScanner(sc);
         // sc.nextLine();
     }
+    //endregion
 
-    public static void clearConsole() {
-        // ANSI escape code to clear the console // TOTALLY YOINKED THIS
-
-        try {
-            final String os = System.getProperty("os.name");
-            if (os.contains("Windows")) {
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                new ProcessBuilder("clear").inheritIO().start().waitFor();
-            }
-        } catch (Exception e) {
-            System.out.println("Could not clear console: " + e.getMessage());
-            // fallback: print 10 new lines
-            for (int i = 0; i < 10; i++) {
-                System.out.println();
-            }
-        }
-    }
-
-    public static void printBigLine() {
-        System.out.println("-----------------------------------------------------------");
-    }
+    //region Dice-Related Utility
 
     /**
      * Function that rolls a given set of dice and returns the number of dice who's
@@ -203,6 +220,33 @@ public class Utility {
 
         return successAmount;
     }
+    //endregion
+
+    //region Display-Related Utility
+
+    public static void clearConsole() {
+        // ANSI escape code to clear the console // TOTALLY YOINKED THIS
+
+        try {
+            final String os = System.getProperty("os.name");
+            if (os.contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
+            }
+        } catch (Exception e) {
+            System.out.println("Could not clear console: " + e.getMessage());
+            // fallback: print 10 new lines
+            for (int i = 0; i < 10; i++) {
+                System.out.println();
+            }
+        }
+    }
+
+    // New method to just streamline break in text, not yet fully implemented into the game.
+    public static void printBigLine() {
+        System.out.println("-----------------------------------------------------------");
+    }
 
     /**
      * slowprint texts to highten player experience, if optional param isn't given
@@ -230,4 +274,5 @@ public class Utility {
         }
         System.out.println();
     }
+    //endregion
 }

@@ -8,7 +8,7 @@ import GameObjects.Entities.PlayerCharacter;
 import GameObjects.Worlds.ZoneManager;
 import Global.Utility;
 import Interactions.Adventure;
-import Resources.Config;
+import Core.Config;
 
 import java.util.Scanner;
 
@@ -30,16 +30,11 @@ public class Game {
         Utility.clearConsole();
         // adding player char and basic items(temp items for now.)
         PlayerCharacter pc = setupUser(sc);
+        // Currently temporary with future plan of adding unique starting items based on class.
+        addStarterItems(pc);
+
         // displays character info and intro to tavern.
         Info.characterIntro(pc, sc);
-        // --- TESTS -----------------------
-        addItems(pc);
-        // Combat Test
-        // combatTest(pc, addEnemyTemp(), sc);
-        // Encounter test
-        // encounterTest(pc, sc);
-
-        // ----------------------------------
         while (gameManager.getCurrentState() != GameState.EXIT) {
             switch (gameManager.getCurrentState()) {
                 case RUNNING:
@@ -57,13 +52,9 @@ public class Game {
         }
     }
 
-    // There are a few mega temporary methods atm, combat related ones being a few.
-    // Wherever we invoke the combat method, we need to make sure it calls "Combat
-    // combat = Combat.getInstance();"
     private static PlayerCharacter setupUser(Scanner sc) {
         System.out.print("What is your name?: ");
         String nameInput = Utility.checkIfValidString(sc);
-        // temp input of stats since i got no idea what we are basing it on.
 
         System.out.println("Your name is " + nameInput + "!");
         Utility.promptEnterKey(sc);
@@ -71,7 +62,6 @@ public class Game {
     }
 
     private static void runGame(PlayerCharacter pc, Scanner sc) {
-        // considering a potential while (Running) here to then break out if we die,
         // ive noticed that a couple of the death's that can occur leads to double enter
         // prompts.
         Utility.clearConsole();
@@ -115,9 +105,9 @@ public class Game {
         }
     }
 
-    // region TT - Testing area
+    // region TT - Testing/ Temporary Area
 
-    private static void addItems(PlayerCharacter pc) {
+    private static void addStarterItems(PlayerCharacter pc) {
         pc.getInventory().addItem(ItemRepository.getItemById(ItemId.RUSTY_LONGSWORD));
         pc.getInventory().addItem(ItemRepository.getItemById(ItemId.GREAT_AXE));
         pc.getInventory().addItem(ItemRepository.getItemById(ItemId.HEALTH_POTION));

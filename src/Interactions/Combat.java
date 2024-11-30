@@ -36,7 +36,7 @@ public class Combat {
     }
 
     // news up the combat situation and then starts the combat logic
-    // Currently takes in playerchar and hostilechar as a simple combat, but also to
+    // Currently takes in player-char and hostile-char as a simple combat, but also to
     // reach their respective methods.
     public void initiateCombat(PlayerCharacter player, HostileCharacter enemy, Scanner sc) {
         this.player = player;
@@ -52,18 +52,17 @@ public class Combat {
     }
 
     private void combatLoop() {
-        // creates the intiative for both entities
+        // creates the initiative for both entities
         playerInitiative = calcInitiative(player, Utility.GREEN);
         enemyInitiative = calcInitiative(enemy, Utility.RED);
 
         int turnCount = 1;
         boolean playerGoingFirst = playerInitiative >= enemyInitiative;
         Utility.clearConsole();
+
         // loop for combat.
         printInitiative();
-
         while (isCombatInProgress) {
-            // Prints all hp's
             // made code more DRY by only repeating the needed methods (the attack order being swapped.)
             printStatusDisplay(turnCount);
             if (playerGoingFirst)
@@ -94,10 +93,55 @@ public class Combat {
         System.out.println("------------ The combat has ended ------------");
     }
 
+    //region Print-methods
     private void printStatusDisplay(int turnCount) {
         System.out.println("------------ Turn: " + turnCount + " ------------");
         printEntityHP(player, Utility.GREEN);
         printEntityHP(enemy, Utility.RED);
+    }
+
+    private void printEntityHP(Entity actor, String colour) {
+        System.out.println(colour + actor.getName() + " health: " + actor.getHealth() + " / " + actor.getMaxHealth() +
+                           Utility.RESET);
+
+        for (int i = 1; i <= actor.getHealth(); i++) {
+            System.out.print(colour + "|" + Utility.RESET);
+        }
+
+        for (int i = 0; i < actor.getMaxHealth() - actor.getHealth(); i++) {
+            System.out.print(Utility.LOW_INTENSITY + "|" + Utility.RESET);
+        }
+        System.out.println();
+    }
+
+    private void printInitiative() {
+        System.out.println("Your initiative is " + playerInitiative);
+        System.out.println("Your enemies initiative is " + enemyInitiative);
+    }
+
+    private void printAttemptsAndAvoids(Entity attacker, Entity defender, int attackHits) {
+        // dynamically omits 's' if it's only a singular hit.
+        System.out.println(attacker.getName() + " attempts to swing " + attackHits + " time" +
+                           (attackHits == 1 ? "" : "s") + "!\n--");
+
+        // if case added to prevent that the target "avoids" more than the amount of hits attempted.
+        if (defender.getDexterity() > attackHits) {
+            System.out.println(defender.getName() + " avoids " + attackHits + " hit" +
+                               (attackHits == 1 ? "" : "s") + "!\n--");
+        } else {
+            System.out.println(defender.getName() + " avoids " + defender.getDexterity() + " hit" +
+                               (defender.getDexterity() == 1 ? "" : "s") + "!\n--");
+        }
+    }
+    //endregion
+
+    //region Main Combat Calculations
+    private int calcInitiative(Entity actor, String colour) {
+
+        int speedCount = Utility.rollDicePool(actor.getIntelligence(), colour, OptionalInt.empty(), OptionalInt.empty(),
+                OptionalInt.empty());
+        System.out.println();
+        return speedCount;
     }
 
     private void playerCombatAction() {
@@ -145,22 +189,6 @@ public class Combat {
         } while (!isInputCorrect);
     }
 
-    // Prints out the health bars.
-    private void printEntityHP(Entity actor, String colour) {
-        System.out.println(colour + actor.getName() + " health: " + actor.getHealth() + " / " + actor.getMaxHealth() +
-                           Utility.RESET);
-        for (int i = 1; i <= actor.getHealth(); i++) {
-            System.out.print(colour + "|" + Utility.RESET);
-        }
-
-        for (int i = 0; i < actor.getMaxHealth() - actor.getHealth(); i++) {
-            System.out.print(Utility.LOW_INTENSITY + "|" + Utility.RESET);
-        }
-
-        System.out.println();
-    }
-
-    // calc's the attack values etc.
     private int calcAttack(Entity actor, String colour) {
 
         System.out.println(
@@ -168,57 +196,10 @@ public class Combat {
         int hitCount = Utility.rollDicePool(actor.getStrength(), colour, OptionalInt.empty(), OptionalInt.empty(),
                 OptionalInt.empty());
 
-        // Used to add break inbetween lines in the console
+        // Used to add break in between lines in the console
         System.out.println();
         return hitCount;
-    }
 
-    // Returns the initiative of the entity.
-    private int calcInitiative(Entity actor, String colour) {
-
-        int speedCount = Utility.rollDicePool(actor.getIntelligence(), colour, OptionalInt.empty(), OptionalInt.empty(),
-                OptionalInt.empty());
-        System.out.println();
-        return speedCount;
-    }
-
-    // checks and returns the added weapon damage if actor has one equipped,
-    // otherwise returns zero.
-    private int addedWeaponDamage(Entity actor) {
-        if (actor.getEquipmentList().getEquipment(EquipmentType.WEAPON) != null)
-            return actor.getEquipmentList().getEquipment(EquipmentType.WEAPON).getEffectValue();
-        else
-            return 0;
-    }
-
-    // checks and returns the protection from the armor, if entity has one equipped,
-    // otherwise returns zero.
-    private int addedArmorSave(Entity actor) {
-        if (actor.getEquipmentList().getEquipment(EquipmentType.ARMOUR) != null)
-
-            return actor.getEquipmentList().getEquipment(EquipmentType.ARMOUR).getEffectValue();
-        else
-            return 0;
-    }
-
-    private void printInitiative() {
-        System.out.println("Your initiative is " + playerInitiative);
-        System.out.println("Your enemies initiative is " + enemyInitiative);
-    }
-
-    private void printAttemptsAndAvoids(Entity attacker, Entity defender, int attackHits) {
-        // dynamically omits 's' if it's only a singular hit.
-        System.out.println(attacker.getName() + " attempts to swing " + attackHits + " time" +
-                           (attackHits == 1 ? "" : "s") + "!\n--");
-
-        // if case added to prevent that the target "avoids" more than the amount of hits attempted.
-        if (defender.getDexterity() > attackHits) {
-            System.out.println(defender.getName() + " avoids " + attackHits + " hit" +
-                               (attackHits == 1 ? "" : "s") + "!\n--");
-        } else {
-            System.out.println(defender.getName() + " avoids " + defender.getDexterity() + " hit" +
-                               (defender.getDexterity() == 1 ? "" : "s") + "!\n--");
-        }
     }
 
     private void enemyAttack(int attackHits) {
@@ -282,6 +263,27 @@ public class Combat {
 
             enemy.takeDamage(attackHits);
         }
+    }
+    //endregion
+
+    //region Equipment Calculations
+    // checks and returns the added weapon damage if actor has one equipped,
+    // otherwise returns zero.
+    private int addedWeaponDamage(Entity actor) {
+        if (actor.getEquipmentList().getEquipment(EquipmentType.WEAPON) != null)
+            return actor.getEquipmentList().getEquipment(EquipmentType.WEAPON).getEffectValue();
+        else
+            return 0;
+    }
+
+    // checks and returns the protection from the armor, if entity has one equipped,
+    // otherwise returns zero.
+    private int addedArmorSave(Entity actor) {
+        if (actor.getEquipmentList().getEquipment(EquipmentType.ARMOUR) != null)
+
+            return actor.getEquipmentList().getEquipment(EquipmentType.ARMOUR).getEffectValue();
+        else
+            return 0;
     }
 
     private int getDamageConversionBasedOnType(int damage, Entity attacker, HostileCharacter defender) {
@@ -354,7 +356,9 @@ public class Combat {
         System.out.println("Your attack was super effective! You caused " + (damage * 2) + " points of damage!");
         return damage * 2;
     }
+    //endregion
 
+    //region Post-Combat Methods (WinConditions, EXP gain etc.)
     // TODO: Look at making this a checking method, and using it to decide if combat
     // should continue, and move messages to other method.
     private void checkVictoryConditionMet() {
@@ -395,4 +399,5 @@ public class Combat {
                     "Either entity was null, and so the player couldn't get Experience at end of combat.");
         }
     }
+    //endregion
 }

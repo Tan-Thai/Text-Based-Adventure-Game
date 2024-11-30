@@ -24,6 +24,7 @@ public class Equipment extends Item {
         return effect.getValue();
     }
 
+    //region Display Methods
     public void displayItem() {
         System.out.println(
                 "\n--" + getName() + "--" +
@@ -31,7 +32,9 @@ public class Equipment extends Item {
                 "\n" + effect.getEffectType() + ": " + effect.getValue() +
                 "\nDescription: " + getDescription());
     }
+    //endregion
 
+    //region Usage Methods
     @Override
     public void promptUse(Scanner sc, PlayerCharacter player, Item selectedItem, HostileCharacter enemy) {
         handleUsage(sc, player, selectedItem);
@@ -52,4 +55,5 @@ public class Equipment extends Item {
             System.out.println("You decided not to equip the item.");
         }
     }
+    //endregion
 }

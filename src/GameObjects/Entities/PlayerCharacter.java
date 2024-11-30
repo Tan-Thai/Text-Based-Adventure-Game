@@ -6,7 +6,7 @@ import GameObjects.Worlds.Zone;
 import GameObjects.Worlds.ZoneManager;
 import GameObjects.Worlds.ZoneType;
 import Global.Utility;
-import Resources.Config;
+import Core.Config;
 
 import java.util.Scanner;
 

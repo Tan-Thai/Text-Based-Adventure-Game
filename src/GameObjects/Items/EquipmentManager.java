@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-// Really temporary classname due to me not being sure how to work with this.
 public class EquipmentManager {
     private final Map<EquipmentType, Equipment> equipmentCollection;
 

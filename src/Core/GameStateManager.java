@@ -28,6 +28,7 @@ public class GameStateManager {
         this.currentState = newState;
     }
 
+/*  Currently not used, in any methods but will keep *just in case*
     public boolean isGameWon() {
         return currentState == GameState.VICTORY;
     }
@@ -35,5 +36,6 @@ public class GameStateManager {
     public boolean isGameLost() {
         return currentState == GameState.GAME_OVER;
     }
+*/
 
 }

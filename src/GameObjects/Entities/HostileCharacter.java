@@ -2,7 +2,7 @@ package GameObjects.Entities;
 
 import GameObjects.Data.ItemId;
 import GameObjects.Data.ItemRepository;
-import Resources.Config;
+import Core.Config;
 
 public class HostileCharacter extends Entity {
 
@@ -16,8 +16,8 @@ public class HostileCharacter extends Entity {
     }
 
     public HostileCharacter(String name, int health, int level, int strength, int dexterity, int intelligence,
-            HostileEntityType hostileEntityType, String hostileEntityDescription) {
-        // temporarily added a 0 for currency due to compile errors.
+                            HostileEntityType hostileEntityType, String hostileEntityDescription) {
+
         super(name, health, level, strength, dexterity, intelligence, (level * 100 / 3));
         this.hostileEntityType = hostileEntityType;
         this.hostileEntityDescription = hostileEntityDescription;
@@ -36,7 +36,7 @@ public class HostileCharacter extends Entity {
 
     /**
      * Returns experience based on entities level times experience per encounter
-     * 
+     *
      * @return
      */
     public int calcExperienceGiven() {

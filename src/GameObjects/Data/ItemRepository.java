@@ -10,16 +10,16 @@ public class ItemRepository {
 
     static {
         /*
-         * Items instanced within hashmap to be the main reference for the cloning of
-         * object.
-         * Reason being that the reference ID need to match for items to be able to
-         * stack due to Key values.
-         *
-         * Adding an item is done through, as an example;
-         * getInventory().addItem(ItemRepository.getItemById(ItemId.HEALTH_POTION));
-         *
-         * We call inventory, addItem gets the item object from this HashMap, with the
-         * enum as the KEY.
+          Items instanced within hashmap to be the main reference for the cloning of
+          object.
+          Reason being that the reference ID need to match for items to be able to
+          stack due to Key values.
+
+          Adding an item is done through, as an example;
+          getInventory().addItem(ItemRepository.getItemById(ItemId.HEALTH_POTION));
+
+          We call inventory, addItem gets the item object from this HashMap, with the
+          enum as the KEY. - TT
          */
 
         // region Equipments generated
@@ -86,8 +86,8 @@ public class ItemRepository {
 
         // region Potions generated
         ITEMS.put(ItemId.POISON_POTION, new Potion(
-                "Totally a Health Potion",
-                "Throw for ouch",
+                "Totally a 'Health Potion'",
+                "Chug/Throw for ouch",
                 new DamageEffect(7),
                 30));
 
@@ -98,7 +98,7 @@ public class ItemRepository {
                 20));
         ITEMS.put(ItemId.GREATER_HEALTH_POTION, new Potion(
                 "Greater health Potion",
-                "Chug when ouch",
+                "Chug when big ouch",
                 new HealingEffect(10),
                 30));
         // endregion

@@ -2,7 +2,7 @@ package GameObjects.Data;
 
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
-import Resources.Config;
+import Core.Config;
 import java.util.Scanner;
 
 public class Info {
@@ -58,6 +58,7 @@ public class Info {
             }
         }
     }
+
     //Temporary game intro, insert actual Wille stuff here
     public static void gameIntro() {
         System.out.println(Utility.GREEN+"  ___ ___                                               ___  ___ ___  "+Utility.RESET);
@@ -73,17 +74,17 @@ public class Info {
         Utility.slowPrint("The land is cursed in darkness. \r\n" + //
                         "Plauge, war and famine have pushed the tenderfoot folk to flee. \r\n" + //
                         "But now they find themselves trapped in Bleakstone Vale. \r\n" + //
-                        "Being a gentle and soft-hearted kin, they need a savior.\r\n" + // 
+                        "Being a gentle and soft-hearted kin, they need a savior.\r\n" + //
                         "They need you!", 40);
         System.out.println();
-        Utility.slowPrint("Restore the Ember Prisms.\r\n"+ // 
+        Utility.slowPrint("Restore the Ember Prisms.\r\n"+ //
 "These crystals were once the pride of the land and used to banish the dark of Evernight.\r\n" + //
 "Held in ancient seats of power, these relic beacons kept the shroud at bay.\r\n" + //
 
 "But they have fallen to the tooth of time, disrepair and decay have claimed them\r\n"+ //
 
 "As the seats crumbled the heirlooms were lost. \r\n"+ //
- 
+
 "Seek them in the perilous wilds! \r\n"+ //
 
 "Restor them to the seats!\r\n"+ //
@@ -94,7 +95,7 @@ public class Info {
     public static void adventureMenuPrint() {
         System.out.println(
                 "1. Explore" +
-                "\n2. Inspect yourself" + 
+                "\n2. Inspect yourself" +
                 "\n3. Travel" +
                 "\n4. Remind me how to play again");
     }
@@ -102,7 +103,7 @@ public class Info {
     public static void adventureMenuTavernPrint() {
         System.out.println(
                 "1. Tavern menu" +
-                "\n2. Inspect yourself" + 
+                "\n2. Inspect yourself" +
                 "\n3. Travel" +
                 "\n4. Remind me how to play again");
     }

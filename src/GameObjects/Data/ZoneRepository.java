@@ -4,7 +4,7 @@ import GameObjects.Worlds.Basement;
 import GameObjects.Worlds.Tavern;
 import GameObjects.Worlds.Zone;
 import GameObjects.Worlds.ZoneType;
-import Resources.Config;
+import Core.Config;
 
 public class ZoneRepository { // This class is a repository for all the zones in the game.
 

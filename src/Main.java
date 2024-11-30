@@ -3,12 +3,14 @@ import Core.GameStateManager;
 import GameObjects.Data.Info;
 import GameObjects.Worlds.ZoneManager;
 import Global.Utility;
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        Boolean replay;
+        boolean replay;
+
         Info.gameIntro();
         Utility.promptEnterKey(sc);
         do {
@@ -26,10 +28,11 @@ public class Main {
             }
 
         } while (replay);
-
         Utility.clearConsole();
+
         System.out.println("Thank you for playing!");
         Utility.promptEnterKey(sc);
+
         sc.close();
         System.exit(0);
     }
@@ -41,7 +44,9 @@ public class Main {
             System.out.println("Main menu" +
                                "\n1. Start Game" +
                                "\n2. How to Play");
+
             System.out.print("\nEnter your choice or press 0 to close program: ");
+
             switch (Utility.checkIfNumber(sc)) {
                 case 1 -> {
                     System.out.println("Starting game...");

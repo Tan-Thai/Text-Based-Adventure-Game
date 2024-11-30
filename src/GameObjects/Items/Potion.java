@@ -15,6 +15,17 @@ public class Potion extends Item implements Consumable {
         this.potionEffect = effect;
     }
 
+    //region Display Methods
+    public void displayItem() {
+        System.out.println(
+                "\n--" + getName() + "--" +
+                "\nCost: " + getItemCost() +
+                "\n" + potionEffect.getEffectType() + ": " + potionEffect.getValue() +
+                "\nDescription: " + getDescription());
+    }
+    //endregion
+
+    //region Using Potion Methods
     @Override
     public void consume(Entity target) {
         System.out.println();
@@ -61,12 +72,5 @@ public class Potion extends Item implements Consumable {
             System.out.println("You decided not to use the item.");
         }
     }
-
-    public void displayItem() {
-        System.out.println(
-                "\n--" + getName() + "--" +
-                "\nCost: " + getItemCost() +
-                "\n" + potionEffect.getEffectType() + ": " + potionEffect.getValue() +
-                "\nDescription: " + getDescription());
-    }
+    //endregion
 }

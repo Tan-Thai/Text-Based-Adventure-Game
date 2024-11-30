@@ -2,7 +2,7 @@ package GameObjects.Data;
 
 import Interactions.ChallengeType;
 import Interactions.Encounter;
-import Resources.Config;
+import Core.Config;
 
 import java.util.ArrayList;
 import java.util.List;

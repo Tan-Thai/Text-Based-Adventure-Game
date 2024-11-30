@@ -5,13 +5,14 @@ import Core.GameStateManager;
 import GameObjects.Entities.NeutralCharacter;
 import GameObjects.Entities.PlayerCharacter;
 import Global.Utility;
+import Core.Config;
 import Interactions.Restable;
-import Resources.Config;
 
 import java.util.Scanner;
 
 public class Tavern extends Zone implements Restable  {
     protected NeutralCharacter shopkeeper;
+
     public Tavern() {
         super("Rothollow tavern",
                 "The patrons are loud and the smell of ale fills the air. The tavern is bustling with activity.\n" +
@@ -33,7 +34,6 @@ public class Tavern extends Zone implements Restable  {
 
     }
 
-    // TODO: add method to call to sell OR call to buy.
     public void itemShop(PlayerCharacter pc, Scanner sc) { // open shop method, WIP
         boolean exitMenu = false;
         while (!exitMenu) {
