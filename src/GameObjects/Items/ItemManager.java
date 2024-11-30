@@ -41,8 +41,8 @@ public class ItemManager {
         return capacity;
     }
 
-    public int setCapacity(int newCapacity) {
-        return capacity = newCapacity;
+    public void setCapacity(int newCapacity) {
+        capacity = newCapacity;
     }
     //endregion
 
@@ -121,7 +121,9 @@ public class ItemManager {
     public void printInventory(List<Map.Entry<Item, Integer>> sortedItems) {
         if (checkIfEmpty()) return;
 
-        System.out.println("Inventory:");
+        System.out.println("------------ Inventory [" +
+                           getTotalItemCount() + " / " +
+                           getCapacity() + "] Slots ------------\n");
 
         // this comparator here is to print items out in alphabetical order, since hash doesn't inherently store order
 

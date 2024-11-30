@@ -60,24 +60,16 @@ public class Info {
         }
     }
 
+    // Intellij formated the ascii art oddly, putting it back as it was before, keeping the format on text below though
+    // - TT
     //Temporary game intro, insert actual Wille stuff here
     public static void gameIntro() {
-        System.out.println(Utility.GREEN + "  ___ ___                                               ___  ___ ___  " +
-                           Utility.RESET);
-        System.out.println(Utility.GREEN + " /   |   \\   ___________  ____D  ______    ___ ______  _| |_/   |   \\  " +
-                           Utility.RESET);
-        System.out.println(
-                Utility.GREEN + "/    ~    \\_/ __ \\_  __ \\/  _ \\/  ___/    \\_____\\__  \\|_   _|   ~    \\ " +
-                Utility.RESET);
-        System.out.println(
-                Utility.GREEN + "\\    Y    /\\  ___/|  | \\(  <_> )___ \\      |  |_> > __ \\| |\\    Y    /" +
-                Utility.RESET);
-        System.out.println(
-                Utility.GREEN + " \\___|_  /  \\___> |  |   \\____/____  >     |   __(____  / | \\___|_  / " +
-                Utility.RESET);
-        System.out.println(
-                Utility.GREEN + "       \\/          \\/              \\/      |__|         \\/        \\/ " +
-                Utility.RESET);
+        System.out.println(Utility.GREEN + "  ___ ___                                               ___  ___ ___  " + Utility.RESET);
+        System.out.println(Utility.GREEN + " /   |   \\   ___________  ____D  ______    ___ ______  _| |_/   |   \\  " + Utility.RESET);
+        System.out.println(Utility.GREEN + "/    ~    \\_/ __ \\_  __ \\/  _ \\/  ___/    \\_____\\__  \\|_   _|   ~    \\ " + Utility.RESET);
+        System.out.println(Utility.GREEN + "\\    Y    /\\  ___/|  | \\(  <_> )___ \\      |  |_> > __ \\| |\\    Y    /" + Utility.RESET);
+        System.out.println(Utility.GREEN + " \\___|_  /  \\___> |  |   \\____/____  >     |   __(____  / | \\___|_  / " + Utility.RESET);
+        System.out.println(Utility.GREEN + "       \\/          \\/              \\/      |__|         \\/        \\/ " + Utility.RESET);
         System.out.println();
         System.out.println(Utility.RED + "By: Wolf light studios" + Utility.RESET);
         System.out.println();
@@ -101,7 +93,7 @@ public class Info {
 
                           "Restor them to the seats!\r\n" + //
 
-                          "Banish the darkness!\r\n", 40);
+                          "Banish the darkness!\r\n", 1);
     }
 
     public static void adventureMenuPrint() {
