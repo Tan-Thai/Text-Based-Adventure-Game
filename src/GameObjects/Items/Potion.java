@@ -59,9 +59,12 @@ public class Potion extends Item implements Consumable {
                 System.out.println("You are currently at full health and put the potion back in your inventory.");
                 return;
             }
+
+            resolveUsage(response, player, player);
+        } else {
+            resolveUsage(response, enemy, player);
         }
 
-        resolveUsage(response, enemy, player);
     }
 
     private void resolveUsage(Boolean response, Entity target, PlayerCharacter player) {
