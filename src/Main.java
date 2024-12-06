@@ -1,3 +1,4 @@
+import Core.AudioManager;
 import Core.GameState;
 import Core.GameStateManager;
 import GameObjects.Data.Info;
@@ -9,7 +10,10 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        AudioManager.initialiseAudio();
         boolean replay;
+
+        audioCheck(sc);
 
         Info.gameIntro();
         Utility.promptEnterKey(sc);
@@ -35,6 +39,19 @@ public class Main {
 
         sc.close();
         System.exit(0);
+    }
+
+    private static void audioCheck(Scanner sc) {
+        System.out.print("Do you wish to have audio playing? (Y/N): ");
+        if (Utility.checkYesOrNo(sc)) {
+            System.out.println("Working Directory = " + System.getProperty("user.dir"));
+            System.out.println("Starting BGM!");
+            AudioManager.playBgm("./src/Core/Resources/MusicForGame.wav");
+        } else {
+            System.out.println("No audio started.");
+        }
+
+        Utility.promptEnterKey(sc);
     }
 
     public static void startMenu(Game game, Scanner sc) {
