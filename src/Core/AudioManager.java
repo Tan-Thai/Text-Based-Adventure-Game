@@ -37,7 +37,7 @@ public class AudioManager {
 
             clip.open(audioStream);
 
-            // notable during startup to set the volume to 50%.
+            // notable during startup to set the volume to 40%.
             if (volumeControl == null) {
                 volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
                 setVolumeToPercentage(40);
