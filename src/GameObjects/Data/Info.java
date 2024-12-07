@@ -61,6 +61,7 @@ public class Info {
 
     //Temporary game intro, insert actual Wille stuff here
     public static void gameIntro() {
+        Utility.clearConsole();
         System.out.println(Utility.GREEN+"  ___ ___                                               ___  ___ ___  "+Utility.RESET);
         System.out.println(Utility.GREEN+" /   |   \\   ___________  ____D  ______    ___ ______  _| |_/   |   \\  "+Utility.RESET);
         System.out.println(Utility.GREEN+"/    ~    \\_/ __ \\_  __ \\/  _ \\/  ___/    \\_____\\__  \\|_   _|   ~    \\ "+Utility.RESET);
@@ -75,7 +76,7 @@ public class Info {
                         "Plauge, war and famine have pushed the tenderfoot folk to flee. \r\n" + //
                         "But now they find themselves trapped in Bleakstone Vale. \r\n" + //
                         "Being a gentle and soft-hearted kin, they need a savior.\r\n" + //
-                        "They need you!", 40);
+                        "They need you!", 25);
         System.out.println();
         Utility.slowPrint("Restore the Ember Prisms.\r\n"+ //
 "These crystals were once the pride of the land and used to banish the dark of Evernight.\r\n" + //
@@ -89,7 +90,7 @@ public class Info {
 
 "Restor them to the seats!\r\n"+ //
 
-"Banish the darkness!\r\n", 40);
+"Banish the darkness!\r\n", 25);
     }
 
     public static void adventureMenuPrint() {
@@ -97,7 +98,8 @@ public class Info {
                 "1. Explore" +
                 "\n2. Inspect yourself" +
                 "\n3. Travel" +
-                "\n4. Remind me how to play again");
+                "\n4. Remind me how to play again" +
+                "\n5. Settings (Audio)");
     }
 
     public static void adventureMenuTavernPrint() {
@@ -105,12 +107,13 @@ public class Info {
                 "1. Tavern menu" +
                 "\n2. Inspect yourself" +
                 "\n3. Travel" +
-                "\n4. Remind me how to play again");
+                "\n4. Remind me how to play again" +
+                "\n5. Settings (Audio)");
     }
 
     public static void characterIntro(PlayerCharacter pc, Scanner sc) {
         Utility.clearConsole();
-        Utility.slowPrint("Here is your chosen character and their attributes:\n");
+        Utility.slowPrint("Here is your chosen character and their attributes:\n", 25);
         pc.displayStats();
         Utility.promptEnterKey(sc);
         Utility.clearConsole();
@@ -120,7 +123,7 @@ public class Info {
             Ruckus song can be heard from within.
 
             You decide to enter the tavern...
-            """, 20);
+            """, 25);
         Utility.promptEnterKey(sc);
     }
 

@@ -13,7 +13,7 @@ public class Main {
         AudioManager.initialiseAudio();
         boolean replay;
 
-        audioCheck(sc);
+        AudioManager.audioCheck(sc);
 
         Info.gameIntro();
         Utility.promptEnterKey(sc);
@@ -39,19 +39,6 @@ public class Main {
 
         sc.close();
         System.exit(0);
-    }
-
-    private static void audioCheck(Scanner sc) {
-        System.out.print("Do you wish to have audio playing? (Y/N): ");
-        if (Utility.checkYesOrNo(sc)) {
-            System.out.println("Working Directory = " + System.getProperty("user.dir"));
-            System.out.println("Starting BGM!");
-            AudioManager.playBgm("./src/Core/Resources/MusicForGame.wav");
-        } else {
-            System.out.println("No audio started.");
-        }
-
-        Utility.promptEnterKey(sc);
     }
 
     public static void startMenu(Game game, Scanner sc) {
