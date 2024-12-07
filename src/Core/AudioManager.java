@@ -52,7 +52,6 @@ public class AudioManager {
         }
     }
 
-    // We don't close the clip until the end similarly to Scanner. Just .flush to remove the current audio.
     private static void stopBgm () {
         if (clip != null && clip.isRunning()) {
             clip.stop();
