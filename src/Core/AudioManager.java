@@ -1,8 +1,9 @@
 package Core;
 import Global.Utility;
 
-import java.io.File;
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Scanner;
 import javax.sound.sampled.*;
 
@@ -32,8 +33,16 @@ public class AudioManager {
         try {
             stopBgm();
 
-            File file = new File(filePath);
-            AudioInputStream audioStream=AudioSystem.getAudioInputStream(file);
+            // TODO highly volatile area
+            InputStream resourceStream = AudioManager.class.getClassLoader().getResourceAsStream(filePath);
+
+            if (resourceStream == null) {
+                throw new IOException("Resource not found: " + filePath);
+            }
+
+            BufferedInputStream bufferedStream = new BufferedInputStream(resourceStream);
+
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(bufferedStream);
 
             clip.open(audioStream);
 
@@ -84,7 +93,8 @@ public class AudioManager {
         System.out.print("Do you wish to have bgm playing? (Y/N): ");
         if (Utility.checkYesOrNo(sc)) {
             System.out.println("----Bgm turned on----");
-            AudioManager.playBgm("Core/Resources/MusicForGame.wav");
+            //AudioManager.playBgm("Core/Resources/MusicForGame.wav");
+            AudioManager.playBgm("audio/StandardBgm.wav");
         } else {
             System.out.println("----Bgm turned off----");
             stopBgm();
@@ -108,7 +118,7 @@ public class AudioManager {
                     if (clip.isRunning())
                         stopBgm();
                     else
-                        playBgm("Core/Resources/MusicForGame.wav");
+                        playBgm("audio/StandardBgm.wav");
                     break;
                 case 2:
                     System.out.print("Please input the wanted volume percentage (0 - 100): ");
