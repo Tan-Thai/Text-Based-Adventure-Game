@@ -1,4 +1,3 @@
-import Core.AudioManager;
 import Core.GameState;
 import Core.GameStateManager;
 import GameObjects.Data.Info;
@@ -10,10 +9,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        AudioManager.initialiseAudio();
         boolean replay;
-
-        AudioManager.audioCheck(sc);
 
         Info.gameIntro();
         Utility.promptEnterKey(sc);

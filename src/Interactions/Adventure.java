@@ -2,7 +2,6 @@ package Interactions;
 
 import java.util.Scanner;
 
-import Core.AudioManager;
 import Core.GameState;
 import Core.GameStateManager;
 import GameObjects.Data.Info;
@@ -45,9 +44,6 @@ public class Adventure {
                 break;
             case 4:
                 Info.howToPlay(sc);
-                break;
-            case 5:
-                AudioManager.audioSettingsMenu(sc);
                 break;
             case 0:
                 System.out.println("Are you sure you want to exit to main menu? ALL YOUR PROGRESS WILL BE LOST (Y/N)");
