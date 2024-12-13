@@ -73,13 +73,13 @@ public class Info {
         System.out.println();
 
         Utility.slowPrint("The land is cursed in darkness. \r\n" + //
-                        "Plauge, war and famine have pushed the tenderfoot folk to flee. \r\n" + //
-                        "But now they find themselves trapped in Bleakstone Vale. \r\n" + //
+                        "Plague, war and famine have pushed the tenderfoot folk to flee. \r\n" + //
+                        "But now they find themselves trapped in Bleak-Stone Vale. \r\n" + //
                         "Being a gentle and soft-hearted kin, they need a savior.\r\n" + //
                         "They need you!", 25);
         System.out.println();
-        Utility.slowPrint("Restore the Ember Prisms.\r\n"+ //
-"These crystals were once the pride of the land and used to banish the dark of Evernight.\r\n" + //
+        Utility.slowPrint("Restore the 'Ember Prisms'.\r\n"+ //
+"These crystals were once the pride of the land and used to banish the dark of Ever-night.\r\n" + //
 "Held in ancient seats of power, these relic beacons kept the shroud at bay.\r\n" + //
 
 "But they have fallen to the tooth of time, disrepair and decay have claimed them\r\n"+ //
@@ -88,7 +88,7 @@ public class Info {
 
 "Seek them in the perilous wilds! \r\n"+ //
 
-"Restor them to the seats!\r\n"+ //
+"Restore them to the seats!\r\n"+ //
 
 "Banish the darkness!\r\n", 25);
     }

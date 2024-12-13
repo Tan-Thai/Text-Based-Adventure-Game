@@ -18,7 +18,7 @@ public class HostileEntitiesRepository {
 	public static HostileCharacter getRottenCrawler() {
 		return new HostileCharacter("Rotten Crawler", 3, 1, 2, 1, 1, HostileEntityType.UNDEFINED,
 				"""
-						You smell rot in the air and as you look up fat armlong pale maggots with sharp mandibles
+						You smell rot in the air and as you look up fat arm-long pale maggots with sharp mandibles
 						fall onto you from the tree canopy and begins to try and eat through your cloths to get
 						at your flesh.""");
 	}
@@ -62,9 +62,9 @@ public class HostileEntitiesRepository {
 	public static HostileCharacter getMossDrenchedUndead() {
 		return new HostileCharacter("Moss Drenched Undead", 25, 2, 8, 3, 3, HostileEntityType.UNDEAD,
 				"""
-						The flames of your torch illuminate a rotting warrior that has grown into the wall,
-						moss and huge funguses cover its body and binds it to the wall, as you look closer
-						its cataracted eyes open and it rips free swinging a rusted axe at your head.""");
+						The flames of your torch illuminate a rotting warrior that has grown into the wall.
+						You approach it slowly and notice moss and large fungi covering it's body, it's wide open eyes filled with cataracts.
+						Suddenly, the rotting corpse rips free and swings it's rusted axe towards you.""");
 	}
 
 	// the easies of enemies in the caverns but still dangerous
@@ -79,7 +79,7 @@ public class HostileEntitiesRepository {
 	public static HostileCharacter getGiantBloodsuckingBat() {
 		return new HostileCharacter("Giant Bloodsucking Bats", 15, 2, 3, 5, 5, HostileEntityType.UNDEFINED,
 				"""
-						You feel the wind change and hear the chittering noises as a murmuration of giant
+						You feel the wind change and hear the chattering noises as a colony of giant
 						black and red bats flood the tunnel and begin taking swiping bites at you.""");
 	}
 
@@ -89,7 +89,7 @@ public class HostileEntitiesRepository {
 				"""
 						You have reached the end of the caverns and it has lead you to what must be the basement of the tavern
 						as you can faintly hear the music from up above, but in the dark lays the beast of darkness,
-						the embodiment of shadow the giant emberprism eating king of lizards known only as -Maximus-.""");
+						the embodiment of shadow the giant 'Ember Prism' eating king of lizards known only as -Maximus-.""");
 	}
 
 	public static HostileCharacter getUndefinedCharacter() {

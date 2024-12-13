@@ -223,7 +223,7 @@ public class EncounterRepository {
 	private static Encounter getRiddleRottenWoodEncounter() {
 		return new Encounter(
 				"""
-						As you try to escape from a swarm of bloodsucking mosquitos you stumble into a grove of
+						As you try to escape from a swarm of bloodsucking mosquitoes you stumble into a grove of
 						twisted, ancient trees. The trees all bear grotesque faces that have been gouged into the living
 						wood. As you take a moment to catch your breath, the gnarled faces begin to whisper to you.
 						'Abandoned before birth,
@@ -292,7 +292,7 @@ public class EncounterRepository {
 				"""
 						Deep into the caves you come across an underground stream. The current is fierce as the water
 						foams around the razor sharp rocks strewn along the streambed. You are able to make out a
-						narrow faultline in the cliff face that you think you might use to climb across without getting
+						narrow fault-line in the cliff face that you think you might use to climb across without getting
 						drenched.
 						""",
 				2,
