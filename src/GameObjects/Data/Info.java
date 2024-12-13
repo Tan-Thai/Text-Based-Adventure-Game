@@ -74,7 +74,7 @@ public class Info {
 
         Utility.slowPrint("The land is cursed in darkness. \r\n" + //
                         "Plague, war and famine have pushed the tenderfoot folk to flee. \r\n" + //
-                        "But now they find themselves trapped in Bleak-stone Vale. \r\n" + //
+                        "But now they find themselves trapped in Bleak-Stone Vale. \r\n" + //
                         "Being a gentle and soft-hearted kin, they need a savior.\r\n" + //
                         "They need you!", 25);
         System.out.println();
