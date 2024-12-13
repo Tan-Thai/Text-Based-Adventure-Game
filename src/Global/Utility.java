@@ -172,7 +172,7 @@ public class Utility {
 
         if (successValue > diceSidesAmount) {
             System.err.println(
-                    "The successvalue is higher than the amount of sides on the die, so the roll will never return a success.");
+                    "The success-value is higher than the amount of sides on the die, so the roll will never return a success.");
         }
 
         if (critValue > diceSidesAmount) {
@@ -194,7 +194,7 @@ public class Utility {
                 currentValue = random.nextInt(diceSidesAmount) + 1;
             } catch (IllegalArgumentException e) {
                 System.err.println(
-                        "The random function returned a negative value. meaning that the die was asigned a negative amount of sides. The result of the die will be zero"
+                        "The random function returned a negative value. meaning that the die was assigned a negative amount of sides. The result of the die will be zero"
                         + e.getMessage());
                 currentValue = 0;
             }

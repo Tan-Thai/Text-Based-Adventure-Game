@@ -15,6 +15,7 @@ public class Transactions {
     /* methods for handling trading between 2 entities. this will be things such as
      * trading with the shop, both buying and selling items.
      * Other actions would also include giving gold from a defeated enemy to the player.
+     * - TT
      * */
 
 

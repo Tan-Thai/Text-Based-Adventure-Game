@@ -31,35 +31,35 @@ public class ItemRepository {
                 WeaponType.DEFAULT));
 
         ITEMS.put(ItemId.METIORIC_IRON_LONGSWORD, new Weapon(
-                "Metioric Iron longsword",
-                "A longsword made of metioric iron, fallen from the stars, sharp as a razor",
+                "Meteoric Iron longsword",
+                "A longsword made of meteoric iron, fallen from the stars, sharp as a razor",
                 new DamageEffect(2),
                 50,
                 WeaponType.DEFAULT));
 
         ITEMS.put(ItemId.GREAT_AXE, new Weapon(
-                "Great-axe",
-                "A Great-axe, its simply a great axe",
+                "Great-Axe",
+                "A Great-Axe, its simply a great axe",
                 new DamageEffect(3),
                 120,
                 WeaponType.DEFAULT));
 
         ITEMS.put(ItemId.FLAMING_BASTARDSWORD, new Weapon(
-                "Flaming bastardsword",
+                "Flaming Bastard Sword",
                 "When drawn blue flames lick the blade of this sword",
                 new DamageEffect(3),
                 200,
                 WeaponType.FIRE));
 
         ITEMS.put(ItemId.BLESSED_WHISPERBLADE, new Weapon(
-                "The blessed whisperblade",
+                "The Blessed Whisper-blade",
                 "A blade blessed by the singing saints, that whispers with their voices as it cuts",
                 new DamageEffect(3),
                 200,
                 WeaponType.HOLY));
         ITEMS.put(ItemId.RAIDIANT_WARHAMMER, new Weapon(
-                "The radiant warhammer",
-                "In the head of this warhammer a emberprism raidiates the light of the true sun",
+                "The Radiant War-Hammer",
+                "In the head of this war-hammer a 'Ember Prism' radiates the light of the true sun",
                 new DamageEffect(3),
                 300,
                 WeaponType.SUNLIGHT));
@@ -76,8 +76,8 @@ public class ItemRepository {
                 new ProtectiveEffect(2),
                 100));
         ITEMS.put(ItemId.HEIRLOOM_BATTLEPLATE, new Equipment(
-                "Heirloom battleplate",
-                "A worn but beautful battleplate that has served many warriors before you",
+                "Heirloom Battleplate",
+                "A worn but beautiful battleplate that has served many warriors before you",
                 EquipmentType.ARMOUR,
                 new ProtectiveEffect(3),
                 200));
@@ -87,7 +87,7 @@ public class ItemRepository {
         // region Potions generated
         ITEMS.put(ItemId.POISON_POTION, new Potion(
                 "Totally a 'Health Potion'",
-                "Chug/Throw for ouch",
+                "Chug or throw for ouch",
                 new DamageEffect(7),
                 30));
 

@@ -25,8 +25,8 @@ public class Basement extends Zone {
     }
     public void endGame() {
         if (GameStateManager.getInstance().getCurrentState() == GameState.VICTORY) {
-            System.out.println("You have defeated the shadow beast and have saved the vally from disapearing into the evernight\n" + 
-            "You have recovered the Emberprism from the guts of Maximus Rex\n" + 
+            System.out.println("You have defeated the shadow beast and have saved the valley from disappearing into the ever-night\n" +
+            "You have recovered the 'Ember Prism' from the guts of Maximus Rex\n" +
             "You will return the prisms to their rebuilt seats\n" + 
             "You are a hero and will be remembered for generations to come.");
             System.out.println();
