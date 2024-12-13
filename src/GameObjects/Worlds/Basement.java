@@ -33,10 +33,10 @@ public class Basement extends Zone {
             System.out.println();
             System.out.println();
              Utility.slowPrint("Made by Wolf light Studios:\r\n" + //
-                        "Wille Virtanen - Project Leader and Game Designer \r\n" + //
-                        "Tan Thai - System Architect\r\n" + //
-                        "Johan Ahlsten - Lead Developer\r\n" + //
-                        "Henrik Bergman - Lead Programer\r\n" + //
+                        "Wille Virtanen - Developer\r\n" + //
+                        "Tan Thai - Developer\r\n" + //
+                        "Johan Ahlsten - Developer\r\n" + //
+                        "Henrik Bergman - Developer\r\n" + //
                         "Maximilian \"Maximus\" Ygdell - Guest Role as Himself\r\n" + //   
                         "Thank you for playing our game!", 40);
         } else if (GameStateManager.getInstance().getCurrentState() == GameState.GAME_OVER) {
